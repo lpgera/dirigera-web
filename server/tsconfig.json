@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "es2018",
+    "module": "commonjs",
+    "lib": ["dom", "es2020"],
+    "downlevelIteration": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "esModuleInterop": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
+  }
+}

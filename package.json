@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.2.1",
+    "@lpgera/ts-env": "^1.1.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
@@ -12,16 +13,20 @@
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
     "antd": "^4.3.2",
+    "dotenv": "^8.2.0",
+    "node-tradfri-client": "^2.1.6",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
+    "ts-node": "^8.10.2",
     "typescript": "^3.9.5"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "server": "ts-node --project ./server/tsconfig.json ./server/index.ts"
   },
   "husky": {
     "hooks": {
