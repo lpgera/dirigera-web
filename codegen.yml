@@ -1,0 +1,21 @@
+schema: http://localhost:${PORT}/graphql
+generates:
+  ./src/graphql.types.ts:
+    plugins:
+      - typescript
+  ./server/graphql/resolvers.gen.ts:
+    config:
+      useIndexSignature: true
+      contextType: ./context#Context
+    plugins:
+      - typescript
+      - typescript-resolvers
+#  .src/:
+#    documents:
+#      - './src/**/*.tsx'
+#    preset: near-operation-file
+#    presetConfig:
+#      extension: .types.gen.ts
+#      baseTypesPath: src/graphql.types.ts
+#    plugins:
+#      - typescript-operations

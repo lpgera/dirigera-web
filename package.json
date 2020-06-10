@@ -13,7 +13,9 @@
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
     "antd": "^4.3.2",
+    "apollo-server": "^2.14.3",
     "dotenv": "^8.2.0",
+    "graphql": "^15.1.0",
     "node-tradfri-client": "^2.1.6",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -26,7 +28,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "ts-node --project ./server/tsconfig.json ./server/index.ts"
+    "server": "ts-node --project ./server/tsconfig.json ./server/index.ts",
+    "watch": "nodemon --ext ts,json --watch server --exec ts-node --project ./server/tsconfig.json ./server/index.ts",
+    "generate": "graphql-codegen -r dotenv/config"
   },
   "husky": {
     "hooks": {
@@ -46,7 +50,13 @@
     ]
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^1.15.2",
+    "@graphql-codegen/near-operation-file-preset": "^1.15.2",
+    "@graphql-codegen/typescript": "^1.15.2",
+    "@graphql-codegen/typescript-operations": "^1.15.2",
+    "@graphql-codegen/typescript-resolvers": "^1.15.2",
     "husky": "^4.2.5",
+    "nodemon": "^2.0.4",
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1"
   }

@@ -1,13 +1,16 @@
 import dotenv from 'dotenv'
+import server from './graphql/server'
+import tsEnv from '@lpgera/ts-env'
 import * as tradfriClient from './tradfri-client'
 
 dotenv.config()
 
-tradfriClient
-  .connect()
-  .then(async (client) => {
-    await client.observeDevices()
-    console.log(client.devices)
-    client.destroy()
+async function start() {
+  const client = await tradfriClient.connect()
+  const { url } = await server(client).listen({
+    port: tsEnv.numberOrThrow('PORT'),
   })
-  .catch(console.error)
+  console.log(`Server is listening on ${url}`)
+}
+
+start().catch(console.error)

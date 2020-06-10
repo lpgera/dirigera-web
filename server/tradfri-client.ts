@@ -17,5 +17,8 @@ export async function connect() {
     tsEnv.stringOrThrow('PSK')
   )
 
+  await client.observeDevices()
+  await client.observeGroupsAndScenes()
+
   return client
 }
