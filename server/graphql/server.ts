@@ -1,6 +1,7 @@
 import { ApolloServer } from 'apollo-server'
 import { gql } from 'apollo-server'
-import * as device from './definitions/device'
+import * as group from './definitions/group'
+import * as accessory from './definitions/accessory'
 import { Context } from './context'
 import { TradfriClient } from 'node-tradfri-client'
 
@@ -13,7 +14,7 @@ const baseTypeDefs = gql`
   }
 `
 
-const definitions = [device]
+const definitions = [accessory, group]
 
 export default (tradfriClient: TradfriClient) =>
   new ApolloServer({

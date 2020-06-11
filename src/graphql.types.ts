@@ -13,7 +13,7 @@ export type Scalars = {
 export type Query = {
   __typename?: 'Query'
   _?: Maybe<Scalars['String']>
-  devices: Array<Device>
+  groups: Array<Group>
 }
 
 export type Mutation = {
@@ -21,9 +21,33 @@ export type Mutation = {
   _?: Maybe<Scalars['String']>
 }
 
-export type Device = {
-  __typename?: 'Device'
+export enum AccessoryType {
+  Remote = 'REMOTE',
+  SlaveRemote = 'SLAVE_REMOTE',
+  Lightbulb = 'LIGHTBULB',
+  Plug = 'PLUG',
+  MotionSensor = 'MOTION_SENSOR',
+  SignalRepeater = 'SIGNAL_REPEATER',
+  Blind = 'BLIND',
+  SoundRemote = 'SOUND_REMOTE',
+}
+
+export type Accessory = {
+  __typename?: 'Accessory'
   id: Scalars['Int']
+  name: Scalars['String']
+  type: AccessoryType
+  alive: Scalars['Boolean']
+  battery?: Maybe<Scalars['Int']>
+  onOff?: Maybe<Scalars['Boolean']>
+  dimmer?: Maybe<Scalars['Int']>
+}
+
+export type Group = {
+  __typename?: 'Group'
+  id: Scalars['Int']
+  name: Scalars['String']
+  accessories: Array<Accessory>
 }
 
 export enum CacheControlScope {

@@ -7,6 +7,9 @@ generates:
     config:
       useIndexSignature: true
       contextType: ./context#Context
+      mappers:
+        Group: ./typeMappings#TradfriGroup
+        Accessory: ./typeMappings#TradfriAccessory
     plugins:
       - typescript
       - typescript-resolvers
