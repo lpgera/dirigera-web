@@ -1,11 +1,17 @@
 import React, { useState } from 'react'
 import { Card, Col, Collapse, Divider, Row, Slider, Switch } from 'antd'
+import Accessory, { AccessoryProps } from './Accessory'
 
-const GroupCard = () => {
+type Props = {
+  id: number
+  name: string
+  accessories: AccessoryProps[]
+}
+
+const GroupCard = (props: Props) => {
   const [value, setValue] = useState(0)
-
   return (
-    <Card title={'Bedroom'}>
+    <Card title={props.name}>
       <Row align="middle">
         <Col flex="50px">
           <Switch
@@ -26,15 +32,9 @@ const GroupCard = () => {
       </Row>
       <Collapse style={{ marginTop: '32px' }}>
         <Collapse.Panel header="Devices" key="1">
-          {[...Array(3)].map((_, index, array) => (
+          {props.accessories.map((accessory, index, array) => (
             <>
-              Device {index}
-              <Slider
-                min={0}
-                max={100}
-                value={value}
-                onChange={(newValue) => setValue(newValue as number)}
-              />
+              <Accessory {...accessory} />
               {index !== array.length - 1 ? <Divider /> : null}
             </>
           ))}

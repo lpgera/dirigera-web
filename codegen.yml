@@ -1,4 +1,5 @@
 schema: http://localhost:${PORT}/graphql
+overwrite: true
 generates:
   ./src/graphql.types.ts:
     plugins:
@@ -14,12 +15,12 @@ generates:
     plugins:
       - typescript
       - typescript-resolvers
-#  .src/:
-#    documents:
-#      - './src/**/*.tsx'
-#    preset: near-operation-file
-#    presetConfig:
-#      extension: .types.gen.ts
-#      baseTypesPath: src/graphql.types.ts
-#    plugins:
-#      - typescript-operations
+  ./src/:
+    documents:
+      - './**/*.tsx'
+    preset: near-operation-file
+    presetConfig:
+      extension: .types.gen.ts
+      baseTypesPath: ./graphql.types.ts
+    plugins:
+      - typescript-operations
