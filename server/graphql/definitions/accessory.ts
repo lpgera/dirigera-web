@@ -21,11 +21,16 @@ export const typeDefs = gql`
     alive: Boolean!
     battery: Int
     onOff: Boolean
-    dimmer: Int
+    dimmer: Float
   }
 
   extend type Group {
     accessories: [Accessory!]!
+  }
+
+  extend type Mutation {
+    accessoryOnOff(id: Int!, onOff: Boolean!): String
+    accessoryDimmer(id: Int!, dimmer: Float!): String
   }
 `
 
@@ -57,6 +62,28 @@ export const resolvers: Resolvers = {
   Group: {
     accessories: ({ deviceIDs }, _, { tradfriClient }) => {
       return deviceIDs.map((deviceID) => tradfriClient.devices[deviceID])
+    },
+  },
+  Mutation: {
+    accessoryOnOff: async (_, { id, onOff }, { tradfriClient }) => {
+      const accessory = tradfriClient.devices[id]
+      switch (accessory.type) {
+        case AccessoryTypes.plug:
+          await tradfriClient.operatePlug(accessory, { onOff })
+          break
+        case AccessoryTypes.lightbulb:
+          await tradfriClient.operateLight(accessory, { onOff })
+          break
+      }
+      return null
+    },
+    accessoryDimmer: async (_, { id, dimmer }, { tradfriClient }) => {
+      const accessory = tradfriClient.devices[id]
+      await tradfriClient.operateLight(accessory, {
+        dimmer,
+        transitionTime: dimmer > 0 ? 2 : undefined,
+      })
+      return null
     },
   },
 }

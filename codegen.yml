@@ -7,6 +7,7 @@ generates:
     config:
       useIndexSignature: true
       contextType: ./context#Context
+      maybeValue: 'T extends PromiseLike<infer U> ? Promise<U | null> : T | null' # https://github.com/dotansimha/graphql-code-generator/issues/3174#issuecomment-595398571
       mappers:
         Group: ./typeMappings#TradfriGroup
         Accessory: ./typeMappings#TradfriAccessory

@@ -19,6 +19,30 @@ export type Query = {
 export type Mutation = {
   __typename?: 'Mutation'
   _?: Maybe<Scalars['String']>
+  accessoryOnOff?: Maybe<Scalars['String']>
+  accessoryDimmer?: Maybe<Scalars['String']>
+  groupOnOff?: Maybe<Scalars['String']>
+  groupDimmer?: Maybe<Scalars['String']>
+}
+
+export type MutationAccessoryOnOffArgs = {
+  id: Scalars['Int']
+  onOff: Scalars['Boolean']
+}
+
+export type MutationAccessoryDimmerArgs = {
+  id: Scalars['Int']
+  dimmer: Scalars['Float']
+}
+
+export type MutationGroupOnOffArgs = {
+  id: Scalars['Int']
+  onOff: Scalars['Boolean']
+}
+
+export type MutationGroupDimmerArgs = {
+  id: Scalars['Int']
+  dimmer: Scalars['Float']
 }
 
 export enum AccessoryType {
@@ -40,7 +64,7 @@ export type Accessory = {
   alive: Scalars['Boolean']
   battery?: Maybe<Scalars['Int']>
   onOff?: Maybe<Scalars['Boolean']>
-  dimmer?: Maybe<Scalars['Int']>
+  dimmer?: Maybe<Scalars['Float']>
 }
 
 export type Group = {

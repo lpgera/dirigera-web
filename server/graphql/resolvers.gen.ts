@@ -5,7 +5,13 @@ import {
 } from 'graphql'
 import { TradfriGroup, TradfriAccessory } from './typeMappings'
 import { Context } from './context'
-export type Maybe<T> = T | null
+export type Maybe<T> = T extends PromiseLike<infer U>
+  ? Promise<U | null>
+  : T | null
+export type RequireFields<T, K extends keyof T> = {
+  [X in Exclude<keyof T, K>]?: T[X]
+} &
+  { [P in K]-?: NonNullable<T[P]> }
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string
@@ -26,6 +32,30 @@ export type Query = {
 export type Mutation = {
   __typename?: 'Mutation'
   _?: Maybe<Scalars['String']>
+  accessoryOnOff?: Maybe<Scalars['String']>
+  accessoryDimmer?: Maybe<Scalars['String']>
+  groupOnOff?: Maybe<Scalars['String']>
+  groupDimmer?: Maybe<Scalars['String']>
+}
+
+export type MutationAccessoryOnOffArgs = {
+  id: Scalars['Int']
+  onOff: Scalars['Boolean']
+}
+
+export type MutationAccessoryDimmerArgs = {
+  id: Scalars['Int']
+  dimmer: Scalars['Float']
+}
+
+export type MutationGroupOnOffArgs = {
+  id: Scalars['Int']
+  onOff: Scalars['Boolean']
+}
+
+export type MutationGroupDimmerArgs = {
+  id: Scalars['Int']
+  dimmer: Scalars['Float']
 }
 
 export enum AccessoryType {
@@ -47,7 +77,7 @@ export type Accessory = {
   alive: Scalars['Boolean']
   battery?: Maybe<Scalars['Int']>
   onOff?: Maybe<Scalars['Boolean']>
-  dimmer?: Maybe<Scalars['Int']>
+  dimmer?: Maybe<Scalars['Float']>
 }
 
 export type Group = {
@@ -183,10 +213,11 @@ export type ResolversTypes = ResolversObject<{
   Query: ResolverTypeWrapper<{}>
   String: ResolverTypeWrapper<Scalars['String']>
   Mutation: ResolverTypeWrapper<{}>
-  AccessoryType: AccessoryType
-  Accessory: ResolverTypeWrapper<TradfriAccessory>
   Int: ResolverTypeWrapper<Scalars['Int']>
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>
+  Float: ResolverTypeWrapper<Scalars['Float']>
+  AccessoryType: AccessoryType
+  Accessory: ResolverTypeWrapper<TradfriAccessory>
   Group: ResolverTypeWrapper<TradfriGroup>
   CacheControlScope: CacheControlScope
   Upload: ResolverTypeWrapper<Scalars['Upload']>
@@ -197,10 +228,11 @@ export type ResolversParentTypes = ResolversObject<{
   Query: {}
   String: Scalars['String']
   Mutation: {}
-  AccessoryType: AccessoryType
-  Accessory: TradfriAccessory
   Int: Scalars['Int']
   Boolean: Scalars['Boolean']
+  Float: Scalars['Float']
+  AccessoryType: AccessoryType
+  Accessory: TradfriAccessory
   Group: TradfriGroup
   CacheControlScope: CacheControlScope
   Upload: Scalars['Upload']
@@ -219,6 +251,30 @@ export type MutationResolvers<
   ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']
 > = ResolversObject<{
   _?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
+  accessoryOnOff?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationAccessoryOnOffArgs, 'id' | 'onOff'>
+  >
+  accessoryDimmer?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationAccessoryDimmerArgs, 'id' | 'dimmer'>
+  >
+  groupOnOff?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationGroupOnOffArgs, 'id' | 'onOff'>
+  >
+  groupDimmer?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationGroupDimmerArgs, 'id' | 'dimmer'>
+  >
 }>
 
 export type AccessoryResolvers<
@@ -231,7 +287,7 @@ export type AccessoryResolvers<
   alive?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
   battery?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
   onOff?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>
-  dimmer?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
+  dimmer?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }>
 
