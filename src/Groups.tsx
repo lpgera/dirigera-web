@@ -6,7 +6,7 @@ import { gql } from 'apollo-boost'
 import { GroupsQuery } from './Groups.types.gen'
 
 const Groups = () => {
-  const { data } = useQuery<GroupsQuery>(gql`
+  const { data, refetch } = useQuery<GroupsQuery>(gql`
     query Groups {
       groups {
         id
@@ -29,7 +29,7 @@ const Groups = () => {
     <Row gutter={[16, 16]}>
       {groups.map((group, index) => (
         <Col key={index} xs={24} sm={12} md={8} lg={6} xl={4}>
-          <GroupCard {...group} />
+          <GroupCard {...group} refetch={refetch} />
         </Col>
       ))}
     </Row>
