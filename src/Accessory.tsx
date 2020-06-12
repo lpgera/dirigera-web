@@ -1,7 +1,7 @@
 import React from 'react'
 import { AccessoryType } from './graphql.types'
-import { Slider, Switch, Typography } from 'antd'
-import { PoweroffOutlined } from '@ant-design/icons'
+import { Col, Row, Slider, Switch, Typography } from 'antd'
+import { BsBatteryFull } from 'react-icons/bs'
 
 export type AccessoryProps = {
   id: number
@@ -17,9 +17,13 @@ const Accessory = (props: AccessoryProps) => {
     case AccessoryType.Remote:
     case AccessoryType.MotionSensor:
       return (
-        <>
-          {props.name} - {props.battery}%
-        </>
+        <Row>
+          <Col flex={'auto'}>{props.name}</Col>
+          <Col flex={'50px'}>
+            <BsBatteryFull style={{ verticalAlign: 'middle' }} />{' '}
+            {props.battery}%
+          </Col>
+        </Row>
       )
     case AccessoryType.Lightbulb:
       return (

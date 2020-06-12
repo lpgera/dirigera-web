@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@ant-design/icons": "^4.2.1",
     "@apollo/react-hooks": "^3.1.5",
     "@lpgera/ts-env": "^1.1.0",
     "@testing-library/jest-dom": "^4.2.4",
@@ -21,6 +20,7 @@
     "node-tradfri-client": "^2.1.6",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-icons": "^3.10.0",
     "react-scripts": "3.4.1",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.5"

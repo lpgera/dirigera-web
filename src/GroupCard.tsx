@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Card, Col, Collapse, Divider, Row, Slider, Switch } from 'antd'
 import Accessory, { AccessoryProps } from './Accessory'
 
@@ -8,16 +8,24 @@ type Props = {
   accessories: AccessoryProps[]
 }
 
+const calculateGroupDimmer = (accessories: AccessoryProps[]) => {
+  const sum = accessories.reduce(
+    (accumulator, item) => accumulator + (item.dimmer ?? 0),
+    0
+  )
+  const count = accessories.filter((a) => a.dimmer !== null).length
+  return sum / count
+}
+
 const GroupCard = (props: Props) => {
-  const [value, setValue] = useState(0)
   return (
     <Card title={props.name}>
       <Row align="middle">
         <Col flex="50px">
           <Switch
             size="small"
-            checked={value > 0}
-            onChange={(newValue) => setValue(newValue ? 100 : 0)}
+            checked={props.accessories.some((a) => a.onOff)}
+            // onChange={(newValue) => setValue(newValue ? 100 : 0)}
           />
         </Col>
         <Col flex="auto">
@@ -25,8 +33,8 @@ const GroupCard = (props: Props) => {
             style={{ marginTop: '12px' }}
             min={0}
             max={100}
-            value={value}
-            onChange={(newValue) => setValue(newValue as number)}
+            value={calculateGroupDimmer(props.accessories)}
+            // onChange={(newValue) => setValue(newValue as number)}
           />
         </Col>
       </Row>

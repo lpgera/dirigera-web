@@ -56,7 +56,11 @@ export const resolvers: Resolvers = {
       return lightList[0]?.onOff ?? plugList[0]?.onOff
     },
     dimmer: ({ lightList = [] }) => {
-      return lightList[0]?.dimmer
+      const dimmerValue = lightList[0]?.dimmer
+      if (dimmerValue === null) {
+        return dimmerValue
+      }
+      return lightList[0]?.onOff ? dimmerValue : 0
     },
   },
   Group: {
