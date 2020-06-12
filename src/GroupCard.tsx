@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Card, Col, Collapse, Divider, Row, Slider, Switch } from 'antd'
 import { useMutation } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
-import debounce from 'lodash/debounce'
 import Accessory, { AccessoryProps } from './Accessory'
 import {
   GroupDimmerMutation,
@@ -15,7 +14,7 @@ type Props = {
   id: number
   name: string
   accessories: AccessoryProps[]
-  refetch: () => void
+  refetch: () => Promise<any>
 }
 
 const calculateGroupDimmer = (accessories: AccessoryProps[]) => {
@@ -27,8 +26,17 @@ const calculateGroupDimmer = (accessories: AccessoryProps[]) => {
   return sum / count
 }
 
+const calculateGroupOnOff = (accessories: AccessoryProps[]) =>
+  accessories.some((a) => a.onOff)
+
 const GroupCard = (props: Props) => {
-  const [value, setValue] = useState(calculateGroupDimmer(props.accessories))
+  const [dimmerState, setDimmerState] = useState(0)
+  const [onOffState, setOnOffState] = useState(false)
+  useEffect(() => {
+    setDimmerState(calculateGroupDimmer(props.accessories))
+    setOnOffState(calculateGroupOnOff(props.accessories))
+  }, [props.accessories])
+
   const [groupOnOff] = useMutation<
     GroupOnOffMutation,
     GroupOnOffMutationVariables
@@ -47,13 +55,14 @@ const GroupCard = (props: Props) => {
       groupDimmer(id: $id, dimmer: $dimmer)
     }
   `)
+
   return (
     <Card title={props.name}>
       <Row align="middle">
         <Col flex="50px">
           <Switch
             size="small"
-            checked={props.accessories.some((a) => a.onOff)}
+            checked={onOffState}
             onChange={async (newValue) => {
               await groupOnOff({
                 variables: { id: props.id, onOff: newValue },
@@ -67,15 +76,13 @@ const GroupCard = (props: Props) => {
             style={{ marginTop: '12px' }}
             min={0}
             max={100}
-            value={value}
-            onChange={(newValue) => {
-              setValue(newValue as number)
-            }}
+            value={dimmerState}
+            onChange={(newValue) => setDimmerState(newValue as number)}
             onAfterChange={async (newValue) => {
               await groupDimmer({
                 variables: { id: props.id, dimmer: newValue as number },
               })
-              setTimeout(() => props.refetch(), 2000)
+              setTimeout(() => props.refetch(), 3000)
             }}
           />
         </Col>
@@ -84,7 +91,7 @@ const GroupCard = (props: Props) => {
         <Collapse.Panel header="Devices" key="1">
           {props.accessories.map((accessory, index, array) => (
             <>
-              <Accessory {...accessory} />
+              <Accessory {...accessory} refetch={props.refetch} />
               {index !== array.length - 1 ? <Divider /> : null}
             </>
           ))}

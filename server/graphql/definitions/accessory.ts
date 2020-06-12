@@ -57,7 +57,7 @@ export const resolvers: Resolvers = {
     },
     dimmer: ({ lightList = [] }) => {
       const dimmerValue = lightList[0]?.dimmer
-      if (dimmerValue === null) {
+      if (dimmerValue === null || dimmerValue === undefined) {
         return dimmerValue
       }
       return lightList[0]?.onOff ? dimmerValue : 0
