@@ -2,6 +2,7 @@ import React from 'react'
 import { Switch, Typography } from 'antd'
 import { useMutation } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
+import delay from 'delay'
 import {
   AccessoryOnOffMutation,
   AccessoryOnOffMutationVariables,
@@ -12,6 +13,8 @@ type Props = {
   name: string
   onOff: boolean
   refetch: () => Promise<any>
+  isLoading: boolean
+  onLoadingChange: (isLoading: boolean) => void
 }
 
 const Plug = (props: Props) => {
@@ -31,11 +34,15 @@ const Plug = (props: Props) => {
       <Switch
         size="small"
         checked={props.onOff ?? false}
+        loading={props.isLoading}
         onChange={async (newValue) => {
+          props.onLoadingChange(true)
           await accessoryOnOff({
             variables: { id: props.id, onOff: newValue },
           })
-          setTimeout(() => props.refetch(), 500)
+          await delay(500)
+          await props.refetch()
+          props.onLoadingChange(false)
         }}
       />
     </>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Slider, Typography } from 'antd'
 import { useMutation } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
+import delay from 'delay'
 import {
   AccessoryDimmerMutation,
   AccessoryDimmerMutationVariables,
@@ -12,6 +13,8 @@ type Props = {
   name: string
   dimmer: number
   refetch: () => Promise<any>
+  isLoading: boolean
+  onLoadingChange: (isLoading: boolean) => void
 }
 
 const Lightbulb = (props: Props) => {
@@ -37,12 +40,16 @@ const Lightbulb = (props: Props) => {
         min={0}
         max={100}
         value={value}
+        disabled={props.isLoading}
         onChange={(newValue) => setValue(newValue as number)}
         onAfterChange={async (newValue) => {
+          props.onLoadingChange(true)
           await accessoryDimmer({
             variables: { id: props.id, dimmer: newValue as number },
           })
-          setTimeout(() => props.refetch(), 3000)
+          await delay(3000)
+          await props.refetch()
+          props.onLoadingChange(false)
         }}
       />
     </>

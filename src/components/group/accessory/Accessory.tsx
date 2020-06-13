@@ -15,6 +15,8 @@ export type AccessoryProps = {
 
 type Props = AccessoryProps & {
   refetch: () => Promise<any>
+  isLoading: boolean
+  onLoadingChange: (isLoading: boolean) => void
 }
 
 const Accessory = (props: Props) => {
@@ -29,6 +31,8 @@ const Accessory = (props: Props) => {
           name={props.name}
           dimmer={props.dimmer ?? 0}
           refetch={props.refetch}
+          isLoading={props.isLoading}
+          onLoadingChange={props.onLoadingChange}
         />
       )
     case AccessoryType.Plug:
@@ -38,6 +42,8 @@ const Accessory = (props: Props) => {
           name={props.name}
           onOff={props.onOff ?? false}
           refetch={props.refetch}
+          isLoading={props.isLoading}
+          onLoadingChange={props.onLoadingChange}
         />
       )
   }

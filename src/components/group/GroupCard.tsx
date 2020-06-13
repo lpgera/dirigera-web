@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Card, Col, Collapse, Divider, Row, Slider, Switch } from 'antd'
 import { useMutation } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
+import delay from 'delay'
 import Accessory, { AccessoryProps } from './accessory/Accessory'
 import {
   GroupDimmerMutation,
@@ -30,6 +31,7 @@ const calculateGroupOnOff = (accessories: AccessoryProps[]) =>
   accessories.some((a) => a.onOff)
 
 const GroupCard = (props: Props) => {
+  const [isLoading, setIsLoading] = useState(false)
   const [dimmerState, setDimmerState] = useState(0)
   const [onOffState, setOnOffState] = useState(false)
   useEffect(() => {
@@ -63,11 +65,15 @@ const GroupCard = (props: Props) => {
           <Switch
             size="small"
             checked={onOffState}
+            loading={isLoading}
             onChange={async (newValue) => {
+              setIsLoading(true)
               await groupOnOff({
                 variables: { id: props.id, onOff: newValue },
               })
-              setTimeout(() => props.refetch(), 500)
+              await delay(500)
+              await props.refetch()
+              setIsLoading(false)
             }}
           />
         </Col>
@@ -77,12 +83,16 @@ const GroupCard = (props: Props) => {
             min={0}
             max={100}
             value={dimmerState}
+            disabled={isLoading}
             onChange={(newValue) => setDimmerState(newValue as number)}
             onAfterChange={async (newValue) => {
+              setIsLoading(true)
               await groupDimmer({
                 variables: { id: props.id, dimmer: newValue as number },
               })
-              setTimeout(() => props.refetch(), 3000)
+              await delay(3000)
+              await props.refetch()
+              setIsLoading(false)
             }}
           />
         </Col>
@@ -91,7 +101,12 @@ const GroupCard = (props: Props) => {
         <Collapse.Panel header="Devices" key="1">
           {props.accessories.map((accessory, index, array) => (
             <React.Fragment key={accessory.id}>
-              <Accessory {...accessory} refetch={props.refetch} />
+              <Accessory
+                {...accessory}
+                isLoading={isLoading}
+                refetch={props.refetch}
+                onLoadingChange={(isLoading) => setIsLoading(isLoading)}
+              />
               {index !== array.length - 1 ? <Divider /> : null}
             </React.Fragment>
           ))}
