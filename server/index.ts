@@ -3,7 +3,7 @@ import express from 'express'
 import path from 'path'
 import tsEnv from '@lpgera/ts-env'
 import server from './graphql/server'
-import * as tradfriClient from './tradfri-client'
+import * as tradfriClient from './tradfri/client'
 
 dotenv.config()
 
