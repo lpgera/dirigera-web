@@ -1,4 +1,4 @@
-schema: http://localhost:${PORT}/graphql
+schema: http://localhost:${REACT_APP_SERVER_PORT}/graphql
 overwrite: true
 generates:
   ./src/graphql.types.ts:

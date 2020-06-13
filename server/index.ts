@@ -8,7 +8,7 @@ dotenv.config()
 async function start() {
   const client = await tradfriClient.connect()
   const { url } = await server(client).listen({
-    port: tsEnv.numberOrThrow('PORT'),
+    port: tsEnv.numberOrThrow('REACT_APP_SERVER_PORT'),
   })
   console.log(`Server is listening on ${url}`)
 }

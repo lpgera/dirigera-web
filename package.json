@@ -2,6 +2,7 @@
   "name": "tradfri-web-ui",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "@apollo/react-hooks": "^3.1.5",
     "@lpgera/ts-env": "^1.1.0",

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Card, Col, Collapse, Divider, Row, Slider, Switch } from 'antd'
 import { useMutation } from '@apollo/react-hooks'
 import { gql } from 'apollo-boost'
-import Accessory, { AccessoryProps } from './Accessory'
+import Accessory, { AccessoryProps } from './accessory/Accessory'
 import {
   GroupDimmerMutation,
   GroupDimmerMutationVariables,

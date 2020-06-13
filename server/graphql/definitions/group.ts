@@ -31,9 +31,13 @@ export const resolvers: Resolvers = {
   Mutation: {
     groupOnOff: async (_, { id, onOff }, { tradfriClient }) => {
       const { group } = tradfriClient.groups[id]
-      await tradfriClient.operateGroup(group, {
-        onOff,
-      })
+      await tradfriClient.operateGroup(
+        group,
+        {
+          onOff,
+        },
+        true
+      )
       return null
     },
     groupDimmer: async (_, { id, dimmer }, { tradfriClient }) => {

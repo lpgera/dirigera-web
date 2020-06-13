@@ -3,7 +3,10 @@ import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from '@apollo/react-hooks'
 
 const client = new ApolloClient({
-  uri: 'http://localhost:5678/grapqhl',
+  uri:
+    process.env.NODE_ENV === 'development'
+      ? `http://localhost:${process.env.REACT_APP_SERVER_PORT}/graphql`
+      : 'graphql',
 })
 
 const Provider: React.FC = (props) => {
