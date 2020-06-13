@@ -27,8 +27,8 @@ const Groups = () => {
 
   return (
     <Row gutter={[16, 16]}>
-      {groups.map((group, index) => (
-        <Col key={index} xs={24} sm={12} md={8} lg={6}>
+      {groups.map((group) => (
+        <Col key={group.id} xs={24} sm={12} md={8} lg={6}>
           <GroupCard {...group} refetch={refetch} />
         </Col>
       ))}

@@ -90,10 +90,10 @@ const GroupCard = (props: Props) => {
       <Collapse style={{ marginTop: '32px' }}>
         <Collapse.Panel header="Devices" key="1">
           {props.accessories.map((accessory, index, array) => (
-            <>
+            <React.Fragment key={accessory.id}>
               <Accessory {...accessory} refetch={props.refetch} />
               {index !== array.length - 1 ? <Divider /> : null}
-            </>
+            </React.Fragment>
           ))}
         </Collapse.Panel>
       </Collapse>

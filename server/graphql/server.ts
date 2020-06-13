@@ -1,4 +1,4 @@
-import { ApolloServer } from 'apollo-server'
+import { ApolloServer } from 'apollo-server-express'
 import { gql } from 'apollo-server'
 import * as group from './definitions/group'
 import * as accessory from './definitions/accessory'
