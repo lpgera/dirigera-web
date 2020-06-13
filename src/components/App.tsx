@@ -2,7 +2,7 @@ import React from 'react'
 import { Layout, Typography } from 'antd'
 import { BsFillHouseFill } from 'react-icons/bs'
 import 'antd/dist/antd.css'
-import ApolloProvider from '../ApolloProvider'
+import ApolloProvider from './ApolloProvider'
 import Groups from './group/Groups'
 
 function App() {
