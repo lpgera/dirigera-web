@@ -38,7 +38,7 @@ const client = (authContext: AuthContextType) =>
             : 'graphql',
         credentials: 'same-origin',
         headers: {
-          'x-token': window.localStorage.getItem('token'),
+          'x-token': authContext.state.token,
         },
       }),
     ]),

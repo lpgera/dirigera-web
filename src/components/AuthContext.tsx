@@ -1,5 +1,7 @@
 import React, { createContext, useReducer } from 'react'
 
+const LOCAL_STORAGE_KEY = 'tradfri-web-ui-token'
+
 type AuthState = {
   token: string | null
 }
@@ -19,7 +21,7 @@ export type AuthContextType = {
 }
 
 const initialState = {
-  token: window.localStorage.getItem('token'),
+  token: window.localStorage.getItem(LOCAL_STORAGE_KEY),
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -32,13 +34,13 @@ const AuthProvider: React.FC = ({ children }) => {
     (state: AuthState, action: AuthAction) => {
       switch (action.type) {
         case 'login':
-          window.localStorage.setItem('token', action.token)
+          window.localStorage.setItem(LOCAL_STORAGE_KEY, action.token)
           return {
             ...state,
             token: action.token,
           }
         case 'logout':
-          window.localStorage.removeItem('token')
+          window.localStorage.removeItem(LOCAL_STORAGE_KEY)
           return {
             ...state,
             token: null,

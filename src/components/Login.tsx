@@ -1,9 +1,10 @@
 import React, { useContext } from 'react'
-import { Button, Col, Form, Input, Result, Row } from 'antd'
+import { Button, Col, Form, Input, Result, Row, Tooltip } from 'antd'
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import { AuthContext } from './AuthContext'
 import { LoginMutation, LoginMutationVariables } from './Login.types.gen'
+import { IoMdLogIn } from 'react-icons/io'
 
 const Login = () => {
   const { dispatch } = useContext(AuthContext)
@@ -41,9 +42,21 @@ const Login = () => {
                 <Input.Password placeholder="Enter password" />
               </Form.Item>
               <Form.Item>
-                <Button type="primary" htmlType="submit">
-                  Login
-                </Button>
+                <Tooltip title="Login">
+                  <Button
+                    shape="circle"
+                    type="primary"
+                    htmlType="submit"
+                    icon={
+                      <IoMdLogIn
+                        size="1.1em"
+                        style={{
+                          verticalAlign: 'text-bottom',
+                        }}
+                      />
+                    }
+                  />
+                </Tooltip>
               </Form.Item>
             </Form>
           </Col>
