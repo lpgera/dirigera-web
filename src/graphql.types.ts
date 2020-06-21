@@ -22,8 +22,10 @@ export type Mutation = {
   login?: Maybe<Scalars['String']>
   accessoryOnOff?: Maybe<Scalars['String']>
   accessoryDimmer?: Maybe<Scalars['String']>
+  accessoryColorTemperature?: Maybe<Scalars['String']>
   groupOnOff?: Maybe<Scalars['String']>
   groupDimmer?: Maybe<Scalars['String']>
+  groupColorTemperature?: Maybe<Scalars['String']>
 }
 
 export type MutationLoginArgs = {
@@ -40,6 +42,11 @@ export type MutationAccessoryDimmerArgs = {
   dimmer: Scalars['Float']
 }
 
+export type MutationAccessoryColorTemperatureArgs = {
+  id: Scalars['Int']
+  colorTemperature: Scalars['Float']
+}
+
 export type MutationGroupOnOffArgs = {
   id: Scalars['Int']
   onOff: Scalars['Boolean']
@@ -48,6 +55,11 @@ export type MutationGroupOnOffArgs = {
 export type MutationGroupDimmerArgs = {
   id: Scalars['Int']
   dimmer: Scalars['Float']
+}
+
+export type MutationGroupColorTemperatureArgs = {
+  id: Scalars['Int']
+  colorTemperature: Scalars['Float']
 }
 
 export enum AccessoryType {
@@ -70,6 +82,7 @@ export type Accessory = {
   battery?: Maybe<Scalars['Int']>
   onOff?: Maybe<Scalars['Boolean']>
   dimmer?: Maybe<Scalars['Float']>
+  colorTemperature?: Maybe<Scalars['Float']>
 }
 
 export type Group = {

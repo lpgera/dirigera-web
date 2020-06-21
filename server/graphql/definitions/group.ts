@@ -1,5 +1,6 @@
 import { gql } from 'apollo-server'
 import { Resolvers } from '../resolvers.gen'
+import { AccessoryTypes } from 'node-tradfri-client'
 
 export const typeDefs = gql`
   type Group {
@@ -14,6 +15,7 @@ export const typeDefs = gql`
   extend type Mutation {
     groupOnOff(id: Int!, onOff: Boolean!): String @loggedIn
     groupDimmer(id: Int!, dimmer: Float!): String @loggedIn
+    groupColorTemperature(id: Int!, colorTemperature: Float!): String @loggedIn
   }
 `
 
@@ -47,6 +49,26 @@ export const resolvers: Resolvers = {
         transitionTime: dimmer > 0 ? 2 : undefined,
         onOff: dimmer > 0,
       })
+      return null
+    },
+    groupColorTemperature: async (
+      _,
+      { id, colorTemperature },
+      { tradfriClient }
+    ) => {
+      const {
+        group: { deviceIDs },
+      } = tradfriClient.groups[id]
+      await Promise.all(
+        deviceIDs.map(async (deviceID) => {
+          const device = tradfriClient.devices[deviceID]
+          if (device.type === AccessoryTypes.lightbulb) {
+            await tradfriClient.operateLight(device, {
+              colorTemperature,
+            })
+          }
+        })
+      )
       return null
     },
   },

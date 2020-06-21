@@ -1,5 +1,8 @@
 schema: http://localhost:${REACT_APP_SERVER_PORT}/graphql
 overwrite: true
+hooks:
+  afterAllFileWrite:
+    - prettier --write
 generates:
   ./src/graphql.types.ts:
     plugins:

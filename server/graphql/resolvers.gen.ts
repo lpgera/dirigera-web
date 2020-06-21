@@ -35,8 +35,10 @@ export type Mutation = {
   login?: Maybe<Scalars['String']>
   accessoryOnOff?: Maybe<Scalars['String']>
   accessoryDimmer?: Maybe<Scalars['String']>
+  accessoryColorTemperature?: Maybe<Scalars['String']>
   groupOnOff?: Maybe<Scalars['String']>
   groupDimmer?: Maybe<Scalars['String']>
+  groupColorTemperature?: Maybe<Scalars['String']>
 }
 
 export type MutationLoginArgs = {
@@ -53,6 +55,11 @@ export type MutationAccessoryDimmerArgs = {
   dimmer: Scalars['Float']
 }
 
+export type MutationAccessoryColorTemperatureArgs = {
+  id: Scalars['Int']
+  colorTemperature: Scalars['Float']
+}
+
 export type MutationGroupOnOffArgs = {
   id: Scalars['Int']
   onOff: Scalars['Boolean']
@@ -61,6 +68,11 @@ export type MutationGroupOnOffArgs = {
 export type MutationGroupDimmerArgs = {
   id: Scalars['Int']
   dimmer: Scalars['Float']
+}
+
+export type MutationGroupColorTemperatureArgs = {
+  id: Scalars['Int']
+  colorTemperature: Scalars['Float']
 }
 
 export enum AccessoryType {
@@ -83,6 +95,7 @@ export type Accessory = {
   battery?: Maybe<Scalars['Int']>
   onOff?: Maybe<Scalars['Boolean']>
   dimmer?: Maybe<Scalars['Float']>
+  colorTemperature?: Maybe<Scalars['Float']>
 }
 
 export type Group = {
@@ -274,6 +287,15 @@ export type MutationResolvers<
     ContextType,
     RequireFields<MutationAccessoryDimmerArgs, 'id' | 'dimmer'>
   >
+  accessoryColorTemperature?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      MutationAccessoryColorTemperatureArgs,
+      'id' | 'colorTemperature'
+    >
+  >
   groupOnOff?: Resolver<
     Maybe<ResolversTypes['String']>,
     ParentType,
@@ -285,6 +307,12 @@ export type MutationResolvers<
     ParentType,
     ContextType,
     RequireFields<MutationGroupDimmerArgs, 'id' | 'dimmer'>
+  >
+  groupColorTemperature?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationGroupColorTemperatureArgs, 'id' | 'colorTemperature'>
   >
 }>
 
@@ -299,6 +327,11 @@ export type AccessoryResolvers<
   battery?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
   onOff?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>
   dimmer?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>
+  colorTemperature?: Resolver<
+    Maybe<ResolversTypes['Float']>,
+    ParentType,
+    ContextType
+  >
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }>
 
