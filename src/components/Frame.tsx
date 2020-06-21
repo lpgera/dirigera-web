@@ -12,7 +12,7 @@ const Frame = () => {
     <Layout style={{ minHeight: '100vh' }}>
       <Layout.Content style={{ margin: '16px' }}>
         <Typography.Title>
-          <Row gutter={[16, 16]}>
+          <Row gutter={[8, 8]}>
             <Col flex="0">
               <BsFillHouseFill
                 size="1.1em"

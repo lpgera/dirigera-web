@@ -39,7 +39,10 @@ const Login = () => {
               onFinish={(values) => loginAndDispatch(values)}
             >
               <Form.Item name="password">
-                <Input.Password placeholder="Enter password" />
+                <Input.Password
+                  placeholder="Enter password"
+                  style={{ width: '200px' }}
+                />
               </Form.Item>
               <Form.Item>
                 <Tooltip title="Login">

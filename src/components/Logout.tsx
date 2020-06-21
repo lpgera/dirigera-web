@@ -17,6 +17,9 @@ const Logout = () => {
         onClick={() => {
           dispatch({ type: 'logout' })
         }}
+        style={{
+          verticalAlign: 'middle',
+        }}
         icon={
           <IoMdLogOut
             size="1.1em"
