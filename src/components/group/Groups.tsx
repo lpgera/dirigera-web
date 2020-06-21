@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, Col, Result, Row, Skeleton } from 'antd'
 import { useQuery } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
+import gql from 'graphql-tag'
 import GroupCard from './GroupCard'
 import { GroupsQuery } from './Groups.types.gen'
 
@@ -35,13 +35,13 @@ const Groups = () => {
   return (
     <Row gutter={[16, 16]}>
       {loading ? (
-        <Col key={'loading'} {...columnSizes}>
+        <Col key="loading" {...columnSizes}>
           <Card>
             <Skeleton active={true} />
           </Card>
         </Col>
       ) : error ? (
-        <Col xs={24}>
+        <Col span={24}>
           <Result status="error" title="Error" subTitle={error.message} />
         </Col>
       ) : (

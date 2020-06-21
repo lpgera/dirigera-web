@@ -19,10 +19,15 @@ export type Query = {
 export type Mutation = {
   __typename?: 'Mutation'
   _?: Maybe<Scalars['String']>
+  login?: Maybe<Scalars['String']>
   accessoryOnOff?: Maybe<Scalars['String']>
   accessoryDimmer?: Maybe<Scalars['String']>
   groupOnOff?: Maybe<Scalars['String']>
   groupDimmer?: Maybe<Scalars['String']>
+}
+
+export type MutationLoginArgs = {
+  password: Scalars['String']
 }
 
 export type MutationAccessoryOnOffArgs = {

@@ -29,8 +29,8 @@ export const typeDefs = gql`
   }
 
   extend type Mutation {
-    accessoryOnOff(id: Int!, onOff: Boolean!): String
-    accessoryDimmer(id: Int!, dimmer: Float!): String
+    accessoryOnOff(id: Int!, onOff: Boolean!): String @loggedIn
+    accessoryDimmer(id: Int!, dimmer: Float!): String @loggedIn
   }
 `
 

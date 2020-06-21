@@ -10,8 +10,8 @@ type Props = {
 const BatteryAccessory = (props: Props) => {
   return (
     <Row>
-      <Col flex={'auto'}>{props.name}</Col>
-      <Col flex={'50px'}>
+      <Col flex="auto">{props.name}</Col>
+      <Col flex="0">
         <BsBatteryFull style={{ verticalAlign: 'middle' }} /> {props.battery}%
       </Col>
     </Row>

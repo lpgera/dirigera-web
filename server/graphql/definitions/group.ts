@@ -8,12 +8,12 @@ export const typeDefs = gql`
   }
 
   extend type Query {
-    groups: [Group!]!
+    groups: [Group!]! @loggedIn
   }
 
   extend type Mutation {
-    groupOnOff(id: Int!, onOff: Boolean!): String
-    groupDimmer(id: Int!, dimmer: Float!): String
+    groupOnOff(id: Int!, onOff: Boolean!): String @loggedIn
+    groupDimmer(id: Int!, dimmer: Float!): String @loggedIn
   }
 `
 

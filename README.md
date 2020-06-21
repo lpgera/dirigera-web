@@ -14,6 +14,8 @@ A React and GraphQL based progressive web app for connecting to a Tradfri gatewa
    IDENTITY=<identity>
    PSK=<psk>
    REACT_APP_SERVER_PORT=8080
+   JWT_SECRET=<long_random_string>
+   PASSWORD=<your_strong_password>
    ```
 
 4. Build the frontend: `npm run build`

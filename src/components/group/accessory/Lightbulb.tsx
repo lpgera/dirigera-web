@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Slider, Typography } from 'antd'
 import { useMutation } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
+import gql from 'graphql-tag'
 import delay from 'delay'
 import {
   AccessoryDimmerMutation,
