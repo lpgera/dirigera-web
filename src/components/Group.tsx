@@ -3,7 +3,7 @@ import { Card, Col, Collapse, Divider, Row, Slider, Switch } from 'antd'
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import delay from 'delay'
-import Accessory, { AccessoryProps } from './accessory/Accessory'
+import Accessory, { AccessoryProps } from './Accessory'
 import {
   GroupColorTemperatureMutation,
   GroupColorTemperatureMutationVariables,
@@ -11,8 +11,8 @@ import {
   GroupDimmerMutationVariables,
   GroupOnOffMutation,
   GroupOnOffMutationVariables,
-} from './GroupCard.types.gen'
-import ColorTemperature from '../ColorTemperature'
+} from './Group.types.gen'
+import ColorTemperature from './ColorTemperature'
 
 type Props = {
   id: number
@@ -52,7 +52,7 @@ const calculateGroupColorTemperature = (accessories: AccessoryProps[]) => {
   return null
 }
 
-const GroupCard = ({ accessories, id, name, refetch }: Props) => {
+const Group = ({ accessories, id, name, refetch }: Props) => {
   const [isLoading, setIsLoading] = useState(false)
   const [dimmer, setDimmer] = useState<number | null>(null)
   const [onOff, setOnOff] = useState(false)
@@ -167,4 +167,4 @@ const GroupCard = ({ accessories, id, name, refetch }: Props) => {
   )
 }
 
-export default GroupCard
+export default Group

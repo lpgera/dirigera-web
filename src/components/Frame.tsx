@@ -1,6 +1,6 @@
 import { Col, Layout, Row, Typography } from 'antd'
 import { BsFillHouseFill } from 'react-icons/bs'
-import Groups from './group/Groups'
+import Groups from './Groups'
 import React, { useContext } from 'react'
 import { AuthContext } from './AuthContext'
 import Login from './Login'

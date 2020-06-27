@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Card, Col, Result, Row, Skeleton } from 'antd'
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
-import GroupCard from './GroupCard'
+import Group from './Group'
 import { GroupsQuery } from './Groups.types.gen'
 
 const columnSizes = {
@@ -63,7 +63,7 @@ const Groups = () => {
       ) : (
         groups.map((group) => (
           <Col key={group.id} {...columnSizes}>
-            <GroupCard {...group} refetch={refetch} />
+            <Group {...group} refetch={refetch} />
           </Col>
         ))
       )}

@@ -1,4 +1,4 @@
-import * as Types from '../../graphql.types'
+import * as Types from '../graphql.types'
 
 export type Exact<T extends { [key: string]: any }> = { [K in keyof T]: T[K] }
 
