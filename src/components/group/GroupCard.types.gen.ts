@@ -21,3 +21,13 @@ export type GroupDimmerMutation = { __typename?: 'Mutation' } & Pick<
   Types.Mutation,
   'groupDimmer'
 >
+
+export type GroupColorTemperatureMutationVariables = Exact<{
+  id: Types.Scalars['Int']
+  colorTemperature: Types.Scalars['Float']
+}>
+
+export type GroupColorTemperatureMutation = { __typename?: 'Mutation' } & Pick<
+  Types.Mutation,
+  'groupColorTemperature'
+>

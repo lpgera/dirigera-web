@@ -44,7 +44,7 @@ const Groups = () => {
     return () => {
       window.removeEventListener('visibilitychange', listener)
     }
-  }, [])
+  }, [refetch])
 
   const groups = data?.groups ?? []
 

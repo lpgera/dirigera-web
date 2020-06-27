@@ -1,10 +1,23 @@
 import React, { useEffect, useState } from 'react'
-import { Card, Col, Collapse, Divider, Row, Slider, Switch } from 'antd'
+import {
+  Button,
+  Card,
+  Col,
+  Collapse,
+  Divider,
+  Popover,
+  Row,
+  Slider,
+  Switch,
+} from 'antd'
+import { MdColorLens } from 'react-icons/all'
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import delay from 'delay'
 import Accessory, { AccessoryProps } from './accessory/Accessory'
 import {
+  GroupColorTemperatureMutation,
+  GroupColorTemperatureMutationVariables,
   GroupDimmerMutation,
   GroupDimmerMutationVariables,
   GroupOnOffMutation,
@@ -30,13 +43,28 @@ const calculateGroupDimmer = (accessories: AccessoryProps[]) => {
 const calculateGroupOnOff = (accessories: AccessoryProps[]) =>
   accessories.some((a) => a.onOff)
 
+const calculateGroupColorTemperature = (accessories: AccessoryProps[]) => {
+  const colorTemperatures = accessories
+    .map((a) => a.colorTemperature)
+    .filter((ct) => ct != null) as number[]
+
+  const sum = colorTemperatures.reduce((a, b) => a + b, 0)
+
+  if (colorTemperatures.length) {
+    return sum / colorTemperatures.length
+  }
+  return 0
+}
+
 const GroupCard = ({ accessories, id, name, refetch }: Props) => {
   const [isLoading, setIsLoading] = useState(false)
-  const [dimmerState, setDimmerState] = useState(0)
-  const [onOffState, setOnOffState] = useState(false)
+  const [dimmer, setDimmer] = useState(0)
+  const [onOff, setOnOff] = useState(false)
+  const [colorTemperature, setColorTemperature] = useState(0)
   useEffect(() => {
-    setDimmerState(calculateGroupDimmer(accessories))
-    setOnOffState(calculateGroupOnOff(accessories))
+    setDimmer(calculateGroupDimmer(accessories))
+    setOnOff(calculateGroupOnOff(accessories))
+    setColorTemperature(calculateGroupColorTemperature(accessories))
   }, [accessories])
 
   const [groupOnOff] = useMutation<
@@ -57,14 +85,22 @@ const GroupCard = ({ accessories, id, name, refetch }: Props) => {
       groupDimmer(id: $id, dimmer: $dimmer)
     }
   `)
+  const [groupColorTemperature] = useMutation<
+    GroupColorTemperatureMutation,
+    GroupColorTemperatureMutationVariables
+  >(gql`
+    mutation GroupColorTemperature($id: Int!, $colorTemperature: Float!) {
+      groupColorTemperature(id: $id, colorTemperature: $colorTemperature)
+    }
+  `)
 
   return (
     <Card title={name}>
-      <Row align="middle">
-        <Col flex="50px">
+      <Row align="middle" gutter={[8, 8]}>
+        <Col flex="0">
           <Switch
             size="small"
-            checked={onOffState}
+            checked={onOff}
             loading={isLoading}
             onChange={async (newValue) => {
               setIsLoading(true)
@@ -82,9 +118,9 @@ const GroupCard = ({ accessories, id, name, refetch }: Props) => {
             style={{ marginTop: '12px' }}
             min={0}
             max={100}
-            value={dimmerState}
+            value={dimmer}
             disabled={isLoading}
-            onChange={(newValue) => setDimmerState(newValue as number)}
+            onChange={(newValue) => setDimmer(newValue as number)}
             onAfterChange={async (newValue) => {
               setIsLoading(true)
               await groupDimmer({
@@ -95,6 +131,37 @@ const GroupCard = ({ accessories, id, name, refetch }: Props) => {
               setIsLoading(false)
             }}
           />
+        </Col>
+        <Col flex="0">
+          <Popover
+            content={
+              <Slider
+                defaultValue={colorTemperature}
+                marks={{
+                  0: 'Cold',
+                  100: 'Warm',
+                }}
+                step={10}
+                onAfterChange={async (value) => {
+                  await groupColorTemperature({
+                    variables: {
+                      id,
+                      colorTemperature: value as number,
+                    },
+                  })
+                }}
+              />
+            }
+            title="Color temperature"
+            trigger="click"
+          >
+            <Button shape="circle">
+              <MdColorLens
+                size="1.1em"
+                style={{ verticalAlign: 'text-bottom' }}
+              />
+            </Button>
+          </Popover>
         </Col>
       </Row>
       <Collapse style={{ marginTop: '32px' }}>
