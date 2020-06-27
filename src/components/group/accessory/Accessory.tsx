@@ -8,9 +8,11 @@ export type AccessoryProps = {
   id: number
   name: string
   type: AccessoryType
+  alive: boolean
   dimmer?: number | null
   onOff?: boolean | null
   battery?: number | null
+  colorTemperature?: number | null
 }
 
 type Props = AccessoryProps & {
@@ -19,31 +21,46 @@ type Props = AccessoryProps & {
   onLoadingChange: (isLoading: boolean) => void
 }
 
-const Accessory = (props: Props) => {
-  switch (props.type) {
+const Accessory = ({
+  alive,
+  battery,
+  colorTemperature,
+  dimmer,
+  id,
+  isLoading,
+  name,
+  onLoadingChange,
+  onOff,
+  refetch,
+  type,
+}: Props) => {
+  switch (type) {
     case AccessoryType.Remote:
     case AccessoryType.MotionSensor:
-      return <BatteryAccessory name={props.name} battery={props.battery ?? 0} />
+      return <BatteryAccessory name={name} battery={battery ?? 0} />
     case AccessoryType.Lightbulb:
       return (
         <Lightbulb
-          id={props.id}
-          name={props.name}
-          dimmer={props.dimmer ?? 0}
-          refetch={props.refetch}
-          isLoading={props.isLoading}
-          onLoadingChange={props.onLoadingChange}
+          id={id}
+          name={name}
+          alive={alive}
+          dimmer={dimmer ?? 0}
+          colorTemperature={colorTemperature ?? 0}
+          refetch={refetch}
+          isLoading={isLoading}
+          onLoadingChange={onLoadingChange}
         />
       )
     case AccessoryType.Plug:
       return (
         <Plug
-          id={props.id}
-          name={props.name}
-          onOff={props.onOff ?? false}
-          refetch={props.refetch}
-          isLoading={props.isLoading}
-          onLoadingChange={props.onLoadingChange}
+          id={id}
+          name={name}
+          alive={alive}
+          onOff={onOff ?? false}
+          refetch={refetch}
+          isLoading={isLoading}
+          onLoadingChange={onLoadingChange}
         />
       )
   }

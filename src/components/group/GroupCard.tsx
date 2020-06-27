@@ -30,14 +30,14 @@ const calculateGroupDimmer = (accessories: AccessoryProps[]) => {
 const calculateGroupOnOff = (accessories: AccessoryProps[]) =>
   accessories.some((a) => a.onOff)
 
-const GroupCard = (props: Props) => {
+const GroupCard = ({ accessories, id, name, refetch }: Props) => {
   const [isLoading, setIsLoading] = useState(false)
   const [dimmerState, setDimmerState] = useState(0)
   const [onOffState, setOnOffState] = useState(false)
   useEffect(() => {
-    setDimmerState(calculateGroupDimmer(props.accessories))
-    setOnOffState(calculateGroupOnOff(props.accessories))
-  }, [props.accessories])
+    setDimmerState(calculateGroupDimmer(accessories))
+    setOnOffState(calculateGroupOnOff(accessories))
+  }, [accessories])
 
   const [groupOnOff] = useMutation<
     GroupOnOffMutation,
@@ -59,7 +59,7 @@ const GroupCard = (props: Props) => {
   `)
 
   return (
-    <Card title={props.name}>
+    <Card title={name}>
       <Row align="middle">
         <Col flex="50px">
           <Switch
@@ -69,10 +69,10 @@ const GroupCard = (props: Props) => {
             onChange={async (newValue) => {
               setIsLoading(true)
               await groupOnOff({
-                variables: { id: props.id, onOff: newValue },
+                variables: { id, onOff: newValue },
               })
               await delay(500)
-              await props.refetch()
+              await refetch()
               setIsLoading(false)
             }}
           />
@@ -88,10 +88,10 @@ const GroupCard = (props: Props) => {
             onAfterChange={async (newValue) => {
               setIsLoading(true)
               await groupDimmer({
-                variables: { id: props.id, dimmer: newValue as number },
+                variables: { id, dimmer: newValue as number },
               })
               await delay(3000)
-              await props.refetch()
+              await refetch()
               setIsLoading(false)
             }}
           />
@@ -99,12 +99,12 @@ const GroupCard = (props: Props) => {
       </Row>
       <Collapse style={{ marginTop: '32px' }}>
         <Collapse.Panel header="Devices" key="1">
-          {props.accessories.map((accessory, index, array) => (
+          {accessories.map((accessory, index, array) => (
             <React.Fragment key={accessory.id}>
               <Accessory
                 {...accessory}
                 isLoading={isLoading}
-                refetch={props.refetch}
+                refetch={refetch}
                 onLoadingChange={(isLoading) => setIsLoading(isLoading)}
               />
               {index !== array.length - 1 ? <Divider /> : null}

@@ -11,13 +11,22 @@ import {
 type Props = {
   id: number
   name: string
+  alive: boolean
   onOff: boolean
   refetch: () => Promise<any>
   isLoading: boolean
   onLoadingChange: (isLoading: boolean) => void
 }
 
-const Plug = (props: Props) => {
+const Plug = ({
+  alive,
+  id,
+  isLoading,
+  name,
+  onLoadingChange,
+  onOff,
+  refetch,
+}: Props) => {
   const [accessoryOnOff] = useMutation<
     AccessoryOnOffMutation,
     AccessoryOnOffMutationVariables
@@ -28,21 +37,23 @@ const Plug = (props: Props) => {
       }
     `
   )
+
   return (
     <>
-      <Typography.Paragraph>{props.name}</Typography.Paragraph>
+      <Typography.Paragraph>{name}</Typography.Paragraph>
       <Switch
         size="small"
-        checked={props.onOff ?? false}
-        loading={props.isLoading}
+        checked={onOff ?? false}
+        loading={isLoading}
+        disabled={!alive}
         onChange={async (newValue) => {
-          props.onLoadingChange(true)
+          onLoadingChange(true)
           await accessoryOnOff({
-            variables: { id: props.id, onOff: newValue },
+            variables: { id, onOff: newValue },
           })
           await delay(500)
-          await props.refetch()
-          props.onLoadingChange(false)
+          await refetch()
+          onLoadingChange(false)
         }}
       />
     </>

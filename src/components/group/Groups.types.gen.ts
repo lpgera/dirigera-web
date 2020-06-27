@@ -8,7 +8,14 @@ export type GroupsQuery = { __typename?: 'Query' } & {
         accessories: Array<
           { __typename?: 'Accessory' } & Pick<
             Types.Accessory,
-            'id' | 'name' | 'type' | 'onOff' | 'dimmer' | 'battery'
+            | 'id'
+            | 'name'
+            | 'type'
+            | 'alive'
+            | 'onOff'
+            | 'dimmer'
+            | 'battery'
+            | 'colorTemperature'
           >
         >
       }

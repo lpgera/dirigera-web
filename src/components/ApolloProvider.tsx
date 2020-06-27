@@ -34,7 +34,7 @@ const client = (authContext: AuthContextType) =>
       new HttpLink({
         uri:
           process.env.NODE_ENV === 'development'
-            ? `http://localhost:${process.env.REACT_APP_SERVER_PORT}/graphql`
+            ? `http://${window.location.hostname}:${process.env.REACT_APP_SERVER_PORT}/graphql`
             : 'graphql',
         credentials: 'same-origin',
         headers: {
@@ -45,12 +45,10 @@ const client = (authContext: AuthContextType) =>
     cache: new InMemoryCache(),
   })
 
-const Provider: React.FC = (props) => {
+const Provider: React.FC = ({ children }) => {
   const authContext = useContext(AuthContext)
   return (
-    <ApolloProvider client={client(authContext)}>
-      {props.children}
-    </ApolloProvider>
+    <ApolloProvider client={client(authContext)}>{children}</ApolloProvider>
   )
 }
 

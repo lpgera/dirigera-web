@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Card, Col, Result, Row, Skeleton } from 'antd'
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
@@ -13,22 +13,38 @@ const columnSizes = {
 }
 
 const Groups = () => {
-  const { data, refetch, loading, error } = useQuery<GroupsQuery>(gql`
-    query Groups {
-      groups {
-        id
-        name
-        accessories {
+  const { data, refetch, loading, error } = useQuery<GroupsQuery>(
+    gql`
+      query Groups {
+        groups {
           id
           name
-          type
-          onOff
-          dimmer
-          battery
+          accessories {
+            id
+            name
+            type
+            alive
+            onOff
+            dimmer
+            battery
+            colorTemperature
+          }
         }
       }
+    `
+  )
+
+  useEffect(() => {
+    const listener = async () => {
+      if (!document.hidden) {
+        await refetch()
+      }
     }
-  `)
+    window.addEventListener('visibilitychange', listener)
+    return () => {
+      window.removeEventListener('visibilitychange', listener)
+    }
+  }, [])
 
   const groups = data?.groups ?? []
 

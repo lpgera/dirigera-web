@@ -7,12 +7,12 @@ type Props = {
   battery: number
 }
 
-const BatteryAccessory = (props: Props) => {
+const BatteryAccessory = ({ battery, name }: Props) => {
   return (
-    <Row>
-      <Col flex="auto">{props.name}</Col>
-      <Col flex="0">
-        <BsBatteryFull style={{ verticalAlign: 'middle' }} /> {props.battery}%
+    <Row gutter={[8, 8]}>
+      <Col flex="auto">{name}</Col>
+      <Col flex="60px">
+        <BsBatteryFull style={{ verticalAlign: 'middle' }} /> {battery}%
       </Col>
     </Row>
   )
