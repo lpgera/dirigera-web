@@ -22,12 +22,17 @@ type Props = {
 }
 
 const calculateGroupDimmer = (accessories: AccessoryProps[]) => {
-  const sum = accessories.reduce(
-    (accumulator, item) => accumulator + (item.dimmer ?? 0),
-    0
-  )
-  const count = accessories.filter((a) => a.dimmer !== null).length
-  return sum / count
+  const dimmers = accessories
+    .map((a) => a.dimmer)
+    .filter((d) => d != null) as number[]
+
+  const sum = dimmers.reduce((accumulator, dimmer) => accumulator + dimmer, 0)
+
+  if (dimmers.length) {
+    return sum / dimmers.length
+  }
+
+  return null
 }
 
 const calculateGroupOnOff = (accessories: AccessoryProps[]) =>
@@ -38,19 +43,20 @@ const calculateGroupColorTemperature = (accessories: AccessoryProps[]) => {
     .map((a) => a.colorTemperature)
     .filter((ct) => ct != null) as number[]
 
-  const sum = colorTemperatures.reduce((a, b) => a + b, 0)
+  const sum = colorTemperatures.reduce((accumulator, ct) => accumulator + ct, 0)
 
   if (colorTemperatures.length) {
     return sum / colorTemperatures.length
   }
-  return 0
+
+  return null
 }
 
 const GroupCard = ({ accessories, id, name, refetch }: Props) => {
   const [isLoading, setIsLoading] = useState(false)
-  const [dimmer, setDimmer] = useState(0)
+  const [dimmer, setDimmer] = useState<number | null>(null)
   const [onOff, setOnOff] = useState(false)
-  const [colorTemperature, setColorTemperature] = useState(0)
+  const [colorTemperature, setColorTemperature] = useState<number | null>(null)
   useEffect(() => {
     setDimmer(calculateGroupDimmer(accessories))
     setOnOff(calculateGroupOnOff(accessories))
@@ -103,40 +109,44 @@ const GroupCard = ({ accessories, id, name, refetch }: Props) => {
             }}
           />
         </Col>
-        <Col flex="auto">
-          <Slider
-            style={{ marginTop: '12px' }}
-            min={0}
-            max={100}
-            value={dimmer}
-            disabled={isLoading}
-            onChange={(newValue) => setDimmer(newValue as number)}
-            onAfterChange={async (newValue) => {
-              setIsLoading(true)
-              await groupDimmer({
-                variables: { id, dimmer: newValue as number },
-              })
-              await delay(3000)
-              await refetch()
-              setIsLoading(false)
-            }}
-          />
-        </Col>
-        <Col flex="0">
-          <ColorTemperature
-            colorTemperature={colorTemperature}
-            onAfterChange={async (value) => {
-              await groupColorTemperature({
-                variables: {
-                  id,
-                  colorTemperature: value as number,
-                },
-              })
-              await delay(3000)
-              await refetch()
-            }}
-          />
-        </Col>
+        {dimmer !== null ? (
+          <Col flex="auto">
+            <Slider
+              style={{ marginTop: '12px' }}
+              min={0}
+              max={100}
+              value={dimmer}
+              disabled={isLoading}
+              onChange={(newValue) => setDimmer(newValue as number)}
+              onAfterChange={async (newValue) => {
+                setIsLoading(true)
+                await groupDimmer({
+                  variables: { id, dimmer: newValue as number },
+                })
+                await delay(3000)
+                await refetch()
+                setIsLoading(false)
+              }}
+            />
+          </Col>
+        ) : null}
+        {colorTemperature !== null ? (
+          <Col flex="0">
+            <ColorTemperature
+              colorTemperature={colorTemperature}
+              onAfterChange={async (value) => {
+                await groupColorTemperature({
+                  variables: {
+                    id,
+                    colorTemperature: value as number,
+                  },
+                })
+                await delay(3000)
+                await refetch()
+              }}
+            />
+          </Col>
+        ) : null}
       </Row>
       <Collapse style={{ marginTop: '32px' }}>
         <Collapse.Panel header="Devices" key="1">
