@@ -1,16 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {
-  Button,
-  Card,
-  Col,
-  Collapse,
-  Divider,
-  Popover,
-  Row,
-  Slider,
-  Switch,
-} from 'antd'
-import { MdColorLens } from 'react-icons/all'
+import { Card, Col, Collapse, Divider, Row, Slider, Switch } from 'antd'
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import delay from 'delay'
@@ -23,6 +12,7 @@ import {
   GroupOnOffMutation,
   GroupOnOffMutationVariables,
 } from './GroupCard.types.gen'
+import ColorTemperature from '../ColorTemperature'
 
 type Props = {
   id: number
@@ -133,35 +123,19 @@ const GroupCard = ({ accessories, id, name, refetch }: Props) => {
           />
         </Col>
         <Col flex="0">
-          <Popover
-            content={
-              <Slider
-                defaultValue={colorTemperature}
-                marks={{
-                  0: 'Cold',
-                  100: 'Warm',
-                }}
-                step={10}
-                onAfterChange={async (value) => {
-                  await groupColorTemperature({
-                    variables: {
-                      id,
-                      colorTemperature: value as number,
-                    },
-                  })
-                }}
-              />
-            }
-            title="Color temperature"
-            trigger="click"
-          >
-            <Button shape="circle">
-              <MdColorLens
-                size="1.1em"
-                style={{ verticalAlign: 'text-bottom' }}
-              />
-            </Button>
-          </Popover>
+          <ColorTemperature
+            colorTemperature={colorTemperature}
+            onAfterChange={async (value) => {
+              await groupColorTemperature({
+                variables: {
+                  id,
+                  colorTemperature: value as number,
+                },
+              })
+              await delay(3000)
+              await refetch()
+            }}
+          />
         </Col>
       </Row>
       <Collapse style={{ marginTop: '32px' }}>

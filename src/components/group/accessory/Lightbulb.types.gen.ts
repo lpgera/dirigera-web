@@ -11,3 +11,12 @@ export type AccessoryDimmerMutation = { __typename?: 'Mutation' } & Pick<
   Types.Mutation,
   'accessoryDimmer'
 >
+
+export type AccessoryColorTemperatureMutationVariables = Exact<{
+  id: Types.Scalars['Int']
+  colorTemperature: Types.Scalars['Float']
+}>
+
+export type AccessoryColorTemperatureMutation = {
+  __typename?: 'Mutation'
+} & Pick<Types.Mutation, 'accessoryColorTemperature'>

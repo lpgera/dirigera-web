@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Col, Popover, Row, Slider, Typography } from 'antd'
-import { MdColorLens } from 'react-icons/all'
+import { Col, Row, Slider, Typography } from 'antd'
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import delay from 'delay'
 import {
+  AccessoryColorTemperatureMutation,
+  AccessoryColorTemperatureMutationVariables,
   AccessoryDimmerMutation,
   AccessoryDimmerMutationVariables,
 } from './Lightbulb.types.gen'
-import ColorTemperatureSlider from './ColorTemperatureSlider'
+import ColorTemperature from '../../ColorTemperature'
 
 type Props = {
   id: number
@@ -46,6 +47,15 @@ const Lightbulb = ({
     `
   )
 
+  const [accessoryColorTemperature] = useMutation<
+    AccessoryColorTemperatureMutation,
+    AccessoryColorTemperatureMutationVariables
+  >(gql`
+    mutation AccessoryColorTemperature($id: Int!, $colorTemperature: Float!) {
+      accessoryColorTemperature(id: $id, colorTemperature: $colorTemperature)
+    }
+  `)
+
   return (
     <Row align="bottom" gutter={[8, 8]}>
       <Col flex="auto">
@@ -68,23 +78,16 @@ const Lightbulb = ({
         />
       </Col>
       <Col flex="0">
-        <Popover
-          content={
-            <ColorTemperatureSlider
-              id={id}
-              colorTemperature={colorTemperature}
-            />
-          }
-          title="Color temperature"
-          trigger="click"
-        >
-          <Button shape="circle">
-            <MdColorLens
-              size="1.1em"
-              style={{ verticalAlign: 'text-bottom' }}
-            />
-          </Button>
-        </Popover>
+        <ColorTemperature
+          colorTemperature={colorTemperature}
+          onAfterChange={async (newValue) => {
+            await accessoryColorTemperature({
+              variables: { id, colorTemperature: newValue },
+            })
+            await delay(3000)
+            await refetch()
+          }}
+        />
       </Col>
     </Row>
   )
