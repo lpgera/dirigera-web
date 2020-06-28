@@ -115,6 +115,7 @@ const Accessory = ({
                 await refetch()
                 onLoadingChange(false)
               }}
+              title={`Toggle ${name}`}
             />
           </Col>
         ) : null}

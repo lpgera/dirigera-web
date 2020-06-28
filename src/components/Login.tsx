@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Button, Col, Form, Input, Result, Row, Tooltip } from 'antd'
+import { Button, Col, Form, Input, Result, Row } from 'antd'
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import { AuthContext } from './AuthContext'
@@ -45,21 +45,20 @@ const Login = () => {
                 />
               </Form.Item>
               <Form.Item>
-                <Tooltip title="Login">
-                  <Button
-                    shape="circle"
-                    type="primary"
-                    htmlType="submit"
-                    icon={
-                      <IoMdLogIn
-                        size="1.1em"
-                        style={{
-                          verticalAlign: 'text-bottom',
-                        }}
-                      />
-                    }
-                  />
-                </Tooltip>
+                <Button
+                  shape="circle"
+                  type="primary"
+                  htmlType="submit"
+                  title="Login"
+                  icon={
+                    <IoMdLogIn
+                      size="1.1em"
+                      style={{
+                        verticalAlign: 'text-bottom',
+                      }}
+                    />
+                  }
+                />
               </Form.Item>
             </Form>
           </Col>

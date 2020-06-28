@@ -30,7 +30,7 @@ const ColorTemperature = ({ colorTemperature, onAfterChange }: Props) => {
       title="Color temperature"
       trigger="click"
     >
-      <Button shape="circle">
+      <Button shape="circle" title="Color temperature">
         <MdColorLens size="1.1em" style={{ verticalAlign: 'text-bottom' }} />
       </Button>
     </Popover>

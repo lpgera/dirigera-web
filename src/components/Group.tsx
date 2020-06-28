@@ -107,6 +107,7 @@ const Group = ({ accessories, id, name, refetch }: Props) => {
               await refetch()
               setIsLoading(false)
             }}
+            title={`Toggle ${name}`}
           />
         </Col>
         {dimmer !== null ? (
