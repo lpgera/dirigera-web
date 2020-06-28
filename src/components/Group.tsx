@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { Card, Col, Collapse, Divider, Row, Slider, Switch } from 'antd'
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
-import delay from 'delay'
 import Accessory, { AccessoryProps } from './Accessory'
 import {
   GroupColorTemperatureMutation,
@@ -103,7 +102,6 @@ const Group = ({ accessories, id, name, refetch }: Props) => {
               await groupOnOff({
                 variables: { id, onOff: newValue },
               })
-              await delay(500)
               await refetch()
               setIsLoading(false)
             }}
@@ -124,7 +122,6 @@ const Group = ({ accessories, id, name, refetch }: Props) => {
                 await groupDimmer({
                   variables: { id, dimmer: newValue as number },
                 })
-                await delay(3000)
                 await refetch()
                 setIsLoading(false)
               }}
@@ -142,7 +139,6 @@ const Group = ({ accessories, id, name, refetch }: Props) => {
                     colorTemperature: value as number,
                   },
                 })
-                await delay(3000)
                 await refetch()
               }}
             />

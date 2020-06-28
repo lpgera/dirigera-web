@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Row, Slider, Switch } from 'antd'
 import { BsBatteryFull } from 'react-icons/bs'
-import delay from 'delay'
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import {
@@ -111,7 +110,6 @@ const Accessory = ({
                 await accessoryOnOff({
                   variables: { id, onOff: newValue },
                 })
-                await delay(500)
                 await refetch()
                 onLoadingChange(false)
               }}
@@ -132,7 +130,6 @@ const Accessory = ({
                 await accessoryDimmer({
                   variables: { id, dimmer: newValue as number },
                 })
-                await delay(3000)
                 await refetch()
                 onLoadingChange(false)
               }}
@@ -148,7 +145,6 @@ const Accessory = ({
                 await accessoryColorTemperature({
                   variables: { id, colorTemperature: newValue },
                 })
-                await delay(3000)
                 await refetch()
               }}
             />

@@ -1,6 +1,7 @@
 import { gql } from 'apollo-server'
-import { Resolvers } from '../resolvers.gen'
+import delay from 'delay'
 import { AccessoryTypes } from 'node-tradfri-client'
+import { Resolvers } from '../resolvers.gen'
 
 export const typeDefs = gql`
   enum AccessoryType {
@@ -85,6 +86,7 @@ export const resolvers: Resolvers = {
           await tradfriClient.operateLight(accessory, { onOff })
           break
       }
+      await delay(100)
       return null
     },
     accessoryDimmer: async (_, { id, dimmer }, { tradfriClient }) => {
@@ -93,6 +95,7 @@ export const resolvers: Resolvers = {
         dimmer,
         transitionTime: dimmer > 0 ? 2 : undefined,
       })
+      await delay(2500)
       return null
     },
     accessoryColorTemperature: async (
@@ -104,6 +107,7 @@ export const resolvers: Resolvers = {
       await tradfriClient.operateLight(accessory, {
         colorTemperature,
       })
+      await delay(100)
       return null
     },
   },
