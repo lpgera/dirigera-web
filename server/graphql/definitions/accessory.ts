@@ -86,7 +86,7 @@ export const resolvers: Resolvers = {
           await tradfriClient.operateLight(accessory, { onOff })
           break
       }
-      await delay(100)
+      await delay(300)
       return null
     },
     accessoryDimmer: async (_, { id, dimmer }, { tradfriClient }) => {
@@ -107,7 +107,7 @@ export const resolvers: Resolvers = {
       await tradfriClient.operateLight(accessory, {
         colorTemperature,
       })
-      await delay(100)
+      await delay(300)
       return null
     },
   },

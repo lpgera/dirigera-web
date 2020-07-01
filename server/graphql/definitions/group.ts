@@ -41,7 +41,7 @@ export const resolvers: Resolvers = {
         },
         true
       )
-      await delay(100)
+      await delay(300)
       return null
     },
     groupDimmer: async (_, { id, dimmer }, { tradfriClient }) => {
@@ -72,7 +72,7 @@ export const resolvers: Resolvers = {
           }
         })
       )
-      await delay(100)
+      await delay(300)
       return null
     },
   },
