@@ -116,11 +116,11 @@ const Group = ({ accessories, id, name, refetch }: Props) => {
               max={100}
               value={dimmer}
               disabled={isLoading}
-              onChange={(newValue) => setDimmer(newValue as number)}
-              onAfterChange={async (newValue) => {
+              onChange={(newValue: number) => setDimmer(newValue)}
+              onAfterChange={async (newValue: number) => {
                 setIsLoading(true)
                 await groupDimmer({
-                  variables: { id, dimmer: newValue as number },
+                  variables: { id, dimmer: newValue },
                 })
                 await refetch()
                 setIsLoading(false)

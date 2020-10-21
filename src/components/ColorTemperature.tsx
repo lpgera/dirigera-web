@@ -23,8 +23,8 @@ const ColorTemperature = ({ colorTemperature, onAfterChange }: Props) => {
             100: 'Warm',
           }}
           step={10}
-          onChange={(value) => setValue(value as number)}
-          onAfterChange={(value) => onAfterChange(value as number)}
+          onChange={(value: number) => setValue(value)}
+          onAfterChange={(value: number) => onAfterChange(value)}
         />
       }
       title="Color temperature"

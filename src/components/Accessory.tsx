@@ -124,11 +124,11 @@ const Accessory = ({
               max={100}
               value={dimmerValue}
               disabled={isLoading || !alive}
-              onChange={(newValue) => setDimmerValue(newValue as number)}
-              onAfterChange={async (newValue) => {
+              onChange={(newValue: number) => setDimmerValue(newValue)}
+              onAfterChange={async (newValue: number) => {
                 onLoadingChange(true)
                 await accessoryDimmer({
-                  variables: { id, dimmer: newValue as number },
+                  variables: { id, dimmer: newValue },
                 })
                 await refetch()
                 onLoadingChange(false)
