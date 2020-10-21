@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Row, Slider, Switch } from 'antd'
 import { BsBatteryFull } from 'react-icons/bs'
-import { useMutation } from '@apollo/react-hooks'
+import { useMutation } from '@apollo/client'
 import gql from 'graphql-tag'
 import {
   AccessoryColorTemperatureMutation,

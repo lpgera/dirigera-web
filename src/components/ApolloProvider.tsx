@@ -1,8 +1,12 @@
 import React, { useContext } from 'react'
-import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client'
-import { onError } from 'apollo-link-error'
-import { ApolloLink } from 'apollo-link'
-import { ApolloProvider } from '@apollo/react-hooks'
+import {
+  ApolloProvider,
+  ApolloClient,
+  InMemoryCache,
+  HttpLink,
+  ApolloLink,
+} from '@apollo/client'
+import { onError } from '@apollo/client/link/error'
 import { AuthContext, AuthContextType } from './AuthContext'
 
 const client = (authContext: AuthContextType) =>

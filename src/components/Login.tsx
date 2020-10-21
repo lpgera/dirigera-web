@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import { Button, Col, Form, Input, Result, Row } from 'antd'
-import { useMutation } from '@apollo/react-hooks'
-import gql from 'graphql-tag'
+import { useMutation, gql } from '@apollo/client'
 import { AuthContext } from './AuthContext'
 import { LoginMutation, LoginMutationVariables } from './Login.types.gen'
 import { IoMdLogIn } from 'react-icons/io'

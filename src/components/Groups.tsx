@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { Card, Col, Result, Row, Skeleton } from 'antd'
-import { useQuery } from '@apollo/react-hooks'
-import gql from 'graphql-tag'
+import { useQuery, gql } from '@apollo/client'
 import Group from './Group'
 import { GroupsQuery } from './Groups.types.gen'
 
