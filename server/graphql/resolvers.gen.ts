@@ -8,6 +8,9 @@ import { Context } from './context'
 export type Maybe<T> = T extends PromiseLike<infer U>
   ? Promise<U | null>
   : T | null
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K]
+}
 export type RequireFields<T, K extends keyof T> = {
   [X in Exclude<keyof T, K>]?: T[X]
 } &
@@ -206,8 +209,9 @@ export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
   info: GraphQLResolveInfo
 ) => Maybe<TTypes> | Promise<Maybe<TTypes>>
 
-export type IsTypeOfResolverFn<T = {}> = (
+export type IsTypeOfResolverFn<T = {}, TContext = {}> = (
   obj: T,
+  context: TContext,
   info: GraphQLResolveInfo
 ) => boolean | Promise<boolean>
 
@@ -249,10 +253,8 @@ export type ResolversParentTypes = ResolversObject<{
   Int: Scalars['Int']
   Boolean: Scalars['Boolean']
   Float: Scalars['Float']
-  AccessoryType: AccessoryType
   Accessory: TradfriAccessory
   Group: TradfriGroup
-  CacheControlScope: CacheControlScope
   Upload: Scalars['Upload']
 }>
 
@@ -332,7 +334,7 @@ export type AccessoryResolvers<
     ParentType,
     ContextType
   >
-  __isTypeOf?: IsTypeOfResolverFn<ParentType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
 export type GroupResolvers<
@@ -346,7 +348,7 @@ export type GroupResolvers<
     ParentType,
     ContextType
   >
-  __isTypeOf?: IsTypeOfResolverFn<ParentType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
 export interface UploadScalarConfig

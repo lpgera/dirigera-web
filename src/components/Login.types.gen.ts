@@ -1,8 +1,6 @@
 import * as Types from '../graphql.types'
 
-export type Exact<T extends { [key: string]: any }> = { [K in keyof T]: T[K] }
-
-export type LoginMutationVariables = Exact<{
+export type LoginMutationVariables = Types.Exact<{
   password: Types.Scalars['String']
 }>
 

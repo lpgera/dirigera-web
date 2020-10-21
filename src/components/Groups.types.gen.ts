@@ -1,6 +1,6 @@
 import * as Types from '../graphql.types'
 
-export type GroupsQueryVariables = {}
+export type GroupsQueryVariables = Types.Exact<{ [key: string]: never }>
 
 export type GroupsQuery = { __typename?: 'Query' } & {
   groups: Array<

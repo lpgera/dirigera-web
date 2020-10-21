@@ -1,8 +1,6 @@
 import * as Types from '../graphql.types'
 
-export type Exact<T extends { [key: string]: any }> = { [K in keyof T]: T[K] }
-
-export type AccessoryOnOffMutationVariables = Exact<{
+export type AccessoryOnOffMutationVariables = Types.Exact<{
   id: Types.Scalars['Int']
   onOff: Types.Scalars['Boolean']
 }>
@@ -12,7 +10,7 @@ export type AccessoryOnOffMutation = { __typename?: 'Mutation' } & Pick<
   'accessoryOnOff'
 >
 
-export type AccessoryDimmerMutationVariables = Exact<{
+export type AccessoryDimmerMutationVariables = Types.Exact<{
   id: Types.Scalars['Int']
   dimmer: Types.Scalars['Float']
 }>
@@ -22,7 +20,7 @@ export type AccessoryDimmerMutation = { __typename?: 'Mutation' } & Pick<
   'accessoryDimmer'
 >
 
-export type AccessoryColorTemperatureMutationVariables = Exact<{
+export type AccessoryColorTemperatureMutationVariables = Types.Exact<{
   id: Types.Scalars['Int']
   colorTemperature: Types.Scalars['Float']
 }>
