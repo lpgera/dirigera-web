@@ -9,7 +9,7 @@ import Logout from './Logout'
 const Frame = () => {
   const { state: authState } = useContext(AuthContext)
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout style={{ minHeight: '100vh', backgroundColor: 'rgb(30 30 30)' }}>
       <Layout.Content style={{ margin: '16px' }}>
         <Typography.Title>
           <Row gutter={[8, 8]}>
