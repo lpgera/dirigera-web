@@ -28,7 +28,9 @@ export const resolvers: Resolvers = {
   },
   Query: {
     groups: (_, __, { tradfriClient }) => {
-      return Object.values(tradfriClient.groups).map(({ group }) => group)
+      return Object.values(tradfriClient.groups)
+        .map(({ group }) => group)
+        .filter((group) => group.name !== 'SuperGroup')
     },
   },
   Mutation: {
