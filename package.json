@@ -18,7 +18,7 @@
     "graphql": "^15.3.0",
     "graphql-tag": "^2.11.0",
     "jsonwebtoken": "^8.5.1",
-    "node-tradfri-client": "^2.1.6",
+    "node-tradfri-client": "^2.1.8",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "react-icons": "^3.11.0",

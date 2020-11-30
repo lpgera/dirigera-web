@@ -22,9 +22,7 @@ export async function connect() {
   )
 
   await client.observeDevices()
-
-  // TODO workaround until this is resolved: https://github.com/AlCalzone/node-tradfri-client/issues/437
-  client.observeGroupsAndScenes()
+  await client.observeGroupsAndScenes()
 
   return client
 }
