@@ -34,7 +34,7 @@ const Scenes: FC<Props> = ({ onChange }) => {
   const scenes = data?.scenes ?? []
 
   return (
-    <Row gutter={[8, 8]}>
+    <Row gutter={[8, 8]} style={{ marginBottom: 16 }}>
       {scenes.map((s) => (
         <Col key={s.id}>
           <Button
