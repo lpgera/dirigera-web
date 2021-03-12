@@ -3,6 +3,7 @@ import { gql } from 'apollo-server'
 import * as auth from './definitions/auth'
 import * as group from './definitions/group'
 import * as accessory from './definitions/accessory'
+import * as scene from './definitions/scene'
 import * as loggedIn from './directives/loggedIn'
 import { Context } from './context'
 import { TradfriClient } from 'node-tradfri-client'
@@ -18,7 +19,7 @@ const baseTypeDefs = gql`
   }
 `
 
-const definitions = [auth, accessory, group]
+const definitions = [auth, accessory, group, scene]
 const directives = [loggedIn]
 
 export default (tradfriClient: TradfriClient) =>

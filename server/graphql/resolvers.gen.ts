@@ -11,6 +11,10 @@ export type Maybe<T> = T extends PromiseLike<infer U>
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K]
 }
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
+  { [SubKey in K]?: Maybe<T[SubKey]> }
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
+  { [SubKey in K]: Maybe<T[SubKey]> }
 export type RequireFields<T, K extends keyof T> = {
   [X in Exclude<keyof T, K>]?: T[X]
 } &
@@ -30,6 +34,7 @@ export type Query = {
   __typename?: 'Query'
   _?: Maybe<Scalars['String']>
   groups: Array<Group>
+  scenes: Array<Scene>
 }
 
 export type Mutation = {
@@ -42,6 +47,7 @@ export type Mutation = {
   groupOnOff?: Maybe<Scalars['String']>
   groupDimmer?: Maybe<Scalars['String']>
   groupColorTemperature?: Maybe<Scalars['String']>
+  activateScene?: Maybe<Scalars['String']>
 }
 
 export type MutationLoginArgs = {
@@ -78,6 +84,10 @@ export type MutationGroupColorTemperatureArgs = {
   colorTemperature: Scalars['Float']
 }
 
+export type MutationActivateSceneArgs = {
+  id: Scalars['Int']
+}
+
 export enum AccessoryType {
   Remote = 'REMOTE',
   SlaveRemote = 'SLAVE_REMOTE',
@@ -106,6 +116,12 @@ export type Group = {
   id: Scalars['Int']
   name: Scalars['String']
   accessories: Array<Accessory>
+}
+
+export type Scene = {
+  __typename?: 'Scene'
+  id: Scalars['Int']
+  name: Scalars['String']
 }
 
 export enum CacheControlScope {
@@ -241,6 +257,7 @@ export type ResolversTypes = ResolversObject<{
   AccessoryType: AccessoryType
   Accessory: ResolverTypeWrapper<TradfriAccessory>
   Group: ResolverTypeWrapper<TradfriGroup>
+  Scene: ResolverTypeWrapper<Scene>
   CacheControlScope: CacheControlScope
   Upload: ResolverTypeWrapper<Scalars['Upload']>
 }>
@@ -255,6 +272,7 @@ export type ResolversParentTypes = ResolversObject<{
   Float: Scalars['Float']
   Accessory: TradfriAccessory
   Group: TradfriGroup
+  Scene: Scene
   Upload: Scalars['Upload']
 }>
 
@@ -264,6 +282,7 @@ export type QueryResolvers<
 > = ResolversObject<{
   _?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
   groups?: Resolver<Array<ResolversTypes['Group']>, ParentType, ContextType>
+  scenes?: Resolver<Array<ResolversTypes['Scene']>, ParentType, ContextType>
 }>
 
 export type MutationResolvers<
@@ -316,6 +335,12 @@ export type MutationResolvers<
     ContextType,
     RequireFields<MutationGroupColorTemperatureArgs, 'id' | 'colorTemperature'>
   >
+  activateScene?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationActivateSceneArgs, 'id'>
+  >
 }>
 
 export type AccessoryResolvers<
@@ -351,6 +376,15 @@ export type GroupResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
+export type SceneResolvers<
+  ContextType = Context,
+  ParentType extends ResolversParentTypes['Scene'] = ResolversParentTypes['Scene']
+> = ResolversObject<{
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
+
 export interface UploadScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {
   name: 'Upload'
@@ -361,6 +395,7 @@ export type Resolvers<ContextType = Context> = ResolversObject<{
   Mutation?: MutationResolvers<ContextType>
   Accessory?: AccessoryResolvers<ContextType>
   Group?: GroupResolvers<ContextType>
+  Scene?: SceneResolvers<ContextType>
   Upload?: GraphQLScalarType
 }>
 
