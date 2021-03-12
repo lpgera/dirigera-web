@@ -3,6 +3,7 @@ import { Card, Col, Result, Row, Skeleton } from 'antd'
 import { useQuery, gql } from '@apollo/client'
 import Group from './Group'
 import { GroupsQuery } from './Groups.types.gen'
+import Scenes from './Scenes'
 
 const columnSizes = {
   xs: 24,
@@ -48,25 +49,32 @@ const Groups = () => {
   const groups = data?.groups ?? []
 
   return (
-    <Row gutter={[16, 16]}>
-      {loading ? (
-        <Col key="loading" {...columnSizes}>
-          <Card>
-            <Skeleton active={true} />
-          </Card>
-        </Col>
-      ) : error ? (
-        <Col span={24}>
-          <Result status="error" title="Error" subTitle={error.message} />
-        </Col>
-      ) : (
-        groups.map((group) => (
-          <Col key={group.id} {...columnSizes}>
-            <Group {...group} refetch={refetch} />
+    <>
+      <Scenes
+        onChange={async () => {
+          await refetch()
+        }}
+      />
+      <Row gutter={[16, 16]}>
+        {loading ? (
+          <Col key="loading" {...columnSizes}>
+            <Card>
+              <Skeleton active={true} />
+            </Card>
           </Col>
-        ))
-      )}
-    </Row>
+        ) : error ? (
+          <Col span={24}>
+            <Result status="error" title="Error" subTitle={error.message} />
+          </Col>
+        ) : (
+          groups.map((group) => (
+            <Col key={group.id} {...columnSizes}>
+              <Group {...group} refetch={refetch} />
+            </Col>
+          ))
+        )}
+      </Row>
+    </>
   )
 }
 
