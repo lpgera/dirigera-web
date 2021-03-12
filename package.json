@@ -22,7 +22,7 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-icons": "^4.2.0",
-    "react-scripts": "3.4.4",
+    "react-scripts": "4.0.3",
     "ts-node": "^9.1.1",
     "typescript": "^4.2.3"
   },
@@ -51,6 +51,12 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
     ]
   },
   "devDependencies": {
