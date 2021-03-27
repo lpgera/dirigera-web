@@ -30,11 +30,39 @@ export type Scalars = {
   Upload: any
 }
 
-export type Query = {
-  __typename?: 'Query'
-  _?: Maybe<Scalars['String']>
-  groups: Array<Group>
-  scenes: Array<Scene>
+export type Accessory = {
+  __typename?: 'Accessory'
+  id: Scalars['Int']
+  name: Scalars['String']
+  type: AccessoryType
+  alive: Scalars['Boolean']
+  battery?: Maybe<Scalars['Int']>
+  onOff?: Maybe<Scalars['Boolean']>
+  dimmer?: Maybe<Scalars['Float']>
+  colorTemperature?: Maybe<Scalars['Float']>
+}
+
+export enum AccessoryType {
+  Remote = 'REMOTE',
+  SlaveRemote = 'SLAVE_REMOTE',
+  Lightbulb = 'LIGHTBULB',
+  Plug = 'PLUG',
+  MotionSensor = 'MOTION_SENSOR',
+  SignalRepeater = 'SIGNAL_REPEATER',
+  Blind = 'BLIND',
+  SoundRemote = 'SOUND_REMOTE',
+}
+
+export enum CacheControlScope {
+  Public = 'PUBLIC',
+  Private = 'PRIVATE',
+}
+
+export type Group = {
+  __typename?: 'Group'
+  id: Scalars['Int']
+  name: Scalars['String']
+  accessories: Array<Accessory>
 }
 
 export type Mutation = {
@@ -88,45 +116,17 @@ export type MutationActivateSceneArgs = {
   id: Scalars['Int']
 }
 
-export enum AccessoryType {
-  Remote = 'REMOTE',
-  SlaveRemote = 'SLAVE_REMOTE',
-  Lightbulb = 'LIGHTBULB',
-  Plug = 'PLUG',
-  MotionSensor = 'MOTION_SENSOR',
-  SignalRepeater = 'SIGNAL_REPEATER',
-  Blind = 'BLIND',
-  SoundRemote = 'SOUND_REMOTE',
-}
-
-export type Accessory = {
-  __typename?: 'Accessory'
-  id: Scalars['Int']
-  name: Scalars['String']
-  type: AccessoryType
-  alive: Scalars['Boolean']
-  battery?: Maybe<Scalars['Int']>
-  onOff?: Maybe<Scalars['Boolean']>
-  dimmer?: Maybe<Scalars['Float']>
-  colorTemperature?: Maybe<Scalars['Float']>
-}
-
-export type Group = {
-  __typename?: 'Group'
-  id: Scalars['Int']
-  name: Scalars['String']
-  accessories: Array<Accessory>
+export type Query = {
+  __typename?: 'Query'
+  _?: Maybe<Scalars['String']>
+  groups: Array<Group>
+  scenes: Array<Scene>
 }
 
 export type Scene = {
   __typename?: 'Scene'
   id: Scalars['Int']
   name: Scalars['String']
-}
-
-export enum CacheControlScope {
-  Public = 'PUBLIC',
-  Private = 'PRIVATE',
 }
 
 export type WithIndex<TObject> = TObject & Record<string, any>
@@ -248,41 +248,65 @@ export type DirectiveResolverFn<
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
-  Query: ResolverTypeWrapper<{}>
-  String: ResolverTypeWrapper<Scalars['String']>
-  Mutation: ResolverTypeWrapper<{}>
+  Accessory: ResolverTypeWrapper<TradfriAccessory>
   Int: ResolverTypeWrapper<Scalars['Int']>
+  String: ResolverTypeWrapper<Scalars['String']>
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>
   Float: ResolverTypeWrapper<Scalars['Float']>
   AccessoryType: AccessoryType
-  Accessory: ResolverTypeWrapper<TradfriAccessory>
-  Group: ResolverTypeWrapper<TradfriGroup>
-  Scene: ResolverTypeWrapper<Scene>
   CacheControlScope: CacheControlScope
+  Group: ResolverTypeWrapper<TradfriGroup>
+  Mutation: ResolverTypeWrapper<{}>
+  Query: ResolverTypeWrapper<{}>
+  Scene: ResolverTypeWrapper<Scene>
   Upload: ResolverTypeWrapper<Scalars['Upload']>
 }>
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
-  Query: {}
-  String: Scalars['String']
-  Mutation: {}
+  Accessory: TradfriAccessory
   Int: Scalars['Int']
+  String: Scalars['String']
   Boolean: Scalars['Boolean']
   Float: Scalars['Float']
-  Accessory: TradfriAccessory
   Group: TradfriGroup
+  Mutation: {}
+  Query: {}
   Scene: Scene
   Upload: Scalars['Upload']
 }>
 
-export type QueryResolvers<
+export type AccessoryResolvers<
   ContextType = Context,
-  ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']
+  ParentType extends ResolversParentTypes['Accessory'] = ResolversParentTypes['Accessory']
 > = ResolversObject<{
-  _?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-  groups?: Resolver<Array<ResolversTypes['Group']>, ParentType, ContextType>
-  scenes?: Resolver<Array<ResolversTypes['Scene']>, ParentType, ContextType>
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  type?: Resolver<ResolversTypes['AccessoryType'], ParentType, ContextType>
+  alive?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
+  battery?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
+  onOff?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>
+  dimmer?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>
+  colorTemperature?: Resolver<
+    Maybe<ResolversTypes['Float']>,
+    ParentType,
+    ContextType
+  >
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
+
+export type GroupResolvers<
+  ContextType = Context,
+  ParentType extends ResolversParentTypes['Group'] = ResolversParentTypes['Group']
+> = ResolversObject<{
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  accessories?: Resolver<
+    Array<ResolversTypes['Accessory']>,
+    ParentType,
+    ContextType
+  >
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
 export type MutationResolvers<
@@ -343,37 +367,13 @@ export type MutationResolvers<
   >
 }>
 
-export type AccessoryResolvers<
+export type QueryResolvers<
   ContextType = Context,
-  ParentType extends ResolversParentTypes['Accessory'] = ResolversParentTypes['Accessory']
+  ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']
 > = ResolversObject<{
-  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  type?: Resolver<ResolversTypes['AccessoryType'], ParentType, ContextType>
-  alive?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
-  battery?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
-  onOff?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>
-  dimmer?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>
-  colorTemperature?: Resolver<
-    Maybe<ResolversTypes['Float']>,
-    ParentType,
-    ContextType
-  >
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
-}>
-
-export type GroupResolvers<
-  ContextType = Context,
-  ParentType extends ResolversParentTypes['Group'] = ResolversParentTypes['Group']
-> = ResolversObject<{
-  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  accessories?: Resolver<
-    Array<ResolversTypes['Accessory']>,
-    ParentType,
-    ContextType
-  >
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+  _?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
+  groups?: Resolver<Array<ResolversTypes['Group']>, ParentType, ContextType>
+  scenes?: Resolver<Array<ResolversTypes['Scene']>, ParentType, ContextType>
 }>
 
 export type SceneResolvers<
@@ -391,10 +391,10 @@ export interface UploadScalarConfig
 }
 
 export type Resolvers<ContextType = Context> = ResolversObject<{
-  Query?: QueryResolvers<ContextType>
-  Mutation?: MutationResolvers<ContextType>
   Accessory?: AccessoryResolvers<ContextType>
   Group?: GroupResolvers<ContextType>
+  Mutation?: MutationResolvers<ContextType>
+  Query?: QueryResolvers<ContextType>
   Scene?: SceneResolvers<ContextType>
   Upload?: GraphQLScalarType
 }>

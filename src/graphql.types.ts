@@ -17,11 +17,39 @@ export type Scalars = {
   Upload: any
 }
 
-export type Query = {
-  __typename?: 'Query'
-  _?: Maybe<Scalars['String']>
-  groups: Array<Group>
-  scenes: Array<Scene>
+export type Accessory = {
+  __typename?: 'Accessory'
+  id: Scalars['Int']
+  name: Scalars['String']
+  type: AccessoryType
+  alive: Scalars['Boolean']
+  battery?: Maybe<Scalars['Int']>
+  onOff?: Maybe<Scalars['Boolean']>
+  dimmer?: Maybe<Scalars['Float']>
+  colorTemperature?: Maybe<Scalars['Float']>
+}
+
+export enum AccessoryType {
+  Remote = 'REMOTE',
+  SlaveRemote = 'SLAVE_REMOTE',
+  Lightbulb = 'LIGHTBULB',
+  Plug = 'PLUG',
+  MotionSensor = 'MOTION_SENSOR',
+  SignalRepeater = 'SIGNAL_REPEATER',
+  Blind = 'BLIND',
+  SoundRemote = 'SOUND_REMOTE',
+}
+
+export enum CacheControlScope {
+  Public = 'PUBLIC',
+  Private = 'PRIVATE',
+}
+
+export type Group = {
+  __typename?: 'Group'
+  id: Scalars['Int']
+  name: Scalars['String']
+  accessories: Array<Accessory>
 }
 
 export type Mutation = {
@@ -75,43 +103,15 @@ export type MutationActivateSceneArgs = {
   id: Scalars['Int']
 }
 
-export enum AccessoryType {
-  Remote = 'REMOTE',
-  SlaveRemote = 'SLAVE_REMOTE',
-  Lightbulb = 'LIGHTBULB',
-  Plug = 'PLUG',
-  MotionSensor = 'MOTION_SENSOR',
-  SignalRepeater = 'SIGNAL_REPEATER',
-  Blind = 'BLIND',
-  SoundRemote = 'SOUND_REMOTE',
-}
-
-export type Accessory = {
-  __typename?: 'Accessory'
-  id: Scalars['Int']
-  name: Scalars['String']
-  type: AccessoryType
-  alive: Scalars['Boolean']
-  battery?: Maybe<Scalars['Int']>
-  onOff?: Maybe<Scalars['Boolean']>
-  dimmer?: Maybe<Scalars['Float']>
-  colorTemperature?: Maybe<Scalars['Float']>
-}
-
-export type Group = {
-  __typename?: 'Group'
-  id: Scalars['Int']
-  name: Scalars['String']
-  accessories: Array<Accessory>
+export type Query = {
+  __typename?: 'Query'
+  _?: Maybe<Scalars['String']>
+  groups: Array<Group>
+  scenes: Array<Scene>
 }
 
 export type Scene = {
   __typename?: 'Scene'
   id: Scalars['Int']
   name: Scalars['String']
-}
-
-export enum CacheControlScope {
-  Public = 'PUBLIC',
-  Private = 'PRIVATE',
 }
