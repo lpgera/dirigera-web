@@ -1,6 +1,3 @@
-import dotenv from 'dotenv'
-dotenv.config()
-
 import express from 'express'
 import path from 'path'
 import tsEnv from '@lpgera/ts-env'
@@ -22,6 +19,9 @@ async function start() {
   apolloServer.applyMiddleware({ app })
   app.listen(port, () => {
     console.log(`Server is listening on port ${port}`)
+    if (process.send) {
+      process.send('ready')
+    }
   })
 }
 
