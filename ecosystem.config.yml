@@ -1,0 +1,4 @@
+apps:
+  - name: tradfri
+    script: npm run server
+    wait_ready: true
