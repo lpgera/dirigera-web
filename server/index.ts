@@ -15,7 +15,7 @@ const port = tsEnv.numberOrThrow('REACT_APP_SERVER_PORT')
 async function start() {
   const client = await tradfriClient.connect()
   const apolloServer = server(client)
-
+  await apolloServer.start()
   apolloServer.applyMiddleware({ app })
   app.listen(port, () => {
     console.log(`Server is listening on port ${port}`)

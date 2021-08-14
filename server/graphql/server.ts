@@ -8,6 +8,7 @@ import * as loggedIn from './directives/loggedIn'
 import { Context } from './context'
 import { TradfriClient } from 'node-tradfri-client'
 import { ExpressContext } from 'apollo-server-express/dist/ApolloServer'
+import { makeExecutableSchema } from '@graphql-tools/schema'
 import { verify } from './jwt'
 
 const baseTypeDefs = gql`
@@ -22,17 +23,20 @@ const baseTypeDefs = gql`
 const definitions = [auth, accessory, group, scene]
 const directives = [loggedIn]
 
-export default (tradfriClient: TradfriClient) =>
-  new ApolloServer({
+const schema = loggedIn.loggedInDirectiveTransformer(
+  makeExecutableSchema({
     typeDefs: [
       baseTypeDefs,
       ...definitions.map((d) => d.typeDefs),
       ...directives.map((d) => d.type),
     ],
     resolvers: definitions.map((d) => d.resolvers),
-    schemaDirectives: {
-      loggedIn: loggedIn.LoggedInDirective,
-    },
+  })
+)
+
+export default (tradfriClient: TradfriClient) =>
+  new ApolloServer({
+    schema,
     context: (expressContext: ExpressContext): Context => {
       const token = expressContext.req.headers['x-token']
       const isLoggedIn = Boolean(token && verify(token.toString()))

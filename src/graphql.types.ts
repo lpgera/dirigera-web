@@ -13,8 +13,6 @@ export type Scalars = {
   Boolean: boolean
   Int: number
   Float: number
-  /** The `Upload` scalar type represents a file upload. */
-  Upload: any
 }
 
 export type Accessory = {
@@ -40,16 +38,11 @@ export enum AccessoryType {
   SoundRemote = 'SOUND_REMOTE',
 }
 
-export enum CacheControlScope {
-  Public = 'PUBLIC',
-  Private = 'PRIVATE',
-}
-
 export type Group = {
   __typename?: 'Group'
+  accessories: Array<Accessory>
   id: Scalars['Int']
   name: Scalars['String']
-  accessories: Array<Accessory>
 }
 
 export type Mutation = {

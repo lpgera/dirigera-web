@@ -1,8 +1,4 @@
-import {
-  GraphQLResolveInfo,
-  GraphQLScalarType,
-  GraphQLScalarTypeConfig,
-} from 'graphql'
+import { GraphQLResolveInfo } from 'graphql'
 import { TradfriGroup, TradfriAccessory } from './typeMappings'
 import { Context } from './context'
 export type Maybe<T> = T extends PromiseLike<infer U>
@@ -26,8 +22,6 @@ export type Scalars = {
   Boolean: boolean
   Int: number
   Float: number
-  /** The `Upload` scalar type represents a file upload. */
-  Upload: any
 }
 
 export type Accessory = {
@@ -53,16 +47,11 @@ export enum AccessoryType {
   SoundRemote = 'SOUND_REMOTE',
 }
 
-export enum CacheControlScope {
-  Public = 'PUBLIC',
-  Private = 'PRIVATE',
-}
-
 export type Group = {
   __typename?: 'Group'
+  accessories: Array<Accessory>
   id: Scalars['Int']
   name: Scalars['String']
-  accessories: Array<Accessory>
 }
 
 export type Mutation = {
@@ -245,12 +234,10 @@ export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>
   Float: ResolverTypeWrapper<Scalars['Float']>
   AccessoryType: AccessoryType
-  CacheControlScope: CacheControlScope
   Group: ResolverTypeWrapper<TradfriGroup>
   Mutation: ResolverTypeWrapper<{}>
   Query: ResolverTypeWrapper<{}>
   Scene: ResolverTypeWrapper<Scene>
-  Upload: ResolverTypeWrapper<Scalars['Upload']>
 }>
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -264,8 +251,16 @@ export type ResolversParentTypes = ResolversObject<{
   Mutation: {}
   Query: {}
   Scene: Scene
-  Upload: Scalars['Upload']
 }>
+
+export type LoggedInDirectiveArgs = {}
+
+export type LoggedInDirectiveResolver<
+  Result,
+  Parent,
+  ContextType = Context,
+  Args = LoggedInDirectiveArgs
+> = DirectiveResolverFn<Result, Parent, ContextType, Args>
 
 export type AccessoryResolvers<
   ContextType = Context,
@@ -290,13 +285,13 @@ export type GroupResolvers<
   ContextType = Context,
   ParentType extends ResolversParentTypes['Group'] = ResolversParentTypes['Group']
 > = ResolversObject<{
-  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   accessories?: Resolver<
     Array<ResolversTypes['Accessory']>,
     ParentType,
     ContextType
   >
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
@@ -376,16 +371,14 @@ export type SceneResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
-export interface UploadScalarConfig
-  extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {
-  name: 'Upload'
-}
-
 export type Resolvers<ContextType = Context> = ResolversObject<{
   Accessory?: AccessoryResolvers<ContextType>
   Group?: GroupResolvers<ContextType>
   Mutation?: MutationResolvers<ContextType>
   Query?: QueryResolvers<ContextType>
   Scene?: SceneResolvers<ContextType>
-  Upload?: GraphQLScalarType
+}>
+
+export type DirectiveResolvers<ContextType = Context> = ResolversObject<{
+  loggedIn?: LoggedInDirectiveResolver<any, any, ContextType>
 }>
