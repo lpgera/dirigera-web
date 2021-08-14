@@ -5,27 +5,27 @@ export type GroupOnOffMutationVariables = Types.Exact<{
   onOff: Types.Scalars['Boolean']
 }>
 
-export type GroupOnOffMutation = { __typename?: 'Mutation' } & Pick<
-  Types.Mutation,
-  'groupOnOff'
->
+export type GroupOnOffMutation = {
+  __typename?: 'Mutation'
+  groupOnOff?: Types.Maybe<string>
+}
 
 export type GroupDimmerMutationVariables = Types.Exact<{
   id: Types.Scalars['Int']
   dimmer: Types.Scalars['Float']
 }>
 
-export type GroupDimmerMutation = { __typename?: 'Mutation' } & Pick<
-  Types.Mutation,
-  'groupDimmer'
->
+export type GroupDimmerMutation = {
+  __typename?: 'Mutation'
+  groupDimmer?: Types.Maybe<string>
+}
 
 export type GroupColorTemperatureMutationVariables = Types.Exact<{
   id: Types.Scalars['Int']
   colorTemperature: Types.Scalars['Float']
 }>
 
-export type GroupColorTemperatureMutation = { __typename?: 'Mutation' } & Pick<
-  Types.Mutation,
-  'groupColorTemperature'
->
+export type GroupColorTemperatureMutation = {
+  __typename?: 'Mutation'
+  groupColorTemperature?: Types.Maybe<string>
+}

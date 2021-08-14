@@ -4,7 +4,7 @@ export type LoginMutationVariables = Types.Exact<{
   password: Types.Scalars['String']
 }>
 
-export type LoginMutation = { __typename?: 'Mutation' } & Pick<
-  Types.Mutation,
-  'login'
->
+export type LoginMutation = {
+  __typename?: 'Mutation'
+  login?: Types.Maybe<string>
+}
