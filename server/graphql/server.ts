@@ -9,7 +9,7 @@ import { Context } from './context'
 import { TradfriClient } from 'node-tradfri-client'
 import { ExpressContext } from 'apollo-server-express/dist/ApolloServer'
 import { makeExecutableSchema } from '@graphql-tools/schema'
-import { verify } from './jwt'
+import { verify } from '../jwt'
 
 const baseTypeDefs = gql`
   type Query {

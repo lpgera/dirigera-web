@@ -35,6 +35,26 @@ const Groups = () => {
   )
 
   useEffect(() => {
+    const ws = new WebSocket(
+      process.env.NODE_ENV === 'development'
+        ? `ws://${window.location.hostname}:${process.env.REACT_APP_SERVER_PORT}/ws`
+        : `${window.location.protocol === 'http:' ? 'ws' : 'wss'}://${
+            window.location.hostname
+          }:${window.location.port}`
+    )
+
+    const listener = async () => {
+      await refetch()
+    }
+
+    ws.addEventListener('message', listener)
+
+    return () => {
+      ws.removeEventListener('message', listener)
+    }
+  }, [refetch])
+
+  useEffect(() => {
     const listener = async () => {
       if (!document.hidden) {
         await refetch()

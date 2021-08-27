@@ -1,7 +1,7 @@
 import { gql } from 'apollo-server'
 import { Resolvers } from '../resolvers.gen'
 import tsEnv from '@lpgera/ts-env'
-import { sign } from '../jwt'
+import { sign } from '../../jwt'
 
 const PASSWORD = tsEnv.stringOrThrow('PASSWORD')
 
