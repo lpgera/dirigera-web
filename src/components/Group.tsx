@@ -16,7 +16,6 @@ type Props = {
   id: number
   name: string
   accessories: AccessoryProps[]
-  refetch: () => Promise<any>
 }
 
 const calculateGroupDimmer = (accessories: AccessoryProps[]) => {
@@ -50,7 +49,7 @@ const calculateGroupColorTemperature = (accessories: AccessoryProps[]) => {
   return null
 }
 
-const Group = ({ accessories, id, name, refetch }: Props) => {
+const Group = ({ accessories, id, name }: Props) => {
   const [isLoading, setIsLoading] = useState(false)
   const [dimmer, setDimmer] = useState<number | null>(null)
   const [onOff, setOnOff] = useState(false)
@@ -101,7 +100,6 @@ const Group = ({ accessories, id, name, refetch }: Props) => {
               await groupOnOff({
                 variables: { id, onOff: newValue },
               })
-              await refetch()
               setIsLoading(false)
             }}
             title={`Toggle ${name}`}
@@ -121,7 +119,6 @@ const Group = ({ accessories, id, name, refetch }: Props) => {
                 await groupDimmer({
                   variables: { id, dimmer: newValue },
                 })
-                await refetch()
                 setIsLoading(false)
               }}
             />
@@ -138,7 +135,6 @@ const Group = ({ accessories, id, name, refetch }: Props) => {
                     colorTemperature: value as number,
                   },
                 })
-                await refetch()
               }}
             />
           </Col>
@@ -151,7 +147,6 @@ const Group = ({ accessories, id, name, refetch }: Props) => {
               <Accessory
                 {...accessory}
                 isLoading={isLoading}
-                refetch={refetch}
                 onLoadingChange={(isLoading) => setIsLoading(isLoading)}
               />
               {index !== array.length - 1 ? <Divider /> : null}

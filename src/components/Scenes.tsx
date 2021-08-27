@@ -8,11 +8,7 @@ import {
 } from './Scenes.types.gen'
 import { Button, Col, Row } from 'antd'
 
-type Props = {
-  onChange: () => void
-}
-
-const Scenes: FC<Props> = ({ onChange }) => {
+const Scenes: FC = () => {
   const { data } = useQuery<ScenesQuery, ScenesQueryVariables>(gql`
     query Scenes {
       scenes {
@@ -44,7 +40,6 @@ const Scenes: FC<Props> = ({ onChange }) => {
                   id: s.id,
                 },
               })
-              await onChange()
             }}
           >
             {s.name}

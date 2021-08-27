@@ -25,7 +25,6 @@ export type AccessoryProps = {
 }
 
 type Props = AccessoryProps & {
-  refetch: () => Promise<any>
   isLoading: boolean
   onLoadingChange: (isLoading: boolean) => void
 }
@@ -40,7 +39,6 @@ const Accessory = ({
   name,
   onLoadingChange,
   onOff,
-  refetch,
   type,
 }: Props) => {
   const isSwitchable = [AccessoryType.Plug, AccessoryType.Lightbulb].includes(
@@ -109,7 +107,6 @@ const Accessory = ({
                 await accessoryOnOff({
                   variables: { id, onOff: newValue },
                 })
-                await refetch()
                 onLoadingChange(false)
               }}
               title={`Toggle ${name}`}
@@ -129,7 +126,6 @@ const Accessory = ({
                 await accessoryDimmer({
                   variables: { id, dimmer: newValue },
                 })
-                await refetch()
                 onLoadingChange(false)
               }}
             />
@@ -144,7 +140,6 @@ const Accessory = ({
                 await accessoryColorTemperature({
                   variables: { id, colorTemperature: newValue },
                 })
-                await refetch()
               }}
             />
           </Col>

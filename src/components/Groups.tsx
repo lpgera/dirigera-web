@@ -70,11 +70,7 @@ const Groups = () => {
 
   return (
     <>
-      <Scenes
-        onChange={async () => {
-          await refetch()
-        }}
-      />
+      <Scenes />
       <Row gutter={[16, 16]}>
         {loading ? (
           <Col key="loading" {...columnSizes}>
@@ -89,7 +85,7 @@ const Groups = () => {
         ) : (
           groups.map((group) => (
             <Col key={group.id} {...columnSizes}>
-              <Group {...group} refetch={refetch} />
+              <Group {...group} />
             </Col>
           ))
         )}

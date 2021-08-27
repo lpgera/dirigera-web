@@ -1,5 +1,4 @@
 import { gql } from 'apollo-server'
-import delay from 'delay'
 import { AccessoryTypes } from 'node-tradfri-client'
 import { Resolvers } from '../resolvers.gen'
 
@@ -43,7 +42,6 @@ export const resolvers: Resolvers = {
         },
         true
       )
-      await delay(500)
       return null
     },
     groupDimmer: async (_, { id, dimmer }, { tradfriClient }) => {
@@ -53,7 +51,6 @@ export const resolvers: Resolvers = {
         transitionTime: dimmer > 0 ? 2 : undefined,
         onOff: dimmer > 0,
       })
-      await delay(4000)
       return null
     },
     groupColorTemperature: async (
@@ -74,7 +71,6 @@ export const resolvers: Resolvers = {
           }
         })
       )
-      await delay(500)
       return null
     },
   },

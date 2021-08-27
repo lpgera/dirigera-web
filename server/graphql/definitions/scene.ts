@@ -1,6 +1,5 @@
 import { gql } from 'apollo-server'
 import { Resolvers } from '../resolvers.gen'
-import delay from 'delay'
 
 export const typeDefs = gql`
   type Scene {
@@ -44,7 +43,6 @@ export const resolvers: Resolvers = {
         },
         true
       )
-      await delay(500)
       return null
     },
   },
