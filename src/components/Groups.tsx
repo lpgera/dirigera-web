@@ -15,7 +15,7 @@ const columnSizes = {
 
 const wsUrl = (() => {
   const { href, protocol, port } = window.location
-  const url = new URL('/ws', href)
+  const url = new URL('ws', href)
   url.protocol = protocol.replace('http', 'ws')
   url.port =
     process.env.NODE_ENV === 'development'
