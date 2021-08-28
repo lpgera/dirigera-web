@@ -140,8 +140,16 @@ const Group = ({ accessories, id, name }: Props) => {
           </Col>
         ) : null}
       </Row>
-      <Collapse style={{ marginTop: '32px' }}>
-        <Collapse.Panel header="Devices" key="1">
+      <Collapse
+        bordered={false}
+        style={{
+          marginLeft: '-24px',
+          marginRight: '-24px',
+          marginBottom: '-24px',
+          marginTop: '24px',
+        }}
+      >
+        <Collapse.Panel header="Devices" key="1" style={{ border: 0 }}>
           {accessories.map((accessory, index, array) => (
             <React.Fragment key={accessory.id}>
               <Accessory

@@ -7,10 +7,12 @@ import { GroupsQuery } from './Groups.types.gen'
 import Scenes from './Scenes'
 
 const columnSizes = {
-  xs: 24,
+  xs: 12,
   sm: 12,
   md: 8,
   lg: 6,
+  xl: 4,
+  xxl: 3,
 }
 
 const wsUrl = (() => {
@@ -51,13 +53,13 @@ const Groups = () => {
   })
 
   useEffect(() => {
-    refetch().catch(console.error)
+    refetch()?.catch(console.error)
   }, [lastMessage, refetch])
 
   useEffect(() => {
     const listener = () => {
       if (!document.hidden) {
-        refetch().catch(console.error)
+        refetch()?.catch(console.error)
       }
     }
     window.addEventListener('visibilitychange', listener)
