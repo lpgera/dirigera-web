@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { Card, Col, Result, Row, Skeleton } from 'antd'
 import { useQuery, gql } from '@apollo/client'
+import useWebSocket from 'react-use-websocket'
 import Group from './Group'
 import { GroupsQuery } from './Groups.types.gen'
 import Scenes from './Scenes'
@@ -11,6 +12,17 @@ const columnSizes = {
   md: 8,
   lg: 6,
 }
+
+const wsUrl = (() => {
+  const { href, protocol, port } = window.location
+  const url = new URL('/ws', href)
+  url.protocol = protocol.replace('http', 'ws')
+  url.port =
+    process.env.NODE_ENV === 'development'
+      ? process.env.REACT_APP_SERVER_PORT ?? port
+      : port
+  return url.toString()
+})()
 
 const Groups = () => {
   const { data, refetch, loading, error } = useQuery<GroupsQuery>(
@@ -34,30 +46,18 @@ const Groups = () => {
     `
   )
 
-  useEffect(() => {
-    const ws = new WebSocket(
-      process.env.NODE_ENV === 'development'
-        ? `ws://${window.location.hostname}:${process.env.REACT_APP_SERVER_PORT}/ws`
-        : `${window.location.protocol === 'http:' ? 'ws' : 'wss'}://${
-            window.location.hostname
-          }:${window.location.port}`
-    )
-
-    const listener = async () => {
-      await refetch()
-    }
-
-    ws.addEventListener('message', listener)
-
-    return () => {
-      ws.removeEventListener('message', listener)
-    }
-  }, [refetch])
+  const { lastMessage } = useWebSocket(wsUrl, {
+    shouldReconnect: () => true,
+  })
 
   useEffect(() => {
-    const listener = async () => {
+    refetch().catch(console.error)
+  }, [lastMessage, refetch])
+
+  useEffect(() => {
+    const listener = () => {
       if (!document.hidden) {
-        await refetch()
+        refetch().catch(console.error)
       }
     }
     window.addEventListener('visibilitychange', listener)
