@@ -13,5 +13,5 @@ export type ActiveSceneMutationVariables = Types.Exact<{
 
 export type ActiveSceneMutation = {
   __typename?: 'Mutation'
-  activateScene?: Types.Maybe<string>
+  activateScene?: string | null | undefined
 }

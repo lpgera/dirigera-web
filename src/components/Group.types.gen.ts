@@ -7,7 +7,7 @@ export type GroupOnOffMutationVariables = Types.Exact<{
 
 export type GroupOnOffMutation = {
   __typename?: 'Mutation'
-  groupOnOff?: Types.Maybe<string>
+  groupOnOff?: string | null | undefined
 }
 
 export type GroupDimmerMutationVariables = Types.Exact<{
@@ -17,7 +17,7 @@ export type GroupDimmerMutationVariables = Types.Exact<{
 
 export type GroupDimmerMutation = {
   __typename?: 'Mutation'
-  groupDimmer?: Types.Maybe<string>
+  groupDimmer?: string | null | undefined
 }
 
 export type GroupColorTemperatureMutationVariables = Types.Exact<{
@@ -27,5 +27,5 @@ export type GroupColorTemperatureMutationVariables = Types.Exact<{
 
 export type GroupColorTemperatureMutation = {
   __typename?: 'Mutation'
-  groupColorTemperature?: Types.Maybe<string>
+  groupColorTemperature?: string | null | undefined
 }

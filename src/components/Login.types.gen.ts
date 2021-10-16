@@ -6,5 +6,5 @@ export type LoginMutationVariables = Types.Exact<{
 
 export type LoginMutation = {
   __typename?: 'Mutation'
-  login?: Types.Maybe<string>
+  login?: string | null | undefined
 }
