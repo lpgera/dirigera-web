@@ -135,6 +135,7 @@ const Accessory = ({
           <Col flex="0">
             <ColorTemperature
               colorTemperature={colorTemperatureValue}
+              disabled={isLoading || !alive}
               onAfterChange={async (newValue) => {
                 setColorTemperatureValue(newValue)
                 await accessoryColorTemperature({

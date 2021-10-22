@@ -87,6 +87,8 @@ const Group = ({ accessories, id, name }: Props) => {
     }
   `)
 
+  const isAnyAccessoryAlive = accessories.some((a) => a.alive)
+
   return (
     <Card title={name}>
       <Row align="middle" gutter={[8, 8]}>
@@ -95,6 +97,7 @@ const Group = ({ accessories, id, name }: Props) => {
             size="small"
             checked={onOff}
             loading={isLoading}
+            disabled={!isAnyAccessoryAlive}
             onChange={async (newValue) => {
               setIsLoading(true)
               await groupOnOff({
@@ -112,7 +115,7 @@ const Group = ({ accessories, id, name }: Props) => {
               min={0}
               max={100}
               value={dimmer}
-              disabled={isLoading}
+              disabled={isLoading || !isAnyAccessoryAlive}
               onChange={(newValue: number) => setDimmer(newValue)}
               onAfterChange={async (newValue: number) => {
                 setIsLoading(true)
@@ -128,6 +131,7 @@ const Group = ({ accessories, id, name }: Props) => {
           <Col flex="0">
             <ColorTemperature
               colorTemperature={colorTemperature}
+              disabled={isLoading || !isAnyAccessoryAlive}
               onAfterChange={async (value) => {
                 await groupColorTemperature({
                   variables: {

@@ -4,10 +4,15 @@ import { MdColorLens } from 'react-icons/all'
 
 type Props = {
   colorTemperature: number
+  disabled: boolean
   onAfterChange: (value: number) => void | Promise<void>
 }
 
-const ColorTemperature = ({ colorTemperature, onAfterChange }: Props) => {
+const ColorTemperature = ({
+  colorTemperature,
+  disabled,
+  onAfterChange,
+}: Props) => {
   const [value, setValue] = useState(colorTemperature)
   useEffect(() => {
     setValue(colorTemperature)
@@ -18,6 +23,7 @@ const ColorTemperature = ({ colorTemperature, onAfterChange }: Props) => {
       content={
         <Slider
           value={value}
+          disabled={disabled}
           marks={{
             0: 'Cold',
             100: 'Warm',
