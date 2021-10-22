@@ -71,7 +71,9 @@ export const resolvers: Resolvers = {
   },
   Group: {
     accessories: ({ deviceIDs }, _, { tradfriClient }) => {
-      return deviceIDs.map((deviceID) => tradfriClient.devices[deviceID])
+      return deviceIDs
+        .map((deviceID) => tradfriClient.devices[deviceID])
+        .sort((a, b) => a.name.localeCompare(b.name))
     },
   },
   Mutation: {

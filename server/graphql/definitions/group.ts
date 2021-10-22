@@ -30,6 +30,7 @@ export const resolvers: Resolvers = {
       return Object.values(tradfriClient.groups)
         .map(({ group }) => group)
         .filter((group) => group.name !== 'SuperGroup')
+        .sort((a, b) => a.name.localeCompare(b.name))
     },
   },
   Mutation: {
