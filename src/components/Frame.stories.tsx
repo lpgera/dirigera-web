@@ -1,13 +1,13 @@
 import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import 'antd/dist/antd.dark.css'
-import Frame from '../components/Frame'
-import { AuthContext } from '../components/AuthContext'
-import { GROUPS_QUERY } from '../components/Groups'
-import { SCENES_QUERY } from '../components/Scenes'
+import Frame from './Frame'
+import { AuthContext } from './AuthContext'
+import { GROUPS_QUERY } from './Groups'
+import { SCENES_QUERY } from './Scenes'
 
 export default {
-  title: 'Tradfri web UI/Pages',
+  title: 'Tradfri web UI',
   component: Frame,
   decorators: [
     (story, context) => (
@@ -28,9 +28,10 @@ export default {
 
 const Template: ComponentStory<typeof Frame> = () => <Frame />
 
+export const LoggedIn = Template.bind({})
+
 export const LoggedOut = Template.bind({})
 
-export const LoggedIn = Template.bind({})
 LoggedIn.parameters = {
   token: 'mock_token',
   apolloClient: {
