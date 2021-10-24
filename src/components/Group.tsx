@@ -96,7 +96,7 @@ const Group = ({ accessories, id, name, isDeviceListDefaultOpen }: Props) => {
         <Col flex="0">
           <Switch
             size="small"
-            style={{ marginTop: 9, marginBottom: 9 }}
+            style={{ marginTop: '9px', marginBottom: '9px' }}
             checked={onOff}
             loading={isLoading}
             disabled={!isAnyAccessoryAlive}
@@ -113,7 +113,6 @@ const Group = ({ accessories, id, name, isDeviceListDefaultOpen }: Props) => {
         {dimmer !== null ? (
           <Col flex="auto">
             <Slider
-              style={{ marginTop: '12px' }}
               min={0}
               max={100}
               value={dimmer}

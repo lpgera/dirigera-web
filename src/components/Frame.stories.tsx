@@ -7,7 +7,7 @@ import { GROUPS_QUERY } from './Groups'
 import { SCENES_QUERY } from './Scenes'
 
 export default {
-  title: 'Tradfri web UI',
+  title: 'Application',
   component: Frame,
   decorators: [
     (story, context) => (
