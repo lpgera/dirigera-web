@@ -16,6 +16,7 @@ type Props = {
   id: number
   name: string
   accessories: AccessoryProps[]
+  isDeviceListDefaultOpen?: Boolean
 }
 
 const calculateGroupDimmer = (accessories: AccessoryProps[]) => {
@@ -49,7 +50,7 @@ const calculateGroupColorTemperature = (accessories: AccessoryProps[]) => {
   return null
 }
 
-const Group = ({ accessories, id, name }: Props) => {
+const Group = ({ accessories, id, name, isDeviceListDefaultOpen }: Props) => {
   const [isLoading, setIsLoading] = useState(false)
   const [dimmer, setDimmer] = useState<number | null>(null)
   const [onOff, setOnOff] = useState(false)
@@ -95,6 +96,7 @@ const Group = ({ accessories, id, name }: Props) => {
         <Col flex="0">
           <Switch
             size="small"
+            style={{ marginTop: '9px', marginBottom: '9px' }}
             checked={onOff}
             loading={isLoading}
             disabled={!isAnyAccessoryAlive}
@@ -111,7 +113,6 @@ const Group = ({ accessories, id, name }: Props) => {
         {dimmer !== null ? (
           <Col flex="auto">
             <Slider
-              style={{ marginTop: '12px' }}
               min={0}
               max={100}
               value={dimmer}
@@ -144,28 +145,31 @@ const Group = ({ accessories, id, name }: Props) => {
           </Col>
         ) : null}
       </Row>
-      <Collapse
-        bordered={false}
-        style={{
-          marginLeft: '-24px',
-          marginRight: '-24px',
-          marginBottom: '-24px',
-          marginTop: '24px',
-        }}
-      >
-        <Collapse.Panel header="Devices" key="1" style={{ border: 0 }}>
-          {accessories.map((accessory, index, array) => (
-            <React.Fragment key={accessory.id}>
-              <Accessory
-                {...accessory}
-                isLoading={isLoading}
-                onLoadingChange={(isLoading) => setIsLoading(isLoading)}
-              />
-              {index !== array.length - 1 ? <Divider /> : null}
-            </React.Fragment>
-          ))}
-        </Collapse.Panel>
-      </Collapse>
+      {accessories.length ? (
+        <Collapse
+          bordered={false}
+          style={{
+            marginLeft: '-24px',
+            marginRight: '-24px',
+            marginBottom: '-24px',
+            marginTop: '24px',
+          }}
+          defaultActiveKey={isDeviceListDefaultOpen ? [1] : undefined}
+        >
+          <Collapse.Panel header="Devices" key="1" style={{ border: 0 }}>
+            {accessories.map((accessory, index, array) => (
+              <React.Fragment key={accessory.id}>
+                <Accessory
+                  {...accessory}
+                  isLoading={isLoading}
+                  onLoadingChange={(isLoading) => setIsLoading(isLoading)}
+                />
+                {index !== array.length - 1 ? <Divider /> : null}
+              </React.Fragment>
+            ))}
+          </Collapse.Panel>
+        </Collapse>
+      ) : null}
     </Card>
   )
 }

@@ -26,27 +26,27 @@ const wsUrl = (() => {
   return url.toString()
 })()
 
-const Groups = () => {
-  const { data, refetch, loading, error } = useQuery<GroupsQuery>(
-    gql`
-      query Groups {
-        groups {
-          id
-          name
-          accessories {
-            id
-            name
-            type
-            alive
-            onOff
-            dimmer
-            battery
-            colorTemperature
-          }
-        }
+export const GROUPS_QUERY = gql`
+  query Groups {
+    groups {
+      id
+      name
+      accessories {
+        id
+        name
+        type
+        alive
+        onOff
+        dimmer
+        battery
+        colorTemperature
       }
-    `
-  )
+    }
+  }
+`
+
+const Groups = () => {
+  const { data, refetch, loading, error } = useQuery<GroupsQuery>(GROUPS_QUERY)
 
   const { lastMessage } = useWebSocket(wsUrl, {
     shouldReconnect: () => true,

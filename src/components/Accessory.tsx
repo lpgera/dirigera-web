@@ -98,6 +98,7 @@ const Accessory = ({
         {isSwitchable ? (
           <Col>
             <Switch
+              style={{ marginTop: '9px', marginBottom: '9px' }}
               size="small"
               checked={onOff ?? false}
               loading={isLoading}

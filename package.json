@@ -36,7 +36,9 @@
     "authenticate": "ts-node --transpile-only --project ./server/tsconfig.json -r dotenv/config ./server/tradfri/authenticate.ts",
     "server": "ts-node --transpile-only --project ./server/tsconfig.json -r dotenv/config ./server/index.ts",
     "watch:backend": "nodemon --ext ts,json --watch server --exec ts-node --project ./server/tsconfig.json -r dotenv/config ./server/index.ts",
-    "generate": "graphql-codegen -r dotenv/config"
+    "generate": "graphql-codegen -r dotenv/config",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "husky": {
     "hooks": {
@@ -59,6 +61,16 @@
     "extends": [
       "react-app",
       "react-app/jest"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      }
     ]
   },
   "devDependencies": {
@@ -67,14 +79,22 @@
     "@graphql-codegen/typescript": "^2.2.4",
     "@graphql-codegen/typescript-operations": "^2.1.8",
     "@graphql-codegen/typescript-resolvers": "^2.3.2",
+    "@storybook/addon-actions": "^6.3.12",
+    "@storybook/addon-essentials": "^6.3.12",
+    "@storybook/addon-links": "^6.3.12",
+    "@storybook/node-logger": "^6.3.12",
+    "@storybook/preset-create-react-app": "^3.2.0",
+    "@storybook/react": "^6.3.12",
     "@types/jest": "^27.0.2",
     "@types/jsonwebtoken": "^8.5.5",
     "@types/node": "^16.11.0",
     "@types/react": "^17.0.30",
     "@types/react-dom": "^17.0.9",
+    "chromatic": "^6.0.4",
     "husky": "^4.3.0",
     "nodemon": "^2.0.13",
     "prettier": "^2.4.1",
-    "pretty-quick": "^3.1.1"
+    "pretty-quick": "^3.1.1",
+    "storybook-addon-apollo-client": "^4.0.9"
   }
 }

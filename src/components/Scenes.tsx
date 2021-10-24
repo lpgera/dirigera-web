@@ -8,15 +8,17 @@ import {
 } from './Scenes.types.gen'
 import { Button, Col, Row } from 'antd'
 
-const Scenes: FC = () => {
-  const { data } = useQuery<ScenesQuery, ScenesQueryVariables>(gql`
-    query Scenes {
-      scenes {
-        id
-        name
-      }
+export const SCENES_QUERY = gql`
+  query Scenes {
+    scenes {
+      id
+      name
     }
-  `)
+  }
+`
+
+const Scenes: FC = () => {
+  const { data } = useQuery<ScenesQuery, ScenesQueryVariables>(SCENES_QUERY)
 
   const [activateScene] = useMutation<
     ActiveSceneMutation,
