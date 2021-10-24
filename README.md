@@ -2,12 +2,12 @@
 
 A React and GraphQL based progressive web app for connecting to a Tradfri gateway and controlling attached devices.
 
-<img src="./screenshot.png" alt="screenshot" />
+Check out the UI on [Chromatic](https://chromatic.com/library?appId=61753f54931d3b003a535d15&branch=master).
 
 ## Setup
 
 1. Install dependencies: `npm i`
-2. Copy the Security code from your Tradfri gateway and generate credentials: `npm run authenticate <security code>`
+2. Copy the Security code from the bottom of your Tradfri gateway and generate credentials: `npm run authenticate <security code>`
 3. Create a `.env` file with the following values set:
 
    ```dotenv
