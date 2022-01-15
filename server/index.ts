@@ -14,7 +14,8 @@ app.get('/', function (_, res) {
 
 const server = http.createServer(app)
 const wss = new Server({ server })
-const port = tsEnv.numberOrThrow('REACT_APP_SERVER_PORT')
+const port =
+  tsEnv.number('REACT_APP_SERVER_PORT') ?? tsEnv.numberOrThrow('PORT')
 
 async function start() {
   const client = await tradfriClient.connect()
