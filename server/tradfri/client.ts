@@ -1,14 +1,26 @@
 import { discoverGateway, TradfriClient } from 'node-tradfri-client'
 import tsEnv from '@lpgera/ts-env'
 
-export async function getClient() {
+async function getGatewayAddress() {
+  const gatewayAddress = tsEnv.string('GATEWAY_ADDRESS')
+
+  if (gatewayAddress) {
+    return gatewayAddress
+  }
+
   const gateway = await discoverGateway()
 
   if (!gateway) {
     throw new Error(`Couldn't find Tradfri gateway`)
   }
 
-  return new TradfriClient(gateway.addresses[0], {
+  return gateway.addresses[0]
+}
+
+export async function getClient() {
+  const gatewayAddress = await getGatewayAddress()
+
+  return new TradfriClient(gatewayAddress, {
     watchConnection: true,
   })
 }
