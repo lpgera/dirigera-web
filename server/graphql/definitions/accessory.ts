@@ -12,6 +12,7 @@ export const typeDefs = gql`
     SIGNAL_REPEATER
     BLIND
     SOUND_REMOTE
+    AIR_PURIFIER
   }
 
   type Accessory {
@@ -47,6 +48,7 @@ export const resolvers: Resolvers = {
     SIGNAL_REPEATER: AccessoryTypes.signalRepeater,
     BLIND: AccessoryTypes.blind,
     SOUND_REMOTE: AccessoryTypes.soundRemote,
+    AIR_PURIFIER: AccessoryTypes.airPurifier,
   },
   Accessory: {
     id: ({ instanceId }) => {

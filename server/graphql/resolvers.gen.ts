@@ -38,6 +38,7 @@ export type Accessory = {
 }
 
 export enum AccessoryType {
+  AirPurifier = 'AIR_PURIFIER',
   Blind = 'BLIND',
   Lightbulb = 'LIGHTBULB',
   MotionSensor = 'MOTION_SENSOR',
