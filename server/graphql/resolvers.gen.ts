@@ -4,6 +4,9 @@ import { Context } from './context'
 export type Maybe<T> = T extends PromiseLike<infer U>
   ? Promise<U | null>
   : T | null
+export type InputMaybe<T> = T extends PromiseLike<infer U>
+  ? Promise<U | null>
+  : T | null
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K]
 }
@@ -144,7 +147,7 @@ export type SubscriptionSubscribeFn<TResult, TParent, TContext, TArgs> = (
   args: TArgs,
   context: TContext,
   info: GraphQLResolveInfo
-) => AsyncIterator<TResult> | Promise<AsyncIterator<TResult>>
+) => AsyncIterable<TResult> | Promise<AsyncIterable<TResult>>
 
 export type SubscriptionResolveFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,
