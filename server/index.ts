@@ -33,6 +33,13 @@ async function start() {
       process.send('ready')
     }
   })
+
+  process.on('SIGINT', () => {
+    console.log('Received SIGINT, exiting...')
+    client.destroy()
+    wss.clients.forEach((ws) => ws.terminate())
+    server.close()
+  })
 }
 
 start().catch(console.error)
