@@ -5,20 +5,20 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN npm ci
+RUN npm ci && npm cache clear --force
 
 COPY . .
 
 RUN npm run build
 
 # stage 2 - lighter image without frontend build dependencies
-FROM node:14-alpine
+FROM node:14-alpine as TARGET
 
 WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN npm ci --only=production
+RUN npm ci --only=production && npm cache clear --force
 
 COPY --from=BUILD_IMAGE /usr/src/app/build ./build
 
