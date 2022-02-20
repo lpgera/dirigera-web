@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN npm ci && npm cache clear --force
+RUN npm ci
 
 COPY . .
 
