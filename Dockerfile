@@ -1,5 +1,5 @@
 # stage 1 - build
-FROM node:14 AS BUILD_IMAGE
+FROM node:16 AS BUILD_IMAGE
 
 WORKDIR /usr/src/app
 
@@ -12,7 +12,7 @@ COPY . .
 RUN npm run build
 
 # stage 2 - lighter image without frontend build dependencies
-FROM node:14-alpine as TARGET
+FROM node:16-alpine as TARGET
 
 WORKDIR /usr/src/app
 
