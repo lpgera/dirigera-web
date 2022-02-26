@@ -14,10 +14,10 @@ export type GroupsQuery = {
       name: string
       type: Types.AccessoryType
       alive: boolean
-      onOff?: boolean | null | undefined
-      dimmer?: number | null | undefined
-      battery?: number | null | undefined
-      colorTemperature?: number | null | undefined
+      onOff?: boolean | null
+      dimmer?: number | null
+      battery?: number | null
+      colorTemperature?: number | null
     }>
   }>
 }
