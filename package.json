@@ -12,8 +12,8 @@
     "server": "ts-node --transpile-only --project ./server/tsconfig.json -r dotenv/config ./server/index.ts",
     "watch:backend": "nodemon --ext ts,json --watch server --exec ts-node --project ./server/tsconfig.json -r dotenv/config ./server/index.ts",
     "generate": "graphql-codegen -r dotenv/config",
-    "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "@apollo/client": "^3.5.9",
@@ -45,6 +45,8 @@
     "@storybook/addon-actions": "^6.4.19",
     "@storybook/addon-essentials": "^6.4.19",
     "@storybook/addon-links": "^6.4.19",
+    "@storybook/builder-webpack5": "^6.4.19",
+    "@storybook/manager-webpack5": "^6.4.19",
     "@storybook/node-logger": "^6.4.19",
     "@storybook/preset-create-react-app": "^4.0.1",
     "@storybook/react": "^6.4.19",
