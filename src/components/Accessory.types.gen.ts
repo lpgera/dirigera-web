@@ -7,7 +7,7 @@ export type AccessoryOnOffMutationVariables = Types.Exact<{
 
 export type AccessoryOnOffMutation = {
   __typename?: 'Mutation'
-  accessoryOnOff?: string | null | undefined
+  accessoryOnOff?: string | null
 }
 
 export type AccessoryDimmerMutationVariables = Types.Exact<{
@@ -17,7 +17,7 @@ export type AccessoryDimmerMutationVariables = Types.Exact<{
 
 export type AccessoryDimmerMutation = {
   __typename?: 'Mutation'
-  accessoryDimmer?: string | null | undefined
+  accessoryDimmer?: string | null
 }
 
 export type AccessoryColorTemperatureMutationVariables = Types.Exact<{
@@ -27,5 +27,5 @@ export type AccessoryColorTemperatureMutationVariables = Types.Exact<{
 
 export type AccessoryColorTemperatureMutation = {
   __typename?: 'Mutation'
-  accessoryColorTemperature?: string | null | undefined
+  accessoryColorTemperature?: string | null
 }

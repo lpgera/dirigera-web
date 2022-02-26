@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Popover, Slider } from 'antd'
-import { MdColorLens } from 'react-icons/all'
+import { MdColorLens } from 'react-icons/md'
 
 type Props = {
   colorTemperature: number

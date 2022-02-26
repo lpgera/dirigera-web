@@ -32,7 +32,7 @@ Check out the UI on [Chromatic](https://chromatic.com/library?appId=61753f54931d
      -it \
      --rm \
      --env GATEWAY_ADDRESS=<gateway_ip_address> \
-     ghcr.io/lpgera/tradfri-web-ui:master \
+     ghcr.io/lpgera/tradfri-web-ui \
      npm run authenticate <security_code>
    ```
 
@@ -56,7 +56,7 @@ Check out the UI on [Chromatic](https://chromatic.com/library?appId=61753f54931d
      -p 8080:80 \
      --restart unless-stopped \
      --name tradfri-web-ui \
-     ghcr.io/lpgera/tradfri-web-ui:master
+     ghcr.io/lpgera/tradfri-web-ui
    ```
 
 5. The app is now available on http://localhost:8080. 🎉

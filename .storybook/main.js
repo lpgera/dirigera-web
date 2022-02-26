@@ -1,5 +1,6 @@
 module.exports = {
   stories: ['../src/**/*.stories.tsx'],
+  staticDirs: ['../public'],
   addons: [
     '@storybook/addon-links',
     {
@@ -11,4 +12,7 @@ module.exports = {
     '@storybook/preset-create-react-app',
     'storybook-addon-apollo-client',
   ],
+  core: {
+    builder: 'webpack5',
+  },
 }

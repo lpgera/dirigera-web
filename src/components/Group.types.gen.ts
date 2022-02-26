@@ -7,7 +7,7 @@ export type GroupOnOffMutationVariables = Types.Exact<{
 
 export type GroupOnOffMutation = {
   __typename?: 'Mutation'
-  groupOnOff?: string | null | undefined
+  groupOnOff?: string | null
 }
 
 export type GroupDimmerMutationVariables = Types.Exact<{
@@ -17,7 +17,7 @@ export type GroupDimmerMutationVariables = Types.Exact<{
 
 export type GroupDimmerMutation = {
   __typename?: 'Mutation'
-  groupDimmer?: string | null | undefined
+  groupDimmer?: string | null
 }
 
 export type GroupColorTemperatureMutationVariables = Types.Exact<{
@@ -27,5 +27,5 @@ export type GroupColorTemperatureMutationVariables = Types.Exact<{
 
 export type GroupColorTemperatureMutation = {
   __typename?: 'Mutation'
-  groupColorTemperature?: string | null | undefined
+  groupColorTemperature?: string | null
 }
