@@ -3,6 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "homepage": ".",
+  "scripts": {
+    "watch:frontend": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "authenticate": "ts-node --transpile-only --project ./server/tsconfig.json -r dotenv/config ./server/tradfri/authenticate.ts",
+    "server": "ts-node --transpile-only --project ./server/tsconfig.json -r dotenv/config ./server/index.ts",
+    "watch:backend": "nodemon --ext ts,json --watch server --exec ts-node --project ./server/tsconfig.json -r dotenv/config ./server/index.ts",
+    "generate": "graphql-codegen -r dotenv/config",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public"
+  },
   "dependencies": {
     "@apollo/client": "^3.5.7",
     "@lpgera/ts-env": "^1.1.2",
@@ -24,17 +36,33 @@
     "typescript": "^4.5.5",
     "ws": "^8.4.2"
   },
-  "scripts": {
-    "watch:frontend": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "authenticate": "ts-node --transpile-only --project ./server/tsconfig.json -r dotenv/config ./server/tradfri/authenticate.ts",
-    "server": "ts-node --transpile-only --project ./server/tsconfig.json -r dotenv/config ./server/index.ts",
-    "watch:backend": "nodemon --ext ts,json --watch server --exec ts-node --project ./server/tsconfig.json -r dotenv/config ./server/index.ts",
-    "generate": "graphql-codegen -r dotenv/config",
-    "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
+  "devDependencies": {
+    "@graphql-codegen/cli": "^2.4.0",
+    "@graphql-codegen/near-operation-file-preset": "^2.2.3",
+    "@graphql-codegen/typescript": "^2.4.2",
+    "@graphql-codegen/typescript-operations": "^2.2.2",
+    "@graphql-codegen/typescript-resolvers": "^2.4.3",
+    "@storybook/addon-actions": "^6.4.14",
+    "@storybook/addon-essentials": "^6.4.14",
+    "@storybook/addon-links": "^6.4.14",
+    "@storybook/node-logger": "^6.4.14",
+    "@storybook/preset-create-react-app": "^3.2.0",
+    "@storybook/react": "^6.4.14",
+    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.5.0",
+    "antd": "^4.18.4",
+    "chromatic": "^6.4.1",
+    "husky": "^4.3.0",
+    "nodemon": "^2.0.15",
+    "prettier": "^2.5.1",
+    "pretty-quick": "^3.1.3",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-icons": "^4.3.1",
+    "react-scripts": "4.0.3",
+    "react-use-websocket": "^2.9.1",
+    "storybook-addon-apollo-client": "^4.0.11"
   },
   "husky": {
     "hooks": {
@@ -68,33 +96,5 @@
         }
       }
     ]
-  },
-  "devDependencies": {
-    "@graphql-codegen/cli": "^2.4.0",
-    "@graphql-codegen/near-operation-file-preset": "^2.2.3",
-    "@graphql-codegen/typescript": "^2.4.2",
-    "@graphql-codegen/typescript-operations": "^2.2.2",
-    "@graphql-codegen/typescript-resolvers": "^2.4.3",
-    "@storybook/addon-actions": "^6.4.14",
-    "@storybook/addon-essentials": "^6.4.14",
-    "@storybook/addon-links": "^6.4.14",
-    "@storybook/node-logger": "^6.4.14",
-    "@storybook/preset-create-react-app": "^3.2.0",
-    "@storybook/react": "^6.4.14",
-    "@testing-library/jest-dom": "^5.16.1",
-    "@testing-library/react": "^12.1.2",
-    "@testing-library/user-event": "^13.5.0",
-    "antd": "^4.18.4",
-    "chromatic": "^6.4.1",
-    "husky": "^4.3.0",
-    "nodemon": "^2.0.15",
-    "prettier": "^2.5.1",
-    "pretty-quick": "^3.1.3",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-icons": "^4.3.1",
-    "react-scripts": "4.0.3",
-    "react-use-websocket": "^2.9.1",
-    "storybook-addon-apollo-client": "^4.0.11"
   }
 }
