@@ -1,5 +1,5 @@
 import React from 'react'
-import 'antd/dist/antd.dark.css'
+import 'antd/dist/antd.dark.min.css'
 import ApolloProvider from './ApolloProvider'
 import { AuthProvider } from './AuthContext'
 import Frame from './Frame'
