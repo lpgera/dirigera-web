@@ -130,3 +130,20 @@ Inaccessible.args = {
     },
   ],
 }
+
+export const ShortcutButtonGroup = Template.bind({})
+ShortcutButtonGroup.args = {
+  name: 'Shortcut button group',
+  accessories: [
+    {
+      id: 1,
+      name: 'TRADFRI SHORTCUT Button',
+      type: AccessoryType.Remote,
+      alive: true,
+      onOff: null,
+      dimmer: null,
+      battery: 87,
+      colorTemperature: null,
+    },
+  ],
+}

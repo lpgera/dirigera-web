@@ -88,7 +88,12 @@ const Group = ({ accessories, id, name, isDeviceListDefaultOpen }: Props) => {
     }
   `)
 
-  const isAnyAccessoryAlive = accessories.some((a) => a.alive)
+  const aliveAccessories = accessories.filter((a) => a.alive)
+  const isGroupSwitchable = aliveAccessories.some((a) => a.onOff !== null)
+  const isGroupDimmable = aliveAccessories.some((a) => a.dimmer !== null)
+  const isGroupColorChangeable = aliveAccessories.some(
+    (a) => a.colorTemperature !== null
+  )
 
   return (
     <Card title={name}>
@@ -99,7 +104,7 @@ const Group = ({ accessories, id, name, isDeviceListDefaultOpen }: Props) => {
             style={{ marginTop: '9px', marginBottom: '9px' }}
             checked={onOff}
             loading={isLoading}
-            disabled={!isAnyAccessoryAlive}
+            disabled={!isGroupSwitchable}
             onChange={async (newValue) => {
               setIsLoading(true)
               await groupOnOff({
@@ -116,7 +121,7 @@ const Group = ({ accessories, id, name, isDeviceListDefaultOpen }: Props) => {
               min={0}
               max={100}
               value={dimmer}
-              disabled={isLoading || !isAnyAccessoryAlive}
+              disabled={isLoading || !isGroupDimmable}
               onChange={(newValue: number) => setDimmer(newValue)}
               onAfterChange={async (newValue: number) => {
                 setIsLoading(true)
@@ -132,7 +137,7 @@ const Group = ({ accessories, id, name, isDeviceListDefaultOpen }: Props) => {
           <Col flex="0">
             <ColorTemperature
               colorTemperature={colorTemperature}
-              disabled={isLoading || !isAnyAccessoryAlive}
+              disabled={isLoading || !isGroupColorChangeable}
               onAfterChange={async (value) => {
                 await groupColorTemperature({
                   variables: {
