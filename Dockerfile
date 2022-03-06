@@ -18,7 +18,7 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN npm ci --only=production && npm cache clear --force
+RUN npm ci --only=production --ignore-scripts && npm cache clear --force
 
 COPY --from=BUILD_IMAGE /usr/src/app/build ./build
 
