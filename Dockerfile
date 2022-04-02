@@ -21,9 +21,9 @@ COPY package*.json ./
 
 RUN npm ci --production --ignore-scripts && npm cache clear --force
 
-COPY --from=BUILD_IMAGE /usr/src/app/build ./build
-COPY --from=BUILD_IMAGE /usr/src/app/server/build ./server/build
-
 COPY . .
 
-CMD ["node", "-r", "dotenv/config", "./server/build/index.js"]
+COPY --from=BUILD_IMAGE /usr/src/app/build ./build
+COPY --from=BUILD_IMAGE /usr/src/app/server ./server
+
+CMD ["node", "-r", "dotenv/config", "./server/index.js"]

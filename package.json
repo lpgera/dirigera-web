@@ -11,7 +11,7 @@
     "authenticate": "node -r @swc/register -r dotenv/config ./server/tradfri/authenticate.ts",
     "server": "node -r dotenv/config ./server/build/index.js",
     "watch:backend": "nodemon --ext ts,json --watch server --exec node -r @swc/register -r dotenv/config ./server/index.ts",
-    "build:backend": "swc -d server/build server/*",
+    "build:backend": "swc -d server server/*",
     "generate": "graphql-codegen -r dotenv/config",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
