@@ -1,5 +1,5 @@
 # stage 1 - build
-FROM node:16 AS BUILD_IMAGE
+FROM --platform=$BUILDPLATFORM node:16 AS BUILD_IMAGE
 
 WORKDIR /usr/src/app
 
