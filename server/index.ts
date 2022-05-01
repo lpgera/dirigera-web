@@ -7,7 +7,11 @@ import graphqlServer from './graphql/server'
 import * as tradfriClient from './tradfri/client'
 
 const app = express()
-app.use(express.static(path.join(__dirname, '..', 'build')))
+app.use(
+  express.static(path.join(__dirname, '..', 'build'), {
+    maxAge: '30 days',
+  })
+)
 app.get('/', function (_, res) {
   res.sendFile(path.join(__dirname, '..', 'build', 'index.html'))
 })
