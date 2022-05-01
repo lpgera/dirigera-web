@@ -1,8 +1,11 @@
 {
   "name": "tradfri-web-ui",
-  "version": "0.1.0",
   "private": true,
   "homepage": ".",
+  "engines": {
+    "node": "^18.0.0",
+    "npm": "^8.5.0"
+  },
   "scripts": {
     "watch:frontend": "react-scripts start",
     "build:frontend": "react-scripts build",
