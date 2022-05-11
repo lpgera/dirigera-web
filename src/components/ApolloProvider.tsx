@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { ReactNode, useContext } from 'react'
 import {
   ApolloProvider,
   ApolloClient,
@@ -47,7 +47,7 @@ const client = (authContext: AuthContextType) =>
     cache: new InMemoryCache(),
   })
 
-const Provider: React.FC = ({ children }) => {
+const Provider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const authContext = useContext(AuthContext)
   return (
     <ApolloProvider client={client(authContext)}>{children}</ApolloProvider>

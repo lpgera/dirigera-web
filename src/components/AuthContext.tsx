@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react'
+import React, { createContext, ReactElement, useReducer } from 'react'
 
 const LOCAL_STORAGE_KEY = 'tradfri-web-ui-token'
 
@@ -29,7 +29,7 @@ const AuthContext = createContext<AuthContextType>({
   dispatch: () => {},
 })
 
-const AuthProvider: React.FC = ({ children }) => {
+const AuthProvider: React.FC<{ children: ReactElement }> = ({ children }) => {
   const [state, dispatch] = useReducer(
     (state: AuthState, action: AuthAction) => {
       switch (action.type) {
