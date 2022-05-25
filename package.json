@@ -35,22 +35,22 @@
     "ws": "^8.6.0"
   },
   "devDependencies": {
-    "@apollo/client": "^3.6.4",
+    "@apollo/client": "^3.6.5",
     "@graphql-codegen/cli": "^2.6.2",
     "@graphql-codegen/near-operation-file-preset": "^2.2.12",
     "@graphql-codegen/typescript": "^2.4.11",
     "@graphql-codegen/typescript-operations": "^2.4.0",
     "@graphql-codegen/typescript-resolvers": "^2.6.4",
-    "@storybook/addon-actions": "^6.5.3",
-    "@storybook/addon-essentials": "^6.5.3",
-    "@storybook/addon-links": "^6.5.3",
-    "@storybook/builder-webpack5": "^6.5.3",
-    "@storybook/manager-webpack5": "^6.5.3",
-    "@storybook/node-logger": "^6.5.3",
-    "@storybook/preset-create-react-app": "^4.1.0",
-    "@storybook/react": "^6.5.3",
+    "@storybook/addon-actions": "^6.5.5",
+    "@storybook/addon-essentials": "^6.5.5",
+    "@storybook/addon-links": "^6.5.5",
+    "@storybook/builder-webpack5": "^6.5.5",
+    "@storybook/manager-webpack5": "^6.5.5",
+    "@storybook/node-logger": "^6.5.5",
+    "@storybook/preset-create-react-app": "^4.1.1",
+    "@storybook/react": "^6.5.5",
     "@swc/cli": "^0.1.57",
-    "@swc/core": "^1.2.189",
+    "@swc/core": "^1.2.192",
     "@swc/register": "^0.1.10",
     "@types/jest": "^27.5.1",
     "@types/jsonwebtoken": "^8.5.8",
@@ -71,7 +71,7 @@
     "react-scripts": "5.0.1",
     "react-use-websocket": "^3.0.0",
     "storybook-addon-apollo-client": "^4.0.11",
-    "typescript": "^4.6.4"
+    "typescript": "^4.7.2"
   },
   "browserslist": {
     "production": [
