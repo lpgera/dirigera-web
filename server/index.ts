@@ -27,6 +27,11 @@ async function start() {
     wss.clients.forEach((client) => client.send('update'))
   })
 
+  client.on('error', (error) => {
+    console.log('Tradfri client error', error)
+    process.exit(1)
+  })
+
   const apolloServer = graphqlServer(client)
   await apolloServer.start()
   apolloServer.applyMiddleware({ app })
