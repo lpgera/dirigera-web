@@ -19,7 +19,7 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN npm ci --production --ignore-scripts && npm cache clear --force
+RUN npm ci --omit=dev --ignore-scripts && npm cache clear --force
 
 COPY . .
 
