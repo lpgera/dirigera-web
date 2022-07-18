@@ -9,10 +9,8 @@
   "scripts": {
     "watch:frontend": "react-scripts start",
     "build:frontend": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
     "authenticate": "node -r @swc/register -r dotenv/config ./server/tradfri/authenticate.ts",
-    "server": "node -r dotenv/config ./server/build/index.js",
+    "server": "node -r dotenv/config ./server/index.js",
     "watch:backend": "nodemon --ext ts,json --watch server --exec node -r @swc/register -r dotenv/config ./server/index.ts",
     "build:backend": "swc server -d server",
     "generate": "graphql-codegen -r dotenv/config",
