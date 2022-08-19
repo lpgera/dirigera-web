@@ -50,7 +50,7 @@
     "@swc/cli": "^0.1.57",
     "@swc/core": "^1.2.227",
     "@swc/register": "^0.1.10",
-    "@types/jest": "^28.1.6",
+    "@types/jest": "^28.1.7",
     "@types/jsonwebtoken": "^8.5.8",
     "@types/node": "^18.7.2",
     "@types/react": "^18.0.17",
