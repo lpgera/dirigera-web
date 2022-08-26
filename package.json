@@ -51,7 +51,7 @@
     "@swc/core": "^1.2.242",
     "@swc/register": "^0.1.10",
     "@types/jest": "^28.1.8",
-    "@types/jsonwebtoken": "^8.5.8",
+    "@types/jsonwebtoken": "^8.5.9",
     "@types/node": "^18.7.13",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
