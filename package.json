@@ -52,7 +52,7 @@
     "@swc/register": "^0.1.10",
     "@types/jest": "^29.0.3",
     "@types/jsonwebtoken": "^8.5.9",
-    "@types/node": "^18.7.19",
+    "@types/node": "^18.8.3",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
     "@types/ws": "^8.5.3",
