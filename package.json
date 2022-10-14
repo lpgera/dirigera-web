@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@lpgera/ts-env": "^1.2.1",
-    "apollo-server": "^3.10.2",
+    "apollo-server": "^3.10.3",
     "apollo-server-express": "^3.10.2",
     "dotenv": "^16.0.3",
     "express": "^4.18.1",
