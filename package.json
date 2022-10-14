@@ -68,7 +68,7 @@
     "react-icons": "^4.4.0",
     "react-scripts": "5.0.1",
     "react-use-websocket": "^4.2.0",
-    "storybook-addon-apollo-client": "^4.0.12",
+    "storybook-addon-apollo-client": "^4.0.13",
     "typescript": "^4.8.4"
   },
   "browserslist": {
