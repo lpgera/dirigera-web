@@ -57,7 +57,7 @@
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
     "@types/ws": "^8.5.3",
-    "antd": "^4.23.5",
+    "antd": "^4.23.6",
     "chromatic": "^6.10.2",
     "husky": "^8.0.1",
     "nodemon": "^2.0.20",
