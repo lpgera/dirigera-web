@@ -1,5 +1,5 @@
 # stage 1 - build
-FROM --platform=$BUILDPLATFORM node:18 AS BUILD_IMAGE
+FROM --platform=$BUILDPLATFORM node:19 AS BUILD_IMAGE
 
 WORKDIR /usr/src/app
 
@@ -13,7 +13,7 @@ RUN npm run build:backend
 RUN npm run build:frontend
 
 # stage 2 - lighter image without frontend build dependencies
-FROM node:18-alpine as TARGET
+FROM node:19-alpine as TARGET
 
 WORKDIR /usr/src/app
 
