@@ -24,7 +24,7 @@
     "@graphql-tools/utils": "^8.13.0",
     "@lpgera/ts-env": "^1.2.1",
     "apollo-server": "^3.10.3",
-    "apollo-server-express": "^3.10.3",
+    "apollo-server-express": "^3.11.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "graphql": "^16.6.0",
