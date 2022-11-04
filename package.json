@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@apollo/client": "^3.7.1",
-    "@graphql-codegen/cli": "^2.13.8",
+    "@graphql-codegen/cli": "^2.13.11",
     "@graphql-codegen/near-operation-file-preset": "^2.4.3",
     "@graphql-codegen/typescript": "^2.8.0",
     "@graphql-codegen/typescript-operations": "^2.5.5",
