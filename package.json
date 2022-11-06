@@ -17,8 +17,8 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "prepare": "husky install",
-    "check-updates": "ncu",
-    "check-updates-interactive": "ncu -i"
+    "check-updates": "ncu -i",
+    "browserslist-update": "browserslist --update-db"
   },
   "dependencies": {
     "@graphql-tools/schema": "^9.0.8",
@@ -32,7 +32,7 @@
     "graphql-tag": "^2.12.6",
     "jsonwebtoken": "^8.5.1",
     "node-tradfri-client": "^3.1.1",
-    "ws": "^8.10.0"
+    "ws": "^8.11.0"
   },
   "devDependencies": {
     "@apollo/client": "^3.7.1",
