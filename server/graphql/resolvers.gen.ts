@@ -34,9 +34,11 @@ export type Accessory = {
   battery?: Maybe<Scalars['Int']>
   colorTemperature?: Maybe<Scalars['Float']>
   dimmer?: Maybe<Scalars['Float']>
+  hue?: Maybe<Scalars['Float']>
   id: Scalars['Int']
   name: Scalars['String']
   onOff?: Maybe<Scalars['Boolean']>
+  saturation?: Maybe<Scalars['Float']>
   type: AccessoryType
 }
 
@@ -64,11 +66,15 @@ export type Mutation = {
   _?: Maybe<Scalars['String']>
   accessoryColorTemperature?: Maybe<Scalars['String']>
   accessoryDimmer?: Maybe<Scalars['String']>
+  accessoryHue?: Maybe<Scalars['String']>
   accessoryOnOff?: Maybe<Scalars['String']>
+  accessorySaturation?: Maybe<Scalars['String']>
   activateScene?: Maybe<Scalars['String']>
   groupColorTemperature?: Maybe<Scalars['String']>
   groupDimmer?: Maybe<Scalars['String']>
+  groupHue?: Maybe<Scalars['String']>
   groupOnOff?: Maybe<Scalars['String']>
+  groupSaturation?: Maybe<Scalars['String']>
   login?: Maybe<Scalars['String']>
 }
 
@@ -82,9 +88,19 @@ export type MutationAccessoryDimmerArgs = {
   id: Scalars['Int']
 }
 
+export type MutationAccessoryHueArgs = {
+  hue: Scalars['Float']
+  id: Scalars['Int']
+}
+
 export type MutationAccessoryOnOffArgs = {
   id: Scalars['Int']
   onOff: Scalars['Boolean']
+}
+
+export type MutationAccessorySaturationArgs = {
+  id: Scalars['Int']
+  saturation: Scalars['Float']
 }
 
 export type MutationActivateSceneArgs = {
@@ -101,9 +117,19 @@ export type MutationGroupDimmerArgs = {
   id: Scalars['Int']
 }
 
+export type MutationGroupHueArgs = {
+  hue: Scalars['Float']
+  id: Scalars['Int']
+}
+
 export type MutationGroupOnOffArgs = {
   id: Scalars['Int']
   onOff: Scalars['Boolean']
+}
+
+export type MutationGroupSaturationArgs = {
+  id: Scalars['Int']
+  saturation: Scalars['Float']
 }
 
 export type MutationLoginArgs = {
@@ -279,9 +305,11 @@ export type AccessoryResolvers<
     ContextType
   >
   dimmer?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>
+  hue?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   onOff?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>
+  saturation?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>
   type?: Resolver<ResolversTypes['AccessoryType'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
@@ -320,11 +348,23 @@ export type MutationResolvers<
     ContextType,
     RequireFields<MutationAccessoryDimmerArgs, 'dimmer' | 'id'>
   >
+  accessoryHue?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationAccessoryHueArgs, 'hue' | 'id'>
+  >
   accessoryOnOff?: Resolver<
     Maybe<ResolversTypes['String']>,
     ParentType,
     ContextType,
     RequireFields<MutationAccessoryOnOffArgs, 'id' | 'onOff'>
+  >
+  accessorySaturation?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationAccessorySaturationArgs, 'id' | 'saturation'>
   >
   activateScene?: Resolver<
     Maybe<ResolversTypes['String']>,
@@ -344,11 +384,23 @@ export type MutationResolvers<
     ContextType,
     RequireFields<MutationGroupDimmerArgs, 'dimmer' | 'id'>
   >
+  groupHue?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationGroupHueArgs, 'hue' | 'id'>
+  >
   groupOnOff?: Resolver<
     Maybe<ResolversTypes['String']>,
     ParentType,
     ContextType,
     RequireFields<MutationGroupOnOffArgs, 'id' | 'onOff'>
+  >
+  groupSaturation?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationGroupSaturationArgs, 'id' | 'saturation'>
   >
   login?: Resolver<
     Maybe<ResolversTypes['String']>,

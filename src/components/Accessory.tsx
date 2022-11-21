@@ -7,11 +7,15 @@ import {
   AccessoryColorTemperatureMutationVariables,
   AccessoryDimmerMutation,
   AccessoryDimmerMutationVariables,
+  AccessoryHueMutation,
+  AccessoryHueMutationVariables,
   AccessoryOnOffMutation,
   AccessoryOnOffMutationVariables,
+  AccessorySaturationMutation,
+  AccessorySaturationMutationVariables,
 } from './Accessory.types.gen'
 import { AccessoryType } from '../graphql.types'
-import ColorTemperature from './ColorTemperature'
+import Color from './Color'
 
 export type AccessoryProps = {
   id: number
@@ -22,6 +26,8 @@ export type AccessoryProps = {
   onOff?: boolean | null
   battery?: number | null
   colorTemperature?: number | null
+  hue?: number | null
+  saturation?: number | null
 }
 
 type Props = AccessoryProps & {
@@ -33,6 +39,8 @@ const Accessory = ({
   alive,
   battery,
   colorTemperature,
+  hue,
+  saturation,
   dimmer,
   id,
   isLoading,
@@ -48,12 +56,20 @@ const Accessory = ({
   const [colorTemperatureValue, setColorTemperatureValue] = useState(
     colorTemperature ?? null
   )
+  const [hueValue, setHueValue] = useState(hue ?? null)
+  const [saturationValue, setSaturationValue] = useState(saturation ?? null)
   useEffect(() => {
     setDimmerValue(dimmer ?? null)
   }, [dimmer])
   useEffect(() => {
     setColorTemperatureValue(colorTemperature ?? null)
   }, [colorTemperature])
+  useEffect(() => {
+    setHueValue(hue ?? null)
+  }, [hue])
+  useEffect(() => {
+    setSaturationValue(saturation ?? null)
+  }, [saturation])
 
   const [accessoryOnOff] = useMutation<
     AccessoryOnOffMutation,
@@ -81,6 +97,22 @@ const Accessory = ({
   >(gql`
     mutation AccessoryColorTemperature($id: Int!, $colorTemperature: Float!) {
       accessoryColorTemperature(id: $id, colorTemperature: $colorTemperature)
+    }
+  `)
+  const [accessoryHue] = useMutation<
+    AccessoryHueMutation,
+    AccessoryHueMutationVariables
+  >(gql`
+    mutation AccessoryHue($id: Int!, $hue: Float!) {
+      accessoryHue(id: $id, hue: $hue)
+    }
+  `)
+  const [accessorySaturation] = useMutation<
+    AccessorySaturationMutation,
+    AccessorySaturationMutationVariables
+  >(gql`
+    mutation AccessorySaturation($id: Int!, $saturation: Float!) {
+      accessorySaturation(id: $id, saturation: $saturation)
     }
   `)
 
@@ -134,13 +166,27 @@ const Accessory = ({
         ) : null}
         {colorTemperatureValue !== null ? (
           <Col flex="0">
-            <ColorTemperature
+            <Color
               colorTemperature={colorTemperatureValue}
+              hue={hueValue}
+              saturation={saturationValue}
               disabled={isLoading || !alive}
-              onAfterChange={async (newValue) => {
+              onColorTemperatureChange={async (newValue) => {
                 setColorTemperatureValue(newValue)
                 await accessoryColorTemperature({
                   variables: { id, colorTemperature: newValue },
+                })
+              }}
+              onHueChange={async (newValue) => {
+                setHueValue(newValue)
+                await accessoryHue({
+                  variables: { id, hue: newValue },
+                })
+              }}
+              onSaturationChange={async (newValue) => {
+                setSaturationValue(newValue)
+                await accessorySaturation({
+                  variables: { id, saturation: newValue },
                 })
               }}
             />

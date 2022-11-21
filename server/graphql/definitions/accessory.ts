@@ -24,6 +24,8 @@ export const typeDefs = gql`
     onOff: Boolean
     dimmer: Float
     colorTemperature: Float
+    hue: Float
+    saturation: Float
   }
 
   extend type Group {
@@ -35,6 +37,8 @@ export const typeDefs = gql`
     accessoryDimmer(id: Int!, dimmer: Float!): String @loggedIn
     accessoryColorTemperature(id: Int!, colorTemperature: Float!): String
       @loggedIn
+    accessoryHue(id: Int!, hue: Float!): String
+    accessorySaturation(id: Int!, saturation: Float!): String
   }
 `
 
@@ -69,6 +73,12 @@ export const resolvers: Resolvers = {
     },
     colorTemperature: ({ lightList = [] }) => {
       return lightList[0]?.colorTemperature
+    },
+    hue: ({ lightList = [] }) => {
+      return lightList[0]?.hue
+    },
+    saturation: ({ lightList = [] }) => {
+      return lightList[0]?.saturation
     },
   },
   Group: {
@@ -107,6 +117,20 @@ export const resolvers: Resolvers = {
       const accessory = tradfriClient.devices[id]
       await tradfriClient.operateLight(accessory, {
         colorTemperature,
+      })
+      return null
+    },
+    accessoryHue: async (_, { id, hue }, { tradfriClient }) => {
+      const accessory = tradfriClient.devices[id]
+      await tradfriClient.operateLight(accessory, {
+        hue,
+      })
+      return null
+    },
+    accessorySaturation: async (_, { id, saturation }, { tradfriClient }) => {
+      const accessory = tradfriClient.devices[id]
+      await tradfriClient.operateLight(accessory, {
+        saturation,
       })
       return null
     },

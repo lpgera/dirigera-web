@@ -29,3 +29,23 @@ export type AccessoryColorTemperatureMutation = {
   __typename?: 'Mutation'
   accessoryColorTemperature?: string | null
 }
+
+export type AccessoryHueMutationVariables = Types.Exact<{
+  id: Types.Scalars['Int']
+  hue: Types.Scalars['Float']
+}>
+
+export type AccessoryHueMutation = {
+  __typename?: 'Mutation'
+  accessoryHue?: string | null
+}
+
+export type AccessorySaturationMutationVariables = Types.Exact<{
+  id: Types.Scalars['Int']
+  saturation: Types.Scalars['Float']
+}>
+
+export type AccessorySaturationMutation = {
+  __typename?: 'Mutation'
+  accessorySaturation?: string | null
+}

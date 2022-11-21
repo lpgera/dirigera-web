@@ -7,10 +7,14 @@ import {
   GroupColorTemperatureMutationVariables,
   GroupDimmerMutation,
   GroupDimmerMutationVariables,
+  GroupHueMutation,
+  GroupHueMutationVariables,
   GroupOnOffMutation,
   GroupOnOffMutationVariables,
+  GroupSaturationMutation,
+  GroupSaturationMutationVariables,
 } from './Group.types.gen'
-import ColorTemperature from './ColorTemperature'
+import Color from './Color'
 
 type Props = {
   id: number
@@ -19,32 +23,21 @@ type Props = {
   isDeviceListDefaultOpen?: Boolean
 }
 
-const calculateGroupDimmer = (accessories: AccessoryProps[]) => {
-  const dimmers = accessories
-    .map((a) => a.dimmer)
-    .filter((d) => d != null) as number[]
-
-  const sum = dimmers.reduce((accumulator, dimmer) => accumulator + dimmer, 0)
-
-  if (dimmers.length) {
-    return sum / dimmers.length
-  }
-
-  return null
-}
-
 const calculateGroupOnOff = (accessories: AccessoryProps[]) =>
   accessories.some((a) => a.onOff)
 
-const calculateGroupColorTemperature = (accessories: AccessoryProps[]) => {
-  const colorTemperatures = accessories
-    .map((a) => a.colorTemperature)
-    .filter((ct) => ct != null) as number[]
+const calculateGroupAverage = (
+  accessories: AccessoryProps[],
+  property: 'dimmer' | 'colorTemperature' | 'hue' | 'saturation'
+) => {
+  const values = accessories
+    .map((a) => a[property])
+    .filter((v) => v != null) as number[]
 
-  const sum = colorTemperatures.reduce((accumulator, ct) => accumulator + ct, 0)
+  const sum = values.reduce((accumulator, v) => accumulator + v, 0)
 
-  if (colorTemperatures.length) {
-    return sum / colorTemperatures.length
+  if (values.length) {
+    return sum / values.length
   }
 
   return null
@@ -55,10 +48,14 @@ const Group = ({ accessories, id, name, isDeviceListDefaultOpen }: Props) => {
   const [dimmer, setDimmer] = useState<number | null>(null)
   const [onOff, setOnOff] = useState(false)
   const [colorTemperature, setColorTemperature] = useState<number | null>(null)
+  const [hue, setHue] = useState<number | null>(null)
+  const [saturation, setSaturation] = useState<number | null>(null)
   useEffect(() => {
-    setDimmer(calculateGroupDimmer(accessories))
+    setDimmer(calculateGroupAverage(accessories, 'dimmer'))
     setOnOff(calculateGroupOnOff(accessories))
-    setColorTemperature(calculateGroupColorTemperature(accessories))
+    setColorTemperature(calculateGroupAverage(accessories, 'colorTemperature'))
+    setHue(calculateGroupAverage(accessories, 'hue'))
+    setSaturation(calculateGroupAverage(accessories, 'saturation'))
   }, [accessories])
 
   const [groupOnOff] = useMutation<
@@ -85,6 +82,22 @@ const Group = ({ accessories, id, name, isDeviceListDefaultOpen }: Props) => {
   >(gql`
     mutation GroupColorTemperature($id: Int!, $colorTemperature: Float!) {
       groupColorTemperature(id: $id, colorTemperature: $colorTemperature)
+    }
+  `)
+  const [groupHue] = useMutation<
+    GroupHueMutation,
+    GroupHueMutationVariables
+  >(gql`
+    mutation GroupHue($id: Int!, $hue: Float!) {
+      groupHue(id: $id, hue: $hue)
+    }
+  `)
+  const [groupSaturation] = useMutation<
+    GroupSaturationMutation,
+    GroupSaturationMutationVariables
+  >(gql`
+    mutation GroupSaturation($id: Int!, $saturation: Float!) {
+      groupSaturation(id: $id, saturation: $saturation)
     }
   `)
 
@@ -133,16 +146,34 @@ const Group = ({ accessories, id, name, isDeviceListDefaultOpen }: Props) => {
             />
           </Col>
         ) : null}
-        {colorTemperature !== null ? (
+        {colorTemperature !== null || hue !== null || saturation !== null ? (
           <Col flex="0">
-            <ColorTemperature
+            <Color
               colorTemperature={colorTemperature}
+              hue={hue}
+              saturation={saturation}
               disabled={isLoading || !isGroupColorChangeable}
-              onAfterChange={async (value) => {
+              onColorTemperatureChange={async (value) => {
                 await groupColorTemperature({
                   variables: {
                     id,
                     colorTemperature: value as number,
+                  },
+                })
+              }}
+              onHueChange={async (value) => {
+                await groupHue({
+                  variables: {
+                    id,
+                    hue: value as number,
+                  },
+                })
+              }}
+              onSaturationChange={async (value) => {
+                await groupSaturation({
+                  variables: {
+                    id,
+                    saturation: value as number,
                   },
                 })
               }}
