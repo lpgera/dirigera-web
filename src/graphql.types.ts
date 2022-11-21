@@ -24,9 +24,11 @@ export type Accessory = {
   battery?: Maybe<Scalars['Int']>
   colorTemperature?: Maybe<Scalars['Float']>
   dimmer?: Maybe<Scalars['Float']>
+  hue?: Maybe<Scalars['Float']>
   id: Scalars['Int']
   name: Scalars['String']
   onOff?: Maybe<Scalars['Boolean']>
+  saturation?: Maybe<Scalars['Float']>
   type: AccessoryType
 }
 
@@ -54,11 +56,15 @@ export type Mutation = {
   _?: Maybe<Scalars['String']>
   accessoryColorTemperature?: Maybe<Scalars['String']>
   accessoryDimmer?: Maybe<Scalars['String']>
+  accessoryHue?: Maybe<Scalars['String']>
   accessoryOnOff?: Maybe<Scalars['String']>
+  accessorySaturation?: Maybe<Scalars['String']>
   activateScene?: Maybe<Scalars['String']>
   groupColorTemperature?: Maybe<Scalars['String']>
   groupDimmer?: Maybe<Scalars['String']>
+  groupHue?: Maybe<Scalars['String']>
   groupOnOff?: Maybe<Scalars['String']>
+  groupSaturation?: Maybe<Scalars['String']>
   login?: Maybe<Scalars['String']>
 }
 
@@ -72,9 +78,19 @@ export type MutationAccessoryDimmerArgs = {
   id: Scalars['Int']
 }
 
+export type MutationAccessoryHueArgs = {
+  hue: Scalars['Float']
+  id: Scalars['Int']
+}
+
 export type MutationAccessoryOnOffArgs = {
   id: Scalars['Int']
   onOff: Scalars['Boolean']
+}
+
+export type MutationAccessorySaturationArgs = {
+  id: Scalars['Int']
+  saturation: Scalars['Float']
 }
 
 export type MutationActivateSceneArgs = {
@@ -91,9 +107,19 @@ export type MutationGroupDimmerArgs = {
   id: Scalars['Int']
 }
 
+export type MutationGroupHueArgs = {
+  hue: Scalars['Float']
+  id: Scalars['Int']
+}
+
 export type MutationGroupOnOffArgs = {
   id: Scalars['Int']
   onOff: Scalars['Boolean']
+}
+
+export type MutationGroupSaturationArgs = {
+  id: Scalars['Int']
+  saturation: Scalars['Float']
 }
 
 export type MutationLoginArgs = {

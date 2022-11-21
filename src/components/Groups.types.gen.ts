@@ -18,6 +18,8 @@ export type GroupsQuery = {
       dimmer?: number | null
       battery?: number | null
       colorTemperature?: number | null
+      hue?: number | null
+      saturation?: number | null
     }>
   }>
 }

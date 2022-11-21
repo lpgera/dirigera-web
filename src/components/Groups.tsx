@@ -40,6 +40,8 @@ export const GROUPS_QUERY = gql`
         dimmer
         battery
         colorTemperature
+        hue
+        saturation
       }
     }
   }

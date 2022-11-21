@@ -29,3 +29,23 @@ export type GroupColorTemperatureMutation = {
   __typename?: 'Mutation'
   groupColorTemperature?: string | null
 }
+
+export type GroupHueMutationVariables = Types.Exact<{
+  id: Types.Scalars['Int']
+  hue: Types.Scalars['Float']
+}>
+
+export type GroupHueMutation = {
+  __typename?: 'Mutation'
+  groupHue?: string | null
+}
+
+export type GroupSaturationMutationVariables = Types.Exact<{
+  id: Types.Scalars['Int']
+  saturation: Types.Scalars['Float']
+}>
+
+export type GroupSaturationMutation = {
+  __typename?: 'Mutation'
+  groupSaturation?: string | null
+}
