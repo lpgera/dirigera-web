@@ -12,8 +12,8 @@ const Frame = () => {
     <Layout style={{ minHeight: '100vh', backgroundColor: 'rgb(30 30 30)' }}>
       <Layout.Content style={{ margin: '16px' }}>
         <Typography.Title>
-          <Row gutter={[8, 8]}>
-            <Col flex="0">
+          <Row gutter={[8, 8]} style={{ fontSize: 'inherit' }}>
+            <Col flex="0" style={{ fontSize: 'inherit' }}>
               <BsFillHouseFill
                 size="1.1em"
                 style={{
@@ -23,8 +23,10 @@ const Frame = () => {
                 }}
               />
             </Col>
-            <Col flex="auto">Tradfri web UI</Col>
-            <Col flex="0">
+            <Col flex="auto" style={{ fontSize: 'inherit' }}>
+              Tradfri web UI
+            </Col>
+            <Col flex="0" style={{ fontSize: 'inherit' }}>
               <Logout />
             </Col>
           </Row>

@@ -38,7 +38,11 @@ const Color = ({
   return (
     <Popover
       content={
-        <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+        <Space
+          direction="vertical"
+          size="middle"
+          style={{ display: 'flex', padding: 8 }}
+        >
           {colorTemperatureValue !== null ? (
             <div>
               Color temperature

@@ -1,6 +1,6 @@
 import React from 'react'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
-import 'antd/dist/antd.dark.css'
+import 'antd/dist/reset.css'
 import Group from './Group'
 import { AccessoryType } from '../graphql.types'
 
