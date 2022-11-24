@@ -1,6 +1,6 @@
 import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
-import 'antd/dist/antd.dark.css'
+import 'antd/dist/reset.css'
 import Frame from './Frame'
 import { AuthContext } from './AuthContext'
 import { GROUPS_QUERY } from './Groups'
