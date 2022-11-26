@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN npm ci
+RUN npm ci --no-audit --no-fund
 
 COPY . .
 
@@ -19,7 +19,7 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN npm ci --omit=dev --ignore-scripts && npm cache clear --force
+RUN npm ci --omit=dev --ignore-scripts --no-audit --no-fund && npm cache clear --force
 
 COPY . .
 
