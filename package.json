@@ -52,7 +52,7 @@
     "@storybook/manager-webpack5": "^6.5.13",
     "@storybook/node-logger": "^6.5.13",
     "@storybook/preset-create-react-app": "^4.1.2",
-    "@storybook/react": "^6.5.13",
+    "@storybook/react": "^6.5.14",
     "@swc/cli": "^0.1.57",
     "@swc/core": "^1.3.19",
     "@swc/register": "^0.1.10",
