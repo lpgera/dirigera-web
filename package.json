@@ -42,7 +42,7 @@
     "@apollo/client": "^3.7.1",
     "@graphql-codegen/cli": "^2.14.1",
     "@graphql-codegen/near-operation-file-preset": "^2.4.4",
-    "@graphql-codegen/typescript": "^2.8.2",
+    "@graphql-codegen/typescript": "^2.8.3",
     "@graphql-codegen/typescript-operations": "^2.5.7",
     "@graphql-codegen/typescript-resolvers": "^2.7.7",
     "@storybook/addon-actions": "^6.5.13",
