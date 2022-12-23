@@ -45,7 +45,7 @@
     "@graphql-codegen/typescript": "^2.8.5",
     "@graphql-codegen/typescript-operations": "^2.5.10",
     "@graphql-codegen/typescript-resolvers": "^2.7.10",
-    "@storybook/addon-actions": "^6.5.14",
+    "@storybook/addon-actions": "^6.5.15",
     "@storybook/addon-essentials": "^6.5.14",
     "@storybook/addon-links": "^6.5.14",
     "@storybook/builder-webpack5": "^6.5.14",
