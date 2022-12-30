@@ -44,7 +44,7 @@
     "@graphql-codegen/near-operation-file-preset": "^2.4.4",
     "@graphql-codegen/typescript": "^2.8.5",
     "@graphql-codegen/typescript-operations": "^2.5.10",
-    "@graphql-codegen/typescript-resolvers": "^2.7.10",
+    "@graphql-codegen/typescript-resolvers": "^2.7.11",
     "@storybook/addon-actions": "^6.5.15",
     "@storybook/addon-essentials": "^6.5.15",
     "@storybook/addon-links": "^6.5.15",
