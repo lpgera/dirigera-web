@@ -35,7 +35,7 @@
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",
     "jsonwebtoken": "^9.0.0",
-    "node-tradfri-client": "^3.1.1",
+    "node-tradfri-client": "^3.2.0",
     "ws": "^8.12.0"
   },
   "devDependencies": {
