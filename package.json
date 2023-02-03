@@ -25,7 +25,7 @@
     "browserslist-update": "browserslist --update-db"
   },
   "dependencies": {
-    "@graphql-tools/schema": "^9.0.13",
+    "@graphql-tools/schema": "^9.0.15",
     "@graphql-tools/utils": "^9.1.4",
     "@lpgera/ts-env": "^1.2.3",
     "apollo-server": "^3.11.1",
