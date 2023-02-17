@@ -60,7 +60,7 @@
     "@types/jsonwebtoken": "^9.0.1",
     "@types/node": "^18.11.18",
     "@types/react": "^18.0.27",
-    "@types/react-dom": "^18.0.10",
+    "@types/react-dom": "^18.0.11",
     "@types/ws": "^8.5.4",
     "antd": "^5.1.7",
     "chromatic": "^6.15.0",
