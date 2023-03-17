@@ -36,7 +36,7 @@
     "graphql-tag": "^2.12.6",
     "jsonwebtoken": "^9.0.0",
     "node-tradfri-client": "^3.2.0",
-    "ws": "^8.12.1"
+    "ws": "^8.13.0"
   },
   "devDependencies": {
     "@apollo/client": "^3.7.9",
