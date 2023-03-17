@@ -75,7 +75,7 @@
     "react-scripts": "5.0.1",
     "react-use-websocket": "^4.3.1",
     "storybook-addon-apollo-client": "^4.0.13",
-    "typescript": "^4.9.5"
+    "typescript": "^5.0.2"
   },
   "browserslist": {
     "production": [
