@@ -7,8 +7,7 @@
     "npm": ">8.0.0"
   },
   "volta": {
-    "node": "19.1.0",
-    "npm": "9.1.2"
+    "node": "19.8.1"
   },
   "scripts": {
     "watch:frontend": "react-scripts start",
