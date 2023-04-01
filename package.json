@@ -64,7 +64,7 @@
     "antd": "^5.3.1",
     "chromatic": "^6.17.2",
     "husky": "^8.0.3",
-    "nodemon": "^2.0.21",
+    "nodemon": "^2.0.22",
     "npm-check-updates": "^16.7.12",
     "prettier": "^2.8.4",
     "pretty-quick": "^3.1.3",
