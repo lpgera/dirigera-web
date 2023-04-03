@@ -35,7 +35,6 @@
     "graphql-tag": "^2.12.6",
     "jsonwebtoken": "^9.0.0",
     "node-tradfri-client": "^3.2.0",
-    "react-scripts": "^5.0.1",
     "ws": "^8.13.0"
   },
   "devDependencies": {
@@ -71,6 +70,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
+    "react-scripts": "^5.0.1",
     "react-use-websocket": "^4.3.1",
     "storybook": "^7.0.2",
     "storybook-addon-apollo-client": "^4.1.4",
