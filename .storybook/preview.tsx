@@ -1,17 +1,27 @@
-import { MockedProvider } from '@apollo/client/testing'
+import type { Preview } from '@storybook/react'
 import { ConfigProvider, theme } from 'antd'
-import { DecoratorFn } from '@storybook/react'
+import { MockedProvider } from '@apollo/client/testing'
 
-export const parameters = {
-  apolloClient: {
-    MockedProvider,
+const preview: Preview = {
+  parameters: {
+    actions: { argTypesRegex: '^on[A-Z].*' },
+    controls: {
+      matchers: {
+        color: /(background|color)$/i,
+        date: /Date$/,
+      },
+    },
+    apolloClient: {
+      MockedProvider,
+    },
   },
+  decorators: [
+    (Story) => (
+      <ConfigProvider theme={{ algorithm: theme.darkAlgorithm }}>
+        {Story()}
+      </ConfigProvider>
+    ),
+  ],
 }
 
-export const decorators = [
-  (Story) => (
-    <ConfigProvider theme={{ algorithm: theme.darkAlgorithm }}>
-      {Story()}
-    </ConfigProvider>
-  ),
-] as DecoratorFn[]
+export default preview
