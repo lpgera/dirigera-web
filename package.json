@@ -61,7 +61,7 @@
     "@types/react-dom": "^18.0.11",
     "@types/ws": "^8.5.4",
     "antd": "^5.3.3",
-    "chromatic": "^6.17.2",
+    "chromatic": "^6.17.3",
     "husky": "^8.0.3",
     "nodemon": "^2.0.22",
     "npm-check-updates": "^16.9.0",
