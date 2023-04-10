@@ -1,5 +1,7 @@
 # Tradfri web UI
 
+> ⚠️ This branch is no longer maintained.
+
 A React and GraphQL based progressive web app for connecting to a Tradfri gateway and controlling attached devices.
 
 Check out the UI on [Chromatic](https://chromatic.com/library?appId=61753f54931d3b003a535d15&branch=master).
@@ -32,7 +34,7 @@ Check out the UI on [Chromatic](https://chromatic.com/library?appId=61753f54931d
      -it \
      --rm \
      --env GATEWAY_ADDRESS=<gateway_ip_address> \
-     ghcr.io/lpgera/tradfri-web-ui \
+     ghcr.io/lpgera/dirigera-web:tradfri \
      npm run authenticate <security_code>
    ```
 
@@ -56,7 +58,7 @@ Check out the UI on [Chromatic](https://chromatic.com/library?appId=61753f54931d
      -p 8080:80 \
      --restart unless-stopped \
      --name tradfri-web-ui \
-     ghcr.io/lpgera/tradfri-web-ui
+     ghcr.io/lpgera/dirigera-web:tradfri
    ```
 
 5. The app is now available on http://localhost:8080. 🎉
