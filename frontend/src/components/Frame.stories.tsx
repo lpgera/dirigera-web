@@ -57,9 +57,37 @@ export const LoggedIn: Story = {
           newData: () => ({
             data: {
               rooms: [
-                { id: '1', name: 'Living Room' },
-                { id: '2', name: 'Bedroom' },
-                { id: '3', name: 'Entrance' },
+                {
+                  id: '1',
+                  name: 'Living Room',
+                  quickControls: [
+                    {
+                      id: '1',
+                      name: 'Lights (on)',
+                      isReachable: true,
+                      isOn: true,
+                    },
+                  ],
+                },
+                {
+                  id: '2',
+                  name: 'Bedroom',
+                  quickControls: [
+                    {
+                      id: '1',
+                      name: 'Lights (unreachable)',
+                      isReachable: false,
+                      isOn: false,
+                    },
+                    {
+                      id: '2',
+                      name: 'Lights (off)',
+                      isReachable: true,
+                      isOn: false,
+                    },
+                  ],
+                },
+                { id: '3', name: 'Entrance', quickControls: [] },
               ],
             },
           }),
