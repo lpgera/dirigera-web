@@ -1,0 +1,18 @@
+schema: ${GRAPHQL_SCHEMA_URL:http://127.0.0.1:3000/graphql}
+overwrite: true
+hooks:
+  afterAllFileWrite:
+    - prettier --write
+generates:
+  ./src/graphql.types.ts:
+    plugins:
+      - typescript
+  ./src/:
+    documents:
+      - './**/*.tsx'
+    preset: near-operation-file
+    presetConfig:
+      extension: .types.gen.ts
+      baseTypesPath: ./graphql.types.ts
+    plugins:
+      - typescript-operations

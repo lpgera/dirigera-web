@@ -1,0 +1,18 @@
+schema: ${GRAPHQL_SCHEMA_URL:http://localhost:4000/graphql}
+overwrite: true
+hooks:
+  afterAllFileWrite:
+    - prettier --write
+generates:
+  ./graphql/resolvers.gen.ts:
+    config:
+      useIndexSignature: true
+      contextType: ./context#Context
+      maybeValue: 'T extends PromiseLike<infer U> ? Promise<U | null> : T | null' # https://github.com/dotansimha/graphql-code-generator/issues/3174#issuecomment-595398571
+    # TODO
+    #      mappers:
+    #        Group: ./typeMappings#TradfriGroup
+    #        Accessory: ./typeMappings#TradfriAccessory
+    plugins:
+      - typescript
+      - typescript-resolvers

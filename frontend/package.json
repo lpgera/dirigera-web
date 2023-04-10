@@ -1,0 +1,68 @@
+{
+  "name": "frontend",
+  "scripts": {
+    "build": "react-scripts build",
+    "build-storybook": "storybook build",
+    "graphql-codegen": "graphql-codegen",
+    "storybook": "storybook dev -p 6006",
+    "watch": "react-scripts start"
+  },
+  "dependencies": {
+    "react-scripts": "^5.0.1"
+  },
+  "devDependencies": {
+    "@apollo/client": "^3.7.10",
+    "@graphql-codegen/cli": "^3.3.0",
+    "@graphql-codegen/near-operation-file-preset": "^2.5.0",
+    "@graphql-codegen/typescript": "^3.0.3",
+    "@graphql-codegen/typescript-operations": "^3.0.3",
+    "@storybook/addon-essentials": "^7.0.2",
+    "@storybook/addon-interactions": "^7.0.2",
+    "@storybook/addon-links": "^7.0.2",
+    "@storybook/blocks": "^7.0.2",
+    "@storybook/preset-create-react-app": "^7.0.2",
+    "@storybook/react": "^7.0.2",
+    "@storybook/react-webpack5": "^7.0.2",
+    "@types/react": "^18.0.33",
+    "@types/react-dom": "^18.0.11",
+    "antd": "^5.3.3",
+    "chromatic": "^6.17.3",
+    "http-proxy-middleware": "^2.0.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.8.0",
+    "react-use-websocket": "^4.3.1",
+    "storybook": "^7.0.2",
+    "storybook-addon-apollo-client": "^4.1.4",
+    "typescript": "^4.9.5"
+  },
+  "homepage": ".",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      }
+    ]
+  }
+}
