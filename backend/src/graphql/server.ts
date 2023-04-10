@@ -1,14 +1,13 @@
-import { ApolloServer } from 'apollo-server-express'
-import { gql } from 'apollo-server'
+import gql from 'graphql-tag'
+import type { Server } from 'http'
 import { makeExecutableSchema } from '@graphql-tools/schema'
-import type { ExpressContext } from 'apollo-server-express/dist/ApolloServer'
-import type { DirigeraClient } from 'dirigera'
+import { ApolloServer } from '@apollo/server'
+import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer'
 import * as loggedIn from './directives/loggedIn'
 import * as auth from './definitions/auth'
 import * as scene from './definitions/scene'
 import * as room from './definitions/room'
 import type { Context } from './context'
-import { verify } from '../jwt'
 
 const baseTypeDefs = gql`
   type Query {
@@ -33,15 +32,8 @@ const schema = loggedIn.loggedInDirectiveTransformer(
   })
 )
 
-export default (dirigeraClient: DirigeraClient) =>
-  new ApolloServer({
+export const apolloServer = (httpServer: Server) =>
+  new ApolloServer<Context>({
     schema,
-    context: (expressContext: ExpressContext): Context => {
-      const token = expressContext.req.headers['x-token']
-      const isLoggedIn = Boolean(token && verify(token.toString()))
-      return {
-        dirigeraClient,
-        isLoggedIn,
-      }
-    },
+    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
   })

@@ -1,4 +1,4 @@
-import { gql } from 'apollo-server'
+import gql from 'graphql-tag'
 import { Resolvers } from '../resolvers.gen'
 import tsEnv from '@lpgera/ts-env'
 import { sign } from '../../jwt'

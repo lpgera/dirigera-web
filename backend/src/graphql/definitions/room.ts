@@ -1,4 +1,4 @@
-import { gql } from 'apollo-server'
+import gql from 'graphql-tag'
 import { QuickControlType, type Resolvers } from '../resolvers.gen'
 import type { Device, DeviceSet } from 'dirigera'
 

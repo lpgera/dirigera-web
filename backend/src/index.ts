@@ -3,8 +3,11 @@ import path from 'path'
 import http from 'http'
 import tsEnv from '@lpgera/ts-env'
 import { Server } from 'ws'
-import graphqlServer from './graphql/server'
+import { json } from 'body-parser'
+import { expressMiddleware } from '@apollo/server/express4'
 import { getClient } from './dirigera'
+import { apolloServer } from './graphql/server'
+import { getContextFunction } from './graphql/context'
 
 const app = express()
 app.use(
@@ -16,8 +19,8 @@ app.get('/', function (_, res) {
   res.sendFile(path.join(__dirname, '..', 'frontend', 'index.html'))
 })
 
-const server = http.createServer(app)
-const wss = new Server({ server })
+const httpServer = http.createServer(app)
+const wss = new Server({ server: httpServer })
 const port = tsEnv.number('PORT') ?? 4000
 
 async function start() {
@@ -28,22 +31,26 @@ async function start() {
     }
   })
 
-  const apolloServer = graphqlServer(client)
-  await apolloServer.start()
-  apolloServer.applyMiddleware({ app })
+  const graphqlServer = apolloServer(httpServer)
+  await graphqlServer.start()
 
-  server.listen(port, () => {
+  app.use(
+    '/graphql',
+    json(),
+    expressMiddleware(graphqlServer, {
+      context: getContextFunction(client),
+    })
+  )
+
+  httpServer.listen(port, () => {
     console.log(`Server is listening on port ${port}`)
-    if (process.send) {
-      process.send('ready')
-    }
   })
 
   process.on('SIGINT', () => {
-    console.log('Received SIGINT, exiting...')
+    console.log('Received SIGINT, shutting down server...')
     client.stopListeningForUpdates()
     wss.clients.forEach((ws) => ws.terminate())
-    server.close()
+    httpServer.close()
   })
 }
 
