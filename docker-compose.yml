@@ -1,0 +1,24 @@
+# for development purposes
+version: '3.8'
+services:
+  backend:
+    image: node:19
+    env_file: backend/.env
+    volumes:
+      - .:/opt/app:delegated
+    working_dir: /opt/app
+    command: npm run watch -w backend
+    ports:
+      - 4000:4000
+  frontend:
+    image: node:19
+    volumes:
+      - .:/opt/app:delegated
+    working_dir: /opt/app
+    command: npm run watch -w frontend
+    ports:
+      - 3000:3000
+    depends_on:
+      - backend
+    environment:
+      - BACKEND_URL=http://backend:4000
