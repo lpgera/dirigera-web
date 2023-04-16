@@ -17,16 +17,11 @@ const Logout = () => {
         dispatch({ type: 'logout' })
       }}
       style={{
-        verticalAlign: 'middle',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
       }}
-      icon={
-        <IoMdLogOut
-          size="1.1em"
-          style={{
-            verticalAlign: 'text-bottom',
-          }}
-        />
-      }
+      icon={<IoMdLogOut />}
       title="Logout"
     />
   )

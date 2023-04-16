@@ -104,17 +104,13 @@ const Rooms = () => {
                   extra={
                     <Button
                       shape={'circle'}
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}
                       onClick={() => navigate(`room/${room.id}`)}
-                      icon={
-                        <>
-                          <GoSettings
-                            size="1.1em"
-                            style={{
-                              verticalAlign: 'text-bottom',
-                            }}
-                          />
-                        </>
-                      }
+                      icon={<GoSettings />}
                     />
                   }
                 >

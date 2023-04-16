@@ -15,14 +15,24 @@ const Frame = () => {
           <Typography.Title>
             <Row gutter={[8, 8]} style={{ fontSize: 'inherit' }}>
               <Col flex="0" style={{ fontSize: 'inherit' }}>
-                <BsFillHouseFill
-                  size="1.1em"
+                <div
                   style={{
+                    width: 46,
+                    height: 46,
                     backgroundColor: '#0059aa',
-                    color: '#fbd910',
-                    verticalAlign: 'text-bottom',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
                   }}
-                />
+                >
+                  <BsFillHouseFill
+                    size={32}
+                    style={{
+                      color: '#fbd910',
+                    }}
+                  />
+                </div>
               </Col>
               <Col flex="auto" style={{ fontSize: 'inherit' }}>
                 Dirigera web
