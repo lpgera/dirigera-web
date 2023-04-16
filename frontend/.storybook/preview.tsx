@@ -1,6 +1,7 @@
 import type { Preview } from '@storybook/react'
 import { ConfigProvider, theme } from 'antd'
 import { MockedProvider } from '@apollo/client/testing'
+import { withRouter } from 'storybook-addon-react-router-v6'
 
 const preview: Preview = {
   parameters: {
@@ -16,6 +17,7 @@ const preview: Preview = {
     },
   },
   decorators: [
+    withRouter,
     (Story) => (
       <ConfigProvider theme={{ algorithm: theme.darkAlgorithm }}>
         {Story()}

@@ -3,7 +3,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import 'antd/dist/reset.css'
 import Frame from './Frame'
 import { AuthContext } from './AuthContext'
-import { ROOMS_QUERY } from './Rooms'
+import Rooms, { ROOMS_QUERY } from './Rooms'
 import { SCENES_QUERY } from './Scenes'
 
 export default {
@@ -32,6 +32,10 @@ export const LoggedOut: Story = {}
 
 export const LoggedIn: Story = {
   parameters: {
+    reactRouter: {
+      routePath: '/',
+      outlet: <Rooms />,
+    },
     token: 'mock_token',
     apolloClient: {
       mocks: [
@@ -66,6 +70,7 @@ export const LoggedIn: Story = {
                       name: 'Lights (on)',
                       isReachable: true,
                       isOn: true,
+                      type: 'DEVICE',
                     },
                   ],
                 },
@@ -78,12 +83,14 @@ export const LoggedIn: Story = {
                       name: 'Lights (unreachable)',
                       isReachable: false,
                       isOn: false,
+                      type: 'DEVICE_SET',
                     },
                     {
                       id: '2',
                       name: 'Lights (off)',
                       isReachable: true,
                       isOn: false,
+                      type: 'DEVICE',
                     },
                   ],
                 },
