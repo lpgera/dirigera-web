@@ -1,6 +1,6 @@
 import React, { createContext, ReactElement, useReducer } from 'react'
 
-const LOCAL_STORAGE_KEY = 'tradfri-web-ui-token'
+const LOCAL_STORAGE_KEY = 'dirigera-web-token'
 
 type AuthState = {
   token: string | null

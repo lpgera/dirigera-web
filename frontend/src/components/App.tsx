@@ -1,9 +1,13 @@
 import React from 'react'
-import ApolloProvider from './ApolloProvider'
-import { AuthProvider } from './AuthContext'
-import Frame from './Frame'
+import { createHashRouter, RouterProvider } from 'react-router-dom'
 import { ConfigProvider, theme } from 'antd'
 import 'antd/dist/reset.css'
+import ApolloProvider from './ApolloProvider'
+import { AuthProvider } from './AuthContext'
+import { WebSocketUpdateProvider } from './WebSocketUpdateProvider'
+import Frame from './Frame'
+import Rooms from './Rooms'
+import Room from './Room'
 
 function App() {
   return (
@@ -14,7 +18,26 @@ function App() {
             algorithm: theme.darkAlgorithm,
           }}
         >
-          <Frame />
+          <WebSocketUpdateProvider>
+            <RouterProvider
+              router={createHashRouter([
+                {
+                  path: '/',
+                  element: <Frame />,
+                  children: [
+                    {
+                      index: true,
+                      element: <Rooms />,
+                    },
+                    {
+                      path: 'room/:roomId',
+                      element: <Room />,
+                    },
+                  ],
+                },
+              ])}
+            />
+          </WebSocketUpdateProvider>
         </ConfigProvider>
       </ApolloProvider>
     </AuthProvider>

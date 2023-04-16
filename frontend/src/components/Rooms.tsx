@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Button, Card, Col, Result, Row, Skeleton } from 'antd'
 import { useQuery, gql, useMutation } from '@apollo/client'
-import useWebSocket from 'react-use-websocket'
 import { GoSettings } from 'react-icons/go'
 import {
   QuickControlMutation,
@@ -9,6 +8,8 @@ import {
   RoomsQuery,
 } from './Rooms.types.gen'
 import Scenes from './Scenes'
+import { useNavigate } from 'react-router-dom'
+import { WebSocketUpdateContext } from './WebSocketUpdateProvider'
 
 const columnSizes = {
   xs: 12,
@@ -23,14 +24,6 @@ const buttonStyles = {
   overflow: 'hidden',
   textOverflow: 'ellipsis',
 }
-
-const wsUrl = (() => {
-  const { href, protocol, port } = window.location
-  const url = new URL('websocket', href)
-  url.protocol = protocol.replace('http', 'ws')
-  url.port = port
-  return url.toString()
-})()
 
 export const ROOMS_QUERY = gql`
   query Rooms {
@@ -59,7 +52,9 @@ const QUICK_CONTROL_MUTATION = gql`
 `
 
 const Rooms = () => {
-  const { data, refetch, loading, error } = useQuery<RoomsQuery>(ROOMS_QUERY)
+  const navigate = useNavigate()
+
+  const { data, refetch, error } = useQuery<RoomsQuery>(ROOMS_QUERY)
 
   // quick control mutation
   const [quickControl, { loading: quickControlLoading }] = useMutation<
@@ -67,10 +62,7 @@ const Rooms = () => {
     QuickControlMutationVariables
   >(QUICK_CONTROL_MUTATION)
 
-  const { lastMessage } = useWebSocket(wsUrl, {
-    shouldReconnect: () => true,
-  })
-
+  const { lastMessage } = useContext(WebSocketUpdateContext)
   useEffect(() => {
     refetch()?.catch(console.error)
   }, [lastMessage, refetch])
@@ -93,7 +85,7 @@ const Rooms = () => {
     <>
       <Scenes />
       <Row gutter={[16, 16]}>
-        {loading ? (
+        {!data ? (
           <Col key="loading" {...columnSizes}>
             <Card>
               <Skeleton active={true} />
@@ -112,7 +104,7 @@ const Rooms = () => {
                   extra={
                     <Button
                       shape={'circle'}
-                      disabled={true}
+                      onClick={() => navigate(`room/${room.id}`)}
                       icon={
                         <>
                           <GoSettings
