@@ -29,7 +29,7 @@ const Frame = () => {
                   <BsFillHouseFill
                     size={32}
                     style={{
-                      color: '#fbd910',
+                      color: '#fbd912',
                     }}
                   />
                 </div>
