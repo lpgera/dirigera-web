@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
-import { QuickControlType, type Resolvers } from '../resolvers.gen'
 import type { Device, DeviceSet } from 'dirigera'
+import { QuickControlType, type Resolvers } from '../resolvers.gen'
 
 export const typeDefs = gql`
   type Room {
@@ -13,7 +13,8 @@ export const typeDefs = gql`
     id: String!
     name: String!
     isReachable: Boolean!
-    isOn: Boolean!
+    isOn: Boolean
+    playback: String
     type: QuickControlType!
   }
 
@@ -30,8 +31,9 @@ export const typeDefs = gql`
     quickControl(
       id: String!
       type: QuickControlType!
-      isOn: Boolean!
-    ): Boolean! @loggedIn
+      isOn: Boolean
+      playback: String
+    ): Boolean @loggedIn
   }
 `
 
@@ -40,7 +42,8 @@ function getDeviceQuickControls(devices: Device[], roomId: string) {
     .filter(
       (device) =>
         device.room?.id === roomId &&
-        device.capabilities.canReceive.includes('isOn') &&
+        (device.capabilities.canReceive.includes('isOn') ||
+          device.capabilities.canReceive.includes('playback')) &&
         device.deviceSet.length === 0
     )
     .map((device) => ({
@@ -48,6 +51,7 @@ function getDeviceQuickControls(devices: Device[], roomId: string) {
       name: device.attributes.customName,
       isReachable: device.isReachable,
       isOn: device.attributes.isOn,
+      playback: device.attributes.playback,
       type: QuickControlType.Device,
     }))
 }
@@ -75,6 +79,8 @@ function getDeviceSetQuickControls(devices: Device[], roomId: string) {
       name: deviceSet.name,
       isReachable: devicesInSet.every((d) => d.isReachable),
       isOn: devicesInSet.some((d) => d.attributes.isOn),
+      playback: devicesInSet.find((d) => d.attributes.playback)?.attributes
+        .playback,
       type: QuickControlType.DeviceSet,
     }
   })
@@ -100,14 +106,30 @@ export const resolvers: Resolvers = {
     },
   },
   Mutation: {
-    quickControl: async (_, { id, type, isOn }, { dirigeraClient }) => {
+    quickControl: async (
+      _,
+      { id, type, isOn, playback },
+      { dirigeraClient }
+    ) => {
       if (type === QuickControlType.DeviceSet) {
-        await dirigeraClient.deviceSets.setIsOn({ id, isOn })
+        await dirigeraClient.deviceSets.setAttributes({
+          id,
+          attributes: {
+            isOn: isOn != null ? isOn : undefined,
+            playback: playback != null ? playback : undefined,
+          },
+        })
       }
       if (type === QuickControlType.Device) {
-        await dirigeraClient.devices.setAttributes({ id, attributes: { isOn } })
+        await dirigeraClient.devices.setAttributes({
+          id,
+          attributes: {
+            isOn: isOn != null ? isOn : undefined,
+            playback: playback != null ? playback : undefined,
+          },
+        })
       }
-      return isOn
+      return null
     },
   },
 }

@@ -35,6 +35,7 @@ export const ROOMS_QUERY = gql`
         name
         isReachable
         isOn
+        playback
         type
       }
     }
@@ -45,9 +46,10 @@ const QUICK_CONTROL_MUTATION = gql`
   mutation QuickControl(
     $id: String!
     $type: QuickControlType!
-    $isOn: Boolean!
+    $isOn: Boolean
+    $playback: String
   ) {
-    quickControl(id: $id, type: $type, isOn: $isOn)
+    quickControl(id: $id, type: $type, isOn: $isOn, playback: $playback)
   }
 `
 
@@ -120,14 +122,26 @@ const Rooms = () => {
                         key={qc.id}
                         block
                         style={buttonStyles}
-                        disabled={!qc.isReachable || quickControlLoading}
-                        type={qc.isOn ? 'primary' : 'default'}
+                        disabled={
+                          (qc.playback && qc.playback !== 'playbackPlaying') ||
+                          !qc.isReachable ||
+                          quickControlLoading
+                        }
+                        type={
+                          qc.isOn || qc.playback === 'playbackPlaying'
+                            ? 'primary'
+                            : 'default'
+                        }
                         onClick={() =>
                           quickControl({
                             variables: {
                               id: qc.id,
                               type: qc.type,
-                              isOn: !qc.isOn,
+                              isOn: qc.isOn != null ? !qc.isOn : null,
+                              playback:
+                                qc.playback === 'playbackPlaying'
+                                  ? 'playbackPaused'
+                                  : null,
                             },
                           })
                         }

@@ -23,7 +23,7 @@ export type Mutation = {
   _?: Maybe<Scalars['String']>
   activateScene?: Maybe<Scalars['String']>
   login?: Maybe<Scalars['String']>
-  quickControl: Scalars['Boolean']
+  quickControl?: Maybe<Scalars['Boolean']>
 }
 
 export type MutationActivateSceneArgs = {
@@ -36,7 +36,8 @@ export type MutationLoginArgs = {
 
 export type MutationQuickControlArgs = {
   id: Scalars['String']
-  isOn: Scalars['Boolean']
+  isOn?: InputMaybe<Scalars['Boolean']>
+  playback?: InputMaybe<Scalars['String']>
   type: QuickControlType
 }
 
@@ -50,9 +51,10 @@ export type Query = {
 export type QuickControl = {
   __typename?: 'QuickControl'
   id: Scalars['String']
-  isOn: Scalars['Boolean']
+  isOn?: Maybe<Scalars['Boolean']>
   isReachable: Scalars['Boolean']
   name: Scalars['String']
+  playback?: Maybe<Scalars['String']>
   type: QuickControlType
 }
 

@@ -32,7 +32,7 @@ export type Mutation = {
   _?: Maybe<Scalars['String']>
   activateScene?: Maybe<Scalars['String']>
   login?: Maybe<Scalars['String']>
-  quickControl: Scalars['Boolean']
+  quickControl?: Maybe<Scalars['Boolean']>
 }
 
 export type MutationActivateSceneArgs = {
@@ -45,7 +45,8 @@ export type MutationLoginArgs = {
 
 export type MutationQuickControlArgs = {
   id: Scalars['String']
-  isOn: Scalars['Boolean']
+  isOn?: InputMaybe<Scalars['Boolean']>
+  playback?: InputMaybe<Scalars['String']>
   type: QuickControlType
 }
 
@@ -59,9 +60,10 @@ export type Query = {
 export type QuickControl = {
   __typename?: 'QuickControl'
   id: Scalars['String']
-  isOn: Scalars['Boolean']
+  isOn?: Maybe<Scalars['Boolean']>
   isReachable: Scalars['Boolean']
   name: Scalars['String']
+  playback?: Maybe<Scalars['String']>
   type: QuickControlType
 }
 
@@ -241,10 +243,10 @@ export type MutationResolvers<
     RequireFields<MutationLoginArgs, 'password'>
   >
   quickControl?: Resolver<
-    ResolversTypes['Boolean'],
+    Maybe<ResolversTypes['Boolean']>,
     ParentType,
     ContextType,
-    RequireFields<MutationQuickControlArgs, 'id' | 'isOn' | 'type'>
+    RequireFields<MutationQuickControlArgs, 'id' | 'type'>
   >
 }>
 
@@ -262,9 +264,10 @@ export type QuickControlResolvers<
   ParentType extends ResolversParentTypes['QuickControl'] = ResolversParentTypes['QuickControl']
 > = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  isOn?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
+  isOn?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>
   isReachable?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  playback?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
   type?: Resolver<ResolversTypes['QuickControlType'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
