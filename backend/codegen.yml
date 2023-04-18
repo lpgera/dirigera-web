@@ -4,7 +4,7 @@ hooks:
   afterAllFileWrite:
     - prettier --write
 generates:
-  ./graphql/resolvers.gen.ts:
+  ./src/graphql/resolvers.gen.ts:
     config:
       useIndexSignature: true
       contextType: ./context#Context
