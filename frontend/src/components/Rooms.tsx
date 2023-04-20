@@ -3,7 +3,7 @@ import { Button, Card, Col, Result, Row, Skeleton } from 'antd'
 import { useQuery, gql, useMutation } from '@apollo/client'
 import { GoSettings } from 'react-icons/go'
 import { useNavigate } from 'react-router-dom'
-import {
+import type {
   QuickControlMutation,
   QuickControlMutationVariables,
   RoomsQuery,

@@ -3,13 +3,84 @@ import { Button, Card, Col, Image, Row, Slider, Switch } from 'antd'
 import { BsBatteryFull } from 'react-icons/bs'
 import { FaPlay, FaPause } from 'react-icons/fa'
 import Color from './Color'
+import { gql, useMutation } from '@apollo/client'
+import type {
+  SetColorHueAndSaturationMutation,
+  SetColorHueAndSaturationMutationVariables,
+  SetColorTemperatureMutation,
+  SetColorTemperatureMutationVariables,
+  SetIsOnMutation,
+  SetIsOnMutationVariables,
+  SetLightLevelMutation,
+  SetLightLevelMutationVariables,
+  SetPlaybackMutation,
+  SetPlaybackMutationVariables,
+  SetVolumeMutation,
+  SetVolumeMutationVariables,
+} from './Device.types.gen'
+import type { ControlType } from '../graphql.types'
+
+const SET_IS_ON_MUTATION = gql`
+  mutation SetIsOn($id: String!, $type: ControlType!, $isOn: Boolean!) {
+    setIsOn(id: $id, type: $type, isOn: $isOn)
+  }
+`
+
+const SET_LIGHT_LEVEL_MUTATION = gql`
+  mutation SetLightLevel($id: String!, $type: ControlType!, $lightLevel: Int!) {
+    setLightLevel(id: $id, type: $type, lightLevel: $lightLevel)
+  }
+`
+
+const SET_COLOR_TEMPERATURE_MUTATION = gql`
+  mutation SetColorTemperature(
+    $id: String!
+    $type: ControlType!
+    $colorTemperature: Int!
+  ) {
+    setColorTemperature(
+      id: $id
+      type: $type
+      colorTemperature: $colorTemperature
+    )
+  }
+`
+
+const SET_COLOR_HUE_AND_SATURATION_MUTATION = gql`
+  mutation SetColorHueAndSaturation(
+    $id: String!
+    $type: ControlType!
+    $colorHue: Float!
+    $colorSaturation: Float!
+  ) {
+    setColorHueAndSaturation(
+      id: $id
+      type: $type
+      colorHue: $colorHue
+      colorSaturation: $colorSaturation
+    )
+  }
+`
+
+const SET_PLAYBACK_MUTATION = gql`
+  mutation SetPlayback($id: String!, $type: ControlType!, $playback: String!) {
+    setPlayback(id: $id, type: $type, playback: $playback)
+  }
+`
+
+const SET_VOLUME_MUTATION = gql`
+  mutation SetVolume($id: String!, $type: ControlType!, $volume: Int!) {
+    setVolume(id: $id, type: $type, volume: $volume)
+  }
+`
 
 const Device = ({
   device,
 }: {
   device: {
+    id: string
     name: string
-    type: string
+    type: ControlType
     isReachable: boolean
     batteryPercentage?: number | null
     isOn?: boolean | null
@@ -47,6 +118,30 @@ const Device = ({
     setColorHueValue(device.colorHue ?? null)
   }, [device.colorHue])
 
+  const [setIsOn] = useMutation<SetIsOnMutation, SetIsOnMutationVariables>(
+    SET_IS_ON_MUTATION
+  )
+  const [setLightLevel] = useMutation<
+    SetLightLevelMutation,
+    SetLightLevelMutationVariables
+  >(SET_LIGHT_LEVEL_MUTATION)
+  const [setColorTemperature] = useMutation<
+    SetColorTemperatureMutation,
+    SetColorTemperatureMutationVariables
+  >(SET_COLOR_TEMPERATURE_MUTATION)
+  const [setColorHueAndSaturation] = useMutation<
+    SetColorHueAndSaturationMutation,
+    SetColorHueAndSaturationMutationVariables
+  >(SET_COLOR_HUE_AND_SATURATION_MUTATION)
+  const [setPlayback] = useMutation<
+    SetPlaybackMutation,
+    SetPlaybackMutationVariables
+  >(SET_PLAYBACK_MUTATION)
+  const [setVolume] = useMutation<
+    SetVolumeMutation,
+    SetVolumeMutationVariables
+  >(SET_VOLUME_MUTATION)
+
   return (
     <Card title={device.name}>
       <Row align="middle" gutter={[8, 8]}>
@@ -65,7 +160,13 @@ const Device = ({
               checked={device.isOn}
               disabled={!device.isReachable}
               onChange={async (newValue) => {
-                // TODO call isOn mutation
+                await setIsOn({
+                  variables: {
+                    id: device.id,
+                    type: device.type,
+                    isOn: newValue,
+                  },
+                })
               }}
               title={`Toggle ${device.name}`}
             />
@@ -81,7 +182,13 @@ const Device = ({
               disabled={!device.isReachable}
               onChange={(newValue: number) => setLightLevelValue(newValue)}
               onAfterChange={async (newValue: number) => {
-                // TODO call light level mutation
+                await setLightLevel({
+                  variables: {
+                    id: device.id,
+                    type: device.type,
+                    lightLevel: newValue,
+                  },
+                })
               }}
             />
           </Col>
@@ -96,15 +203,35 @@ const Device = ({
               disabled={!device.isReachable}
               onColorTemperatureChange={async (newValue) => {
                 setColorTemperatureValue(newValue)
-                // TODO call color temperature mutation
+                await setColorTemperature({
+                  variables: {
+                    id: device.id,
+                    type: device.type,
+                    colorTemperature: newValue,
+                  },
+                })
               }}
               onHueChange={async (newValue) => {
                 setColorHueValue(newValue)
-                // TODO call hue mutation
+                await setColorHueAndSaturation({
+                  variables: {
+                    id: device.id,
+                    type: device.type,
+                    colorHue: newValue,
+                    colorSaturation: device.colorSaturation ?? 1,
+                  },
+                })
               }}
               onSaturationChange={async (newValue) => {
                 setColorSaturationValue(newValue)
-                // TODO call saturation mutation
+                await setColorHueAndSaturation({
+                  variables: {
+                    id: device.id,
+                    type: device.type,
+                    colorHue: device.colorHue ?? 0,
+                    colorSaturation: newValue,
+                  },
+                })
               }}
             />
           </Col>
@@ -119,6 +246,7 @@ const Device = ({
                 justifyContent: 'center',
                 alignItems: 'center',
               }}
+              loading={device.playback === 'playbackBuffering'}
               disabled={
                 !device.isReachable ||
                 !['playbackPaused', 'playbackPlaying'].includes(device.playback)
@@ -127,7 +255,23 @@ const Device = ({
                 device.playback === 'playbackPlaying' ? <FaPause /> : <FaPlay />
               }
               onClick={async () => {
-                // TODO call playback mutation
+                if (device.playback === 'playbackPaused') {
+                  return await setPlayback({
+                    variables: {
+                      id: device.id,
+                      type: device.type,
+                      playback: 'playbackPlaying',
+                    },
+                  })
+                }
+
+                await setPlayback({
+                  variables: {
+                    id: device.id,
+                    type: device.type,
+                    playback: 'playbackPaused',
+                  },
+                })
               }}
             />
           </Col>
@@ -141,7 +285,13 @@ const Device = ({
               value={device.volume}
               disabled={!device.isReachable}
               onChange={async (newValue: number) => {
-                // TODO call volume mutation
+                await setVolume({
+                  variables: {
+                    id: device.id,
+                    type: device.type,
+                    volume: newValue,
+                  },
+                })
               }}
             />
           </Col>

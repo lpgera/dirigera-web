@@ -57,6 +57,12 @@ export type Mutation = {
   activateScene?: Maybe<Scalars['String']>
   login?: Maybe<Scalars['String']>
   quickControl?: Maybe<Scalars['Boolean']>
+  setColorHueAndSaturation?: Maybe<Scalars['Boolean']>
+  setColorTemperature?: Maybe<Scalars['Boolean']>
+  setIsOn?: Maybe<Scalars['Boolean']>
+  setLightLevel?: Maybe<Scalars['Boolean']>
+  setPlayback?: Maybe<Scalars['Boolean']>
+  setVolume?: Maybe<Scalars['Boolean']>
 }
 
 export type MutationActivateSceneArgs = {
@@ -72,6 +78,43 @@ export type MutationQuickControlArgs = {
   isOn?: InputMaybe<Scalars['Boolean']>
   playback?: InputMaybe<Scalars['String']>
   type: ControlType
+}
+
+export type MutationSetColorHueAndSaturationArgs = {
+  colorHue: Scalars['Float']
+  colorSaturation: Scalars['Float']
+  id: Scalars['String']
+  type: ControlType
+}
+
+export type MutationSetColorTemperatureArgs = {
+  colorTemperature: Scalars['Int']
+  id: Scalars['String']
+  type: ControlType
+}
+
+export type MutationSetIsOnArgs = {
+  id: Scalars['String']
+  isOn: Scalars['Boolean']
+  type: ControlType
+}
+
+export type MutationSetLightLevelArgs = {
+  id: Scalars['String']
+  lightLevel: Scalars['Int']
+  type: ControlType
+}
+
+export type MutationSetPlaybackArgs = {
+  id: Scalars['String']
+  playback: Scalars['String']
+  type: ControlType
+}
+
+export type MutationSetVolumeArgs = {
+  id: Scalars['String']
+  type: ControlType
+  volume: Scalars['Int']
 }
 
 export type Query = {
@@ -320,6 +363,48 @@ export type MutationResolvers<
     ParentType,
     ContextType,
     RequireFields<MutationQuickControlArgs, 'id' | 'type'>
+  >
+  setColorHueAndSaturation?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      MutationSetColorHueAndSaturationArgs,
+      'colorHue' | 'colorSaturation' | 'id' | 'type'
+    >
+  >
+  setColorTemperature?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType,
+    RequireFields<
+      MutationSetColorTemperatureArgs,
+      'colorTemperature' | 'id' | 'type'
+    >
+  >
+  setIsOn?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationSetIsOnArgs, 'id' | 'isOn' | 'type'>
+  >
+  setLightLevel?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationSetLightLevelArgs, 'id' | 'lightLevel' | 'type'>
+  >
+  setPlayback?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationSetPlaybackArgs, 'id' | 'playback' | 'type'>
+  >
+  setVolume?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationSetVolumeArgs, 'id' | 'type' | 'volume'>
   >
 }>
 

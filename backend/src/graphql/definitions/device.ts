@@ -24,6 +24,26 @@ export const typeDefs = gql`
     playItemImageURL: String
     nextPlayItem: String
   }
+
+  extend type Mutation {
+    setIsOn(id: String!, type: ControlType!, isOn: Boolean!): Boolean @loggedIn
+    setLightLevel(id: String!, type: ControlType!, lightLevel: Int!): Boolean
+      @loggedIn
+    setColorTemperature(
+      id: String!
+      type: ControlType!
+      colorTemperature: Int!
+    ): Boolean @loggedIn
+    setColorHueAndSaturation(
+      id: String!
+      type: ControlType!
+      colorHue: Float!
+      colorSaturation: Float!
+    ): Boolean @loggedIn
+    setPlayback(id: String!, type: ControlType!, playback: String!): Boolean
+      @loggedIn
+    setVolume(id: String!, type: ControlType!, volume: Int!): Boolean @loggedIn
+  }
 `
 
 function getAttributeIfCanReceive(device: Device, attribute: string) {
@@ -115,6 +135,97 @@ export const resolvers: Resolvers = {
         ...getDevicesNotInSet(devicesInRoom),
         ...getDeviceSets(devicesInRoom),
       ].sort((a, b) => a.name.localeCompare(b.name))
+    },
+  },
+  Mutation: {
+    setIsOn: async (_, { id, type, isOn }, { dirigeraClient }) => {
+      if (type === ControlType.Device) {
+        await dirigeraClient.devices.setAttributes({ id, attributes: { isOn } })
+      } else {
+        await dirigeraClient.deviceSets.setAttributes({
+          id,
+          attributes: { isOn },
+        })
+      }
+      return true
+    },
+    setLightLevel: async (_, { id, type, lightLevel }, { dirigeraClient }) => {
+      if (type === ControlType.Device) {
+        await dirigeraClient.devices.setAttributes({
+          id,
+          attributes: { lightLevel },
+        })
+      } else {
+        await dirigeraClient.deviceSets.setAttributes({
+          id,
+          attributes: { lightLevel },
+        })
+      }
+      return true
+    },
+    setColorTemperature: async (
+      _,
+      { id, type, colorTemperature },
+      { dirigeraClient }
+    ) => {
+      if (type === ControlType.Device) {
+        await dirigeraClient.devices.setAttributes({
+          id,
+          attributes: { colorTemperature },
+        })
+      } else {
+        await dirigeraClient.deviceSets.setAttributes({
+          id,
+          attributes: { colorTemperature },
+        })
+      }
+      return true
+    },
+    setColorHueAndSaturation: async (
+      _,
+      { id, type, colorHue, colorSaturation },
+      { dirigeraClient }
+    ) => {
+      if (type === ControlType.Device) {
+        await dirigeraClient.devices.setAttributes({
+          id,
+          attributes: { colorHue, colorSaturation },
+        })
+      } else {
+        await dirigeraClient.deviceSets.setAttributes({
+          id,
+          attributes: { colorHue, colorSaturation },
+        })
+      }
+      return true
+    },
+    setPlayback: async (_, { id, type, playback }, { dirigeraClient }) => {
+      if (type === ControlType.Device) {
+        await dirigeraClient.devices.setAttributes({
+          id,
+          attributes: { playback },
+        })
+      } else {
+        await dirigeraClient.deviceSets.setAttributes({
+          id,
+          attributes: { playback },
+        })
+      }
+      return true
+    },
+    setVolume: async (_, { id, type, volume }, { dirigeraClient }) => {
+      if (type === ControlType.Device) {
+        await dirigeraClient.devices.setAttributes({
+          id,
+          attributes: { volume },
+        })
+      } else {
+        await dirigeraClient.deviceSets.setAttributes({
+          id,
+          attributes: { volume },
+        })
+      }
+      return true
     },
   },
 }
