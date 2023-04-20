@@ -27,6 +27,12 @@ export type Scalars = {
   Float: number
 }
 
+export type Device = {
+  __typename?: 'Device'
+  id: Scalars['String']
+  name: Scalars['String']
+}
+
 export type Mutation = {
   __typename?: 'Mutation'
   _?: Maybe<Scalars['String']>
@@ -53,8 +59,13 @@ export type MutationQuickControlArgs = {
 export type Query = {
   __typename?: 'Query'
   _?: Maybe<Scalars['String']>
+  room?: Maybe<Room>
   rooms: Array<Room>
   scenes: Array<Scene>
+}
+
+export type QueryRoomArgs = {
+  id: Scalars['String']
 }
 
 export type QuickControl = {
@@ -74,6 +85,7 @@ export enum QuickControlType {
 
 export type Room = {
   __typename?: 'Room'
+  devices: Array<Device>
   id: Scalars['String']
   name: Scalars['String']
   quickControls: Array<QuickControl>
@@ -196,6 +208,7 @@ export type DirectiveResolverFn<
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>
+  Device: ResolverTypeWrapper<Device>
   Mutation: ResolverTypeWrapper<{}>
   Query: ResolverTypeWrapper<{}>
   QuickControl: ResolverTypeWrapper<QuickControl>
@@ -208,6 +221,7 @@ export type ResolversTypes = ResolversObject<{
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
   Boolean: Scalars['Boolean']
+  Device: Device
   Mutation: {}
   Query: {}
   QuickControl: QuickControl
@@ -224,6 +238,15 @@ export type LoggedInDirectiveResolver<
   ContextType = Context,
   Args = LoggedInDirectiveArgs
 > = DirectiveResolverFn<Result, Parent, ContextType, Args>
+
+export type DeviceResolvers<
+  ContextType = Context,
+  ParentType extends ResolversParentTypes['Device'] = ResolversParentTypes['Device']
+> = ResolversObject<{
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}>
 
 export type MutationResolvers<
   ContextType = Context,
@@ -255,6 +278,12 @@ export type QueryResolvers<
   ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']
 > = ResolversObject<{
   _?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
+  room?: Resolver<
+    Maybe<ResolversTypes['Room']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryRoomArgs, 'id'>
+  >
   rooms?: Resolver<Array<ResolversTypes['Room']>, ParentType, ContextType>
   scenes?: Resolver<Array<ResolversTypes['Scene']>, ParentType, ContextType>
 }>
@@ -276,6 +305,7 @@ export type RoomResolvers<
   ContextType = Context,
   ParentType extends ResolversParentTypes['Room'] = ResolversParentTypes['Room']
 > = ResolversObject<{
+  devices?: Resolver<Array<ResolversTypes['Device']>, ParentType, ContextType>
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   quickControls?: Resolver<
@@ -296,6 +326,7 @@ export type SceneResolvers<
 }>
 
 export type Resolvers<ContextType = Context> = ResolversObject<{
+  Device?: DeviceResolvers<ContextType>
   Mutation?: MutationResolvers<ContextType>
   Query?: QueryResolvers<ContextType>
   QuickControl?: QuickControlResolvers<ContextType>

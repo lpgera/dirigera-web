@@ -9,6 +9,7 @@ export const typeDefs = gql`
 
   extend type Query {
     rooms: [Room!]! @loggedIn
+    room(id: String!): Room @loggedIn
   }
 `
 
@@ -22,8 +23,23 @@ export const resolvers: Resolvers = {
           id,
           name,
           quickControls: [],
+          devices: [],
         }))
         .sort((a, b) => a.name.localeCompare(b.name))
+    },
+    room: async (_, { id }, { dirigeraClient }) => {
+      const room = await dirigeraClient.rooms.get({ id })
+
+      if (!room) {
+        return null
+      }
+
+      return {
+        id,
+        name: room.name,
+        quickControls: [],
+        devices: [],
+      }
     },
   },
 }
