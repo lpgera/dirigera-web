@@ -4,7 +4,7 @@
 
 A React and GraphQL based progressive web app for connecting to a Tradfri gateway and controlling attached devices.
 
-Check out the UI on [Chromatic](https://chromatic.com/library?appId=61753f54931d3b003a535d15&branch=master).
+Check out the UI on [Chromatic](https://chromatic.com/library?appId=61753f54931d3b003a535d15&branch=tradfri).
 
 ## Setup
 
