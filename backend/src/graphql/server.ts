@@ -7,6 +7,7 @@ import * as loggedIn from './directives/loggedIn'
 import * as auth from './definitions/auth'
 import * as scene from './definitions/scene'
 import * as room from './definitions/room'
+import * as quickControl from './definitions/quickControl'
 import type { Context } from './context'
 
 const baseTypeDefs = gql`
@@ -18,7 +19,7 @@ const baseTypeDefs = gql`
   }
 `
 
-const definitions = [auth, scene, room]
+const definitions = [auth, scene, room, quickControl]
 const directives = [loggedIn]
 
 const schema = loggedIn.loggedInDirectiveTransformer(
