@@ -10,6 +10,7 @@ import {
 import Scenes from './Scenes'
 import { useNavigate } from 'react-router-dom'
 import { WebSocketUpdateContext } from './WebSocketUpdateProvider'
+import { useRefetch } from '../useRefetch'
 
 const columnSizes = {
   xs: 12,
@@ -58,28 +59,12 @@ const Rooms = () => {
 
   const { data, refetch, error } = useQuery<RoomsQuery>(ROOMS_QUERY)
 
-  // quick control mutation
   const [quickControl, { loading: quickControlLoading }] = useMutation<
     QuickControlMutation,
     QuickControlMutationVariables
   >(QUICK_CONTROL_MUTATION)
 
-  const { lastMessage } = useContext(WebSocketUpdateContext)
-  useEffect(() => {
-    refetch()?.catch(console.error)
-  }, [lastMessage, refetch])
-
-  useEffect(() => {
-    const listener = () => {
-      if (!document.hidden) {
-        refetch()?.catch(console.error)
-      }
-    }
-    window.addEventListener('visibilitychange', listener)
-    return () => {
-      window.removeEventListener('visibilitychange', listener)
-    }
-  }, [refetch])
+  useRefetch(refetch)
 
   const rooms = data?.rooms ?? []
 
