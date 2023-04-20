@@ -11,38 +11,40 @@ const Frame = () => {
   return (
     <Layout style={{ minHeight: '100vh', backgroundColor: 'rgb(30 30 30)' }}>
       <Layout.Content style={{ margin: '16px' }}>
-        <Link to={'/'}>
-          <Typography.Title>
-            <Row gutter={[8, 8]} style={{ fontSize: 'inherit' }}>
-              <Col flex="0" style={{ fontSize: 'inherit' }}>
-                <div
+        <Row gutter={[8, 8]}>
+          <Col flex="0">
+            <Link to={'/'}>
+              <div
+                style={{
+                  width: 46,
+                  height: 46,
+                  backgroundColor: '#0059aa',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <BsFillHouseFill
+                  size={32}
                   style={{
-                    width: 46,
-                    height: 46,
-                    backgroundColor: '#0059aa',
-                    borderRadius: '50%',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
+                    color: '#fbd912',
                   }}
-                >
-                  <BsFillHouseFill
-                    size={32}
-                    style={{
-                      color: '#fbd912',
-                    }}
-                  />
-                </div>
-              </Col>
-              <Col flex="auto" style={{ fontSize: 'inherit' }}>
+                />
+              </div>
+            </Link>
+          </Col>
+          <Col flex="auto">
+            <Typography.Title>
+              <Link to={'/'} style={{ color: '#ffffffd9' }}>
                 Dirigera web
-              </Col>
-              <Col flex="0" style={{ fontSize: 'inherit' }}>
-                <Logout />
-              </Col>
-            </Row>
-          </Typography.Title>
-        </Link>
+              </Link>
+            </Typography.Title>
+          </Col>
+          <Col flex="0">
+            <Logout />
+          </Col>
+        </Row>
         {authState.token ? <Outlet /> : <Login />}
       </Layout.Content>
     </Layout>
