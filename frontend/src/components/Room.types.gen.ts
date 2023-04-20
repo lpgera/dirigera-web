@@ -10,6 +10,11 @@ export type RoomQuery = {
     __typename?: 'Room'
     id: string
     name: string
-    devices: Array<{ __typename?: 'Device'; id: string; name: string }>
+    devices: Array<{
+      __typename?: 'Device'
+      id: string
+      name: string
+      type: Types.ControlType
+    }>
   } | null
 }

@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 import type { Device, DeviceSet } from 'dirigera'
-import { QuickControlType, type Resolvers } from '../resolvers.gen'
+import { ControlType, type Resolvers } from '../resolvers.gen'
 
 export const typeDefs = gql`
   extend type Room {
@@ -13,18 +13,13 @@ export const typeDefs = gql`
     isReachable: Boolean!
     isOn: Boolean
     playback: String
-    type: QuickControlType!
-  }
-
-  enum QuickControlType {
-    DEVICE
-    DEVICE_SET
+    type: ControlType!
   }
 
   extend type Mutation {
     quickControl(
       id: String!
-      type: QuickControlType!
+      type: ControlType!
       isOn: Boolean
       playback: String
     ): Boolean @loggedIn
@@ -46,7 +41,7 @@ function getDeviceQuickControls(devices: Device[], roomId: string) {
       isReachable: device.isReachable,
       isOn: device.attributes.isOn,
       playback: device.attributes.playback,
-      type: QuickControlType.Device,
+      type: ControlType.Device,
     }))
 }
 
@@ -75,7 +70,7 @@ function getDeviceSetQuickControls(devices: Device[], roomId: string) {
       isOn: devicesInSet.some((d) => d.attributes.isOn),
       playback: devicesInSet.find((d) => d.attributes.playback)?.attributes
         .playback,
-      type: QuickControlType.DeviceSet,
+      type: ControlType.DeviceSet,
     }
   })
 }
@@ -96,7 +91,7 @@ export const resolvers: Resolvers = {
       { id, type, isOn, playback },
       { dirigeraClient }
     ) => {
-      if (type === QuickControlType.DeviceSet) {
+      if (type === ControlType.DeviceSet) {
         await dirigeraClient.deviceSets.setAttributes({
           id,
           attributes: {
@@ -105,7 +100,7 @@ export const resolvers: Resolvers = {
           },
         })
       }
-      if (type === QuickControlType.Device) {
+      if (type === ControlType.Device) {
         await dirigeraClient.devices.setAttributes({
           id,
           attributes: {

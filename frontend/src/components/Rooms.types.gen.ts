@@ -15,14 +15,14 @@ export type RoomsQuery = {
       isReachable: boolean
       isOn?: boolean | null
       playback?: string | null
-      type: Types.QuickControlType
+      type: Types.ControlType
     }>
   }>
 }
 
 export type QuickControlMutationVariables = Types.Exact<{
   id: Types.Scalars['String']
-  type: Types.QuickControlType
+  type: Types.ControlType
   isOn?: Types.InputMaybe<Types.Scalars['Boolean']>
   playback?: Types.InputMaybe<Types.Scalars['String']>
 }>

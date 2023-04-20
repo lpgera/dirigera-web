@@ -14,6 +14,7 @@ const ROOM_QUERY = gql`
       devices {
         id
         name
+        type
       }
     }
   }

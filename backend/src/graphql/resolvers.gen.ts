@@ -27,10 +27,16 @@ export type Scalars = {
   Float: number
 }
 
+export enum ControlType {
+  Device = 'DEVICE',
+  DeviceSet = 'DEVICE_SET',
+}
+
 export type Device = {
   __typename?: 'Device'
   id: Scalars['String']
   name: Scalars['String']
+  type: ControlType
 }
 
 export type Mutation = {
@@ -53,7 +59,7 @@ export type MutationQuickControlArgs = {
   id: Scalars['String']
   isOn?: InputMaybe<Scalars['Boolean']>
   playback?: InputMaybe<Scalars['String']>
-  type: QuickControlType
+  type: ControlType
 }
 
 export type Query = {
@@ -75,12 +81,7 @@ export type QuickControl = {
   isReachable: Scalars['Boolean']
   name: Scalars['String']
   playback?: Maybe<Scalars['String']>
-  type: QuickControlType
-}
-
-export enum QuickControlType {
-  Device = 'DEVICE',
-  DeviceSet = 'DEVICE_SET',
+  type: ControlType
 }
 
 export type Room = {
@@ -208,11 +209,11 @@ export type DirectiveResolverFn<
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>
+  ControlType: ControlType
   Device: ResolverTypeWrapper<Device>
   Mutation: ResolverTypeWrapper<{}>
   Query: ResolverTypeWrapper<{}>
   QuickControl: ResolverTypeWrapper<QuickControl>
-  QuickControlType: QuickControlType
   Room: ResolverTypeWrapper<Room>
   Scene: ResolverTypeWrapper<Scene>
   String: ResolverTypeWrapper<Scalars['String']>
@@ -245,6 +246,7 @@ export type DeviceResolvers<
 > = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  type?: Resolver<ResolversTypes['ControlType'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
@@ -297,7 +299,7 @@ export type QuickControlResolvers<
   isReachable?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   playback?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-  type?: Resolver<ResolversTypes['QuickControlType'], ParentType, ContextType>
+  type?: Resolver<ResolversTypes['ControlType'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 

@@ -37,7 +37,7 @@ export const ROOMS_QUERY = gql`
 const QUICK_CONTROL_MUTATION = gql`
   mutation QuickControl(
     $id: String!
-    $type: QuickControlType!
+    $type: ControlType!
     $isOn: Boolean
     $playback: String
   ) {
