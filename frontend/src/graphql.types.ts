@@ -18,6 +18,12 @@ export type Scalars = {
   Float: number
 }
 
+export type Device = {
+  __typename?: 'Device'
+  id: Scalars['String']
+  name: Scalars['String']
+}
+
 export type Mutation = {
   __typename?: 'Mutation'
   _?: Maybe<Scalars['String']>
@@ -44,8 +50,13 @@ export type MutationQuickControlArgs = {
 export type Query = {
   __typename?: 'Query'
   _?: Maybe<Scalars['String']>
+  room?: Maybe<Room>
   rooms: Array<Room>
   scenes: Array<Scene>
+}
+
+export type QueryRoomArgs = {
+  id: Scalars['String']
 }
 
 export type QuickControl = {
@@ -65,6 +76,7 @@ export enum QuickControlType {
 
 export type Room = {
   __typename?: 'Room'
+  devices: Array<Device>
   id: Scalars['String']
   name: Scalars['String']
   quickControls: Array<QuickControl>

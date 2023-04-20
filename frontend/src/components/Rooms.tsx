@@ -1,25 +1,16 @@
-import React, { useContext, useEffect } from 'react'
+import React from 'react'
 import { Button, Card, Col, Result, Row, Skeleton } from 'antd'
 import { useQuery, gql, useMutation } from '@apollo/client'
 import { GoSettings } from 'react-icons/go'
+import { useNavigate } from 'react-router-dom'
 import {
   QuickControlMutation,
   QuickControlMutationVariables,
   RoomsQuery,
 } from './Rooms.types.gen'
 import Scenes from './Scenes'
-import { useNavigate } from 'react-router-dom'
-import { WebSocketUpdateContext } from './WebSocketUpdateProvider'
 import { useRefetch } from '../useRefetch'
-
-const columnSizes = {
-  xs: 12,
-  sm: 12,
-  md: 8,
-  lg: 8,
-  xl: 6,
-  xxl: 4,
-}
+import { columnSizes } from '../columnSizes'
 
 const buttonStyles = {
   overflow: 'hidden',
@@ -83,62 +74,60 @@ const Rooms = () => {
             <Result status="error" title="Error" subTitle={error.message} />
           </Col>
         ) : (
-          <>
-            {rooms.map((room) => (
-              <Col key={room.id} {...columnSizes}>
-                <Card
-                  title={room.name}
-                  extra={
+          rooms.map((room) => (
+            <Col key={room.id} {...columnSizes}>
+              <Card
+                title={room.name}
+                extra={
+                  <Button
+                    shape={'circle'}
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                    onClick={() => navigate(`room/${room.id}`)}
+                    icon={<GoSettings />}
+                  />
+                }
+              >
+                <Row align="middle" gutter={[8, 8]}>
+                  {room.quickControls.map((qc) => (
                     <Button
-                      shape={'circle'}
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}
-                      onClick={() => navigate(`room/${room.id}`)}
-                      icon={<GoSettings />}
-                    />
-                  }
-                >
-                  <Row align="middle" gutter={[8, 8]}>
-                    {room.quickControls.map((qc) => (
-                      <Button
-                        key={qc.id}
-                        block
-                        style={buttonStyles}
-                        disabled={
-                          (qc.playback && qc.playback !== 'playbackPlaying') ||
-                          !qc.isReachable ||
-                          quickControlLoading
-                        }
-                        type={
-                          qc.isOn || qc.playback === 'playbackPlaying'
-                            ? 'primary'
-                            : 'default'
-                        }
-                        onClick={() =>
-                          quickControl({
-                            variables: {
-                              id: qc.id,
-                              type: qc.type,
-                              isOn: qc.isOn != null ? !qc.isOn : null,
-                              playback:
-                                qc.playback === 'playbackPlaying'
-                                  ? 'playbackPaused'
-                                  : null,
-                            },
-                          })
-                        }
-                      >
-                        {qc.name}
-                      </Button>
-                    ))}
-                  </Row>
-                </Card>
-              </Col>
-            ))}
-          </>
+                      key={qc.id}
+                      block
+                      style={buttonStyles}
+                      disabled={
+                        (qc.playback && qc.playback !== 'playbackPlaying') ||
+                        !qc.isReachable ||
+                        quickControlLoading
+                      }
+                      type={
+                        qc.isOn || qc.playback === 'playbackPlaying'
+                          ? 'primary'
+                          : 'default'
+                      }
+                      onClick={() =>
+                        quickControl({
+                          variables: {
+                            id: qc.id,
+                            type: qc.type,
+                            isOn: qc.isOn != null ? !qc.isOn : null,
+                            playback:
+                              qc.playback === 'playbackPlaying'
+                                ? 'playbackPaused'
+                                : null,
+                          },
+                        })
+                      }
+                    >
+                      {qc.name}
+                    </Button>
+                  ))}
+                </Row>
+              </Card>
+            </Col>
+          ))
         )}
       </Row>
     </>
