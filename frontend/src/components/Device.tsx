@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Card, Col, Row, Slider, Switch } from 'antd'
+import { Button, Card, Col, Image, Row, Slider, Switch } from 'antd'
 import { BsBatteryFull } from 'react-icons/bs'
+import { FaPlay, FaPause } from 'react-icons/fa'
 import Color from './Color'
 
 const Device = ({
@@ -16,6 +17,11 @@ const Device = ({
     colorTemperature?: number | null
     colorSaturation?: number | null
     colorHue?: number | null
+    playback?: string | null
+    volume?: number | null
+    playItem?: string | null
+    playItemImageURL?: string | null
+    nextPlayItem?: string | null
   }
 }) => {
   const [lightLevelValue, setLightLevelValue] = useState(
@@ -104,7 +110,60 @@ const Device = ({
           </Col>
         )}
 
-        {/* TODO speaker functions */}
+        {device.playback != null && (
+          <Col>
+            <Button
+              shape={'circle'}
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              disabled={
+                !device.isReachable ||
+                !['playbackPaused', 'playbackPlaying'].includes(device.playback)
+              }
+              icon={
+                device.playback === 'playbackPlaying' ? <FaPause /> : <FaPlay />
+              }
+              onClick={async () => {
+                // TODO call playback mutation
+              }}
+            />
+          </Col>
+        )}
+
+        {device.volume != null && (
+          <Col flex="auto">
+            <Slider
+              min={0}
+              max={100}
+              value={device.volume}
+              disabled={!device.isReachable}
+              onChange={async (newValue: number) => {
+                // TODO call volume mutation
+              }}
+            />
+          </Col>
+        )}
+
+        {device.playItem != null && (
+          <Col style={{ textAlign: 'center', flexBasis: '100%' }}>
+            Now playing: {device.playItem}
+          </Col>
+        )}
+
+        {device.nextPlayItem != null && (
+          <Col style={{ textAlign: 'center', flexBasis: '100%' }}>
+            Next: {device.nextPlayItem}
+          </Col>
+        )}
+
+        {device.playItemImageURL != null && (
+          <Col flex="auto">
+            <Image preview={false} src={device.playItemImageURL} />
+          </Col>
+        )}
       </Row>
     </Card>
   )

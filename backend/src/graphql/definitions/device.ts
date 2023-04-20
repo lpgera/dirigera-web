@@ -96,11 +96,11 @@ function getDeviceSets(devices: Device[]) {
       colorHue: devicesInSet[0]?.attributes?.colorHue,
       playback: devicesInSet[0]?.attributes?.playback,
       volume: devicesInSet[0]?.attributes?.volume,
-      playItem: playItem ? `${playItem?.artist} - ${playItem?.title}` : '',
+      playItem: playItem ? `${playItem?.artist} - ${playItem?.title}` : null,
       playItemImageURL: playItem?.imageURL,
       nextPlayItem: nextPlayItem
         ? `${nextPlayItem?.artist} - ${nextPlayItem?.title}`
-        : '',
+        : null,
     }
   })
 }
