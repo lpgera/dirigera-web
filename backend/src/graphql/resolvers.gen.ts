@@ -34,9 +34,21 @@ export enum ControlType {
 
 export type Device = {
   __typename?: 'Device'
+  batteryPercentage?: Maybe<Scalars['Int']>
+  colorHue?: Maybe<Scalars['Int']>
+  colorSaturation?: Maybe<Scalars['Int']>
+  colorTemperature?: Maybe<Scalars['Int']>
   id: Scalars['String']
+  isOn?: Maybe<Scalars['Boolean']>
+  isReachable: Scalars['Boolean']
+  lightLevel?: Maybe<Scalars['Int']>
   name: Scalars['String']
+  nextPlayItem?: Maybe<Scalars['String']>
+  playItem?: Maybe<Scalars['String']>
+  playItemImageURL?: Maybe<Scalars['String']>
+  playback?: Maybe<Scalars['String']>
   type: ControlType
+  volume?: Maybe<Scalars['Int']>
 }
 
 export type Mutation = {
@@ -211,6 +223,7 @@ export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>
   ControlType: ControlType
   Device: ResolverTypeWrapper<Device>
+  Int: ResolverTypeWrapper<Scalars['Int']>
   Mutation: ResolverTypeWrapper<{}>
   Query: ResolverTypeWrapper<{}>
   QuickControl: ResolverTypeWrapper<QuickControl>
@@ -223,6 +236,7 @@ export type ResolversTypes = ResolversObject<{
 export type ResolversParentTypes = ResolversObject<{
   Boolean: Scalars['Boolean']
   Device: Device
+  Int: Scalars['Int']
   Mutation: {}
   Query: {}
   QuickControl: QuickControl
@@ -244,9 +258,41 @@ export type DeviceResolvers<
   ContextType = Context,
   ParentType extends ResolversParentTypes['Device'] = ResolversParentTypes['Device']
 > = ResolversObject<{
+  batteryPercentage?: Resolver<
+    Maybe<ResolversTypes['Int']>,
+    ParentType,
+    ContextType
+  >
+  colorHue?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
+  colorSaturation?: Resolver<
+    Maybe<ResolversTypes['Int']>,
+    ParentType,
+    ContextType
+  >
+  colorTemperature?: Resolver<
+    Maybe<ResolversTypes['Int']>,
+    ParentType,
+    ContextType
+  >
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  isOn?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>
+  isReachable?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
+  lightLevel?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  nextPlayItem?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >
+  playItem?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
+  playItemImageURL?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType
+  >
+  playback?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
   type?: Resolver<ResolversTypes['ControlType'], ParentType, ContextType>
+  volume?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 

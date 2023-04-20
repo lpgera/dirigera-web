@@ -15,6 +15,18 @@ const ROOM_QUERY = gql`
         id
         name
         type
+        isReachable
+        batteryPercentage
+        isOn
+        lightLevel
+        colorTemperature
+        colorSaturation
+        colorHue
+        playback
+        volume
+        playItem
+        playItemImageURL
+        nextPlayItem
       }
     }
   }

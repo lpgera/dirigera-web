@@ -15,6 +15,18 @@ export type RoomQuery = {
       id: string
       name: string
       type: Types.ControlType
+      isReachable: boolean
+      batteryPercentage?: number | null
+      isOn?: boolean | null
+      lightLevel?: number | null
+      colorTemperature?: number | null
+      colorSaturation?: number | null
+      colorHue?: number | null
+      playback?: string | null
+      volume?: number | null
+      playItem?: string | null
+      playItemImageURL?: string | null
+      nextPlayItem?: string | null
     }>
   } | null
 }

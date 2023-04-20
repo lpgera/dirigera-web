@@ -25,9 +25,21 @@ export enum ControlType {
 
 export type Device = {
   __typename?: 'Device'
+  batteryPercentage?: Maybe<Scalars['Int']>
+  colorHue?: Maybe<Scalars['Int']>
+  colorSaturation?: Maybe<Scalars['Int']>
+  colorTemperature?: Maybe<Scalars['Int']>
   id: Scalars['String']
+  isOn?: Maybe<Scalars['Boolean']>
+  isReachable: Scalars['Boolean']
+  lightLevel?: Maybe<Scalars['Int']>
   name: Scalars['String']
+  nextPlayItem?: Maybe<Scalars['String']>
+  playItem?: Maybe<Scalars['String']>
+  playItemImageURL?: Maybe<Scalars['String']>
+  playback?: Maybe<Scalars['String']>
   type: ControlType
+  volume?: Maybe<Scalars['Int']>
 }
 
 export type Mutation = {

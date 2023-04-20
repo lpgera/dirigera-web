@@ -10,10 +10,10 @@ export const typeDefs = gql`
   type QuickControl {
     id: String!
     name: String!
+    type: ControlType!
     isReachable: Boolean!
     isOn: Boolean
     playback: String
-    type: ControlType!
   }
 
   extend type Mutation {
@@ -38,10 +38,10 @@ function getDeviceQuickControls(devices: Device[], roomId: string) {
     .map((device) => ({
       id: device.id,
       name: device.attributes.customName,
+      type: ControlType.Device,
       isReachable: device.isReachable,
       isOn: device.attributes.isOn,
       playback: device.attributes.playback,
-      type: ControlType.Device,
     }))
 }
 
@@ -66,11 +66,11 @@ function getDeviceSetQuickControls(devices: Device[], roomId: string) {
     return {
       id: deviceSet.id,
       name: deviceSet.name,
+      type: ControlType.DeviceSet,
       isReachable: devicesInSet.every((d) => d.isReachable),
       isOn: devicesInSet.some((d) => d.attributes.isOn),
       playback: devicesInSet.find((d) => d.attributes.playback)?.attributes
         .playback,
-      type: ControlType.DeviceSet,
     }
   })
 }
