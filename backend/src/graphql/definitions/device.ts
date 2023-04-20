@@ -16,8 +16,8 @@ export const typeDefs = gql`
     isOn: Boolean
     lightLevel: Int
     colorTemperature: Int
-    colorSaturation: Int
-    colorHue: Int
+    colorSaturation: Float
+    colorHue: Float
     playback: String
     volume: Int
     playItem: String
@@ -25,6 +25,12 @@ export const typeDefs = gql`
     nextPlayItem: String
   }
 `
+
+function getAttributeIfCanReceive(device: Device, attribute: string) {
+  return device.capabilities.canReceive.includes(attribute)
+    ? device.attributes[attribute]
+    : null
+}
 
 function getDevicesNotInSet(devices: Device[]) {
   return devices
@@ -39,13 +45,13 @@ function getDevicesNotInSet(devices: Device[]) {
         type: ControlType.Device,
         isReachable: device.isReachable,
         batteryPercentage: device.attributes.batteryPercentage,
-        isOn: device.attributes.isOn,
-        lightLevel: device.attributes.lightLevel,
-        colorTemperature: device.attributes.colorTemperature,
-        colorSaturation: device.attributes.colorSaturation,
-        colorHue: device.attributes.colorHue,
-        playback: device.attributes.playback,
-        volume: device.attributes.volume,
+        isOn: getAttributeIfCanReceive(device, 'isOn'),
+        lightLevel: getAttributeIfCanReceive(device, 'lightLevel'),
+        colorTemperature: getAttributeIfCanReceive(device, 'colorTemperature'),
+        colorSaturation: getAttributeIfCanReceive(device, 'colorSaturation'),
+        colorHue: getAttributeIfCanReceive(device, 'colorHue'),
+        playback: getAttributeIfCanReceive(device, 'playback'),
+        volume: getAttributeIfCanReceive(device, 'volume'),
         playItem: playItem ? `${playItem.artist} - ${playItem.title}` : null,
         playItemImageURL: playItem?.imageURL,
         nextPlayItem: nextPlayItem

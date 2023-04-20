@@ -3,9 +3,9 @@ import { Button, Popover, Slider, Space } from 'antd'
 import { MdColorLens } from 'react-icons/md'
 
 type Props = {
-  colorTemperature: number | null
-  hue: number | null
-  saturation: number | null
+  colorTemperature?: number | null
+  hue?: number | null
+  saturation?: number | null
   disabled: boolean
   onColorTemperatureChange: (value: number) => void | Promise<void>
   onHueChange: (value: number) => void | Promise<void>
@@ -43,25 +43,27 @@ const Color = ({
           size="middle"
           style={{ display: 'flex', padding: 8 }}
         >
-          {colorTemperatureValue !== null ? (
+          {colorTemperatureValue != null && (
             <div>
               Color temperature
               <Slider
                 value={colorTemperatureValue}
                 disabled={disabled}
+                min={2202}
+                max={4000}
                 marks={{
-                  0: 'Cold',
-                  100: 'Warm',
+                  2202: 'Warm',
+                  4000: 'Cold',
                 }}
-                step={10}
+                step={62}
                 onChange={(value: number) => setColorTemperatureValue(value)}
                 onAfterChange={(value: number) =>
                   onColorTemperatureChange(value)
                 }
               />
             </div>
-          ) : null}
-          {hueValue !== null ? (
+          )}
+          {hueValue != null && (
             <div>
               Hue
               <Slider
@@ -78,8 +80,8 @@ const Color = ({
                 onAfterChange={(value: number) => onHueChange(value)}
               />
             </div>
-          ) : null}
-          {saturationValue !== null ? (
+          )}
+          {saturationValue != null && (
             <div>
               Saturation
               <Slider
@@ -87,13 +89,15 @@ const Color = ({
                 disabled={disabled}
                 marks={{
                   0: 'White',
-                  100: 'Color',
+                  1: 'Color',
                 }}
+                max={1}
+                step={0.01}
                 onChange={(value: number) => setSaturationValue(value)}
                 onAfterChange={(value: number) => onSaturationChange(value)}
               />
             </div>
-          ) : null}
+          )}
         </Space>
       }
       title="Color"

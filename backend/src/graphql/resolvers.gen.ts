@@ -35,8 +35,8 @@ export enum ControlType {
 export type Device = {
   __typename?: 'Device'
   batteryPercentage?: Maybe<Scalars['Int']>
-  colorHue?: Maybe<Scalars['Int']>
-  colorSaturation?: Maybe<Scalars['Int']>
+  colorHue?: Maybe<Scalars['Float']>
+  colorSaturation?: Maybe<Scalars['Float']>
   colorTemperature?: Maybe<Scalars['Int']>
   id: Scalars['String']
   isOn?: Maybe<Scalars['Boolean']>
@@ -223,6 +223,7 @@ export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>
   ControlType: ControlType
   Device: ResolverTypeWrapper<Device>
+  Float: ResolverTypeWrapper<Scalars['Float']>
   Int: ResolverTypeWrapper<Scalars['Int']>
   Mutation: ResolverTypeWrapper<{}>
   Query: ResolverTypeWrapper<{}>
@@ -236,6 +237,7 @@ export type ResolversTypes = ResolversObject<{
 export type ResolversParentTypes = ResolversObject<{
   Boolean: Scalars['Boolean']
   Device: Device
+  Float: Scalars['Float']
   Int: Scalars['Int']
   Mutation: {}
   Query: {}
@@ -263,9 +265,9 @@ export type DeviceResolvers<
     ParentType,
     ContextType
   >
-  colorHue?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
+  colorHue?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>
   colorSaturation?: Resolver<
-    Maybe<ResolversTypes['Int']>,
+    Maybe<ResolversTypes['Float']>,
     ParentType,
     ContextType
   >

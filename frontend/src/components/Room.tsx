@@ -5,6 +5,7 @@ import { gql, useQuery } from '@apollo/client'
 import { RoomQuery, RoomQueryVariables } from './Room.types.gen'
 import { useRefetch } from '../useRefetch'
 import { columnSizes } from '../columnSizes'
+import Device from './Device'
 
 const ROOM_QUERY = gql`
   query Room($id: String!) {
@@ -62,7 +63,7 @@ const Room = () => {
         ) : (
           data.room?.devices.map((device) => (
             <Col key={device.id} {...columnSizes}>
-              <Card title={device.name}>Controls and indicators go here</Card>
+              <Device device={device} />
             </Col>
           ))
         )}

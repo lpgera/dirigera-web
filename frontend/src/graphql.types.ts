@@ -26,8 +26,8 @@ export enum ControlType {
 export type Device = {
   __typename?: 'Device'
   batteryPercentage?: Maybe<Scalars['Int']>
-  colorHue?: Maybe<Scalars['Int']>
-  colorSaturation?: Maybe<Scalars['Int']>
+  colorHue?: Maybe<Scalars['Float']>
+  colorSaturation?: Maybe<Scalars['Float']>
   colorTemperature?: Maybe<Scalars['Int']>
   id: Scalars['String']
   isOn?: Maybe<Scalars['Boolean']>
