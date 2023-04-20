@@ -7,7 +7,15 @@ import {
   ApolloLink,
 } from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
+import { persistCache } from 'apollo3-cache-persist'
 import { AuthContext, AuthContextType } from './AuthContext'
+
+const cache = new InMemoryCache()
+
+persistCache({
+  cache,
+  storage: window.localStorage,
+}).catch(console.error)
 
 const client = (authContext: AuthContextType) =>
   new ApolloClient({
@@ -41,7 +49,7 @@ const client = (authContext: AuthContextType) =>
         },
       }),
     ]),
-    cache: new InMemoryCache(),
+    cache,
   })
 
 const Provider: React.FC<{ children: ReactNode }> = ({ children }) => {

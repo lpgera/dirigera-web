@@ -33,21 +33,27 @@ const Scenes: FC = () => {
 
   return (
     <Row gutter={[8, 8]} style={{ marginBottom: 16 }}>
-      {scenes.map((s) => (
-        <Col key={s.id}>
-          <Button
-            onClick={async () => {
-              await activateScene({
-                variables: {
-                  id: s.id,
-                },
-              })
-            }}
-          >
-            {s.name}
-          </Button>
+      {!data ? (
+        <Col key={'loading'}>
+          <Button disabled>Loading...</Button>
         </Col>
-      ))}
+      ) : (
+        scenes.map((s) => (
+          <Col key={s.id}>
+            <Button
+              onClick={async () => {
+                await activateScene({
+                  variables: {
+                    id: s.id,
+                  },
+                })
+              }}
+            >
+              {s.name}
+            </Button>
+          </Col>
+        ))
+      )}
     </Row>
   )
 }
