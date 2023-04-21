@@ -176,12 +176,12 @@ const LightColor = ({
           )}
         </Space>
       }
-      title="LightColor"
+      title="Color"
       trigger="click"
     >
       <Button
         shape="circle"
-        title="LightColor temperature"
+        title="Color"
         style={{
           display: 'flex',
           justifyContent: 'center',
