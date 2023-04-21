@@ -1,5 +1,5 @@
 # stage 1 - backend build
-FROM --platform=$BUILDPLATFORM node:19 AS BACKEND_BUILD
+FROM --platform=$BUILDPLATFORM node:20 AS BACKEND_BUILD
 
 WORKDIR /usr/src/app
 
@@ -13,7 +13,7 @@ COPY backend backend
 RUN npm run build -w backend
 
 # stage 2 - frontend build
-FROM --platform=$BUILDPLATFORM node:19 AS FRONTEND_BUILD
+FROM --platform=$BUILDPLATFORM node:20 AS FRONTEND_BUILD
 
 WORKDIR /usr/src/app
 
@@ -27,7 +27,7 @@ COPY frontend frontend
 RUN npm run build -w frontend
 
 # stage 3 - lighter image without frontend build dependencies
-FROM node:19-alpine as TARGET
+FROM node:20-alpine as TARGET
 
 WORKDIR /usr/src/app
 
