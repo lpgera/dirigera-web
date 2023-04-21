@@ -1,4 +1,4 @@
-import * as Types from '../graphql.types'
+import * as Types from '../../graphql.types'
 
 export type SetColorTemperatureMutationVariables = Types.Exact<{
   id: Types.Scalars['String']
@@ -21,15 +21,4 @@ export type SetColorHueAndSaturationMutationVariables = Types.Exact<{
 export type SetColorHueAndSaturationMutation = {
   __typename?: 'Mutation'
   setColorHueAndSaturation?: boolean | null
-}
-
-export type SetPlaybackMutationVariables = Types.Exact<{
-  id: Types.Scalars['String']
-  type: Types.ControlType
-  playback: Types.Scalars['String']
-}>
-
-export type SetPlaybackMutation = {
-  __typename?: 'Mutation'
-  setPlayback?: boolean | null
 }
