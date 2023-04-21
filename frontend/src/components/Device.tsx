@@ -1,12 +1,13 @@
 import React from 'react'
 import { Card, Col, Image, Row } from 'antd'
-import type { ControlType } from '../graphql.types'
+import { ControlType } from '../graphql.types'
 import IsOn from './deviceControls/IsOn'
 import LightLevel from './deviceControls/LightLevel'
 import Volume from './deviceControls/Volume'
 import LightColor from './deviceControls/LightColor'
 import Playback from './deviceControls/Playback'
 import Battery from './deviceControls/Battery'
+import PlayItemImage from './deviceControls/PlayItemImage'
 
 const Device = ({
   device,
@@ -104,9 +105,9 @@ const Device = ({
           </Col>
         )}
 
-        {device.playItemImageURL != null && (
+        {device.playItem != null && device.type === ControlType.Device && (
           <Col flex="auto">
-            <Image preview={false} src={device.playItemImageURL} />
+            <PlayItemImage id={device.id} />
           </Col>
         )}
 

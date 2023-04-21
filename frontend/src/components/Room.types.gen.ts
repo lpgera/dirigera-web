@@ -25,7 +25,6 @@ export type RoomQuery = {
       playback?: string | null
       volume?: number | null
       playItem?: string | null
-      playItemImageURL?: string | null
       nextPlayItem?: string | null
     }>
   } | null

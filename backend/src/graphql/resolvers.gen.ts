@@ -45,7 +45,6 @@ export type Device = {
   name: Scalars['String']
   nextPlayItem?: Maybe<Scalars['String']>
   playItem?: Maybe<Scalars['String']>
-  playItemImageURL?: Maybe<Scalars['String']>
   playback?: Maybe<Scalars['String']>
   type: ControlType
   volume?: Maybe<Scalars['Int']>
@@ -120,9 +119,14 @@ export type MutationSetVolumeArgs = {
 export type Query = {
   __typename?: 'Query'
   _?: Maybe<Scalars['String']>
+  devicePlayItemImageURL?: Maybe<Scalars['String']>
   room?: Maybe<Room>
   rooms: Array<Room>
   scenes: Array<Scene>
+}
+
+export type QueryDevicePlayItemImageUrlArgs = {
+  id: Scalars['String']
 }
 
 export type QueryRoomArgs = {
@@ -330,11 +334,6 @@ export type DeviceResolvers<
     ContextType
   >
   playItem?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-  playItemImageURL?: Resolver<
-    Maybe<ResolversTypes['String']>,
-    ParentType,
-    ContextType
-  >
   playback?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
   type?: Resolver<ResolversTypes['ControlType'], ParentType, ContextType>
   volume?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
@@ -413,6 +412,12 @@ export type QueryResolvers<
   ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']
 > = ResolversObject<{
   _?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
+  devicePlayItemImageURL?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryDevicePlayItemImageUrlArgs, 'id'>
+  >
   room?: Resolver<
     Maybe<ResolversTypes['Room']>,
     ParentType,

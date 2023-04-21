@@ -26,7 +26,6 @@ const ROOM_QUERY = gql`
         playback
         volume
         playItem
-        playItemImageURL
         nextPlayItem
       }
     }

@@ -36,7 +36,6 @@ export type Device = {
   name: Scalars['String']
   nextPlayItem?: Maybe<Scalars['String']>
   playItem?: Maybe<Scalars['String']>
-  playItemImageURL?: Maybe<Scalars['String']>
   playback?: Maybe<Scalars['String']>
   type: ControlType
   volume?: Maybe<Scalars['Int']>
@@ -111,9 +110,14 @@ export type MutationSetVolumeArgs = {
 export type Query = {
   __typename?: 'Query'
   _?: Maybe<Scalars['String']>
+  devicePlayItemImageURL?: Maybe<Scalars['String']>
   room?: Maybe<Room>
   rooms: Array<Room>
   scenes: Array<Scene>
+}
+
+export type QueryDevicePlayItemImageUrlArgs = {
+  id: Scalars['String']
 }
 
 export type QueryRoomArgs = {

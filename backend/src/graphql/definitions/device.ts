@@ -21,8 +21,11 @@ export const typeDefs = gql`
     playback: String
     volume: Int
     playItem: String
-    playItemImageURL: String
     nextPlayItem: String
+  }
+
+  extend type Query {
+    devicePlayItemImageURL(id: String!): String @loggedIn
   }
 
   extend type Mutation {
@@ -45,6 +48,17 @@ export const typeDefs = gql`
     setVolume(id: String!, type: ControlType!, volume: Int!): Boolean @loggedIn
   }
 `
+
+async function getImageAsBase64(url: string | null) {
+  if (!url) {
+    return null
+  }
+  const response = await fetch(url)
+  const buffer = Buffer.from(await response.arrayBuffer())
+  const base64 = buffer.toString('base64')
+  const mimeType = response.headers.get('content-type')
+  return `data:${mimeType};base64,${base64}`
+}
 
 function getAttributeIfCanReceive(device: Device, attribute: string) {
   return device.capabilities.canReceive.includes(attribute)
@@ -73,7 +87,6 @@ function getDevicesNotInSet(devices: Device[]) {
         playback: getAttributeIfCanReceive(device, 'playback'),
         volume: getAttributeIfCanReceive(device, 'volume'),
         playItem: playItem ? `${playItem.artist} - ${playItem.title}` : null,
-        playItemImageURL: playItem?.imageURL,
         nextPlayItem: nextPlayItem
           ? `${nextPlayItem.artist} - ${nextPlayItem.title}`
           : null,
@@ -117,7 +130,6 @@ function getDeviceSets(devices: Device[]) {
       playback: devicesInSet[0]?.attributes?.playback,
       volume: devicesInSet[0]?.attributes?.volume,
       playItem: playItem ? `${playItem?.artist} - ${playItem?.title}` : null,
-      playItemImageURL: playItem?.imageURL,
       nextPlayItem: nextPlayItem
         ? `${nextPlayItem?.artist} - ${nextPlayItem?.title}`
         : null,
@@ -135,6 +147,14 @@ export const resolvers: Resolvers = {
         ...getDevicesNotInSet(devicesInRoom),
         ...getDeviceSets(devicesInRoom),
       ].sort((a, b) => a.name.localeCompare(b.name))
+    },
+  },
+  Query: {
+    devicePlayItemImageURL: async (_, { id }, { dirigeraClient }) => {
+      const device = await dirigeraClient.devices.get({ id })
+      return getImageAsBase64(
+        device.attributes.playbackAudio?.playItem?.imageURL
+      )
     },
   },
   Mutation: {
