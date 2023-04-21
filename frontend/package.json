@@ -21,7 +21,7 @@
     "@storybook/addon-links": "^7.0.4",
     "@storybook/blocks": "^7.0.2",
     "@storybook/preset-create-react-app": "^7.0.4",
-    "@storybook/react": "^7.0.4",
+    "@storybook/react": "^7.0.6",
     "@storybook/react-webpack5": "^7.0.4",
     "@types/react": "^18.0.35",
     "@types/react-dom": "^18.0.11",
