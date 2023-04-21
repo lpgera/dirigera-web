@@ -1,7 +1,7 @@
 import React from 'react'
 import { gql, useMutation } from '@apollo/client'
-import { Button } from 'antd'
-import { FaPause, FaPlay } from 'react-icons/fa'
+import { Button, Col, Row } from 'antd'
+import { FaPause, FaPlay, FaStepBackward, FaStepForward } from 'react-icons/fa'
 import type {
   SetPlaybackMutation,
   SetPlaybackMutationVariables,
@@ -19,11 +19,15 @@ const Playback = ({
   type,
   isReachable,
   playback,
+  playbackNextAvailable,
+  playbackPreviousAvailable,
 }: {
   id: string
   type: ControlType
   isReachable: boolean
   playback: string
+  playbackNextAvailable?: boolean | null
+  playbackPreviousAvailable?: boolean | null
 }) => {
   const [setPlayback] = useMutation<
     SetPlaybackMutation,
@@ -31,39 +35,82 @@ const Playback = ({
   >(SET_PLAYBACK_MUTATION)
 
   return (
-    <Button
-      shape={'circle'}
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-      loading={playback === 'playbackBuffering'}
-      disabled={
-        !isReachable ||
-        !['playbackPaused', 'playbackPlaying'].includes(playback)
-      }
-      icon={playback === 'playbackPlaying' ? <FaPause /> : <FaPlay />}
-      onClick={async () => {
-        if (playback === 'playbackPaused') {
-          return await setPlayback({
-            variables: {
-              id,
-              type,
-              playback: 'playbackPlaying',
-            },
-          })
-        }
+    <Row gutter={[8, 0]}>
+      <Col>
+        <Button
+          shape="circle"
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          disabled={!isReachable || !playbackPreviousAvailable}
+          icon={<FaStepBackward />}
+          onClick={async () => {
+            await setPlayback({
+              variables: {
+                id,
+                type,
+                playback: 'playbackPrevious',
+              },
+            })
+          }}
+        />
+      </Col>
+      <Col>
+        <Button
+          shape="circle"
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          loading={playback === 'playbackBuffering'}
+          disabled={!isReachable}
+          icon={playback === 'playbackPlaying' ? <FaPause /> : <FaPlay />}
+          onClick={async () => {
+            if (playback === 'playbackPaused') {
+              return await setPlayback({
+                variables: {
+                  id,
+                  type,
+                  playback: 'playbackPlaying',
+                },
+              })
+            }
 
-        await setPlayback({
-          variables: {
-            id,
-            type,
-            playback: 'playbackPaused',
-          },
-        })
-      }}
-    />
+            await setPlayback({
+              variables: {
+                id,
+                type,
+                playback: 'playbackPaused',
+              },
+            })
+          }}
+        />
+      </Col>
+      <Col>
+        <Button
+          shape="circle"
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          disabled={!isReachable || !playbackNextAvailable}
+          icon={<FaStepForward />}
+          onClick={async () => {
+            await setPlayback({
+              variables: {
+                id,
+                type,
+                playback: 'playbackNext',
+              },
+            })
+          }}
+        />
+      </Col>
+    </Row>
   )
 }
 

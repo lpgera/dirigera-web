@@ -24,6 +24,8 @@ const ROOM_QUERY = gql`
         colorSaturation
         colorHue
         playback
+        playbackNextAvailable
+        playbackPreviousAvailable
         volume
         playItem
         nextPlayItem

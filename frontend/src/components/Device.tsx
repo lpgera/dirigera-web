@@ -24,6 +24,8 @@ const Device = ({
     colorSaturation?: number | null
     colorHue?: number | null
     playback?: string | null
+    playbackNextAvailable?: boolean | null
+    playbackPreviousAvailable?: boolean | null
     volume?: number | null
     playItem?: string | null
     playItemImageURL?: string | null
@@ -78,12 +80,19 @@ const Device = ({
               type={device.type}
               isReachable={device.isReachable}
               playback={device.playback}
+              playbackNextAvailable={device.playbackNextAvailable}
+              playbackPreviousAvailable={device.playbackPreviousAvailable}
             />
           </Col>
         )}
 
         {device.volume != null && (
-          <Col flex="auto">
+          <Col
+            flex="auto"
+            style={{
+              minWidth: 64,
+            }}
+          >
             <Volume
               id={device.id}
               type={device.type}

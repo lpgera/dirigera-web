@@ -37,7 +37,7 @@ const Volume = ({
   return (
     <Slider
       min={0}
-      max={100}
+      max={50}
       value={volumeValue}
       disabled={!isReachable || loading}
       onChange={(newValue: number) => setVolumeValue(newValue)}

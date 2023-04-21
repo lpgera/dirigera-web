@@ -46,6 +46,9 @@ export type Device = {
   nextPlayItem?: Maybe<Scalars['String']>
   playItem?: Maybe<Scalars['String']>
   playback?: Maybe<Scalars['String']>
+  playbackNextAvailable?: Maybe<Scalars['Boolean']>
+  playbackPauseAvailable?: Maybe<Scalars['Boolean']>
+  playbackPreviousAvailable?: Maybe<Scalars['Boolean']>
   type: ControlType
   volume?: Maybe<Scalars['Int']>
 }
@@ -335,6 +338,21 @@ export type DeviceResolvers<
   >
   playItem?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
   playback?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
+  playbackNextAvailable?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType
+  >
+  playbackPauseAvailable?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType
+  >
+  playbackPreviousAvailable?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType
+  >
   type?: Resolver<ResolversTypes['ControlType'], ParentType, ContextType>
   volume?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>

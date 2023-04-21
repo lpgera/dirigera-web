@@ -80,7 +80,7 @@ const Rooms = () => {
                 title={room.name}
                 extra={
                   <Button
-                    shape={'circle'}
+                    shape="circle"
                     style={{
                       display: 'flex',
                       justifyContent: 'center',

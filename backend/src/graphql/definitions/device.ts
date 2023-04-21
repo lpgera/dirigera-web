@@ -19,6 +19,9 @@ export const typeDefs = gql`
     colorSaturation: Float
     colorHue: Float
     playback: String
+    playbackPauseAvailable: Boolean
+    playbackNextAvailable: Boolean
+    playbackPreviousAvailable: Boolean
     volume: Int
     playItem: String
     nextPlayItem: String
@@ -85,6 +88,12 @@ function getDevicesNotInSet(devices: Device[]) {
         colorSaturation: getAttributeIfCanReceive(device, 'colorSaturation'),
         colorHue: getAttributeIfCanReceive(device, 'colorHue'),
         playback: getAttributeIfCanReceive(device, 'playback'),
+        playbackPauseAvailable:
+          device.attributes.playbackAvailableActions?.pause,
+        playbackNextAvailable:
+          device.attributes.playbackAvailableActions?.playbackNext,
+        playbackPreviousAvailable:
+          device.attributes.playbackAvailableActions?.playbackPrev,
         volume: getAttributeIfCanReceive(device, 'volume'),
         playItem: playItem ? `${playItem.artist} - ${playItem.title}` : null,
         nextPlayItem: nextPlayItem
@@ -128,6 +137,12 @@ function getDeviceSets(devices: Device[]) {
       colorSaturation: devicesInSet[0]?.attributes?.colorSaturation,
       colorHue: devicesInSet[0]?.attributes?.colorHue,
       playback: devicesInSet[0]?.attributes?.playback,
+      playbackPauseAvailable:
+        devicesInSet[0]?.attributes?.playbackAvailableActions?.pause,
+      playbackNextAvailable:
+        devicesInSet[0]?.attributes?.playbackAvailableActions?.playbackNext,
+      playbackPreviousAvailable:
+        devicesInSet[0]?.attributes?.playbackAvailableActions?.playbackPrev,
       volume: devicesInSet[0]?.attributes?.volume,
       playItem: playItem ? `${playItem?.artist} - ${playItem?.title}` : null,
       nextPlayItem: nextPlayItem

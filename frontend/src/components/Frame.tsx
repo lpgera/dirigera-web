@@ -13,7 +13,7 @@ const Frame = () => {
       <Layout.Content style={{ margin: '16px' }}>
         <Row gutter={[8, 8]}>
           <Col flex="0">
-            <Link to={'/'}>
+            <Link to="/">
               <div
                 style={{
                   width: 46,
@@ -36,7 +36,7 @@ const Frame = () => {
           </Col>
           <Col flex="auto">
             <Typography.Title>
-              <Link to={'/'} style={{ color: '#ffffffd9' }}>
+              <Link to="/" style={{ color: '#ffffffd9' }}>
                 Dirigera web
               </Link>
             </Typography.Title>

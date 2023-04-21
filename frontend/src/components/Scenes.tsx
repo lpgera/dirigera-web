@@ -34,7 +34,7 @@ const Scenes: FC = () => {
   return (
     <Row gutter={[8, 8]} style={{ marginBottom: 16 }}>
       {!data ? (
-        <Col key={'loading'}>
+        <Col key="loading">
           <Button disabled>Loading...</Button>
         </Col>
       ) : (

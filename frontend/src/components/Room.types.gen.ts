@@ -23,6 +23,8 @@ export type RoomQuery = {
       colorSaturation?: number | null
       colorHue?: number | null
       playback?: string | null
+      playbackNextAvailable?: boolean | null
+      playbackPreviousAvailable?: boolean | null
       volume?: number | null
       playItem?: string | null
       nextPlayItem?: string | null

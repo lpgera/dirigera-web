@@ -37,6 +37,9 @@ export type Device = {
   nextPlayItem?: Maybe<Scalars['String']>
   playItem?: Maybe<Scalars['String']>
   playback?: Maybe<Scalars['String']>
+  playbackNextAvailable?: Maybe<Scalars['Boolean']>
+  playbackPauseAvailable?: Maybe<Scalars['Boolean']>
+  playbackPreviousAvailable?: Maybe<Scalars['Boolean']>
   type: ControlType
   volume?: Maybe<Scalars['Int']>
 }
