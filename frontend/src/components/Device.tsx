@@ -1,12 +1,12 @@
 import React from 'react'
 import { Card, Col, Image, Row } from 'antd'
-import { BsBatteryFull } from 'react-icons/bs'
 import type { ControlType } from '../graphql.types'
 import IsOn from './deviceControls/IsOn'
 import LightLevel from './deviceControls/LightLevel'
 import Volume from './deviceControls/Volume'
 import LightColor from './deviceControls/LightColor'
 import Playback from './deviceControls/Playback'
+import Battery from './deviceControls/Battery'
 
 const Device = ({
   device,
@@ -32,13 +32,6 @@ const Device = ({
   return (
     <Card title={device.name}>
       <Row align="middle" gutter={[8, 8]}>
-        {device.batteryPercentage != null && (
-          <Col>
-            <BsBatteryFull size={22} style={{ verticalAlign: 'middle' }} />{' '}
-            {device.batteryPercentage}%
-          </Col>
-        )}
-
         {device.isOn != null && (
           <Col>
             <IsOn
@@ -114,6 +107,12 @@ const Device = ({
         {device.playItemImageURL != null && (
           <Col flex="auto">
             <Image preview={false} src={device.playItemImageURL} />
+          </Col>
+        )}
+
+        {device.batteryPercentage != null && (
+          <Col>
+            <Battery batteryPercentage={device.batteryPercentage} />
           </Col>
         )}
       </Row>
