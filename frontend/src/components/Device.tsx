@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Col, Image, Row } from 'antd'
+import { Card, Col, Row } from 'antd'
 import { ControlType } from '../graphql.types'
 import IsOn from './deviceControls/IsOn'
 import LightLevel from './deviceControls/LightLevel'
