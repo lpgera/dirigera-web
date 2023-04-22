@@ -92,6 +92,9 @@ const Rooms = () => {
                 }
               >
                 <Row align="middle" gutter={[8, 8]}>
+                  {room.quickControls.length === 0 && (
+                    <>No quick controls available</>
+                  )}
                   {room.quickControls.map((qc) => (
                     <Button
                       key={qc.id}

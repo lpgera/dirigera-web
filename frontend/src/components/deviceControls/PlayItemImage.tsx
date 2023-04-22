@@ -7,7 +7,7 @@ import type {
 } from './PlayItemImage.types.gen'
 import { useRefetch } from '../../useRefetch'
 
-const DEVICE_PLAY_ITEM_IMAGE_URL_QUERY = gql`
+export const DEVICE_PLAY_ITEM_IMAGE_URL_QUERY = gql`
   query DevicePlayItemImageURL($id: String!) {
     devicePlayItemImageURL(id: $id)
   }

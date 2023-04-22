@@ -7,7 +7,7 @@ import { useRefetch } from '../useRefetch'
 import { columnSizes } from '../columnSizes'
 import Device from './Device'
 
-const ROOM_QUERY = gql`
+export const ROOM_QUERY = gql`
   query Room($id: String!) {
     room(id: $id) {
       id
@@ -62,11 +62,18 @@ const Room = () => {
             <Result status="error" title="Error" subTitle={error.message} />
           </Col>
         ) : (
-          data.room?.devices.map((device) => (
-            <Col key={device.id} {...columnSizes}>
-              <Device device={device} />
-            </Col>
-          ))
+          <>
+            {data.room?.devices.length === 0 && (
+              <Col span={24}>
+                <Result status="404" title="No devices" />
+              </Col>
+            )}
+            {data.room?.devices.map((device) => (
+              <Col key={device.id} {...columnSizes}>
+                <Device device={device} />
+              </Col>
+            ))}
+          </>
         )}
       </Row>
     </>

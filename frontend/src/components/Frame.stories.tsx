@@ -5,9 +5,11 @@ import Frame from './Frame'
 import { AuthContext } from './AuthContext'
 import Rooms, { ROOMS_QUERY } from './Rooms'
 import { SCENES_QUERY } from './Scenes'
+import RoomComponent, { ROOM_QUERY } from './Room'
+import { DEVICE_PLAY_ITEM_IMAGE_URL_QUERY } from './deviceControls/PlayItemImage'
 
 export default {
-  title: 'Application',
+  title: 'Application pages',
   component: Frame,
   decorators: [
     (story, context) => (
@@ -30,7 +32,7 @@ type Story = StoryObj<typeof Frame>
 
 export const LoggedOut: Story = {}
 
-export const LoggedIn: Story = {
+export const QuickControls: Story = {
   parameters: {
     reactRouter: {
       routePath: '/',
@@ -85,7 +87,7 @@ export const LoggedIn: Story = {
                       isReachable: false,
                       isOn: false,
                       playback: null,
-                      type: 'DEVICE_SET',
+                      type: 'DEVICE',
                     },
                     {
                       id: '2',
@@ -107,7 +109,7 @@ export const LoggedIn: Story = {
                       isReachable: true,
                       isOn: null,
                       playback: 'playbackIdle',
-                      type: 'DEVICE_SET',
+                      type: 'DEVICE',
                     },
                     {
                       id: '2',
@@ -119,8 +121,126 @@ export const LoggedIn: Story = {
                     },
                   ],
                 },
-                { id: '3', name: 'Entrance', quickControls: [] },
+                { id: '4', name: 'Entrance', quickControls: [] },
               ],
+            },
+          }),
+        },
+      ],
+    },
+  },
+}
+
+export const Room: Story = {
+  parameters: {
+    reactRouter: {
+      routePath: '/rooms/room-id',
+      outlet: <RoomComponent />,
+    },
+    token: 'mock_token',
+    apolloClient: {
+      mocks: [
+        {
+          request: {
+            query: ROOM_QUERY,
+            variables: {
+              id: '',
+            },
+          },
+          newData: () => ({
+            data: {
+              room: {
+                id: 'room-id',
+                name: 'Room name',
+                devices: [
+                  {
+                    id: '1',
+                    name: 'Speaker',
+                    type: 'DEVICE',
+                    isReachable: true,
+                    isOn: null,
+                    lightLevel: null,
+                    colorTemperature: null,
+                    colorHue: null,
+                    colorSaturation: null,
+                    batteryPercentage: null,
+                    playback: 'playbackPlaying',
+                    volume: 25,
+                    playItem: 'Song title',
+                    nextPlayItem: 'Next song title',
+                    playbackNextAvailable: true,
+                    playbackPreviousAvailable: true,
+                  },
+                  {
+                    id: '2',
+                    name: 'Light 1',
+                    type: 'DEVICE',
+                    isReachable: true,
+                    isOn: false,
+                    lightLevel: 1,
+                    colorTemperature: null,
+                    colorHue: null,
+                    colorSaturation: null,
+                    batteryPercentage: null,
+                    playback: null,
+                    volume: null,
+                    playItem: null,
+                    nextPlayItem: null,
+                    playbackNextAvailable: null,
+                    playbackPreviousAvailable: null,
+                  },
+                  {
+                    id: '3',
+                    name: 'Light 2',
+                    type: 'DEVICE_SET',
+                    isReachable: true,
+                    isOn: true,
+                    lightLevel: 100,
+                    colorTemperature: 4000,
+                    colorHue: 0,
+                    colorSaturation: 1,
+                    batteryPercentage: null,
+                    playback: null,
+                    volume: null,
+                    playItem: null,
+                    nextPlayItem: null,
+                    playbackNextAvailable: null,
+                    playbackPreviousAvailable: null,
+                  },
+                  {
+                    id: '4',
+                    name: 'Remote',
+                    type: 'DEVICE',
+                    isReachable: true,
+                    isOn: null,
+                    lightLevel: null,
+                    colorTemperature: null,
+                    colorHue: null,
+                    colorSaturation: null,
+                    batteryPercentage: 50,
+                    playback: null,
+                    volume: null,
+                    playItem: null,
+                    nextPlayItem: null,
+                    playbackNextAvailable: null,
+                    playbackPreviousAvailable: null,
+                  },
+                ],
+              },
+            },
+          }),
+        },
+        {
+          request: {
+            query: DEVICE_PLAY_ITEM_IMAGE_URL_QUERY,
+            variables: {
+              id: '1',
+            },
+          },
+          newData: () => ({
+            data: {
+              devicePlayItemImageURL:
+                'https://placehold.co/320x320?text=Album+art',
             },
           }),
         },
