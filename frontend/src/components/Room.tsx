@@ -70,7 +70,7 @@ const Room = () => {
             )}
             {data.room?.devices.map((device) => (
               <Col key={device.id} {...columnSizes}>
-                <Device device={device} />
+                <Device {...device} />
               </Col>
             ))}
           </>

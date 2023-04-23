@@ -7,11 +7,13 @@ import Rooms, { ROOMS_QUERY } from './Rooms'
 import { SCENES_QUERY } from './Scenes'
 import RoomComponent, { ROOM_QUERY } from './Room'
 import { DEVICE_PLAY_ITEM_IMAGE_URL_QUERY } from './deviceControls/PlayItemImage'
+import { withRouter } from 'storybook-addon-react-router-v6'
 
 export default {
   title: 'Application pages',
   component: Frame,
   decorators: [
+    withRouter,
     (story, context) => (
       <AuthContext.Provider
         value={{

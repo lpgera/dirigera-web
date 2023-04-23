@@ -41,6 +41,7 @@ const Volume = ({
       value={volumeValue}
       disabled={!isReachable || loading}
       onChange={(newValue: number) => setVolumeValue(newValue)}
+      tooltip={{ formatter: (value) => `Volume: ${value}%` }}
       onAfterChange={async (newValue: number) => {
         await setVolume({
           variables: {
