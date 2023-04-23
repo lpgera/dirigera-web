@@ -13,11 +13,11 @@ user-friendly interface for controlling your smart home devices, and can be acce
   <hr />
 </details>
 
-Check out the latest non-interactive Storybook to see the UI at
-[Chromatic](https://www.chromatic.com/library?appId=61753f54931d3b003a535d15&branch=master)
+Check out the latest storybook build to see the UI
+[here](https://www.chromatic.com/library?appId=61753f54931d3b003a535d15&branch=master).
 
 > Are you looking for the old Tradfri web ui?
-> [Switch to the tradfri branch](https://github.com/lpgera/tradfri-web-ui/tree/tradfri)
+> [Switch to the tradfri branch](https://github.com/lpgera/tradfri-web-ui/tree/tradfri).
 
 ## Environment Variables
 
@@ -99,6 +99,12 @@ Then navigate to the cloned directory and install dependencies:
 ```
 cd dirigera-web
 npm install
+```
+
+Then build the project:
+
+```
+npm run build
 ```
 
 Finally, start the server:
