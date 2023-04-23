@@ -3,7 +3,7 @@ version: '3.8'
 services:
   backend:
     image: node:19
-    env_file: backend/.env
+    env_file: .env
     volumes:
       - .:/opt/app:delegated
     working_dir: /opt/app

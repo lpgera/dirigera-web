@@ -4,8 +4,8 @@
     "authenticate": "dirigera authenticate",
     "build": "swc src -d dist",
     "graphql-codegen": "graphql-codegen",
-    "start": "node -r dotenv/config dist/index.js",
-    "watch": "nodemon --ext ts,json --exec node -r @swc/register -r dotenv/config src/index.ts"
+    "start": "node -r dotenv/config dist/index.js dotenv_config_path=../.env",
+    "watch": "nodemon --ext ts,json --exec node -r @swc/register -r dotenv/config src/index.ts dotenv_config_path=../.env"
   },
   "dependencies": {
     "@apollo/server": "^4.7.0",
