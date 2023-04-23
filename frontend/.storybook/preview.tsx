@@ -4,6 +4,11 @@ import { MockedProvider } from '@apollo/client/testing'
 
 const preview: Preview = {
   parameters: {
+    options: {
+      storySort: {
+        method: 'alphabetical',
+      },
+    },
     apolloClient: {
       MockedProvider,
     },
