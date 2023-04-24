@@ -52,10 +52,12 @@ Replace the values with your own.
 To run the app with Docker, you can use the following command:
 
 ```
-docker run -d \
+docker run \
   -p 4000:4000 \
   --env-file .env \
   --name dirigera-web \
+  --restart unless-stopped \
+  --detach \
   ghcr.io/lpgera/dirigera-web
 ```
 
