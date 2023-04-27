@@ -48,7 +48,12 @@ export function getDeviceQuickControls(devices: Device[], roomId: string) {
 export function getDeviceSetQuickControls(devices: Device[], roomId: string) {
   const deviceSets = [
     ...devices
-      .filter((d) => d.room?.id === roomId)
+      .filter(
+        (d) =>
+          d.room?.id === roomId &&
+          (d.capabilities.canReceive.includes('isOn') ||
+            d.capabilities.canReceive.includes('playback'))
+      )
       .flatMap((d) => d.deviceSet)
       .reduce((map, item) => {
         if (!map.has(item.id)) {
