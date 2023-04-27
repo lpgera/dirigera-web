@@ -63,13 +63,13 @@ async function getImageAsBase64(url: string | null) {
   return `data:${mimeType};base64,${base64}`
 }
 
-function getAttributeIfCanReceive(device: Device, attribute: string) {
+export function getAttributeIfCanReceive(device: Device, attribute: string) {
   return device.capabilities.canReceive.includes(attribute)
     ? device.attributes[attribute]
     : null
 }
 
-function getDevicesNotInSet(devices: Device[]) {
+export function getDevicesNotInSet(devices: Device[]) {
   return devices
     .filter((d) => d.deviceSet.length === 0)
     .map((device) => {
@@ -103,7 +103,7 @@ function getDevicesNotInSet(devices: Device[]) {
     })
 }
 
-function getDeviceSets(devices: Device[]) {
+export function getDeviceSets(devices: Device[]) {
   const deviceSets = [
     ...devices
       .flatMap((d) => d.deviceSet)

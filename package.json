@@ -13,7 +13,8 @@
     "build": "npm run build -ws",
     "check-updates": "ncu -i -ws --root",
     "prepare": "node -e \"try { require('husky').install() } catch (e) {if (e.code !== 'MODULE_NOT_FOUND') throw e}\"",
-    "start": "npm run start -w backend"
+    "start": "npm run start -w backend",
+    "test": "npm run test -w backend"
   },
   "devDependencies": {
     "husky": "^8.0.3",

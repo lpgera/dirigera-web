@@ -10,6 +10,8 @@ RUN npm ci --no-audit --no-fund -w backend
 
 COPY backend backend
 
+RUN npm run test -w backend
+
 RUN npm run build -w backend
 
 # stage 2 - frontend build

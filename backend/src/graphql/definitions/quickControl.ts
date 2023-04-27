@@ -26,7 +26,7 @@ export const typeDefs = gql`
   }
 `
 
-function getDeviceQuickControls(devices: Device[], roomId: string) {
+export function getDeviceQuickControls(devices: Device[], roomId: string) {
   return devices
     .filter(
       (device) =>
@@ -45,7 +45,7 @@ function getDeviceQuickControls(devices: Device[], roomId: string) {
     }))
 }
 
-function getDeviceSetQuickControls(devices: Device[], roomId: string) {
+export function getDeviceSetQuickControls(devices: Device[], roomId: string) {
   const deviceSets = [
     ...devices
       .filter((d) => d.room?.id === roomId)

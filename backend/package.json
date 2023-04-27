@@ -5,6 +5,8 @@
     "build": "swc src -d dist",
     "graphql-codegen": "graphql-codegen",
     "start": "node -r dotenv/config dist/index.js dotenv_config_path=../.env",
+    "test": "globstar -- node -r @swc/register --test \"./**/*.test.ts\"",
+    "test-watch": "globstar -- node -r @swc/register --watch --test \"./**/*.test.ts\"",
     "watch": "nodemon --ext ts,json --exec node -r @swc/register -r dotenv/config src/index.ts dotenv_config_path=../.env"
   },
   "dependencies": {
@@ -31,6 +33,7 @@
     "@types/jsonwebtoken": "^9.0.1",
     "@types/node": "^18.15.13",
     "@types/ws": "^8.5.4",
+    "globstar": "^1.0.0",
     "nodemon": "^2.0.22",
     "typescript": "^5.0.4"
   }
