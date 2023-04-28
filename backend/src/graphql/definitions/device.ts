@@ -152,6 +152,23 @@ export function getDeviceSets(devices: Device[]) {
   })
 }
 
+const hasControl = (d: {
+  isOn: boolean | null
+  lightLevel: number | null
+  colorTemperature: number | null
+  colorSaturation: number | null
+  colorHue: number | null
+  playback: string | null
+  volume: number | null
+}) =>
+  d.isOn !== null ||
+  d.lightLevel !== null ||
+  d.colorTemperature !== null ||
+  d.colorSaturation !== null ||
+  d.colorHue !== null ||
+  d.playback !== null ||
+  d.volume !== null
+
 export const resolvers: Resolvers = {
   Room: {
     devices: async ({ id }, _, { dirigeraClient }) => {
@@ -161,7 +178,9 @@ export const resolvers: Resolvers = {
       return [
         ...getDevicesNotInSet(devicesInRoom),
         ...getDeviceSets(devicesInRoom),
-      ].sort((a, b) => a.name.localeCompare(b.name))
+      ]
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .sort((a, b) => Number(hasControl(b)) - Number(hasControl(a)))
     },
   },
   Query: {

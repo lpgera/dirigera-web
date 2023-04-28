@@ -10,7 +10,15 @@ import type {
 } from './Rooms.types.gen'
 import Scenes from './Scenes'
 import { useRefetch } from '../useRefetch'
-import { columnSizes } from '../columnSizes'
+
+const columnSizes = {
+  xs: 12,
+  sm: 12,
+  md: 8,
+  lg: 8,
+  xl: 6,
+  xxl: 4,
+}
 
 const buttonStyles = {
   overflow: 'hidden',

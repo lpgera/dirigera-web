@@ -4,8 +4,16 @@ import { Card, Col, Result, Row, Skeleton, Typography } from 'antd'
 import { gql, useQuery } from '@apollo/client'
 import type { RoomQuery, RoomQueryVariables } from './Room.types.gen'
 import { useRefetch } from '../useRefetch'
-import { columnSizes } from '../columnSizes'
 import Device from './Device'
+
+const columnSizes = {
+  xs: 24,
+  sm: 12,
+  md: 8,
+  lg: 8,
+  xl: 6,
+  xxl: 4,
+}
 
 export const ROOM_QUERY = gql`
   query Room($id: String!) {
