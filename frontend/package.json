@@ -20,7 +20,7 @@
     "@storybook/addon-interactions": "^7.0.6",
     "@storybook/addon-links": "^7.0.7",
     "@storybook/blocks": "^7.0.7",
-    "@storybook/preset-create-react-app": "^7.0.6",
+    "@storybook/preset-create-react-app": "^7.0.7",
     "@storybook/react": "^7.0.6",
     "@storybook/react-webpack5": "^7.0.6",
     "@types/react": "^18.2.0",
