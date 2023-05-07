@@ -27,7 +27,7 @@
     "@types/react-dom": "^18.2.1",
     "antd": "^5.4.6",
     "apollo3-cache-persist": "^0.14.1",
-    "chromatic": "^6.17.3",
+    "chromatic": "^6.17.4",
     "http-proxy-middleware": "^2.0.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
