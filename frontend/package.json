@@ -22,7 +22,7 @@
     "@storybook/blocks": "^7.0.11",
     "@storybook/preset-create-react-app": "^7.0.9",
     "@storybook/react": "^7.0.11",
-    "@storybook/react-webpack5": "^7.0.9",
+    "@storybook/react-webpack5": "^7.0.11",
     "@types/react": "^18.2.6",
     "@types/react-dom": "^18.2.4",
     "antd": "^5.4.7",
