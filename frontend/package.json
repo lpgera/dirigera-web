@@ -34,7 +34,7 @@
     "react-icons": "^4.8.0",
     "react-router-dom": "^6.11.2",
     "react-use-websocket": "^4.3.1",
-    "storybook": "^7.0.11",
+    "storybook": "^7.0.12",
     "storybook-addon-apollo-client": "^4.1.4",
     "storybook-addon-react-router-v6": "^1.0.0",
     "typescript": "^5.0.4"
