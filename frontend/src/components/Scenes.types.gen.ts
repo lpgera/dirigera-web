@@ -8,7 +8,7 @@ export type ScenesQuery = {
 }
 
 export type ActiveSceneMutationVariables = Types.Exact<{
-  id: Types.Scalars['String']
+  id: Types.Scalars['String']['input']
 }>
 
 export type ActiveSceneMutation = {

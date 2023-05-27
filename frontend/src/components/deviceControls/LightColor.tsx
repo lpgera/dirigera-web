@@ -7,7 +7,7 @@ import type {
   SetColorHueAndSaturationMutationVariables,
   SetColorTemperatureMutation,
   SetColorTemperatureMutationVariables,
-} from '../Device.types.gen'
+} from './LightColor.types.gen'
 import type { ControlType } from '../../graphql.types'
 
 const SET_COLOR_TEMPERATURE_MUTATION = gql`

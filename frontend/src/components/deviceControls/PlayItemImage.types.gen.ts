@@ -1,7 +1,7 @@
 import * as Types from '../../graphql.types'
 
 export type DevicePlayItemImageUrlQueryVariables = Types.Exact<{
-  id: Types.Scalars['String']
+  id: Types.Scalars['String']['input']
 }>
 
 export type DevicePlayItemImageUrlQuery = {

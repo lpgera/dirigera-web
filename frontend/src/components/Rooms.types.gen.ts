@@ -21,10 +21,10 @@ export type RoomsQuery = {
 }
 
 export type QuickControlMutationVariables = Types.Exact<{
-  id: Types.Scalars['String']
+  id: Types.Scalars['String']['input']
   type: Types.ControlType
-  isOn?: Types.InputMaybe<Types.Scalars['Boolean']>
-  playback?: Types.InputMaybe<Types.Scalars['String']>
+  isOn?: Types.InputMaybe<Types.Scalars['Boolean']['input']>
+  playback?: Types.InputMaybe<Types.Scalars['String']['input']>
 }>
 
 export type QuickControlMutation = {

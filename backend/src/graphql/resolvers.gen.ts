@@ -15,16 +15,25 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
   [SubKey in K]: Maybe<T[SubKey]>
 }
+export type MakeEmpty<
+  T extends { [key: string]: unknown },
+  K extends keyof T
+> = { [_ in K]?: never }
+export type Incremental<T> =
+  | T
+  | {
+      [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never
+    }
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & {
   [P in K]-?: NonNullable<T[P]>
 }
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string
-  String: string
-  Boolean: boolean
-  Int: number
-  Float: number
+  ID: { input: string | number; output: string }
+  String: { input: string; output: string }
+  Boolean: { input: boolean; output: boolean }
+  Int: { input: number; output: number }
+  Float: { input: number; output: number }
 }
 
 export enum ControlType {
@@ -34,130 +43,130 @@ export enum ControlType {
 
 export type Device = {
   __typename?: 'Device'
-  batteryPercentage?: Maybe<Scalars['Int']>
-  colorHue?: Maybe<Scalars['Float']>
-  colorSaturation?: Maybe<Scalars['Float']>
-  colorTemperature?: Maybe<Scalars['Int']>
-  id: Scalars['String']
-  isOn?: Maybe<Scalars['Boolean']>
-  isReachable: Scalars['Boolean']
-  lightLevel?: Maybe<Scalars['Int']>
-  name: Scalars['String']
-  nextPlayItem?: Maybe<Scalars['String']>
-  playItem?: Maybe<Scalars['String']>
-  playback?: Maybe<Scalars['String']>
-  playbackNextAvailable?: Maybe<Scalars['Boolean']>
-  playbackPauseAvailable?: Maybe<Scalars['Boolean']>
-  playbackPreviousAvailable?: Maybe<Scalars['Boolean']>
+  batteryPercentage?: Maybe<Scalars['Int']['output']>
+  colorHue?: Maybe<Scalars['Float']['output']>
+  colorSaturation?: Maybe<Scalars['Float']['output']>
+  colorTemperature?: Maybe<Scalars['Int']['output']>
+  id: Scalars['String']['output']
+  isOn?: Maybe<Scalars['Boolean']['output']>
+  isReachable: Scalars['Boolean']['output']
+  lightLevel?: Maybe<Scalars['Int']['output']>
+  name: Scalars['String']['output']
+  nextPlayItem?: Maybe<Scalars['String']['output']>
+  playItem?: Maybe<Scalars['String']['output']>
+  playback?: Maybe<Scalars['String']['output']>
+  playbackNextAvailable?: Maybe<Scalars['Boolean']['output']>
+  playbackPauseAvailable?: Maybe<Scalars['Boolean']['output']>
+  playbackPreviousAvailable?: Maybe<Scalars['Boolean']['output']>
   type: ControlType
-  volume?: Maybe<Scalars['Int']>
+  volume?: Maybe<Scalars['Int']['output']>
 }
 
 export type Mutation = {
   __typename?: 'Mutation'
-  _?: Maybe<Scalars['String']>
-  activateScene?: Maybe<Scalars['String']>
-  login?: Maybe<Scalars['String']>
-  quickControl?: Maybe<Scalars['Boolean']>
-  setColorHueAndSaturation?: Maybe<Scalars['Boolean']>
-  setColorTemperature?: Maybe<Scalars['Boolean']>
-  setIsOn?: Maybe<Scalars['Boolean']>
-  setLightLevel?: Maybe<Scalars['Boolean']>
-  setPlayback?: Maybe<Scalars['Boolean']>
-  setVolume?: Maybe<Scalars['Boolean']>
+  _?: Maybe<Scalars['String']['output']>
+  activateScene?: Maybe<Scalars['String']['output']>
+  login?: Maybe<Scalars['String']['output']>
+  quickControl?: Maybe<Scalars['Boolean']['output']>
+  setColorHueAndSaturation?: Maybe<Scalars['Boolean']['output']>
+  setColorTemperature?: Maybe<Scalars['Boolean']['output']>
+  setIsOn?: Maybe<Scalars['Boolean']['output']>
+  setLightLevel?: Maybe<Scalars['Boolean']['output']>
+  setPlayback?: Maybe<Scalars['Boolean']['output']>
+  setVolume?: Maybe<Scalars['Boolean']['output']>
 }
 
 export type MutationActivateSceneArgs = {
-  id: Scalars['String']
+  id: Scalars['String']['input']
 }
 
 export type MutationLoginArgs = {
-  password: Scalars['String']
+  password: Scalars['String']['input']
 }
 
 export type MutationQuickControlArgs = {
-  id: Scalars['String']
-  isOn?: InputMaybe<Scalars['Boolean']>
-  playback?: InputMaybe<Scalars['String']>
+  id: Scalars['String']['input']
+  isOn?: InputMaybe<Scalars['Boolean']['input']>
+  playback?: InputMaybe<Scalars['String']['input']>
   type: ControlType
 }
 
 export type MutationSetColorHueAndSaturationArgs = {
-  colorHue: Scalars['Float']
-  colorSaturation: Scalars['Float']
-  id: Scalars['String']
+  colorHue: Scalars['Float']['input']
+  colorSaturation: Scalars['Float']['input']
+  id: Scalars['String']['input']
   type: ControlType
 }
 
 export type MutationSetColorTemperatureArgs = {
-  colorTemperature: Scalars['Int']
-  id: Scalars['String']
+  colorTemperature: Scalars['Int']['input']
+  id: Scalars['String']['input']
   type: ControlType
 }
 
 export type MutationSetIsOnArgs = {
-  id: Scalars['String']
-  isOn: Scalars['Boolean']
+  id: Scalars['String']['input']
+  isOn: Scalars['Boolean']['input']
   type: ControlType
 }
 
 export type MutationSetLightLevelArgs = {
-  id: Scalars['String']
-  lightLevel: Scalars['Int']
+  id: Scalars['String']['input']
+  lightLevel: Scalars['Int']['input']
   type: ControlType
 }
 
 export type MutationSetPlaybackArgs = {
-  id: Scalars['String']
-  playback: Scalars['String']
+  id: Scalars['String']['input']
+  playback: Scalars['String']['input']
   type: ControlType
 }
 
 export type MutationSetVolumeArgs = {
-  id: Scalars['String']
+  id: Scalars['String']['input']
   type: ControlType
-  volume: Scalars['Int']
+  volume: Scalars['Int']['input']
 }
 
 export type Query = {
   __typename?: 'Query'
-  _?: Maybe<Scalars['String']>
-  devicePlayItemImageURL?: Maybe<Scalars['String']>
+  _?: Maybe<Scalars['String']['output']>
+  devicePlayItemImageURL?: Maybe<Scalars['String']['output']>
   room?: Maybe<Room>
   rooms: Array<Room>
   scenes: Array<Scene>
 }
 
 export type QueryDevicePlayItemImageUrlArgs = {
-  id: Scalars['String']
+  id: Scalars['String']['input']
 }
 
 export type QueryRoomArgs = {
-  id: Scalars['String']
+  id: Scalars['String']['input']
 }
 
 export type QuickControl = {
   __typename?: 'QuickControl'
-  id: Scalars['String']
-  isOn?: Maybe<Scalars['Boolean']>
-  isReachable: Scalars['Boolean']
-  name: Scalars['String']
-  playback?: Maybe<Scalars['String']>
+  id: Scalars['String']['output']
+  isOn?: Maybe<Scalars['Boolean']['output']>
+  isReachable: Scalars['Boolean']['output']
+  name: Scalars['String']['output']
+  playback?: Maybe<Scalars['String']['output']>
   type: ControlType
 }
 
 export type Room = {
   __typename?: 'Room'
   devices: Array<Device>
-  id: Scalars['String']
-  name: Scalars['String']
+  id: Scalars['String']['output']
+  name: Scalars['String']['output']
   quickControls: Array<QuickControl>
 }
 
 export type Scene = {
   __typename?: 'Scene'
-  id: Scalars['String']
-  name: Scalars['String']
+  id: Scalars['String']['output']
+  name: Scalars['String']['output']
 }
 
 export type WithIndex<TObject> = TObject & Record<string, any>
@@ -270,31 +279,31 @@ export type DirectiveResolverFn<
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>
   ControlType: ControlType
   Device: ResolverTypeWrapper<Device>
-  Float: ResolverTypeWrapper<Scalars['Float']>
-  Int: ResolverTypeWrapper<Scalars['Int']>
+  Float: ResolverTypeWrapper<Scalars['Float']['output']>
+  Int: ResolverTypeWrapper<Scalars['Int']['output']>
   Mutation: ResolverTypeWrapper<{}>
   Query: ResolverTypeWrapper<{}>
   QuickControl: ResolverTypeWrapper<QuickControl>
   Room: ResolverTypeWrapper<Room>
   Scene: ResolverTypeWrapper<Scene>
-  String: ResolverTypeWrapper<Scalars['String']>
+  String: ResolverTypeWrapper<Scalars['String']['output']>
 }>
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
-  Boolean: Scalars['Boolean']
+  Boolean: Scalars['Boolean']['output']
   Device: Device
-  Float: Scalars['Float']
-  Int: Scalars['Int']
+  Float: Scalars['Float']['output']
+  Int: Scalars['Int']['output']
   Mutation: {}
   Query: {}
   QuickControl: QuickControl
   Room: Room
   Scene: Scene
-  String: Scalars['String']
+  String: Scalars['String']['output']
 }>
 
 export type LoggedInDirectiveArgs = {}

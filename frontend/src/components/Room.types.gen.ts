@@ -1,7 +1,7 @@
 import * as Types from '../graphql.types'
 
 export type RoomQueryVariables = Types.Exact<{
-  id: Types.Scalars['String']
+  id: Types.Scalars['String']['input']
 }>
 
 export type RoomQuery = {
