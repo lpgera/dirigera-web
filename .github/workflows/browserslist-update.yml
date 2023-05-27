@@ -1,0 +1,33 @@
+name: Update browserslist database
+
+on:
+  schedule:
+    - cron: '0 16 * * 5'
+  workflow_dispatch:
+
+jobs:
+  browserslist-update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          ref: 'master'
+
+      - name: Setup node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Run browserslist update
+        run: npm run browserslist-update
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.AUTO_PR_PAT }}
+          branch: 'feature/browserslist-update'
+          delete-branch: true
+          commit-message: 'update browserslist database'
+          title: 'Update browserslist database'
