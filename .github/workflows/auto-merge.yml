@@ -12,4 +12,4 @@ jobs:
         with:
           target: minor
           command: squash and merge
-          github-token: ${{ secrets.AUTO_MERGE_PERSONAL_TOKEN }}
+          github-token: ${{ secrets.AUTO_PR_PAT }}
