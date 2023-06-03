@@ -26,7 +26,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
-          token: ${{ secrets.AUTO_PR_PAT }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           branch: 'feature/browserslist-update'
           delete-branch: true
           commit-message: 'update browserslist database'
