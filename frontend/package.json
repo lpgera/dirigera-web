@@ -25,7 +25,7 @@
     "@storybook/react-webpack5": "^7.0.18",
     "@types/react": "^18.2.8",
     "@types/react-dom": "^18.2.4",
-    "antd": "^5.5.2",
+    "antd": "^5.6.1",
     "apollo3-cache-persist": "^0.14.1",
     "chromatic": "^6.18.0",
     "http-proxy-middleware": "^2.0.6",
