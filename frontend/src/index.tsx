@@ -1,7 +1,6 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './components/App'
-import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 
 const rootElement = document.getElementById('root')
 if (!rootElement) {
@@ -14,5 +13,3 @@ root.render(
     <App />
   </React.StrictMode>
 )
-
-serviceWorkerRegistration.register()
