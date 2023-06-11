@@ -1,4 +1,5 @@
 import React, { FC } from 'react'
+import { Button, Col, Row } from 'antd'
 import { useQuery, gql, useMutation } from '@apollo/client'
 import {
   ActiveSceneMutation,
@@ -6,7 +7,7 @@ import {
   ScenesQuery,
   ScenesQueryVariables,
 } from './Scenes.types.gen'
-import { Button, Col, Row } from 'antd'
+import { useRefetch } from '../useRefetch'
 
 export const SCENES_QUERY = gql`
   query Scenes {
@@ -18,7 +19,9 @@ export const SCENES_QUERY = gql`
 `
 
 const Scenes: FC = () => {
-  const { data } = useQuery<ScenesQuery, ScenesQueryVariables>(SCENES_QUERY)
+  const { data, refetch } = useQuery<ScenesQuery, ScenesQueryVariables>(
+    SCENES_QUERY
+  )
 
   const [activateScene] = useMutation<
     ActiveSceneMutation,
@@ -28,6 +31,8 @@ const Scenes: FC = () => {
       activateScene(id: $id)
     }
   `)
+
+  useRefetch(refetch)
 
   const scenes = data?.scenes ?? []
 
