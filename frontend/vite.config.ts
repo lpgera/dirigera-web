@@ -1,12 +1,12 @@
 import { defineConfig } from 'vite'
-import reactRefresh from '@vitejs/plugin-react-refresh'
+import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 
 const target = process.env.BACKEND_URL ?? 'http://localhost:4000'
 
 export default defineConfig({
   plugins: [
-    reactRefresh(),
+    react(),
     VitePWA({
       registerType: 'autoUpdate',
       workbox: {
