@@ -3,19 +3,13 @@ updates:
   - package-ecosystem: 'npm'
     directory: '/'
     schedule:
-      interval: 'weekly'
-      day: 'friday'
-      time: '16:00'
+      interval: 'daily'
     open-pull-requests-limit: 20
   - package-ecosystem: 'docker'
     directory: '/'
     schedule:
-      interval: 'weekly'
-      day: 'friday'
-      time: '16:00'
+      interval: 'daily'
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
-      interval: 'weekly'
-      day: 'friday'
-      time: '16:00'
+      interval: 'daily'
