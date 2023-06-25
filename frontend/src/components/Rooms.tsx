@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Card, Col, Result, Row, Skeleton } from 'antd'
 import { useQuery, gql, useMutation } from '@apollo/client'
-import { GoSettings } from 'react-icons/go'
+import { GoGear } from 'react-icons/go'
 import { useNavigate } from 'react-router-dom'
 import type {
   QuickControlMutation,
@@ -95,7 +95,7 @@ const Rooms = () => {
                       alignItems: 'center',
                     }}
                     onClick={() => navigate(`room/${room.id}`)}
-                    icon={<GoSettings />}
+                    icon={<GoGear />}
                   />
                 }
               >
