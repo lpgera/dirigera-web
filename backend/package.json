@@ -35,6 +35,6 @@
     "@types/ws": "^8.5.5",
     "globstar": "^1.0.0",
     "nodemon": "^2.0.22",
-    "typescript": "^5.1.5"
+    "typescript": "^5.1.6"
   }
 }
