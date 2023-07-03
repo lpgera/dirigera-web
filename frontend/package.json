@@ -18,7 +18,7 @@
     "@storybook/addon-links": "^7.0.24",
     "@storybook/blocks": "^7.0.24",
     "@storybook/react": "^7.0.23",
-    "@storybook/react-vite": "^7.0.24",
+    "@storybook/react-vite": "^7.0.25",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
     "@vitejs/plugin-react": "^4.0.1",
