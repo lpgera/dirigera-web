@@ -17,7 +17,7 @@ export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
 }
 export type MakeEmpty<
   T extends { [key: string]: unknown },
-  K extends keyof T
+  K extends keyof T,
 > = { [_ in K]?: never }
 export type Incremental<T> =
   | T
@@ -29,7 +29,7 @@ export type RequireFields<T, K extends keyof T> = Omit<T, K> & {
 }
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string | number; output: string }
+  ID: { input: string; output: string }
   String: { input: string; output: string }
   Boolean: { input: boolean; output: boolean }
   Int: { input: number; output: number }
@@ -178,28 +178,28 @@ export type Resolver<
   TResult,
   TParent = {},
   TContext = {},
-  TArgs = {}
+  TArgs = {},
 > = ResolverFn<TResult, TParent, TContext, TArgs>
 
 export type ResolverFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,
   args: TArgs,
   context: TContext,
-  info: GraphQLResolveInfo
+  info: GraphQLResolveInfo,
 ) => Promise<TResult> | TResult
 
 export type SubscriptionSubscribeFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,
   args: TArgs,
   context: TContext,
-  info: GraphQLResolveInfo
+  info: GraphQLResolveInfo,
 ) => AsyncIterable<TResult> | Promise<AsyncIterable<TResult>>
 
 export type SubscriptionResolveFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,
   args: TArgs,
   context: TContext,
-  info: GraphQLResolveInfo
+  info: GraphQLResolveInfo,
 ) => TResult | Promise<TResult>
 
 export interface SubscriptionSubscriberObject<
@@ -207,7 +207,7 @@ export interface SubscriptionSubscriberObject<
   TKey extends string,
   TParent,
   TContext,
-  TArgs
+  TArgs,
 > {
   subscribe: SubscriptionSubscribeFn<
     { [key in TKey]: TResult },
@@ -233,7 +233,7 @@ export type SubscriptionObject<
   TKey extends string,
   TParent,
   TContext,
-  TArgs
+  TArgs,
 > =
   | SubscriptionSubscriberObject<TResult, TKey, TParent, TContext, TArgs>
   | SubscriptionResolverObject<TResult, TParent, TContext, TArgs>
@@ -243,7 +243,7 @@ export type SubscriptionResolver<
   TKey extends string,
   TParent = {},
   TContext = {},
-  TArgs = {}
+  TArgs = {},
 > =
   | ((
       ...args: any[]
@@ -253,13 +253,13 @@ export type SubscriptionResolver<
 export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
   parent: TParent,
   context: TContext,
-  info: GraphQLResolveInfo
+  info: GraphQLResolveInfo,
 ) => Maybe<TTypes> | Promise<Maybe<TTypes>>
 
 export type IsTypeOfResolverFn<T = {}, TContext = {}> = (
   obj: T,
   context: TContext,
-  info: GraphQLResolveInfo
+  info: GraphQLResolveInfo,
 ) => boolean | Promise<boolean>
 
 export type NextResolverFn<T> = () => Promise<T>
@@ -268,13 +268,13 @@ export type DirectiveResolverFn<
   TResult = {},
   TParent = {},
   TContext = {},
-  TArgs = {}
+  TArgs = {},
 > = (
   next: NextResolverFn<TResult>,
   parent: TParent,
   args: TArgs,
   context: TContext,
-  info: GraphQLResolveInfo
+  info: GraphQLResolveInfo,
 ) => TResult | Promise<TResult>
 
 /** Mapping between all available schema types and the resolvers types */
@@ -312,12 +312,13 @@ export type LoggedInDirectiveResolver<
   Result,
   Parent,
   ContextType = Context,
-  Args = LoggedInDirectiveArgs
+  Args = LoggedInDirectiveArgs,
 > = DirectiveResolverFn<Result, Parent, ContextType, Args>
 
 export type DeviceResolvers<
   ContextType = Context,
-  ParentType extends ResolversParentTypes['Device'] = ResolversParentTypes['Device']
+  ParentType extends
+    ResolversParentTypes['Device'] = ResolversParentTypes['Device'],
 > = ResolversObject<{
   batteryPercentage?: Resolver<
     Maybe<ResolversTypes['Int']>,
@@ -369,7 +370,8 @@ export type DeviceResolvers<
 
 export type MutationResolvers<
   ContextType = Context,
-  ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']
+  ParentType extends
+    ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation'],
 > = ResolversObject<{
   _?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
   activateScene?: Resolver<
@@ -436,7 +438,8 @@ export type MutationResolvers<
 
 export type QueryResolvers<
   ContextType = Context,
-  ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']
+  ParentType extends
+    ResolversParentTypes['Query'] = ResolversParentTypes['Query'],
 > = ResolversObject<{
   _?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
   devicePlayItemImageURL?: Resolver<
@@ -457,7 +460,8 @@ export type QueryResolvers<
 
 export type QuickControlResolvers<
   ContextType = Context,
-  ParentType extends ResolversParentTypes['QuickControl'] = ResolversParentTypes['QuickControl']
+  ParentType extends
+    ResolversParentTypes['QuickControl'] = ResolversParentTypes['QuickControl'],
 > = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   isOn?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>
@@ -470,7 +474,8 @@ export type QuickControlResolvers<
 
 export type RoomResolvers<
   ContextType = Context,
-  ParentType extends ResolversParentTypes['Room'] = ResolversParentTypes['Room']
+  ParentType extends
+    ResolversParentTypes['Room'] = ResolversParentTypes['Room'],
 > = ResolversObject<{
   devices?: Resolver<Array<ResolversTypes['Device']>, ParentType, ContextType>
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>
@@ -485,7 +490,8 @@ export type RoomResolvers<
 
 export type SceneResolvers<
   ContextType = Context,
-  ParentType extends ResolversParentTypes['Scene'] = ResolversParentTypes['Scene']
+  ParentType extends
+    ResolversParentTypes['Scene'] = ResolversParentTypes['Scene'],
 > = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
