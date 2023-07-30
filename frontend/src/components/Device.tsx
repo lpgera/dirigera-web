@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card, Col, Row } from 'antd'
-import { ControlType } from '../graphql.types'
+import type { ControlType } from '../graphql.types'
 import IsOn from './deviceControls/IsOn'
 import LightLevel from './deviceControls/LightLevel'
 import Volume from './deviceControls/Volume'
@@ -131,7 +131,7 @@ const Device = ({
           </Col>
         )}
 
-        {playItem != null && type === ControlType.Device && (
+        {playItem != null && type === 'DEVICE' && (
           <Col flex="auto">
             <PlayItemImage id={id} />
           </Col>

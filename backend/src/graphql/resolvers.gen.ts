@@ -36,10 +36,7 @@ export type Scalars = {
   Float: { input: number; output: number }
 }
 
-export enum ControlType {
-  Device = 'DEVICE',
-  DeviceSet = 'DEVICE_SET',
-}
+export type ControlType = 'DEVICE' | 'DEVICE_SET'
 
 export type Device = {
   __typename?: 'Device'
@@ -54,7 +51,7 @@ export type Device = {
   name: Scalars['String']['output']
   nextPlayItem?: Maybe<Scalars['String']['output']>
   playItem?: Maybe<Scalars['String']['output']>
-  playback?: Maybe<Scalars['String']['output']>
+  playback?: Maybe<Playback>
   playbackNextAvailable?: Maybe<Scalars['Boolean']['output']>
   playbackPauseAvailable?: Maybe<Scalars['Boolean']['output']>
   playbackPreviousAvailable?: Maybe<Scalars['Boolean']['output']>
@@ -128,12 +125,13 @@ export type MutationSetVolumeArgs = {
   volume: Scalars['Int']['input']
 }
 
-export enum Playback {
-  PlaybackNext = 'playbackNext',
-  PlaybackPaused = 'playbackPaused',
-  PlaybackPlaying = 'playbackPlaying',
-  PlaybackPrevious = 'playbackPrevious',
-}
+export type Playback =
+  | 'playbackBuffering'
+  | 'playbackIdle'
+  | 'playbackNext'
+  | 'playbackPaused'
+  | 'playbackPlaying'
+  | 'playbackPrevious'
 
 export type Query = {
   __typename?: 'Query'
@@ -355,7 +353,11 @@ export type DeviceResolvers<
     ContextType
   >
   playItem?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-  playback?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
+  playback?: Resolver<
+    Maybe<ResolversTypes['Playback']>,
+    ParentType,
+    ContextType
+  >
   playbackNextAvailable?: Resolver<
     Maybe<ResolversTypes['Boolean']>,
     ParentType,

@@ -24,7 +24,7 @@ export type QuickControlMutationVariables = Types.Exact<{
   id: Types.Scalars['String']['input']
   type: Types.ControlType
   isOn?: Types.InputMaybe<Types.Scalars['Boolean']['input']>
-  playback?: Types.InputMaybe<Types.Scalars['String']['input']>
+  playback?: Types.InputMaybe<Types.Playback>
 }>
 
 export type QuickControlMutation = {

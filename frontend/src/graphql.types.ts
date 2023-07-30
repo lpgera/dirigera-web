@@ -27,10 +27,7 @@ export type Scalars = {
   Float: { input: number; output: number }
 }
 
-export enum ControlType {
-  Device = 'DEVICE',
-  DeviceSet = 'DEVICE_SET',
-}
+export type ControlType = 'DEVICE' | 'DEVICE_SET'
 
 export type Device = {
   __typename?: 'Device'
@@ -45,7 +42,7 @@ export type Device = {
   name: Scalars['String']['output']
   nextPlayItem?: Maybe<Scalars['String']['output']>
   playItem?: Maybe<Scalars['String']['output']>
-  playback?: Maybe<Scalars['String']['output']>
+  playback?: Maybe<Playback>
   playbackNextAvailable?: Maybe<Scalars['Boolean']['output']>
   playbackPauseAvailable?: Maybe<Scalars['Boolean']['output']>
   playbackPreviousAvailable?: Maybe<Scalars['Boolean']['output']>
@@ -78,7 +75,7 @@ export type MutationLoginArgs = {
 export type MutationQuickControlArgs = {
   id: Scalars['String']['input']
   isOn?: InputMaybe<Scalars['Boolean']['input']>
-  playback?: InputMaybe<Scalars['String']['input']>
+  playback?: InputMaybe<Playback>
   type: ControlType
 }
 
@@ -109,7 +106,7 @@ export type MutationSetLightLevelArgs = {
 
 export type MutationSetPlaybackArgs = {
   id: Scalars['String']['input']
-  playback: Scalars['String']['input']
+  playback: Playback
   type: ControlType
 }
 
@@ -118,6 +115,14 @@ export type MutationSetVolumeArgs = {
   type: ControlType
   volume: Scalars['Int']['input']
 }
+
+export type Playback =
+  | 'playbackBuffering'
+  | 'playbackIdle'
+  | 'playbackNext'
+  | 'playbackPaused'
+  | 'playbackPlaying'
+  | 'playbackPrevious'
 
 export type Query = {
   __typename?: 'Query'

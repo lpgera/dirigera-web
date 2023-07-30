@@ -6,6 +6,8 @@ export const typeDefs = gql`
     playbackPaused
     playbackNext
     playbackPrevious
+    playbackIdle
+    playbackBuffering
   }
 `
 

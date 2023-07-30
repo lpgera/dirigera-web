@@ -9,7 +9,11 @@ import type {
 import type { ControlType } from '../../graphql.types'
 
 const SET_PLAYBACK_MUTATION = gql`
-  mutation SetPlayback($id: String!, $type: ControlType!, $playback: String!) {
+  mutation SetPlayback(
+    $id: String!
+    $type: ControlType!
+    $playback: Playback!
+  ) {
     setPlayback(id: $id, type: $type, playback: $playback)
   }
 `

@@ -5,6 +5,8 @@ hooks:
     - prettier --write
 generates:
   ./src/graphql.types.ts:
+    config:
+      enumsAsTypes: true
     plugins:
       - typescript
   ./src/:

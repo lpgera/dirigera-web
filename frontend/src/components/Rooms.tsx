@@ -47,7 +47,7 @@ const QUICK_CONTROL_MUTATION = gql`
     $id: String!
     $type: ControlType!
     $isOn: Boolean
-    $playback: String
+    $playback: Playback
   ) {
     quickControl(id: $id, type: $type, isOn: $isOn, playback: $playback)
   }

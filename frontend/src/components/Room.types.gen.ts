@@ -22,7 +22,7 @@ export type RoomQuery = {
       colorTemperature?: number | null
       colorSaturation?: number | null
       colorHue?: number | null
-      playback?: string | null
+      playback?: Types.Playback | null
       playbackNextAvailable?: boolean | null
       playbackPreviousAvailable?: boolean | null
       volume?: number | null

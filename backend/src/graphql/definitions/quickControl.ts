@@ -38,7 +38,7 @@ export function getDeviceQuickControls(devices: Device[], roomId: string) {
     .map((device) => ({
       id: device.id,
       name: device.attributes.customName,
-      type: ControlType.Device,
+      type: 'DEVICE' as ControlType,
       isReachable: device.isReachable,
       isOn: device.attributes.isOn,
       playback: device.attributes.playback,
@@ -71,7 +71,7 @@ export function getDeviceSetQuickControls(devices: Device[], roomId: string) {
     return {
       id: deviceSet.id,
       name: deviceSet.name,
-      type: ControlType.DeviceSet,
+      type: 'DEVICE_SET' as ControlType,
       isReachable: devicesInSet.every((d) => d.isReachable),
       isOn: devicesInSet.some((d) => d.attributes.isOn),
       playback: devicesInSet.find((d) => d.attributes.playback)?.attributes
@@ -96,7 +96,7 @@ export const resolvers: Resolvers = {
       { id, type, isOn, playback },
       { dirigeraClient }
     ) => {
-      if (type === ControlType.DeviceSet) {
+      if (type === 'DEVICE_SET') {
         await dirigeraClient.deviceSets.setAttributes({
           id,
           attributes: {
@@ -105,7 +105,7 @@ export const resolvers: Resolvers = {
           },
         })
       }
-      if (type === ControlType.Device) {
+      if (type === 'DEVICE') {
         await dirigeraClient.devices.setAttributes({
           id,
           attributes: {

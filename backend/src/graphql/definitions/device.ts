@@ -18,7 +18,7 @@ export const typeDefs = gql`
     colorTemperature: Int
     colorSaturation: Float
     colorHue: Float
-    playback: String
+    playback: Playback
     playbackPauseAvailable: Boolean
     playbackNextAvailable: Boolean
     playbackPreviousAvailable: Boolean
@@ -82,7 +82,7 @@ export function getDevicesNotInSet(devices: Device[]) {
       return {
         id: device.id,
         name: device.attributes.customName,
-        type: ControlType.Device,
+        type: 'DEVICE' as ControlType,
         isReachable: device.isReachable,
         batteryPercentage: device.attributes.batteryPercentage,
         isOn: getAttributeIfCanReceive(device, 'isOn'),
@@ -131,7 +131,7 @@ export function getDeviceSets(devices: Device[]) {
     return {
       id: deviceSet.id,
       name: deviceSet.name,
-      type: ControlType.DeviceSet,
+      type: 'DEVICE_SET' as ControlType,
       isReachable: devicesInSet.every((d) => d.isReachable),
       batteryPercentage: devicesInSet[0]?.attributes?.batteryPercentage,
       isOn: devicesInSet.some((d) => d.attributes.isOn),
@@ -196,7 +196,7 @@ export const resolvers: Resolvers = {
   },
   Mutation: {
     setIsOn: async (_, { id, type, isOn }, { dirigeraClient }) => {
-      if (type === ControlType.Device) {
+      if (type === 'DEVICE') {
         await dirigeraClient.devices.setAttributes({ id, attributes: { isOn } })
       } else {
         await dirigeraClient.deviceSets.setAttributes({
@@ -207,7 +207,7 @@ export const resolvers: Resolvers = {
       return true
     },
     setLightLevel: async (_, { id, type, lightLevel }, { dirigeraClient }) => {
-      if (type === ControlType.Device) {
+      if (type === 'DEVICE') {
         await dirigeraClient.devices.setAttributes({
           id,
           attributes: { lightLevel },
@@ -225,7 +225,7 @@ export const resolvers: Resolvers = {
       { id, type, colorTemperature },
       { dirigeraClient }
     ) => {
-      if (type === ControlType.Device) {
+      if (type === 'DEVICE') {
         await dirigeraClient.devices.setAttributes({
           id,
           attributes: { colorTemperature },
@@ -243,7 +243,7 @@ export const resolvers: Resolvers = {
       { id, type, colorHue, colorSaturation },
       { dirigeraClient }
     ) => {
-      if (type === ControlType.Device) {
+      if (type === 'DEVICE') {
         await dirigeraClient.devices.setAttributes({
           id,
           attributes: { colorHue, colorSaturation },
@@ -257,7 +257,7 @@ export const resolvers: Resolvers = {
       return true
     },
     setPlayback: async (_, { id, type, playback }, { dirigeraClient }) => {
-      if (type === ControlType.Device) {
+      if (type === 'DEVICE') {
         await dirigeraClient.devices.setAttributes({
           id,
           attributes: { playback },
@@ -271,7 +271,7 @@ export const resolvers: Resolvers = {
       return true
     },
     setVolume: async (_, { id, type, volume }, { dirigeraClient }) => {
-      if (type === ControlType.Device) {
+      if (type === 'DEVICE') {
         await dirigeraClient.devices.setAttributes({
           id,
           attributes: { volume },
