@@ -21,7 +21,7 @@ export const typeDefs = gql`
       id: String!
       type: ControlType!
       isOn: Boolean
-      playback: String
+      playback: Playback
     ): Boolean @loggedIn
   }
 `

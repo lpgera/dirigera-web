@@ -46,13 +46,13 @@ export const typeDefs = gql`
       colorHue: Float!
       colorSaturation: Float!
     ): Boolean @loggedIn
-    setPlayback(id: String!, type: ControlType!, playback: String!): Boolean
+    setPlayback(id: String!, type: ControlType!, playback: Playback!): Boolean
       @loggedIn
     setVolume(id: String!, type: ControlType!, volume: Int!): Boolean @loggedIn
   }
 `
 
-async function getImageAsBase64(url: string | null) {
+async function getImageAsBase64(url: string | null | undefined) {
   if (!url) {
     return null
   }
@@ -63,7 +63,10 @@ async function getImageAsBase64(url: string | null) {
   return `data:${mimeType};base64,${base64}`
 }
 
-export function getAttributeIfCanReceive(device: Device, attribute: string) {
+export function getAttributeIfCanReceive<T extends keyof Device['attributes']>(
+  device: Device,
+  attribute: T
+) {
   return device.capabilities.canReceive.includes(attribute)
     ? device.attributes[attribute]
     : null
@@ -153,13 +156,13 @@ export function getDeviceSets(devices: Device[]) {
 }
 
 const hasControl = (d: {
-  isOn: boolean | null
-  lightLevel: number | null
-  colorTemperature: number | null
-  colorSaturation: number | null
-  colorHue: number | null
-  playback: string | null
-  volume: number | null
+  isOn: boolean | null | undefined
+  lightLevel: number | null | undefined
+  colorTemperature: number | null | undefined
+  colorSaturation: number | null | undefined
+  colorHue: number | null | undefined
+  playback: string | null | undefined
+  volume: number | null | undefined
 }) =>
   d.isOn !== null ||
   d.lightLevel !== null ||

@@ -87,7 +87,7 @@ export type MutationLoginArgs = {
 export type MutationQuickControlArgs = {
   id: Scalars['String']['input']
   isOn?: InputMaybe<Scalars['Boolean']['input']>
-  playback?: InputMaybe<Scalars['String']['input']>
+  playback?: InputMaybe<Playback>
   type: ControlType
 }
 
@@ -118,7 +118,7 @@ export type MutationSetLightLevelArgs = {
 
 export type MutationSetPlaybackArgs = {
   id: Scalars['String']['input']
-  playback: Scalars['String']['input']
+  playback: Playback
   type: ControlType
 }
 
@@ -126,6 +126,13 @@ export type MutationSetVolumeArgs = {
   id: Scalars['String']['input']
   type: ControlType
   volume: Scalars['Int']['input']
+}
+
+export enum Playback {
+  PlaybackNext = 'playbackNext',
+  PlaybackPaused = 'playbackPaused',
+  PlaybackPlaying = 'playbackPlaying',
+  PlaybackPrevious = 'playbackPrevious',
 }
 
 export type Query = {
@@ -185,21 +192,21 @@ export type ResolverFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,
   args: TArgs,
   context: TContext,
-  info: GraphQLResolveInfo,
+  info: GraphQLResolveInfo
 ) => Promise<TResult> | TResult
 
 export type SubscriptionSubscribeFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,
   args: TArgs,
   context: TContext,
-  info: GraphQLResolveInfo,
+  info: GraphQLResolveInfo
 ) => AsyncIterable<TResult> | Promise<AsyncIterable<TResult>>
 
 export type SubscriptionResolveFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,
   args: TArgs,
   context: TContext,
-  info: GraphQLResolveInfo,
+  info: GraphQLResolveInfo
 ) => TResult | Promise<TResult>
 
 export interface SubscriptionSubscriberObject<
@@ -253,13 +260,13 @@ export type SubscriptionResolver<
 export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
   parent: TParent,
   context: TContext,
-  info: GraphQLResolveInfo,
+  info: GraphQLResolveInfo
 ) => Maybe<TTypes> | Promise<Maybe<TTypes>>
 
 export type IsTypeOfResolverFn<T = {}, TContext = {}> = (
   obj: T,
   context: TContext,
-  info: GraphQLResolveInfo,
+  info: GraphQLResolveInfo
 ) => boolean | Promise<boolean>
 
 export type NextResolverFn<T> = () => Promise<T>
@@ -274,7 +281,7 @@ export type DirectiveResolverFn<
   parent: TParent,
   args: TArgs,
   context: TContext,
-  info: GraphQLResolveInfo,
+  info: GraphQLResolveInfo
 ) => TResult | Promise<TResult>
 
 /** Mapping between all available schema types and the resolvers types */
@@ -285,6 +292,7 @@ export type ResolversTypes = ResolversObject<{
   Float: ResolverTypeWrapper<Scalars['Float']['output']>
   Int: ResolverTypeWrapper<Scalars['Int']['output']>
   Mutation: ResolverTypeWrapper<{}>
+  Playback: Playback
   Query: ResolverTypeWrapper<{}>
   QuickControl: ResolverTypeWrapper<QuickControl>
   Room: ResolverTypeWrapper<Room>
