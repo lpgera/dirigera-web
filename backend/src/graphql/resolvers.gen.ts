@@ -44,6 +44,7 @@ export type Device = {
   colorHue?: Maybe<Scalars['Float']['output']>
   colorSaturation?: Maybe<Scalars['Float']['output']>
   colorTemperature?: Maybe<Scalars['Int']['output']>
+  humidity?: Maybe<Scalars['Int']['output']>
   id: Scalars['String']['output']
   isOn?: Maybe<Scalars['Boolean']['output']>
   isReachable: Scalars['Boolean']['output']
@@ -55,7 +56,10 @@ export type Device = {
   playbackNextAvailable?: Maybe<Scalars['Boolean']['output']>
   playbackPauseAvailable?: Maybe<Scalars['Boolean']['output']>
   playbackPreviousAvailable?: Maybe<Scalars['Boolean']['output']>
+  pm25?: Maybe<Scalars['Int']['output']>
+  temperature?: Maybe<Scalars['Int']['output']>
   type: ControlType
+  vocIndex?: Maybe<Scalars['Int']['output']>
   volume?: Maybe<Scalars['Int']['output']>
 }
 
@@ -342,6 +346,7 @@ export type DeviceResolvers<
     ParentType,
     ContextType
   >
+  humidity?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   isOn?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>
   isReachable?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
@@ -373,7 +378,10 @@ export type DeviceResolvers<
     ParentType,
     ContextType
   >
+  pm25?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
+  temperature?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
   type?: Resolver<ResolversTypes['ControlType'], ParentType, ContextType>
+  vocIndex?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
   volume?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>

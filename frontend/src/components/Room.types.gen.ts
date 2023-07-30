@@ -28,6 +28,10 @@ export type RoomQuery = {
       volume?: number | null
       playItem?: string | null
       nextPlayItem?: string | null
+      temperature?: number | null
+      humidity?: number | null
+      pm25?: number | null
+      vocIndex?: number | null
     }>
   } | null
 }

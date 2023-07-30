@@ -157,3 +157,16 @@ export const Remote: Story = {
     batteryPercentage: 100,
   },
 }
+
+export const EnvironmentSensor: Story = {
+  args: {
+    id: '1',
+    name: 'Environment sensor',
+    type: 'DEVICE',
+    isReachable: true,
+    temperature: 25,
+    humidity: 50,
+    pm25: 10,
+    vocIndex: 100,
+  },
+}

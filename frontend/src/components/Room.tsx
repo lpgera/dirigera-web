@@ -37,6 +37,10 @@ export const ROOM_QUERY = gql`
         volume
         playItem
         nextPlayItem
+        temperature
+        humidity
+        pm25
+        vocIndex
       }
     }
   }

@@ -26,6 +26,10 @@ const Device = ({
   volume,
   playItem,
   nextPlayItem,
+  temperature,
+  humidity,
+  pm25,
+  vocIndex,
 }: {
   id: string
   name: string
@@ -43,6 +47,10 @@ const Device = ({
   volume?: number | null
   playItem?: string | null
   nextPlayItem?: string | null
+  temperature?: number | null
+  humidity?: number | null
+  pm25?: number | null
+  vocIndex?: number | null
 }) => {
   return (
     <Card title={name}>
@@ -136,13 +144,47 @@ const Device = ({
             <PlayItemImage id={id} />
           </Col>
         )}
+      </Row>
 
-        {batteryPercentage != null && (
+      {batteryPercentage != null && (
+        <Row>
           <Col>
             <Battery batteryPercentage={batteryPercentage} />
           </Col>
-        )}
-      </Row>
+        </Row>
+      )}
+
+      {temperature != null && (
+        <Row>
+          <Col>
+            <div>Temperature: {temperature}°C</div>
+          </Col>
+        </Row>
+      )}
+
+      {humidity != null && (
+        <Row>
+          <Col>
+            <div>Humidity: {humidity}%</div>
+          </Col>
+        </Row>
+      )}
+
+      {pm25 != null && (
+        <Row>
+          <Col>
+            <div>PM2.5: {pm25} μg/m³</div>
+          </Col>
+        </Row>
+      )}
+
+      {vocIndex != null && (
+        <Row>
+          <Col>
+            <div>tVOC Index: {vocIndex}</div>
+          </Col>
+        </Row>
+      )}
     </Card>
   )
 }

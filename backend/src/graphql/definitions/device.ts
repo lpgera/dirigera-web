@@ -25,6 +25,10 @@ export const typeDefs = gql`
     volume: Int
     playItem: String
     nextPlayItem: String
+    temperature: Int
+    humidity: Int
+    pm25: Int
+    vocIndex: Int
   }
 
   extend type Query {
@@ -102,6 +106,10 @@ export function getDevicesNotInSet(devices: Device[]) {
         nextPlayItem: nextPlayItem
           ? `${nextPlayItem.artist} - ${nextPlayItem.title}`
           : null,
+        temperature: device.attributes.currentTemperature,
+        humidity: device.attributes.currentRH,
+        pm25: device.attributes.currentPM25,
+        vocIndex: device.attributes.vocIndex,
       }
     })
 }
@@ -151,6 +159,10 @@ export function getDeviceSets(devices: Device[]) {
       nextPlayItem: nextPlayItem
         ? `${nextPlayItem?.artist} - ${nextPlayItem?.title}`
         : null,
+      temperature: devicesInSet[0]?.attributes?.currentTemperature,
+      humidity: devicesInSet[0]?.attributes?.currentRH,
+      pm25: devicesInSet[0]?.attributes?.currentPM25,
+      vocIndex: devicesInSet[0]?.attributes.vocIndex,
     }
   })
 }
