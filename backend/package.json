@@ -18,7 +18,7 @@
     "dirigera": "^0.11.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "graphql": "^16.7.1",
+    "graphql": "^16.8.0",
     "graphql-tag": "^2.12.6",
     "jsonwebtoken": "^9.0.1",
     "ws": "^8.13.0"
