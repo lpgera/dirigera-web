@@ -32,7 +32,7 @@
     "react-use-websocket": "^4.3.1",
     "storybook": "^7.3.1",
     "storybook-addon-apollo-client": "^5.0.0",
-    "storybook-addon-react-router-v6": "^2.0.4",
+    "storybook-addon-react-router-v6": "^2.0.5",
     "typescript": "^5.1.6",
     "vite": "^4.4.9",
     "vite-plugin-pwa": "^0.16.4"
