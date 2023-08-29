@@ -13,7 +13,7 @@
     "@graphql-codegen/near-operation-file-preset": "^2.5.0",
     "@graphql-codegen/typescript": "^4.0.1",
     "@graphql-codegen/typescript-operations": "^4.0.1",
-    "@storybook/addon-essentials": "^7.3.2",
+    "@storybook/addon-essentials": "^7.4.0",
     "@storybook/addon-interactions": "^7.4.0",
     "@storybook/addon-links": "^7.3.2",
     "@storybook/blocks": "^7.4.0",
