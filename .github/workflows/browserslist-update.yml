@@ -16,9 +16,7 @@ jobs:
           ref: 'master'
 
       - name: Setup node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'
+        uses: volta-cli/action@v4
 
       - name: Run browserslist update
         run: npm run browserslist-update
