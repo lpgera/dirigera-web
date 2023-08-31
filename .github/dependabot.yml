@@ -4,6 +4,14 @@ updates:
     directory: '/'
     schedule:
       interval: 'daily'
+    groups:
+      graphql-codegen:
+        patterns:
+          - '@graphql-codegen/*'
+      storybook:
+        patterns:
+          - '@storybook/*'
+          - 'storybook*'
     open-pull-requests-limit: 20
   - package-ecosystem: 'docker'
     directory: '/'
