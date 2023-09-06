@@ -21,7 +21,7 @@
     "graphql": "^16.8.0",
     "graphql-tag": "^2.12.6",
     "jsonwebtoken": "^9.0.2",
-    "ws": "^8.13.0"
+    "ws": "^8.14.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.0",
