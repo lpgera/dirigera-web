@@ -35,6 +35,6 @@
     "storybook-addon-react-router-v6": "^2.0.7",
     "typescript": "^5.2.2",
     "vite": "^4.4.9",
-    "vite-plugin-pwa": "^0.16.4"
+    "vite-plugin-pwa": "^0.16.5"
   }
 }
