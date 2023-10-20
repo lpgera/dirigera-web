@@ -2,11 +2,11 @@
   "name": "dirigera-web",
   "private": true,
   "engines": {
-    "node": "^20.0.0",
-    "npm": ">9.0.0"
+    "node": "^21.0.0",
+    "npm": ">10.0.0"
   },
   "volta": {
-    "node": "20.5.1"
+    "node": "21.0.0"
   },
   "scripts": {
     "browserslist-update": "npx update-browserslist-db@latest",
