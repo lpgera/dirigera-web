@@ -1,5 +1,5 @@
 # stage 1 - build
-FROM --platform=$BUILDPLATFORM node:20 AS BUILD
+FROM --platform=$BUILDPLATFORM node:21 AS BUILD
 
 WORKDIR /usr/src/app
 
@@ -20,7 +20,7 @@ COPY frontend frontend
 RUN npm run build -w frontend
 
 # stage 2 - target
-FROM node:20-alpine as TARGET
+FROM node:21-alpine as TARGET
 
 WORKDIR /usr/src/app
 
