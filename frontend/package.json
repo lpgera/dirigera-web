@@ -28,7 +28,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
-    "react-router-dom": "^6.17.0",
+    "react-router-dom": "^6.18.0",
     "react-use-websocket": "^4.5.0",
     "storybook": "^7.5.1",
     "storybook-addon-apollo-client": "^5.0.0",
