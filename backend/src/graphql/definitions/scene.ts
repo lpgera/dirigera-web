@@ -18,8 +18,7 @@ export const typeDefs = gql`
 
 export const resolvers: Resolvers = {
   Query: {
-    scenes: async (_, __, { dirigeraClient }) => {
-      const scenes = await dirigeraClient.scenes.list()
+    scenes: async (_, __, { homeState: { scenes } }) => {
       return scenes.map((scene) => ({
         id: scene.id,
         name: scene.info.name,

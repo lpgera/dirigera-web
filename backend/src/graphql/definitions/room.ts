@@ -15,9 +15,7 @@ export const typeDefs = gql`
 
 export const resolvers: Resolvers = {
   Query: {
-    rooms: async (_, __, { dirigeraClient }) => {
-      const rooms = await dirigeraClient.rooms.list()
-
+    rooms: async (_, __, { homeState: { rooms } }) => {
       return rooms
         .map(({ id, name }) => ({
           id,
@@ -27,8 +25,8 @@ export const resolvers: Resolvers = {
         }))
         .sort((a, b) => a.name.localeCompare(b.name))
     },
-    room: async (_, { id }, { dirigeraClient }) => {
-      const room = await dirigeraClient.rooms.get({ id })
+    room: async (_, { id }, { homeState: { rooms } }) => {
+      const room = rooms.find((r) => r.id === id)
 
       if (!room) {
         return null

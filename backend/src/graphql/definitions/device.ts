@@ -186,8 +186,7 @@ const hasControl = (d: {
 
 export const resolvers: Resolvers = {
   Room: {
-    devices: async ({ id }, _, { dirigeraClient }) => {
-      const devices = await dirigeraClient.devices.list()
+    devices: async ({ id }, _, { homeState: { devices } }) => {
       const devicesInRoom = devices.filter((device) => device.room?.id === id)
 
       return [
@@ -199,8 +198,13 @@ export const resolvers: Resolvers = {
     },
   },
   Query: {
-    devicePlayItemImageURL: async (_, { id }, { dirigeraClient }) => {
-      const device = await dirigeraClient.devices.get({ id })
+    devicePlayItemImageURL: async (_, { id }, { homeState: { devices } }) => {
+      const device = devices.find((d) => d.id === id)
+
+      if (!device) {
+        return null
+      }
+
       return getImageAsBase64(
         device.attributes.playbackAudio?.playItem?.imageURL
       )

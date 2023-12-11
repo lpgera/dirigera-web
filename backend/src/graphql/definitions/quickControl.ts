@@ -82,8 +82,7 @@ export function getDeviceSetQuickControls(devices: Device[], roomId: string) {
 
 export const resolvers: Resolvers = {
   Room: {
-    quickControls: async ({ id }, _, { dirigeraClient }) => {
-      const devices = await dirigeraClient.devices.list()
+    quickControls: async ({ id }, _, { homeState: { devices } }) => {
       return [
         ...getDeviceQuickControls(devices, id),
         ...getDeviceSetQuickControls(devices, id),
