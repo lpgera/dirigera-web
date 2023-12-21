@@ -16,7 +16,7 @@
     "@storybook/addon-essentials": "^7.6.6",
     "@storybook/addon-interactions": "^7.6.6",
     "@storybook/addon-links": "^7.6.6",
-    "@storybook/blocks": "^7.5.3",
+    "@storybook/blocks": "^7.6.6",
     "@storybook/react": "^7.6.6",
     "@storybook/react-vite": "^7.6.6",
     "@types/react": "^18.2.45",
@@ -34,7 +34,7 @@
     "storybook-addon-apollo-client": "^5.0.0",
     "storybook-addon-react-router-v6": "^2.0.10",
     "typescript": "^5.3.3",
-    "vite": "^4.5.1",
+    "vite": "^5.0.10",
     "vite-plugin-pwa": "^0.17.4"
   }
 }

@@ -15,7 +15,7 @@
     "@graphql-tools/utils": "^10.0.11",
     "@lpgera/ts-env": "^1.2.5",
     "body-parser": "^1.20.2",
-    "dirigera": "^0.11.6",
+    "dirigera": "^0.12.1",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "graphql": "^16.8.1",
