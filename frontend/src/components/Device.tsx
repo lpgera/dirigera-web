@@ -30,6 +30,7 @@ const Device = ({
   humidity,
   pm25,
   vocIndex,
+  isOpen,
 }: {
   id: string
   name: string
@@ -51,6 +52,7 @@ const Device = ({
   humidity?: number | null
   pm25?: number | null
   vocIndex?: number | null
+  isOpen?: boolean | null
 }) => {
   return (
     <Card title={name}>
@@ -145,6 +147,14 @@ const Device = ({
           </Col>
         )}
       </Row>
+
+      {isOpen != null && (
+        <Row>
+          <Col>
+            <div>{isOpen ? 'Open' : 'Closed'}</div>
+          </Col>
+        </Row>
+      )}
 
       {batteryPercentage != null && (
         <Row>

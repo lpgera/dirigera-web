@@ -41,6 +41,7 @@ export const ROOM_QUERY = gql`
         humidity
         pm25
         vocIndex
+        isOpen
       }
     }
   }

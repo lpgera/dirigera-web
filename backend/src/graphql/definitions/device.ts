@@ -29,6 +29,7 @@ export const typeDefs = gql`
     humidity: Int
     pm25: Int
     vocIndex: Int
+    isOpen: Boolean
   }
 
   extend type Query {
@@ -110,6 +111,7 @@ export function getDevicesNotInSet(devices: Device[]) {
         humidity: device.attributes.currentRH,
         pm25: device.attributes.currentPM25,
         vocIndex: device.attributes.vocIndex,
+        isOpen: device.attributes.isOpen,
       }
     })
 }
@@ -163,6 +165,7 @@ export function getDeviceSets(devices: Device[]) {
       humidity: devicesInSet[0]?.attributes?.currentRH,
       pm25: devicesInSet[0]?.attributes?.currentPM25,
       vocIndex: devicesInSet[0]?.attributes.vocIndex,
+      isOpen: devicesInSet[0]?.attributes.isOpen,
     }
   })
 }

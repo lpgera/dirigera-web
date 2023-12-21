@@ -47,6 +47,7 @@ export type Device = {
   humidity?: Maybe<Scalars['Int']['output']>
   id: Scalars['String']['output']
   isOn?: Maybe<Scalars['Boolean']['output']>
+  isOpen?: Maybe<Scalars['Boolean']['output']>
   isReachable: Scalars['Boolean']['output']
   lightLevel?: Maybe<Scalars['Int']['output']>
   name: Scalars['String']['output']
@@ -349,6 +350,7 @@ export type DeviceResolvers<
   humidity?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   isOn?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>
+  isOpen?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>
   isReachable?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
   lightLevel?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>

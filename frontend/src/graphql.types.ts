@@ -38,6 +38,7 @@ export type Device = {
   humidity?: Maybe<Scalars['Int']['output']>
   id: Scalars['String']['output']
   isOn?: Maybe<Scalars['Boolean']['output']>
+  isOpen?: Maybe<Scalars['Boolean']['output']>
   isReachable: Scalars['Boolean']['output']
   lightLevel?: Maybe<Scalars['Int']['output']>
   name: Scalars['String']['output']
