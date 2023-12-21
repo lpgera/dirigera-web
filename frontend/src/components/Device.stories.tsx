@@ -170,3 +170,14 @@ export const EnvironmentSensor: Story = {
     vocIndex: 100,
   },
 }
+
+export const OpenCloseSensor: Story = {
+  args: {
+    id: '1',
+    name: 'Open/close sensor',
+    type: 'DEVICE',
+    isReachable: true,
+    batteryPercentage: 92,
+    isOpen: true,
+  },
+}
