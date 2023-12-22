@@ -9,9 +9,16 @@ import Logout from './Logout'
 const Frame = () => {
   const { state: authState } = useContext(AuthContext)
   return (
-    <Layout style={{ minHeight: '100vh', backgroundColor: 'rgb(30 30 30)' }}>
-      <Layout.Content style={{ margin: '16px' }}>
-        <Row gutter={[8, 8]}>
+    <Layout style={{ backgroundColor: 'rgb(30 30 30)' }}>
+      <Layout.Content
+        style={{
+          minHeight: '100vh',
+          padding: '16px',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <Row gutter={8}>
           <Col flex="0">
             <Link to="/">
               <div
@@ -45,7 +52,9 @@ const Frame = () => {
             <Logout />
           </Col>
         </Row>
-        {authState.token ? <Outlet /> : <Login />}
+        <div style={{ flex: 'auto', display: 'flex', flexDirection: 'column' }}>
+          {authState.token ? <Outlet /> : <Login />}
+        </div>
       </Layout.Content>
     </Layout>
   )

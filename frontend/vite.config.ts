@@ -55,6 +55,18 @@ export default defineConfig({
   build: {
     outDir: 'build',
   },
+  define: {
+    __VERSION__: JSON.stringify(
+      process.env.VERSION ??
+        (await (async () => {
+          const { execSync } = await import('child_process')
+          const commitHash = execSync('git rev-parse --short HEAD')
+            .toString()
+            .trim()
+          return `dev-${commitHash}`
+        })())
+    ),
+  },
   server: {
     port: 3000,
     host: true,
