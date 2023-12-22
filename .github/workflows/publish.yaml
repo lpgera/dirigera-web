@@ -34,13 +34,18 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Generate version
+        run: echo "VERSION=$(date +'v%Y-%m-%d.')-$((1 + $GITHUB_RUN_NUMBER))" >> $GITHUB_ENV
+
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          # TODO apply filtering by branch ,enable=${{ github.ref == 'refs/heads/master' }}
           tags: |
             type=ref,event=branch
+            type=raw,value=${{ env.VERSION }}
             type=raw,value=latest,enable=${{ github.ref == 'refs/heads/master' }}
 
       - name: Build and push Docker image
