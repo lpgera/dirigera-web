@@ -11,7 +11,7 @@ jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       packages: write
 
     steps:
@@ -34,6 +34,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Generate version
+        run: echo "VERSION=$(date +'v%Y-%m-%d').$GITHUB_RUN_NUMBER" >> $GITHUB_ENV
+
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v5
@@ -41,15 +44,28 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=ref,event=branch
+            type=raw,value=${{ env.VERSION }},enable=${{ github.ref == 'refs/heads/master' }}
             type=raw,value=latest,enable=${{ github.ref == 'refs/heads/master' }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
+          build-args: |
+            VERSION=${{ env.VERSION }}
           push: ${{ !startsWith(github.ref, 'refs/heads/dependabot/') }}
           platforms: linux/amd64,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+      - name: Create GitHub Release
+        uses: ncipollo/release-action@v1
+        if: github.ref == 'refs/heads/master'
+        with:
+          tag: ${{ env.VERSION }}
+          commit: ${{ github.sha }}
+          body: |
+            You can grab this specific image from here: `ghcr.io/${{ github.repository }}:${{ env.VERSION }}`
+            To always get the most up-to-date version, use `ghcr.io/${{ github.repository }}:latest`

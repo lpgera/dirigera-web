@@ -1,5 +1,6 @@
 {
   "name": "frontend",
+  "type": "module",
   "scripts": {
     "build": "vite build",
     "build-storybook": "storybook build",

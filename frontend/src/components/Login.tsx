@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Button, Col, Form, Input, Result, Row } from 'antd'
+import { Button, Col, Form, Input, Result, Row, Typography } from 'antd'
 import { useMutation, gql } from '@apollo/client'
 import { AuthContext } from './AuthContext'
 import { LoginMutation, LoginMutationVariables } from './Login.types.gen'
@@ -28,40 +28,47 @@ const Login = () => {
   }
 
   return (
-    <Result
-      status="403"
-      extra={
-        <Row justify="center">
-          <Col>
-            <Form
-              layout="inline"
-              onFinish={(values) => loginAndDispatch(values)}
-            >
-              <Form.Item name="password">
-                <Input.Password
-                  placeholder="Enter password"
-                  style={{ width: '200px' }}
-                />
-              </Form.Item>
-              <Form.Item>
-                <Button
-                  shape="circle"
-                  type="primary"
-                  htmlType="submit"
-                  title="Login"
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                  icon={<IoMdLogIn />}
-                />
-              </Form.Item>
-            </Form>
-          </Col>
-        </Row>
-      }
-    />
+    <>
+      <div style={{ flexGrow: 1 }}>
+        <Result
+          status="403"
+          extra={
+            <Row justify="center">
+              <Col>
+                <Form
+                  layout="inline"
+                  onFinish={(values) => loginAndDispatch(values)}
+                >
+                  <Form.Item name="password">
+                    <Input.Password
+                      placeholder="Enter password"
+                      style={{ width: '200px' }}
+                    />
+                  </Form.Item>
+                  <Form.Item>
+                    <Button
+                      shape="circle"
+                      type="primary"
+                      htmlType="submit"
+                      title="Login"
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}
+                      icon={<IoMdLogIn />}
+                    />
+                  </Form.Item>
+                </Form>
+              </Col>
+            </Row>
+          }
+        />
+      </div>
+      <div style={{ margin: 8 }}>
+        <Typography.Text>{__VERSION__}</Typography.Text>
+      </div>
+    </>
   )
 }
 
