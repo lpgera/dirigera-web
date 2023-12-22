@@ -1,6 +1,8 @@
 # stage 1 - build
 FROM --platform=$BUILDPLATFORM node:21 AS BUILD
 
+ARG VERSION
+
 WORKDIR /usr/src/app
 
 COPY package*.json ./
