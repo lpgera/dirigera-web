@@ -42,10 +42,9 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          # TODO apply filtering by branch ,enable=${{ github.ref == 'refs/heads/master' }}
           tags: |
             type=ref,event=branch
-            type=raw,value=${{ env.VERSION }}
+            type=raw,value=${{ env.VERSION }},enable=${{ github.ref == 'refs/heads/master' }}
             type=raw,value=latest,enable=${{ github.ref == 'refs/heads/master' }}
 
       - name: Build and push Docker image
@@ -63,7 +62,7 @@ jobs:
 
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
-        # TODO if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master'
         with:
           prerelease: true
           tag: ${{ env.VERSION }}
