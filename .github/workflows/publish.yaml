@@ -11,7 +11,7 @@ jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       packages: write
 
     steps:
@@ -60,3 +60,14 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+      - name: Create GitHub Release
+        uses: ncipollo/release-action@v1
+        # TODO if: github.ref == 'refs/heads/master'
+        with:
+          prerelease: true
+          tag: ${{ env.VERSION }}
+          commit: ${{ github.sha }}
+          body: |
+            You can grab this specific image from here: `ghcr.io/${{ github.repository }}:${{ env.VERSION }}`
+            To always get the most up-to-date version, use `ghcr.io/${{ github.repository }}:latest`
