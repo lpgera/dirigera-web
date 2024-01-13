@@ -42,7 +42,7 @@ const LightLevel = ({
       disabled={!isReachable || loading}
       onChange={(newValue: number) => setLightLevelValue(newValue)}
       tooltip={{ formatter: (value) => `Light level: ${value}%` }}
-      onAfterChange={async (newValue: number) => {
+      onChangeComplete={async (newValue: number) => {
         await setLightLevel({
           variables: {
             id,

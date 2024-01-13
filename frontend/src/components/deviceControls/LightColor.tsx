@@ -103,11 +103,11 @@ const LightColor = ({
                   2202: 'Warm',
                   4000: 'Cold',
                 }}
-                step={62}
+                // step={62}
                 onChange={(newValue: number) =>
                   setColorTemperatureValue(newValue)
                 }
-                onAfterChange={async (newValue: number) =>
+                onChangeComplete={async (newValue: number) =>
                   await setColorTemperature({
                     variables: {
                       id,
@@ -133,7 +133,7 @@ const LightColor = ({
                 }}
                 max={359}
                 onChange={(newValue: number) => setColorHueValue(newValue)}
-                onAfterChange={async (newValue: number) => {
+                onChangeComplete={async (newValue: number) => {
                   await setColorHueAndSaturation({
                     variables: {
                       id,
@@ -161,7 +161,7 @@ const LightColor = ({
                 onChange={(newValue: number) =>
                   setColorSaturationValue(newValue)
                 }
-                onAfterChange={async (newValue: number) =>
+                onChangeComplete={async (newValue: number) =>
                   await setColorHueAndSaturation({
                     variables: {
                       id,
