@@ -12,8 +12,6 @@ updates:
         patterns:
           - '@storybook/*'
           - 'storybook*'
-    ignore:
-      - dependency-name: '@swc/cli'
     open-pull-requests-limit: 20
   - package-ecosystem: 'docker'
     directory: '/'
