@@ -10,7 +10,7 @@
     "watch": "nodemon --ext ts,json --exec node -r @swc/register -r dotenv/config src/index.ts dotenv_config_path=../.env"
   },
   "dependencies": {
-    "@apollo/server": "^4.10.0",
+    "@apollo/server": "^4.10.1",
     "@graphql-tools/schema": "^10.0.3",
     "@graphql-tools/utils": "^10.1.0",
     "@lpgera/ts-env": "^1.2.5",
