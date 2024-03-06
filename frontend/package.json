@@ -23,7 +23,7 @@
     "@types/react": "^18.2.63",
     "@types/react-dom": "^18.2.20",
     "@vitejs/plugin-react": "^4.2.1",
-    "antd": "^5.15.0",
+    "antd": "^5.15.1",
     "apollo3-cache-persist": "^0.14.1",
     "chromatic": "^11.0.1",
     "react": "^18.2.0",
