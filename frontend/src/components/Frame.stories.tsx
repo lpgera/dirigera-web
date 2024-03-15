@@ -7,7 +7,7 @@ import Rooms, { ROOMS_QUERY } from './Rooms'
 import { SCENES_QUERY } from './Scenes'
 import RoomComponent, { ROOM_QUERY } from './Room'
 import { DEVICE_PLAY_ITEM_IMAGE_URL_QUERY } from './deviceControls/PlayItemImage'
-import { withRouter } from 'storybook-addon-react-router-v6'
+import { withRouter } from 'storybook-addon-remix-react-router'
 
 export default {
   title: 'Application pages',

@@ -5,7 +5,7 @@ export default {
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
     'storybook-addon-apollo-client',
-    'storybook-addon-react-router-v6',
+    'storybook-addon-remix-react-router',
   ],
   docs: {
     autodocs: 'tag',
