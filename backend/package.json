@@ -4,10 +4,10 @@
     "authenticate": "dirigera authenticate",
     "build": "swc src -d dist --strip-leading-paths",
     "graphql-codegen": "graphql-codegen",
-    "start": "node -r dotenv/config dist/index.js dotenv_config_path=../.env",
+    "start": "node dist/index.js",
     "test": "globstar -- node -r @swc/register --test \"./**/*.test.ts\"",
     "test-watch": "globstar -- node -r @swc/register --watch --test \"./**/*.test.ts\"",
-    "watch": "nodemon --ext ts,json --exec node -r @swc/register -r dotenv/config src/index.ts dotenv_config_path=../.env"
+    "watch": "node --watch --env-file=../.env -r @swc/register src/index.ts"
   },
   "dependencies": {
     "@apollo/server": "^4.10.4",
@@ -16,7 +16,6 @@
     "@lpgera/ts-env": "^1.2.5",
     "body-parser": "^1.20.2",
     "dirigera": "^0.16.1",
-    "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "graphql": "^16.8.1",
     "graphql-tag": "^2.12.6",
@@ -34,7 +33,6 @@
     "@types/node": "^20.12.7",
     "@types/ws": "^8.5.10",
     "globstar": "^1.0.0",
-    "nodemon": "^3.1.0",
     "typescript": "^5.4.5"
   }
 }
