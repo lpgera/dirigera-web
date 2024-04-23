@@ -32,7 +32,13 @@ export default {
 
 type Story = StoryObj<typeof Frame>
 
-export const LoggedOut: Story = {}
+export const LoggedOut: Story = {
+  parameters: {
+    apolloClient: {
+      mocks: [],
+    },
+  },
+}
 
 export const QuickControls: Story = {
   parameters: {
