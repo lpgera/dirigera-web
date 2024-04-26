@@ -34,9 +34,7 @@ type Story = StoryObj<typeof Frame>
 
 export const LoggedOut: Story = {
   parameters: {
-    apolloClient: {
-      mocks: [],
-    },
+    apolloClient: {},
   },
 }
 
