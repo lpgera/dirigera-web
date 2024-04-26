@@ -1,6 +1,5 @@
 import type { Preview } from '@storybook/react'
 import { ConfigProvider, theme } from 'antd'
-import { MockedProvider } from '@apollo/client/testing'
 
 const preview: Preview = {
   parameters: {
@@ -8,9 +7,6 @@ const preview: Preview = {
       storySort: {
         method: 'alphabetical',
       },
-    },
-    apolloClient: {
-      MockedProvider,
     },
   },
   decorators: [
