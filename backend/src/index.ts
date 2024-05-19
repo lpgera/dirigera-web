@@ -4,6 +4,7 @@ import http from 'http'
 import tsEnv from '@lpgera/ts-env'
 import { Server } from 'ws'
 import { json } from 'body-parser'
+import compression from 'compression'
 import type { Socket } from 'net'
 import { expressMiddleware } from '@apollo/server/express4'
 import { getClient } from './dirigera'
@@ -12,6 +13,7 @@ import { getContextFunction } from './graphql/context'
 import { verify } from './jwt'
 
 const app = express()
+app.use(compression())
 app.use(
   express.static(path.join(__dirname, '..', 'frontend'), {
     maxAge: '30 days',
