@@ -93,7 +93,7 @@ port 4000 on the host system. It also specifies the `.env` file containing the r
 ## Running with Node.js natively
 
 ```
-git clone git@github.com:lpgera/dirigera-web.git
+git clone https://github.com/lpgera/dirigera-web.git
 ```
 
 Then navigate to the cloned directory and install dependencies:
