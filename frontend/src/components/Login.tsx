@@ -51,12 +51,15 @@ const Login = () => {
                       type="primary"
                       htmlType="submit"
                       title="Login"
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}
-                      icon={<IoMdLogIn />}
+                      icon={
+                        <IoMdLogIn
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                          }}
+                        />
+                      }
                     />
                   </Form.Item>
                 </Form>

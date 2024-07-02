@@ -16,12 +16,15 @@ const Logout = () => {
       onClick={() => {
         dispatch({ type: 'logout' })
       }}
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-      icon={<IoMdLogOut />}
+      icon={
+        <IoMdLogOut
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        />
+      }
       title="Logout"
     />
   )

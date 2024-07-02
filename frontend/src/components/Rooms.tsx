@@ -89,13 +89,16 @@ const Rooms = () => {
                 extra={
                   <Button
                     shape="circle"
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
                     onClick={() => navigate(`room/${room.id}`)}
-                    icon={<GoGear />}
+                    icon={
+                      <GoGear
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}
+                      />
+                    }
                   />
                 }
               >
