@@ -43,13 +43,16 @@ const Playback = ({
       <Col>
         <Button
           shape="circle"
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
           disabled={!isReachable || !playbackPreviousAvailable}
-          icon={<FaStepBackward />}
+          icon={
+            <FaStepBackward
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            />
+          }
           onClick={async () => {
             await setPlayback({
               variables: {
@@ -64,14 +67,27 @@ const Playback = ({
       <Col>
         <Button
           shape="circle"
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
           loading={playback === 'playbackBuffering'}
           disabled={!isReachable}
-          icon={playback === 'playbackPlaying' ? <FaPause /> : <FaPlay />}
+          icon={
+            playback === 'playbackPlaying' ? (
+              <FaPause
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              />
+            ) : (
+              <FaPlay
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              />
+            )
+          }
           onClick={async () => {
             if (playback === 'playbackPaused') {
               return await setPlayback({
@@ -96,13 +112,16 @@ const Playback = ({
       <Col>
         <Button
           shape="circle"
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
           disabled={!isReachable || !playbackNextAvailable}
-          icon={<FaStepForward />}
+          icon={
+            <FaStepForward
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            />
+          }
           onClick={async () => {
             await setPlayback({
               variables: {
