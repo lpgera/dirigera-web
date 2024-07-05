@@ -36,4 +36,4 @@ COPY . .
 COPY --from=BUILD /usr/src/app/backend/dist ./backend/dist
 COPY --from=BUILD /usr/src/app/frontend/build ./frontend/build
 
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "start-without-env-file"]

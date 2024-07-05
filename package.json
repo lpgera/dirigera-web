@@ -14,6 +14,7 @@
     "check-updates": "ncu -i -ws --root",
     "prepare": "husky",
     "start": "npm run start -w backend",
+    "start-without-env-file": "npm run start-without-env-file -w backend",
     "test": "npm run test -w backend"
   },
   "devDependencies": {
