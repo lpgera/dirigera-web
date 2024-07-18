@@ -29,7 +29,7 @@
     "@graphql-codegen/typescript": "^4.0.9",
     "@graphql-codegen/typescript-resolvers": "^4.2.1",
     "@swc/cli": "0.4.0",
-    "@swc/core": "^1.6.13",
+    "@swc/core": "^1.7.0",
     "@swc/register": "^0.1.10",
     "@types/compression": "^1.7.5",
     "@types/jsonwebtoken": "^9.0.6",
