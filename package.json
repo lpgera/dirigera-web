@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "husky": "^9.1.4",
-    "lint-staged": "^15.2.8",
+    "lint-staged": "^15.2.9",
     "npm-check-updates": "^17.0.6",
     "prettier": "^3.3.3"
   },
