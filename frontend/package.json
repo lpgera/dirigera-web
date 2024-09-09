@@ -34,7 +34,7 @@
     "storybook": "^8.2.9",
     "storybook-addon-apollo-client": "^7.3.0",
     "storybook-addon-remix-react-router": "^3.0.0",
-    "typescript": "^5.5.4",
+    "typescript": "^5.6.2",
     "vite": "^5.4.3",
     "vite-plugin-pwa": "^0.20.5"
   },
