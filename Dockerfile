@@ -29,7 +29,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 COPY backend/package.json backend/
 
-RUN --mount=type=cache,target=/root/.npm npm ci --omit=dev --ignore-scripts --no-audit --no-fund -w backend
+RUN npm ci --omit=dev --no-audit --no-fund -w backend && npm cache clear --force
 
 COPY . .
 

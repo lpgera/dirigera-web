@@ -12,7 +12,7 @@
     "browserslist-update": "npx update-browserslist-db@latest",
     "build": "npm run build -ws",
     "check-updates": "ncu -i -ws",
-    "prepare": "husky",
+    "prepare": "husky || true",
     "start": "npm run start -w backend",
     "start-without-env-file": "npm run start-without-env-file -w backend",
     "test": "npm run test -w backend"
