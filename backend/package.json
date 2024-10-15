@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@apollo/server": "^4.11.0",
-    "@graphql-tools/schema": "^10.0.6",
+    "@graphql-tools/schema": "^10.0.7",
     "@graphql-tools/utils": "^10.5.4",
     "@lpgera/ts-env": "^1.2.5",
     "body-parser": "^1.20.3",
