@@ -1,5 +1,5 @@
 # stage 1 - build
-FROM --platform=$BUILDPLATFORM node:22-alpine AS build
+FROM --platform=$BUILDPLATFORM node:23-alpine AS build
 
 ARG VERSION
 
@@ -22,7 +22,7 @@ COPY frontend frontend
 RUN npm run build -w frontend
 
 # stage 2 - target
-FROM node:22-alpine AS target
+FROM node:23-alpine AS target
 
 WORKDIR /usr/src/app
 
