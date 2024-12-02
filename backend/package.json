@@ -28,7 +28,7 @@
     "@graphql-codegen/cli": "^5.0.3",
     "@graphql-codegen/typescript": "^4.1.2",
     "@graphql-codegen/typescript-resolvers": "^4.4.1",
-    "@swc/cli": "0.5.1",
+    "@swc/cli": "0.5.2",
     "@swc/core": "^1.9.3",
     "@swc/register": "^0.1.10",
     "@types/compression": "^1.7.5",
