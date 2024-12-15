@@ -1,7 +1,7 @@
 # stage 1 - build
 FROM --platform=$BUILDPLATFORM node:23-alpine AS build
 
-ARG VERSION
+ARG COMMIT_SHA
 
 WORKDIR /usr/src/app
 

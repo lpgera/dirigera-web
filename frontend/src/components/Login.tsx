@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { Button, Col, Form, Input, Result, Row, Typography } from 'antd'
-import { useMutation, gql } from '@apollo/client'
+import { gql, useMutation } from '@apollo/client'
 import { AuthContext } from './AuthContext'
 import { LoginMutation, LoginMutationVariables } from './Login.types.gen'
 import { IoMdLogIn } from 'react-icons/io'
@@ -69,7 +69,16 @@ const Login = () => {
         />
       </div>
       <div style={{ margin: 8 }}>
-        <Typography.Text>{__VERSION__}</Typography.Text>
+        {__COMMIT_SHA__ ? (
+          <Typography.Link
+            target={'_blank'}
+            href={`https://github.com/lpgera/dirigera-web/compare/master..${__COMMIT_SHA__}`}
+          >
+            Check for updates ({__COMMIT_SHA__.substring(0, 7)})
+          </Typography.Link>
+        ) : (
+          <Typography.Text>Dev mode</Typography.Text>
+        )}
       </div>
     </>
   )

@@ -56,7 +56,7 @@ export default defineConfig({
     outDir: 'build',
   },
   define: {
-    __VERSION__: JSON.stringify(process.env.VERSION ?? 'v0.0'),
+    __COMMIT_SHA__: JSON.stringify(process.env.COMMIT_SHA ?? null),
   },
   server: {
     port: 3000,
