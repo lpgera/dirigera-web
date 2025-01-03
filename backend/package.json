@@ -11,7 +11,7 @@
     "watch": "node --watch --env-file=../.env -r @swc/register src/index.ts"
   },
   "dependencies": {
-    "@apollo/server": "^4.11.2",
+    "@apollo/server": "^4.11.3",
     "@graphql-tools/schema": "^10.0.15",
     "@graphql-tools/utils": "^10.7.1",
     "@lpgera/ts-env": "^1.2.5",
