@@ -33,7 +33,7 @@
     "@swc/register": "^0.1.10",
     "@types/compression": "^1.7.5",
     "@types/jsonwebtoken": "^9.0.8",
-    "@types/node": "^22.13.2",
+    "@types/node": "^22.13.4",
     "@types/ws": "^8.5.14",
     "globstar": "^1.0.0",
     "typescript": "^5.7.3"
