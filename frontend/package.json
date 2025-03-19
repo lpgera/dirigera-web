@@ -20,7 +20,7 @@
     "@storybook/blocks": "^8.4.7",
     "@storybook/react": "^8.6.4",
     "@storybook/react-vite": "^8.6.4",
-    "@types/react": "^19.0.11",
+    "@types/react": "^19.0.12",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^4.3.4",
     "antd": "^5.24.4",
