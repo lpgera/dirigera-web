@@ -2,7 +2,7 @@
 version: '3.8'
 services:
   backend:
-    image: node:23
+    image: node:24
     env_file: .env
     volumes:
       - .:/opt/app:delegated
@@ -11,7 +11,7 @@ services:
     ports:
       - 4000:4000
   frontend:
-    image: node:23
+    image: node:24
     volumes:
       - .:/opt/app:delegated
     working_dir: /opt/app
