@@ -24,7 +24,7 @@
     "@vitejs/plugin-react": "^4.5.0",
     "antd": "^5.25.2",
     "apollo3-cache-persist": "^0.15.0",
-    "chromatic": "^11.29.0",
+    "chromatic": "^12.0.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-icons": "^5.5.0",
