@@ -1,5 +1,10 @@
 import type { Preview } from '@storybook/react'
 import { ConfigProvider, theme } from 'antd'
+import { loadErrorMessages, loadDevMessages } from '@apollo/client/dev'
+import { MockedProvider } from '@apollo/client/testing'
+
+loadDevMessages()
+loadErrorMessages()
 
 const preview: Preview = {
   parameters: {
@@ -10,9 +15,11 @@ const preview: Preview = {
     },
   },
   decorators: [
-    (Story) => (
+    (Story, context) => (
       <ConfigProvider theme={{ algorithm: theme.darkAlgorithm }}>
-        {Story()}
+        <MockedProvider mocks={context.parameters.mocks ?? []}>
+          {Story()}
+        </MockedProvider>
       </ConfigProvider>
     ),
   ],
