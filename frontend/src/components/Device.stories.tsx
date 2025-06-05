@@ -5,33 +5,28 @@ import Frame from './Frame'
 import Device from './Device'
 import { DEVICE_PLAY_ITEM_IMAGE_URL_QUERY } from './deviceControls/PlayItemImage'
 
+const mocks = [
+  {
+    request: {
+      query: DEVICE_PLAY_ITEM_IMAGE_URL_QUERY,
+      variables: {
+        id: '1',
+      },
+    },
+    newData: () => ({
+      data: {
+        devicePlayItemImageURL: 'https://placehold.co/320x320?text=Album+art',
+      },
+    }),
+  },
+]
+
 export default {
   title: 'Devices',
   component: Device,
   decorators: [(story) => <div style={{ width: 320 }}>{story()}</div>],
   parameters: {
-    backgrounds: {
-      default: 'dark',
-      values: [{ name: 'dark', value: '#1e1e1e' }],
-    },
-    apolloClient: {
-      mocks: [
-        {
-          request: {
-            query: DEVICE_PLAY_ITEM_IMAGE_URL_QUERY,
-            variables: {
-              id: '1',
-            },
-          },
-          newData: () => ({
-            data: {
-              devicePlayItemImageURL:
-                'https://placehold.co/320x320?text=Album+art',
-            },
-          }),
-        },
-      ],
-    },
+    mocks,
   },
   argTypes: {
     id: { control: false },
