@@ -13,6 +13,14 @@ const preview: Preview = {
         method: 'alphabetical',
       },
     },
+    backgrounds: {
+      options: {
+        dark: { name: 'Dark', value: '#1e1e1e' },
+      },
+    },
+  },
+  initialGlobals: {
+    backgrounds: { value: 'dark' },
   },
   decorators: [
     (Story, context) => (
