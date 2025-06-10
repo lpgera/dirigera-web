@@ -18,7 +18,7 @@
     "@storybook/react-vite": "^9.0.6",
     "@types/react": "^19.1.7",
     "@types/react-dom": "^19.1.6",
-    "@vitejs/plugin-react": "^4.5.1",
+    "@vitejs/plugin-react": "^4.5.2",
     "antd": "^5.26.0",
     "apollo3-cache-persist": "^0.15.0",
     "chromatic": "^12.2.0",
