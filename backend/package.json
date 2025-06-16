@@ -32,7 +32,7 @@
     "@swc/core": "^1.12.1",
     "@swc/register": "^0.1.10",
     "@types/compression": "^1.8.1",
-    "@types/jsonwebtoken": "^9.0.9",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.0.1",
     "@types/ws": "^8.18.1",
     "globstar": "^1.0.0",
