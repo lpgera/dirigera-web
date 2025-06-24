@@ -30,7 +30,7 @@
     "storybook": "^9.0.4",
     "storybook-addon-remix-react-router": "^5.0.0",
     "typescript": "^5.8.3",
-    "vite": "^6.3.5",
+    "vite": "^7.0.0",
     "vite-plugin-pwa": "^1.0.0"
   },
   "volta": {
