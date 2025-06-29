@@ -5,6 +5,9 @@ on:
     - cron: '0 16 * * 5'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   browserslist-update:
     runs-on: ubuntu-latest
@@ -12,8 +15,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          ref: 'master'
 
       - name: Setup node.js
         uses: volta-cli/action@v4
@@ -21,11 +22,20 @@ jobs:
       - name: Run browserslist update
         run: npm run browserslist-update
 
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v7
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          branch: 'feature/browserslist-update'
-          delete-branch: true
-          commit-message: 'update browserslist database'
-          title: 'Update browserslist database'
+      - name: Check for changes
+        id: git-diff
+        run: |
+          if [[ -n "$(git status --porcelain)" ]]; then
+            echo "changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "changes=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push changes
+        if: steps.git-diff.outputs.changes == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add package-lock.json
+          git commit -m "update browserslist database"
+          git push
