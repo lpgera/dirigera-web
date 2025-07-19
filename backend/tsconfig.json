@@ -5,6 +5,7 @@
     "strict": true,
     "lib": ["esnext", "dom"],
     "esModuleInterop": true,
+    "moduleResolution": "nodenext",
     "downlevelIteration": true
   }
 }
