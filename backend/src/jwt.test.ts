@@ -1,12 +1,12 @@
 import { before, describe, it } from 'node:test'
 import assert from 'node:assert'
 
-let jwt: typeof import('./jwt')
+let jwt: typeof import('./jwt.ts')
 
 describe('jwt', () => {
   before(async () => {
     process.env.JWT_SECRET = 'secret'
-    jwt = await import('./jwt')
+    jwt = await import('./jwt.ts')
   })
 
   describe('sign', () => {

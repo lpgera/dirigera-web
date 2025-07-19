@@ -1,5 +1,5 @@
-import gql from 'graphql-tag'
-import { type Resolvers } from '../resolvers.gen'
+import { gql } from 'graphql-tag'
+import { type Resolvers } from '../resolvers.gen.ts'
 
 export const typeDefs = gql`
   type Room {

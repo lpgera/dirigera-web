@@ -1,6 +1,6 @@
 import type { DirigeraClient, Home } from 'dirigera'
 import type { Request } from 'express'
-import { verify } from '../jwt'
+import { verify } from '../jwt.ts'
 
 export type Context = {
   dirigeraClient: DirigeraClient

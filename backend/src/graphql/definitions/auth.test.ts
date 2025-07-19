@@ -1,15 +1,15 @@
 import { before, describe, it } from 'node:test'
 import assert from 'node:assert'
 
-let auth: typeof import('./auth')
-let jwt: typeof import('../../jwt')
+let auth: typeof import('./auth.ts')
+let jwt: typeof import('../../jwt.ts')
 
 describe('definitions/auth', () => {
   before(async () => {
     process.env.PASSWORD = 'password'
     process.env.JWT_SECRET = 'secret'
-    auth = await import('./auth')
-    jwt = await import('../../jwt')
+    auth = await import('./auth.ts')
+    jwt = await import('../../jwt.ts')
   })
 
   describe('login', () => {

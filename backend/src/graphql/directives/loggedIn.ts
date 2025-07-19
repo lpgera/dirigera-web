@@ -1,6 +1,6 @@
 import { mapSchema, getDirective, MapperKind } from '@graphql-tools/utils'
 import { defaultFieldResolver, type GraphQLSchema, GraphQLError } from 'graphql'
-import gql from 'graphql-tag'
+import { gql } from 'graphql-tag'
 
 export const loggedInDirectiveTransformer = (schema: GraphQLSchema) =>
   mapSchema(schema, {

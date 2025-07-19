@@ -2,11 +2,11 @@ import { before, describe, it } from 'node:test'
 import assert from 'node:assert'
 import type { Device } from 'dirigera'
 
-let device: typeof import('./device')
+let device: typeof import('./device.ts')
 
 describe('definitions/device', () => {
   before(async () => {
-    device = await import('./device')
+    device = await import('./device.ts')
   })
 
   describe('getAttributeIfCanReceive', () => {

@@ -5,7 +5,8 @@ const JWT_SECRET = tsEnv.stringOrThrow('JWT_SECRET')
 
 export function sign() {
   return jwt.sign({}, JWT_SECRET, {
-    expiresIn: tsEnv.string('JWT_EXPIRY') ?? '1 day',
+    expiresIn: (tsEnv.string('JWT_EXPIRY') ??
+      '1 day') as jwt.SignOptions['expiresIn'], // type def is ms.StringValue
   })
 }
 

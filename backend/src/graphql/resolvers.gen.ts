@@ -1,11 +1,9 @@
-import { GraphQLResolveInfo } from 'graphql'
-import { Context } from './context'
-export type Maybe<T> = T extends PromiseLike<infer U>
-  ? Promise<U | null>
-  : T | null
-export type InputMaybe<T> = T extends PromiseLike<infer U>
-  ? Promise<U | null>
-  : T | null
+import type { GraphQLResolveInfo } from 'graphql'
+import type { Context } from './context.ts'
+export type Maybe<T> =
+  T extends PromiseLike<infer U> ? Promise<U | null> : T | null
+export type InputMaybe<T> =
+  T extends PromiseLike<infer U> ? Promise<U | null> : T | null
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K]
 }

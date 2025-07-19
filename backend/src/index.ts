@@ -2,20 +2,20 @@ import express from 'express'
 import path from 'path'
 import http from 'http'
 import tsEnv from '@lpgera/ts-env'
-import { Server } from 'ws'
-import { json } from 'body-parser'
+import { WebSocketServer } from 'ws'
+import bodyParser from 'body-parser'
 import compression from 'compression'
 import type { Socket } from 'net'
 import { expressMiddleware } from '@as-integrations/express5'
-import { getClient } from './dirigera'
-import { apolloServer } from './graphql/server'
-import { getContextFunction } from './graphql/context'
-import { verify } from './jwt'
+import { getClient } from './dirigera.ts'
+import { apolloServer } from './graphql/server.ts'
+import { getContextFunction } from './graphql/context.ts'
+import { verify } from './jwt.ts'
 
 const app = express()
 app.use(compression())
 app.use(
-  express.static(path.join(__dirname, '..', 'frontend'), {
+  express.static(path.join(import.meta.dirname, '..', 'frontend'), {
     maxAge: '30 days',
   })
 )
@@ -24,7 +24,7 @@ app.get('/', function (_, res) {
 })
 
 const httpServer = http.createServer(app)
-const wss = new Server({ noServer: true })
+const wss = new WebSocketServer({ noServer: true })
 
 httpServer.on(
   'upgrade',
@@ -58,7 +58,7 @@ async function start() {
 
   app.use(
     '/graphql',
-    json(),
+    bodyParser.json(),
     expressMiddleware(graphqlServer, {
       context: getContextFunction(client),
     })

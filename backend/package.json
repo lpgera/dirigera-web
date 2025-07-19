@@ -1,14 +1,13 @@
 {
   "name": "backend",
+  "type": "module",
   "scripts": {
     "authenticate": "dirigera authenticate",
-    "build": "swc src -d dist --strip-leading-paths",
     "graphql-codegen": "graphql-codegen",
-    "start": "node --env-file=../.env dist/index.js",
-    "start-without-env-file": "node dist/index.js",
-    "test": "globstar -- node -r @swc/register --test \"./**/*.test.ts\"",
-    "test-watch": "globstar -- node -r @swc/register --watch --test \"./**/*.test.ts\"",
-    "watch": "node --watch --env-file=../.env -r @swc/register src/index.ts"
+    "start": "node --env-file-if-exists=../.env src/index.ts",
+    "test": "globstar -- node --test \"./**/*.test.ts\"",
+    "test-watch": "globstar -- node --watch --test \"./**/*.test.ts\"",
+    "watch": "node --watch --env-file=../.env src/index.ts"
   },
   "dependencies": {
     "@apollo/server": "^5.0.0",
@@ -29,9 +28,6 @@
     "@graphql-codegen/cli": "^5.0.7",
     "@graphql-codegen/typescript": "^4.1.6",
     "@graphql-codegen/typescript-resolvers": "^4.5.1",
-    "@swc/cli": "0.7.8",
-    "@swc/core": "^1.13.0",
-    "@swc/register": "^0.1.10",
     "@types/compression": "^1.8.1",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.0.14",

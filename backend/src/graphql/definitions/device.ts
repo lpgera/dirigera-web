@@ -1,6 +1,6 @@
-import gql from 'graphql-tag'
+import { gql } from 'graphql-tag'
 import type { Device, DeviceSet } from 'dirigera'
-import { type Resolvers, ControlType } from '../resolvers.gen'
+import type { Resolvers, ControlType } from '../resolvers.gen.ts'
 
 export const typeDefs = gql`
   extend type Room {

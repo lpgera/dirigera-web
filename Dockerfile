@@ -15,8 +15,6 @@ COPY backend backend
 
 RUN npm run test -w backend
 
-RUN npm run build -w backend
-
 COPY frontend frontend
 
 RUN npm run build -w frontend
@@ -33,7 +31,6 @@ RUN npm ci --omit=dev --no-audit --no-fund -w backend && npm cache clear --force
 
 COPY . .
 
-COPY --from=BUILD /usr/src/app/backend/dist ./backend/dist
 COPY --from=BUILD /usr/src/app/frontend/build ./frontend/build
 
-CMD ["npm", "run", "start-without-env-file"]
+CMD ["node", "--run", "start"]

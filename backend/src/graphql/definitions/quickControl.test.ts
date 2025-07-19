@@ -1,13 +1,12 @@
 import { before, describe, it } from 'node:test'
 import assert from 'node:assert'
-import { getDeviceQuickControls } from './quickControl'
-import { Device } from 'dirigera'
+import type { Device } from 'dirigera'
 
-let quickControl: typeof import('./quickControl')
+let quickControl: typeof import('./quickControl.ts')
 
 describe('definitions/quickControl', () => {
   before(async () => {
-    quickControl = await import('./quickControl')
+    quickControl = await import('./quickControl.ts')
   })
 
   describe('getDeviceQuickControls', () => {

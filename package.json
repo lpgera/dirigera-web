@@ -6,7 +6,7 @@
     "npm": ">11.0.0"
   },
   "volta": {
-    "node": "24.0.1"
+    "node": "24.4.1"
   },
   "scripts": {
     "browserslist-update": "npx update-browserslist-db@latest",
@@ -14,7 +14,6 @@
     "check-updates": "ncu -i -ws",
     "prepare": "husky || true",
     "start": "npm run start -w backend",
-    "start-without-env-file": "npm run start-without-env-file -w backend",
     "test": "npm run test -w backend"
   },
   "devDependencies": {

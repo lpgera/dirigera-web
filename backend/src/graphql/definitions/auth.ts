@@ -1,7 +1,7 @@
-import gql from 'graphql-tag'
-import { Resolvers } from '../resolvers.gen'
+import { gql } from 'graphql-tag'
+import type { Resolvers } from '../resolvers.gen.ts'
 import tsEnv from '@lpgera/ts-env'
-import { sign } from '../../jwt'
+import { sign } from '../../jwt.ts'
 
 const PASSWORD = tsEnv.stringOrThrow('PASSWORD')
 
