@@ -10,7 +10,7 @@
   },
   "scripts": {
     "browserslist-update": "npx update-browserslist-db@latest",
-    "build": "npm run build -ws",
+    "build": "npm run build -w frontend",
     "check-updates": "ncu -i -ws",
     "prepare": "husky || true",
     "start": "npm run start -w backend",
