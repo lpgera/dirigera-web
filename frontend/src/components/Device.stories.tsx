@@ -13,11 +13,11 @@ const mocks = [
         id: '1',
       },
     },
-    newData: () => ({
+    result: {
       data: {
         devicePlayItemImageURL: 'https://placehold.co/320x320?text=Album+art',
       },
-    }),
+    },
   },
 ]
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Switch } from 'antd'
-import { gql, useMutation } from '@apollo/client'
+import { gql } from '@apollo/client'
+import { useMutation } from '@apollo/client/react'
 import type {
   SetIsOnMutation,
   SetIsOnMutationVariables,

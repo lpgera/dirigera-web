@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
 import { Button, Col, Row } from 'antd'
-import { useQuery, gql, useMutation } from '@apollo/client'
+import { gql } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client/react'
 import {
   ActiveSceneMutation,
   ActiveSceneMutationVariables,

@@ -1,7 +1,7 @@
 import type { Preview } from '@storybook/react'
 import { ConfigProvider, theme } from 'antd'
 import { loadErrorMessages, loadDevMessages } from '@apollo/client/dev'
-import { MockedProvider } from '@apollo/client/testing'
+import { MockedProvider } from '@apollo/client/testing/react'
 
 loadDevMessages()
 loadErrorMessages()
