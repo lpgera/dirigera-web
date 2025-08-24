@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button, Card, Col, Result, Row, Skeleton } from 'antd'
-import { useQuery, gql, useMutation } from '@apollo/client'
+import { gql } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client/react'
 import { GoGear } from 'react-icons/go'
 import { useNavigate } from 'react-router-dom'
 import type {

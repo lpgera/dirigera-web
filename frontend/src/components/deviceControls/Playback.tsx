@@ -1,5 +1,6 @@
 import React from 'react'
-import { gql, useMutation } from '@apollo/client'
+import { gql } from '@apollo/client'
+import { useMutation } from '@apollo/client/react'
 import { Button, Col, Row } from 'antd'
 import { FaPause, FaPlay, FaStepBackward, FaStepForward } from 'react-icons/fa'
 import type {

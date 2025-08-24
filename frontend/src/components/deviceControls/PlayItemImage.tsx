@@ -1,5 +1,6 @@
 import React from 'react'
-import { gql, useQuery } from '@apollo/client'
+import { gql } from '@apollo/client'
+import { useQuery } from '@apollo/client/react'
 import { Image } from 'antd'
 import type {
   DevicePlayItemImageUrlQuery,
@@ -26,7 +27,11 @@ const PlayItemImage = ({ id }: { id: string }) => {
 
   useRefetch(refetch)
 
-  return <Image preview={false} src={data?.devicePlayItemImageURL ?? ''} />
+  if (!data?.devicePlayItemImageURL) {
+    return null
+  }
+
+  return <Image preview={false} src={data.devicePlayItemImageURL} />
 }
 
 export default PlayItemImage

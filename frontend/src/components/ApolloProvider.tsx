@@ -1,14 +1,15 @@
 import React, { ReactNode, useContext } from 'react'
 import {
-  ApolloProvider,
   ApolloClient,
   InMemoryCache,
   HttpLink,
   ApolloLink,
+  CombinedGraphQLErrors,
 } from '@apollo/client'
-import { onError } from '@apollo/client/link/error'
+import { ApolloProvider } from '@apollo/client/react'
 import { persistCache } from 'apollo3-cache-persist'
 import { AuthContext, AuthContextType } from './AuthContext'
+import { ErrorLink } from '@apollo/client/link/error'
 
 const cache = new InMemoryCache()
 
@@ -20,9 +21,10 @@ persistCache({
 const client = (authContext: AuthContextType) =>
   new ApolloClient({
     link: ApolloLink.from([
-      onError(({ graphQLErrors, networkError }) => {
+      new ErrorLink(({ error }) => {
         if (
-          graphQLErrors?.some((err) =>
+          CombinedGraphQLErrors.is(error) &&
+          error.errors?.some((err) =>
             err.message.includes(
               'You must be logged in to access this resource.'
             )
@@ -30,16 +32,7 @@ const client = (authContext: AuthContextType) =>
         ) {
           authContext.dispatch({ type: 'logout' })
         }
-        if (graphQLErrors) {
-          graphQLErrors.forEach(({ message, locations, path }) =>
-            console.log(
-              `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
-            )
-          )
-        }
-        if (networkError) {
-          console.log(`[Network error]: ${networkError}`)
-        }
+        console.error(error)
       }),
       new HttpLink({
         uri: './graphql',

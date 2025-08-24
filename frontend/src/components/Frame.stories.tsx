@@ -49,7 +49,7 @@ const mocks = [
     request: {
       query: ROOMS_QUERY,
     },
-    newData: () => ({
+    result: {
       data: {
         rooms: [
           {
@@ -113,7 +113,7 @@ const mocks = [
           { id: '4', name: 'Entrance', quickControls: [] },
         ],
       },
-    }),
+    },
   },
   {
     request: {
@@ -122,7 +122,7 @@ const mocks = [
         id: '',
       },
     },
-    newData: () => ({
+    result: {
       data: {
         room: {
           id: 'room-id',
@@ -193,7 +193,7 @@ const mocks = [
           ],
         },
       },
-    }),
+    },
   },
   {
     request: {
@@ -202,11 +202,11 @@ const mocks = [
         id: '1',
       },
     },
-    newData: () => ({
+    result: {
       data: {
         devicePlayItemImageURL: 'https://placehold.co/320x320?text=Album+art',
       },
-    }),
+    },
   },
 ]
 

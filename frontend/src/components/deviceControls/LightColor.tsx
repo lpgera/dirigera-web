@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { gql, useMutation } from '@apollo/client'
+import { gql } from '@apollo/client'
+import { useMutation } from '@apollo/client/react'
 import { Button, Popover, Slider, Space } from 'antd'
 import { MdColorLens } from 'react-icons/md'
 import type {
