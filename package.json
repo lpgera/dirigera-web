@@ -11,15 +11,15 @@
   "scripts": {
     "browserslist-update": "npx update-browserslist-db@latest",
     "build": "npm run build -w frontend",
-    "check-updates": "ncu -i -ws",
+    "check-updates": "ncu -i -w",
     "prepare": "husky || true",
     "start": "npm run start -w backend",
     "test": "npm run test -w backend"
   },
   "devDependencies": {
     "husky": "^9.1.7",
-    "lint-staged": "^16.2.1",
-    "npm-check-updates": "^18.3.0",
+    "lint-staged": "^16.2.3",
+    "npm-check-updates": "^19.0.0",
     "prettier": "^3.6.2"
   },
   "workspaces": [
