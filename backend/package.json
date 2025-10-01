@@ -33,7 +33,7 @@
     "@types/node": "^24.6.0",
     "@types/ws": "^8.18.1",
     "globstar": "^1.0.0",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.3"
   },
   "volta": {
     "extends": "../package.json"
