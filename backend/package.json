@@ -30,7 +30,7 @@
     "@graphql-codegen/typescript-resolvers": "^5.0.1",
     "@types/compression": "^1.8.1",
     "@types/jsonwebtoken": "^9.0.10",
-    "@types/node": "^24.6.2",
+    "@types/node": "^24.7.0",
     "@types/ws": "^8.18.1",
     "globstar": "^1.0.0",
     "typescript": "^5.9.3"
