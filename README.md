@@ -1,4 +1,4 @@
-# Dirigera web
+# JEK Dirigera web
 
 Dirigera web is a web-based interface for controlling smart home devices connected to the IKEA Dirigera gateway. The app
 is designed to be run on a home server (such as a Raspberry Pi) on the same network as the gateway. It provides a
