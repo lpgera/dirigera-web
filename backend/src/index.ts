@@ -11,16 +11,19 @@ import { getClient } from './dirigera.ts'
 import { apolloServer } from './graphql/server.ts'
 import { getContextFunction } from './graphql/context.ts'
 import { verify } from './jwt.ts'
+import { fileURLToPath } from 'url'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const app = express()
 app.use(compression())
 app.use(
-  express.static(path.join(import.meta.dirname, '..', 'frontend'), {
+  express.static(path.join(__dirname, '../..', 'frontend', 'build'), {
     maxAge: '30 days',
   })
 )
 app.get('/', function (_, res) {
-  res.sendFile(path.join(__dirname, '..', 'frontend', 'index.html'))
+  res.sendFile(path.join(__dirname, '../..', 'frontend', 'build', 'index.html'))
 })
 
 const httpServer = http.createServer(app)
