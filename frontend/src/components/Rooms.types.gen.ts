@@ -17,6 +17,13 @@ export type RoomsQuery = {
       playback?: string | null
       type: Types.ControlType
     }>
+    devices: Array<{
+      __typename?: 'Device'
+      id: string
+      name: string
+      isReachable: boolean
+      batteryPercentage?: number | null
+    }>
   }>
 }
 

@@ -1,8 +1,8 @@
-schema: ${GRAPHQL_SCHEMA_URL:http://127.0.0.1:3000/graphql}
+schema: ${GRAPHQL_SCHEMA_URL:http://127.0.0.1:4000/graphql}
 overwrite: true
 hooks:
-  afterAllFileWrite:
-    - prettier --write
+  # afterAllFileWrite:
+  #   - prettier --write
 generates:
   ./src/graphql.types.ts:
     config:

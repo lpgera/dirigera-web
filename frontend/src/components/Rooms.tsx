@@ -1,8 +1,20 @@
 import React from 'react'
-import { Button, Card, Col, Result, Row, Skeleton } from 'antd'
+import {
+  MdOutlineBattery0Bar,
+  MdOutlineBattery1Bar,
+  MdOutlineBattery2Bar,
+  MdOutlineBattery3Bar,
+  MdOutlineBattery4Bar,
+  MdOutlineBattery5Bar,
+  MdOutlineBattery6Bar,
+  MdOutlineBatteryFull,
+  MdOutlineBatteryUnknown,
+} from 'react-icons/md'
+import { Button, Card, Col, Divider, Result, Row, Skeleton } from 'antd'
 import { gql } from '@apollo/client'
 import { useMutation, useQuery } from '@apollo/client/react'
 import { GoGear } from 'react-icons/go'
+import { InfoCircleOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
 import type {
   QuickControlMutation,
@@ -11,6 +23,7 @@ import type {
 } from './Rooms.types.gen'
 import Scenes from './Scenes'
 import { useRefetch } from '../useRefetch'
+import BatteryIcon from './BatteryIcon'
 
 const columnSizes = {
   xs: 12,
@@ -38,6 +51,12 @@ export const ROOMS_QUERY = gql`
         isOn
         playback
         type
+      }
+      devices {
+        id
+        name
+        isReachable
+        batteryPercentage
       }
     }
   }
@@ -92,14 +111,11 @@ const Rooms = () => {
                     shape="circle"
                     onClick={() => navigate(`room/${room.id}`)}
                     icon={
-                      <GoGear
-                        style={{
-                          display: 'flex',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                        }}
+                      <InfoCircleOutlined
+                        style={{ fontSize: 32, color: '#1890ff', marginTop: 2 }}
                       />
                     }
+                    title="View room details"
                   />
                 }
               >
@@ -139,6 +155,23 @@ const Rooms = () => {
                       {qc.name}
                     </Button>
                   ))}
+                </Row>
+                <Divider />
+                <Row>
+                  {room.devices
+                    .filter(
+                      (device) =>
+                        device.batteryPercentage !== null &&
+                        device.batteryPercentage !== undefined
+                    )
+                    .map((device) => (
+                      <Col key={device.id} style={{ marginRight: 8 }}>
+                        <BatteryIcon
+                          batteryPercentage={device.batteryPercentage}
+                          name={device.name}
+                        />
+                      </Col>
+                    ))}
                 </Row>
               </Card>
             </Col>
