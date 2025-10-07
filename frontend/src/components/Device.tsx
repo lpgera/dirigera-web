@@ -159,7 +159,7 @@ const Device = ({
       {batteryPercentage != null && (
         <Row>
           <Col>
-            <Battery batteryPercentage={batteryPercentage} />
+            <Battery batteryPercentage={batteryPercentage} name={name} />
           </Col>
         </Row>
       )}
