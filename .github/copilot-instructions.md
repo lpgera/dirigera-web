@@ -30,13 +30,24 @@ npm run watch -w frontend   # Starts frontend on :3000
 - **Backend**: `npm run graphql-codegen -w backend` generates `src/graphql/resolvers.gen.ts`
 - **Frontend**: `npm run graphql-codegen -w frontend` generates types throughout `src/`
 - Always run codegen after GraphQL schema changes before editing resolvers/components
+- Backend codegen uses GRAPHQL_SCHEMA_URL environment variable (defaults to http://localhost:4000/graphql)
+- Frontend codegen uses http://127.0.0.1:3000/graphql during development
 
 ### Testing & Building
 
 ```bash
-npm test                    # Runs backend tests only
+npm test                    # Runs backend tests only (Node.js native test runner)
+npm run test-watch -w backend  # Watch mode for backend tests
 npm run build              # Builds frontend for production
 npm start                  # Starts production server
+npm run authenticate -w backend  # Get Dirigera gateway access token
+```
+
+### Linting & Code Quality
+
+```bash
+npm run check-updates      # Check for package updates across workspaces
+npx prettier --write .     # Format code (auto-runs on git commits via husky)
 ```
 
 ## GraphQL Patterns
@@ -46,18 +57,31 @@ npm start                  # Starts production server
 - GraphQL schema defined in `backend/src/graphql/definitions/*.ts` files
 - Each definition exports `typeDefs` and `resolvers`
 - Resolvers use generated types from `resolvers.gen.ts`
+- Example pattern:
+  ```typescript
+  export const typeDefs = gql`
+    extend type Mutation {
+      setIsOn(id: String!, type: ControlType!, isOn: Boolean!): Boolean @loggedIn
+    }
+  `
+  export const resolvers: Resolvers = {
+    Mutation: { setIsOn: async (_, { id, type, isOn }, { dirigera }) => { ... } }
+  }
+  ```
 
 ### Frontend Type Generation
 
 - Uses **near-operation-file preset** - generates `.types.gen.ts` files next to components
 - Components import types: `import type { RoomQuery } from './Room.types.gen.ts'`
 - All GraphQL operations in components trigger type generation
+- Pattern: `const QUERY = gql\`...\``followed by`useLazyQuery<QueryType, QueryVariables>`
 
 ### Authentication Pattern
 
 - Uses `@loggedIn` directive in schema for protected operations
 - JWT tokens stored in React context (`AuthContext`)
-- WebSocket connection includes token in URL params
+- WebSocket connection includes token in URL params: `ws://host/websocket?token=...`
+- Backend verifies JWT on both HTTP and WebSocket connections
 
 ## File Structure Conventions
 
@@ -94,12 +118,16 @@ frontend/src/components/
 - Each control has its own GraphQL mutation and types
 - Examples: `IsOn.tsx`, `LightLevel.tsx`, `Volume.tsx`
 - Use Ant Design components for UI consistency
+- Pattern: Accept `{ id, name, type, isReachable, [controlValue] }` props
+- Always include loading states and disable controls when `!isReachable`
 
 ### Real-time Updates
 
 - WebSocket connection established in `WebSocketUpdateProvider`
 - Backend broadcasts device state changes via WebSocket
 - Frontend components refetch data on WebSocket messages using `useRefetch.ts`
+- Pattern: `useRefetch(refetch)` triggers refetch on both WebSocket messages and tab focus
+- WebSocket URL constructed dynamically with JWT token in query params
 
 ## Environment Configuration
 
@@ -117,6 +145,8 @@ Required `.env` variables:
 - Run with `npm run storybook -w frontend`
 - Used for component development and documentation
 - Chromatic integration for visual testing
+- Stories use Apollo MockedProvider with comprehensive mock data
+- Includes `withRouter` decorator for components using React Router
 
 ## Common Patterns
 
@@ -131,3 +161,5 @@ Required `.env` variables:
 - Backend: Node.js native test runner with `.test.ts` files
 - Tests focus on business logic (JWT, GraphQL resolvers, auth)
 - No frontend tests currently - relies on Storybook for component validation
+- Use `describe`, `it`, and `before` from `node:test` module
+- Test pattern: Import modules dynamically after setting up environment variables
