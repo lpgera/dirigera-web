@@ -1,0 +1,263 @@
+ActivityGroupUid;ActivityGroupName;ActivitySubGroupUid;ActivitySubGroupName;;ActivityGroupUid;ActivityGroupName
+ActivityGroup_000002;AE Requiring Additional Data;ActivitySubGroup_000007;Medication Error, Misuse and Abuse;;ActivityGroup_000002;AE Requiring Additional Data
+ActivityGroup_000002;AE Requiring Additional Data;ActivitySubGroup_000008;Acute Kidney Injury;;ActivityGroup_000003;Laboratory Assessments
+ActivityGroup_000002;AE Requiring Additional Data;ActivitySubGroup_000014;Urinalysis;;ActivityGroup_000004;Clinical Outcome Assessments
+ActivityGroup_000002;AE Requiring Additional Data;ActivitySubGroup_000034;Acute Coronary Syndrome;;ActivityGroup_000005;Event Adjudication
+ActivityGroup_000002;AE Requiring Additional Data;ActivitySubGroup_000042;Diabetic Retinopathy;;ActivityGroup_000006;Physical Examination
+ActivityGroup_000002;AE Requiring Additional Data;ActivitySubGroup_000064;Gallbladder Disease;;ActivityGroup_000007;Adverse Event
+ActivityGroup_000002;AE Requiring Additional Data;ActivitySubGroup_000069;Heart Failure;;ActivityGroup_000008;Demography
+ActivityGroup_000002;AE Requiring Additional Data;ActivitySubGroup_000070;Hepatic Event;;ActivityGroup_000009;Alcohol Breath Test
+ActivityGroup_000002;AE Requiring Additional Data;ActivitySubGroup_000078;Hypersensitivity Reaction;;ActivityGroup_000013;Medical History/Concomitant Illness
+ActivityGroup_000002;AE Requiring Additional Data;ActivitySubGroup_000084;Infusion Site Reaction;;ActivityGroup_000015;Clamp
+ActivityGroup_000002;AE Requiring Additional Data;ActivitySubGroup_000096;Malignant Neoplasm;;ActivityGroup_000016;Contraceptive Counselling
+ActivityGroup_000002;AE Requiring Additional Data;ActivitySubGroup_000101;Neoplasm;;ActivityGroup_000017;Biosamples for Future Research
+ActivityGroup_000002;AE Requiring Additional Data;ActivitySubGroup_000110;Pancreatitis;;ActivityGroup_000019;Body Measurements
+ActivityGroup_000002;AE Requiring Additional Data;ActivitySubGroup_000168;Cerebrovascular Event;;ActivityGroup_000021;DEXA Scan
+ActivityGroup_000002;AE Requiring Additional Data;ActivitySubGroup_000243;Injection Site Reaction;;ActivityGroup_000022;Vital Signs
+ActivityGroup_000002;AE Requiring Additional Data;ActivitySubGroup_000292;Kidney Failure Requiring Kidney Replacement Therapy;;ActivityGroup_000025;CGM
+ActivityGroup_000002;AE Requiring Additional Data;ActivitySubGroup_000349;Thromboembolic Event;;ActivityGroup_000029;Childbearing Potential
+ActivityGroup_000002;AE Requiring Additional Data;ActivitySubGroup_000352;Dysaesthesia;;ActivityGroup_000030;Randomisation
+ActivityGroup_000002;AE Requiring Additional Data;ActivitySubGroup_000374;Liver Biopsy Complication;;ActivityGroup_000033;Pubertal Status
+ActivityGroup_000002;AE Requiring Additional Data;ActivitySubGroup_000382;Thrombocytopenia;;ActivityGroup_000034;PK Sampling
+ActivityGroup_000002;AE Requiring Additional Data;ActivitySubGroup_000385;Kidney Injury;;ActivityGroup_000035;Device Deficiency That Could Led to SAE
+ActivityGroup_000002;AE Requiring Additional Data;ActivitySubGroup_000396;Arrhythmia;;ActivityGroup_000036;DEXA
+ActivityGroup_000002;AE Requiring Additional Data;ActivitySubGroup_000397;Myocardial Inflammation;;ActivityGroup_000038;Discontinuation Criteria
+ActivityGroup_000002;AE Requiring Additional Data;ActivitySubGroup_000406;Psychiatric Disorder;;ActivityGroup_000041;Dosing Day Exclusion Criteria
+ActivityGroup_000002;AE Requiring Additional Data;ActivitySubGroup_000407;Sleep Disorder;;ActivityGroup_000043;Eligibility Criteria
+ActivityGroup_000002;AE Requiring Additional Data;ActivitySubGroup_000409;Suicidal Ideation And Behaviour;;ActivityGroup_000044;End of Study
+ActivityGroup_000003;Laboratory Assessments;ActivitySubGroup_000001;24 Hour Urine Collection;;ActivityGroup_000046;Eye Examination
+ActivityGroup_000003;Laboratory Assessments;ActivitySubGroup_000006;Antibodies;;ActivityGroup_000048;Evaluation of Glycaemic Status
+ActivityGroup_000003;Laboratory Assessments;ActivitySubGroup_000014;Urinalysis;;ActivityGroup_000049;Self Measured Glucose
+ActivityGroup_000003;Laboratory Assessments;ActivitySubGroup_000016;Biochemistry;;ActivityGroup_000050;Pregnancy Test
+ActivityGroup_000003;Laboratory Assessments;ActivitySubGroup_000016;Biochemistry        ;;ActivityGroup_000051;Weight History
+ActivityGroup_000003;Laboratory Assessments;ActivitySubGroup_000018;Coagulation Parameters;;ActivityGroup_000052;Hyperglycaemic Episode
+ActivityGroup_000003;Laboratory Assessments;ActivitySubGroup_000024;Glucose Metabolism;;ActivityGroup_000053;Hypoglycaemic Episode
+ActivityGroup_000003;Laboratory Assessments;ActivitySubGroup_000025;Urine Dipstick;;ActivityGroup_000056;Informed Consent
+ActivityGroup_000003;Laboratory Assessments;ActivitySubGroup_000036;Hormones;;ActivityGroup_000061;End of IMP Treatment
+ActivityGroup_000003;Laboratory Assessments;ActivitySubGroup_000058;Haematology;;ActivityGroup_000062;MRI/MRE
+ActivityGroup_000003;Laboratory Assessments;ActivitySubGroup_000062;Lipids;;ActivityGroup_000064;MRI
+ActivityGroup_000003;Laboratory Assessments;ActivitySubGroup_000188;Biomarkers;;ActivityGroup_000065;Pathology
+ActivityGroup_000003;Laboratory Assessments;ActivitySubGroup_000196;Clamp;;ActivityGroup_000069;Pen-Injector Use Error
+ActivityGroup_000003;Laboratory Assessments;ActivitySubGroup_000209;Hepatitis;;ActivityGroup_000071;Hypoglycaemia Unawareness
+ActivityGroup_000003;Laboratory Assessments;ActivitySubGroup_000235;Virology;;ActivityGroup_000072;Run-in Criteria
+ActivityGroup_000003;Laboratory Assessments;ActivitySubGroup_000265;Sperm Analysis;;ActivityGroup_000075;Technical Complaints
+ActivityGroup_000003;Laboratory Assessments;ActivitySubGroup_000329;Renal Function;;ActivityGroup_000077;24 Hour Urine Collection
+ActivityGroup_000003;Laboratory Assessments;ActivitySubGroup_000336;Genotype;;ActivityGroup_000078;Collection of Samples for Laboratory
+ActivityGroup_000003;Laboratory Assessments;ActivitySubGroup_000362;Immunology;;ActivityGroup_000080;Concomitant Medication
+ActivityGroup_000003;Laboratory Assessments;ActivitySubGroup_000368;Genetics;;ActivityGroup_000081;Elevated Liver Enzymes
+ActivityGroup_000003;Laboratory Assessments;ActivitySubGroup_000388;Pharmacodynamics;;ActivityGroup_000082;Randomisation Criteria
+ActivityGroup_000004;Clinical Outcome Assessments;ActivitySubGroup_000161;SPFQ V1.0;;ActivityGroup_000083;Reminders
+ActivityGroup_000004;Clinical Outcome Assessments;ActivitySubGroup_000220;Neuropathic Pain 4 Questions (DN4);;ActivityGroup_000085;Self Measured Fasting Glucose
+ActivityGroup_000004;Clinical Outcome Assessments;ActivitySubGroup_000230;Four-Choice Reaction Time;;ActivityGroup_000086;Profiles
+ActivityGroup_000004;Clinical Outcome Assessments;ActivitySubGroup_000273;Performance Outcome;;ActivityGroup_000087;First Dose
+ActivityGroup_000004;Clinical Outcome Assessments;ActivitySubGroup_000275;Composite;;ActivityGroup_000090;Colon Neoplasm Follow-up
+ActivityGroup_000004;Clinical Outcome Assessments;ActivitySubGroup_000276;Observer-Reported Outcome;;ActivityGroup_000091;Breast Neoplasm Follow-up
+ActivityGroup_000004;Clinical Outcome Assessments;ActivitySubGroup_000277;Clinician-Reported Outcome;;ActivityGroup_000092;Procedures
+ActivityGroup_000004;Clinical Outcome Assessments;ActivitySubGroup_000278;Patient-Reported Outcome;;ActivityGroup_000094;Tobacco, E-Cigarette and Nicotine Products
+ActivityGroup_000004;Clinical Outcome Assessments;ActivitySubGroup_000417;PROMIS Sleep Disturbance SF 8b v1.0;;ActivityGroup_000095;Biospecimen Characteristics
+ActivityGroup_000004;Clinical Outcome Assessments;ActivitySubGroup_000418;PROMIS Sleep-Related Impairment 8a v1.0;;ActivityGroup_000096;Administration of IMP
+ActivityGroup_000004;Clinical Outcome Assessments;ActivitySubGroup_000419;ATTR Quality of Life Questionnaire SSF;;ActivityGroup_000097;Biospecimen Events
+ActivityGroup_000004;Clinical Outcome Assessments;ActivitySubGroup_000423;PROMIS Dyspnea Severity SF 10a v1.0;;ActivityGroup_000100;Echocardiography
+ActivityGroup_000004;Clinical Outcome Assessments;ActivitySubGroup_000424;PGI Severity-Sleep Problems;;ActivityGroup_000101;Socio-Demographic Parameter
+ActivityGroup_000004;Clinical Outcome Assessments;ActivitySubGroup_000425;PGI Change-Sleep Problems;;ActivityGroup_000102;Confirmation of Semaglutide Treatment 
+ActivityGroup_000004;Clinical Outcome Assessments;ActivitySubGroup_000426;PGI Severity-Sleepiness;;ActivityGroup_000103;HCP Information
+ActivityGroup_000004;Clinical Outcome Assessments;ActivitySubGroup_000427;PGI Change-Sleepiness;;ActivityGroup_000104;HCP Contact
+ActivityGroup_000004;Clinical Outcome Assessments;ActivitySubGroup_000428;PGI Severity-Impact of Sleep Problems on Functioning;;ActivityGroup_000105;Reasons to Initiate Semaglutide
+ActivityGroup_000004;Clinical Outcome Assessments;ActivitySubGroup_000429;PGI Change-Impact of Sleep Problems on Functioning;;ActivityGroup_000106;Alcohol Consumption
+ActivityGroup_000004;Clinical Outcome Assessments;ActivitySubGroup_000432;Study Participant Feedback Questionnaire V1.0 (SPFQ V1.0);;ActivityGroup_000108;FibroScan
+ActivityGroup_000004;Clinical Outcome Assessments;ActivitySubGroup_000433;Epworth Sleepiness Scale Questionnaire;;ActivityGroup_000109;PK Parameters
+ActivityGroup_000004;Clinical Outcome Assessments;ActivitySubGroup_000434;FLACC Scale;;ActivityGroup_000111;Malaria Assessments
+ActivityGroup_000004;Clinical Outcome Assessments;ActivitySubGroup_000435;FACES Pain Rating Scale;;ActivityGroup_000112;Evaluation of Treatment
+ActivityGroup_000004;Clinical Outcome Assessments;ActivitySubGroup_000436;PedsQL Sickle Cell Acute V3 Teen;;ActivityGroup_000113;Urinalysis
+ActivityGroup_000004;Clinical Outcome Assessments;ActivitySubGroup_000438;Clinical Dementia Rating (CDR);;ActivityGroup_000114;Treatment Compliance
+ActivityGroup_000005;Event Adjudication;ActivitySubGroup_000029;Death;;ActivityGroup_000116;Death Details
+ActivityGroup_000005;Event Adjudication;ActivitySubGroup_000030;Acute Pancreatitis;;ActivityGroup_000118;MRI-PDFF Scan
+ActivityGroup_000005;Event Adjudication;ActivitySubGroup_000034;Acute Coronary Syndrome;;ActivityGroup_000119;MRE Scan
+ActivityGroup_000005;Event Adjudication;ActivitySubGroup_000063;Kidney Replacement Therapy;;ActivityGroup_000120;RBC Transfusion
+ActivityGroup_000005;Event Adjudication;ActivitySubGroup_000069;Heart Failure;;ActivityGroup_000121;MRI Scan
+ActivityGroup_000005;Event Adjudication;ActivitySubGroup_000079;Hypoglycaemic Episodes;;ActivityGroup_000122;Dosing Day Criteria
+ActivityGroup_000005;Event Adjudication;ActivitySubGroup_000080;Hypoglycaemic Episode;;ActivityGroup_000124;Subject Characteristics
+ActivityGroup_000005;Event Adjudication;ActivitySubGroup_000097;Coronary Revascularisation;;ActivityGroup_000125;Administration of NIMP
+ActivityGroup_000005;Event Adjudication;ActivitySubGroup_000168;Cerebrovascular Event;;ActivityGroup_000126;Administration of IMP 
+ActivityGroup_000005;Event Adjudication;ActivitySubGroup_000371;Liver Induc MELD and/or Hepatic Decomp;;ActivityGroup_000128;Immunogenicity Assessments
+ActivityGroup_000006;Physical Examination;ActivitySubGroup_000180;Physical Examination;;ActivityGroup_000129;Biosamples for Omics
+ActivityGroup_000007;Adverse Event;ActivitySubGroup_000012;Adverse Event;;ActivityGroup_000130;Neurological Examination
+ActivityGroup_000008;Demography;ActivitySubGroup_000184;Demography;;ActivityGroup_000131;Bleeding Episodes
+ActivityGroup_000009;Alcohol Breath Test;ActivitySubGroup_000017;Alcohol Breath Test;;ActivityGroup_000132;Procedure Agents
+ActivityGroup_000013;Medical History/Concomitant Illness;ActivitySubGroup_000098;Medical History/Concomitant Illness;;ActivityGroup_000133;Cardiovascular Assessments
+ActivityGroup_000013;Medical History/Concomitant Illness;ActivitySubGroup_000191;Haemophilia Treatment and Bleed History;;ActivityGroup_000134;PD Sampling
+ActivityGroup_000013;Medical History/Concomitant Illness;ActivitySubGroup_000272;Medical History Evaluation of Weight Related Comorbidities;;ActivityGroup_000135;Bone Tissue Analysis
+ActivityGroup_000013;Medical History/Concomitant Illness;ActivitySubGroup_000321;Evaluation of CV Comorbidity;;ActivityGroup_000136;Body Composition
+ActivityGroup_000013;Medical History/Concomitant Illness;ActivitySubGroup_000323;Evaluation of Genitourinary Tract Comorbidity;;ActivityGroup_000137;Genetics
+ActivityGroup_000013;Medical History/Concomitant Illness;ActivitySubGroup_000324;Evaluation of Kidney Disease Comorbidity;;ActivityGroup_000141;Hypoglycaemia Intervention
+ActivityGroup_000013;Medical History/Concomitant Illness;ActivitySubGroup_000325;Evaluation of Musculoskeletal System Comorbidity ;;ActivityGroup_000142;Liver Stiffness and Steatosis
+ActivityGroup_000013;Medical History/Concomitant Illness;ActivitySubGroup_000326;Evaluation of Respiratory Comorbidity;;ActivityGroup_000143;Primary Death Classification
+ActivityGroup_000013;Medical History/Concomitant Illness;ActivitySubGroup_000327;Evaluation of Skin Disease Comorbidity;;ActivityGroup_000144;Coronary Revascularisation
+ActivityGroup_000013;Medical History/Concomitant Illness;ActivitySubGroup_000348;Evaluation of Dyslipidaemia Comorbidity ;;;
+ActivityGroup_000015;Clamp;ActivitySubGroup_000196;Clamp;;;
+ActivityGroup_000015;Clamp;ActivitySubGroup_000360;Hyperglycaemic Clamp;;;
+ActivityGroup_000015;Clamp;ActivitySubGroup_000361;Hyperinsulinaemic Euglycaemic Clamp;;;
+ActivityGroup_000016;Contraceptive Counselling;ActivitySubGroup_000198;Contraceptive Counselling;;;
+ActivityGroup_000017;Biosamples for Future Research;ActivitySubGroup_000383;Biosamples for Future Research;;;
+ActivityGroup_000019;Body Measurements;ActivitySubGroup_000028;Body Measurements;;;
+ActivityGroup_000021;DEXA Scan;ActivitySubGroup_000201;DEXA Scan;;;
+ActivityGroup_000022;Vital Signs;ActivitySubGroup_000027;Vital Signs;;;
+ActivityGroup_000022;Vital Signs;ActivitySubGroup_000381;Ambulatory Blood Pressure Measurement;;;
+ActivityGroup_000025;CGM;ActivitySubGroup_000379;CGM;;;
+ActivityGroup_000029;Childbearing Potential;ActivitySubGroup_000031;Childbearing Potential;;;
+ActivityGroup_000030;Randomisation;ActivitySubGroup_000157;Randomisation;;;
+ActivityGroup_000033;Pubertal Status;ActivitySubGroup_000213;Pubertal Status;;;
+ActivityGroup_000034;PK Sampling;ActivitySubGroup_000214;PK Sampling;;;
+ActivityGroup_000035;Device Deficiency That Could Led to SAE;ActivitySubGroup_000215;Device Deficiency That Could Led to SAE;;;
+ActivityGroup_000036;DEXA;ActivitySubGroup_000216;DEXA;;;
+ActivityGroup_000038;Discontinuation Criteria;ActivitySubGroup_000218;Discontinuation Criteria;;;
+ActivityGroup_000041;Dosing Day Exclusion Criteria;ActivitySubGroup_000221;Dosing Day Exclusion Criteria;;;
+ActivityGroup_000043;Eligibility Criteria;ActivitySubGroup_000053;Eligibility Criteria;;;
+ActivityGroup_000044;End of Study;ActivitySubGroup_000056;End of Study;;;
+ActivityGroup_000044;End of Study;ActivitySubGroup_000218;Discontinuation Criteria;;;
+ActivityGroup_000046;Eye Examination;ActivitySubGroup_000106;Eye Examination;;;
+ActivityGroup_000048;Evaluation of Glycaemic Status;ActivitySubGroup_000232;Evaluation of Glycaemic Status;;;
+ActivityGroup_000049;Self Measured Glucose;ActivitySubGroup_000066;Self Measured Glucose;;;
+ActivityGroup_000050;Pregnancy Test;ActivitySubGroup_000153;Pregnancy Test;;;
+ActivityGroup_000051;Weight History;ActivitySubGroup_000443;Weight History (Adults);;;
+ActivityGroup_000051;Weight History;ActivitySubGroup_000444;Weight History (Paediatric);;;
+ActivityGroup_000052;Hyperglycaemic Episode;ActivitySubGroup_000239;Hyperglycaemic Episode;;;
+ActivityGroup_000053;Hypoglycaemic Episode;ActivitySubGroup_000080;Hypoglycaemic Episode;;;
+ActivityGroup_000056;Informed Consent;ActivitySubGroup_000242;Informed Consent;;;
+ActivityGroup_000061;End of IMP Treatment;ActivitySubGroup_000170;End of IMP Treatment;;;
+ActivityGroup_000062;MRI/MRE;ActivitySubGroup_000249;MRI/MRE;;;
+ActivityGroup_000064;MRI;ActivitySubGroup_000252;MRI;;;
+ActivityGroup_000065;Pathology;ActivitySubGroup_000253;Pathology;;;
+ActivityGroup_000069;Pen-Injector Use Error;ActivitySubGroup_000114;Pen-Injector Use Error;;;
+ActivityGroup_000071;Hypoglycaemia Unawareness;ActivitySubGroup_000059;Hypoglycaemia Unawareness;;;
+ActivityGroup_000072;Run-in Criteria;ActivitySubGroup_000262;Run-in Criteria;;;
+ActivityGroup_000075;Technical Complaints;ActivitySubGroup_000285;Technical Complaint for Clinical Study;;;
+ActivityGroup_000077;24 Hour Urine Collection;ActivitySubGroup_000001;24 Hour Urine Collection;;;
+ActivityGroup_000078;Collection of Samples for Laboratory;ActivitySubGroup_000026;Collection of Samples for Laboratory;;;
+ActivityGroup_000080;Concomitant Medication;ActivitySubGroup_000279;Concomitant Medication;;;
+ActivityGroup_000081;Elevated Liver Enzymes;ActivitySubGroup_000274;Elevated Liver Enzymes;;;
+ActivityGroup_000082;Randomisation Criteria;ActivitySubGroup_000283;Randomisation Criteria;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000043;Drug Accountability;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000153;Pregnancy Test;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000170;End of IMP Treatment;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000180;Physical Examination;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000185;Screen for Alcohol;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000218;Discontinuation Criteria;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000219;Dispensing Visit;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000221;Dosing Day Exclusion Criteria;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000222;Screen for Drug;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000283;Randomisation Criteria;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000286;Attending Fasting Visit;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000287;Training in Device;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000288;Subject Re-Screened;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000289;Barriers and Motivation Interview;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000290;RTSM Session;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000291;Casebook Sign-off;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000293;Collect Diary;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000294;Diet and Physical Activity Counselling;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000295;Dispense Activity Tracker;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000296;Hand Out Directions for Use;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000297;Hand Out Dose Reminder Card;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000298;Hand Out ID Card;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000300;Training in Trial Product, Pen-handling;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000301;Hand Out and Instruct in BG-meter;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000302;Hand Out Home Pregnancy Test;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000303;Collect BG Meter;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000304;Subject Randomised;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000305;Hand Out Urine Kit;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000306;Dosing Day Criteria;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000309;Hand Out and Instruct in Diary;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000311;Biosamples for Future Research;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000312;Hand Out Patient Material;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000313;Ensure Updated Contact Persons List;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000316;On-Site Dosing;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000330;Tobacco, E-cigarette and Nicotine Use;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000339;Training in Trial Product;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000351;In-Trial Interview;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000355;CGM Data Transfer;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000357;CGM Training;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000363;Hand Out and Instruct in Device;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000365;Collect, Review and Transcribe Diary;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000387;Screen for HIV, Hepatitis B and C;;;
+ActivityGroup_000083;Reminders;ActivitySubGroup_000398;Neurological Examination;;;
+ActivityGroup_000085;Self Measured Fasting Glucose;ActivitySubGroup_000358;Self Measured Fasting Glucose;;;
+ActivityGroup_000086;Profiles;ActivitySubGroup_000310;Profiles;;;
+ActivityGroup_000087;First Dose;ActivitySubGroup_000315;First Dose;;;
+ActivityGroup_000090;Colon Neoplasm Follow-up;ActivitySubGroup_000317;Colon Neoplasm Follow-up;;;
+ActivityGroup_000091;Breast Neoplasm Follow-up;ActivitySubGroup_000319;Breast Neoplasm Follow-up;;;
+ActivityGroup_000092;Procedures;ActivitySubGroup_000027;Vital Signs;;;
+ActivityGroup_000092;Procedures;ActivitySubGroup_000052;ECG;;;
+ActivityGroup_000092;Procedures;ActivitySubGroup_000196;Clamp;;;
+ActivityGroup_000092;Procedures;ActivitySubGroup_000202;X-ray;;;
+ActivityGroup_000092;Procedures;ActivitySubGroup_000208;Continuous ECG;;;
+ActivityGroup_000092;Procedures;ActivitySubGroup_000249;MRI/MRE;;;
+ActivityGroup_000092;Procedures;ActivitySubGroup_000250;Fibroscan;;;
+ActivityGroup_000092;Procedures;ActivitySubGroup_000252;MRI;;;
+ActivityGroup_000092;Procedures;ActivitySubGroup_000331;Biopsy;;;
+ActivityGroup_000092;Procedures;ActivitySubGroup_000337;Echocardiography;;;
+ActivityGroup_000092;Procedures;ActivitySubGroup_000350;DXA Scan;;;
+ActivityGroup_000092;Procedures;ActivitySubGroup_000356;Polysomnography;;;
+ActivityGroup_000092;Procedures;ActivitySubGroup_000381;Ambulatory Blood Pressure Monitoring;;;
+ActivityGroup_000092;Procedures;ActivitySubGroup_000389;Surgery;;;
+ActivityGroup_000092;Procedures;ActivitySubGroup_000391;FibroscanCap;;;
+ActivityGroup_000092;Procedures;ActivitySubGroup_000392;Index Coronary Procedure;;;
+ActivityGroup_000092;Procedures;ActivitySubGroup_000394;Surgical Procedures;;;
+ActivityGroup_000092;Procedures;ActivitySubGroup_000395;Endoscopy;;;
+ActivityGroup_000092;Procedures;ActivitySubGroup_000411;CT Scan;;;
+ActivityGroup_000092;Procedures;ActivitySubGroup_000416;12-Lead ECG Single Recording;;;
+ActivityGroup_000092;Procedures;ActivitySubGroup_000431;Elastography;;;
+ActivityGroup_000092;Procedures;ActivitySubGroup_000437;PET/CT Scan;;;
+ActivityGroup_000092;Procedures;ActivitySubGroup_000440;Scintigraphy;;;
+ActivityGroup_000092;Procedures;ActivitySubGroup_000441;Sleep Apnoea Test;;;
+ActivityGroup_000094;Tobacco, E-Cigarette and Nicotine Products;ActivitySubGroup_000330;Tobacco, E-cigarette and Nicotine Use;;;
+ActivityGroup_000094;Tobacco, E-Cigarette and Nicotine Products;ActivitySubGroup_000333;Tobacco, E-cigarette and Nicotine Status;;;
+ActivityGroup_000095;Biospecimen Characteristics;ActivitySubGroup_000331;Biopsy;;;
+ActivityGroup_000096;Administration of IMP;ActivitySubGroup_000332;Administration of IMP;;;
+ActivityGroup_000096;Administration of IMP;ActivitySubGroup_000332;Administration of IMP    ;;;
+ActivityGroup_000097;Biospecimen Events;ActivitySubGroup_000331;Biopsy;;;
+ActivityGroup_000100;Echocardiography;ActivitySubGroup_000245;Transthoracic Echocardiogram (TTE);;;
+ActivityGroup_000100;Echocardiography;ActivitySubGroup_000337;Echocardiography;;;
+ActivityGroup_000101;Socio-Demographic Parameter;ActivitySubGroup_000338;Socio-Demographic Parameter;;;
+ActivityGroup_000102;Confirmation of Semaglutide Treatment ;ActivitySubGroup_000343;Confirmation of Semaglutide Treatment ;;;
+ActivityGroup_000103;HCP Information;ActivitySubGroup_000344;HCP Information;;;
+ActivityGroup_000104;HCP Contact;ActivitySubGroup_000341;HCP Contact;;;
+ActivityGroup_000105;Reasons to Initiate Semaglutide;ActivitySubGroup_000342;Reasons to Initiate Semaglutide;;;
+ActivityGroup_000106;Alcohol Consumption;ActivitySubGroup_000347;Alcohol Consumption;;;
+ActivityGroup_000108;FibroScan;ActivitySubGroup_000353;FibroScan;;;
+ActivityGroup_000109;PK Parameters;ActivitySubGroup_000354;PK Parameters;;;
+ActivityGroup_000111;Malaria Assessments;ActivitySubGroup_000364;Malaria Assessments;;;
+ActivityGroup_000112;Evaluation of Treatment;ActivitySubGroup_000366;Evaluation of Treatment;;;
+ActivityGroup_000113;Urinalysis;ActivitySubGroup_000367;Screen for Drugs;;;
+ActivityGroup_000114;Treatment Compliance;ActivitySubGroup_000369;Treatment Compliance;;;
+ActivityGroup_000116;Death Details;ActivitySubGroup_000370;Death Details;;;
+ActivityGroup_000118;MRI-PDFF Scan;ActivitySubGroup_000376;MRI-PDFF Scan;;;
+ActivityGroup_000119;MRE Scan;ActivitySubGroup_000375;MRE Scan;;;
+ActivityGroup_000120;RBC Transfusion;ActivitySubGroup_000378;RBC Transfusion;;;
+ActivityGroup_000121;MRI Scan;ActivitySubGroup_000377;MRI Scan;;;
+ActivityGroup_000122;Dosing Day Criteria;ActivitySubGroup_000306;Dosing Day Criteria;;;
+ActivityGroup_000124;Subject Characteristics;ActivitySubGroup_000386;Subject Characteristics;;;
+ActivityGroup_000125;Administration of NIMP;ActivitySubGroup_000390;Administration of NIMP;;;
+ActivityGroup_000126;Administration of IMP ;ActivitySubGroup_000393;Administration of IMP ;;;
+ActivityGroup_000128;Immunogenicity Assessments;ActivitySubGroup_000078;Hypersensitivity Reaction;;;
+ActivityGroup_000129;Biosamples for Omics;ActivitySubGroup_000314;Omics;;;
+ActivityGroup_000130;Neurological Examination;ActivitySubGroup_000398;Neurological Examination;;;
+ActivityGroup_000131;Bleeding Episodes;ActivitySubGroup_000401;Bleeding Episodes;;;
+ActivityGroup_000132;Procedure Agents;ActivitySubGroup_000402;Procedure Agents;;;
+ActivityGroup_000133;Cardiovascular Assessments;ActivitySubGroup_000052;ECG;;;
+ActivityGroup_000133;Cardiovascular Assessments;ActivitySubGroup_000208;Continuous ECG;;;
+ActivityGroup_000133;Cardiovascular Assessments;ActivitySubGroup_000403;Imaging;;;
+ActivityGroup_000133;Cardiovascular Assessments;ActivitySubGroup_000408;Cardiovascular Assessments;;;
+ActivityGroup_000134;PD Sampling;ActivitySubGroup_000404;PD Sampling;;;
+ActivityGroup_000135;Bone Tissue Analysis;ActivitySubGroup_000411;CT Scan;;;
+ActivityGroup_000135;Bone Tissue Analysis;ActivitySubGroup_000412;Histology;;;
+ActivityGroup_000135;Bone Tissue Analysis;ActivitySubGroup_000413;Spectroscopy;;;
+ActivityGroup_000135;Bone Tissue Analysis;ActivitySubGroup_000414;Indentation;;;
+ActivityGroup_000136;Body Composition;ActivitySubGroup_000252;MRI;;;
+ActivityGroup_000136;Body Composition;ActivitySubGroup_000411;CT Scan;;;
+ActivityGroup_000136;Body Composition;ActivitySubGroup_000412;Histology;;;
+ActivityGroup_000136;Body Composition;ActivitySubGroup_000415;PET Scan;;;
+ActivityGroup_000137;Genetics;ActivitySubGroup_000336;Genotype;;;
+ActivityGroup_000141;Hypoglycaemia Intervention;ActivitySubGroup_000430;Hypoglycaemia Intervention;;;
+ActivityGroup_000142;Liver Stiffness and Steatosis;ActivitySubGroup_000431;Elastography;;;
+ActivityGroup_000143;Primary Death Classification;ActivitySubGroup_000445;Primary Death Classification;;;
+ActivityGroup_000144;Coronary Revascularisation;ActivitySubGroup_000097;Coronary Revascularisation;;;

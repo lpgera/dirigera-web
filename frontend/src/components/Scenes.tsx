@@ -9,6 +9,7 @@ import {
   ScenesQueryVariables,
 } from './Scenes.types.gen'
 import { useRefetch } from '../useRefetch'
+import { useSceneScopes } from '../useSceneScopes'
 
 export const SCENES_QUERY = gql`
   query Scenes {
@@ -19,7 +20,13 @@ export const SCENES_QUERY = gql`
   }
 `
 
-const Scenes: FC = () => {
+interface ScenesProps {
+  scope?: 'house' | 'floor' | 'room'
+  scopeId?: string // floor ID or room ID when scope is 'floor' or 'room'
+  title?: string // Optional title for the scenes section
+}
+
+const Scenes: FC<ScenesProps> = ({ scope = 'house', scopeId, title }) => {
   const { data, refetch } = useQuery<ScenesQuery, ScenesQueryVariables>(
     SCENES_QUERY
   )
@@ -35,32 +42,76 @@ const Scenes: FC = () => {
 
   useRefetch(refetch)
 
-  const scenes = data?.scenes ?? []
+  const {
+    getHouseScenes,
+    getFloorScenes,
+    getRoomScenes,
+    filterScenes,
+    hasConfiguration,
+    isScopeConfigured,
+  } = useSceneScopes()
+
+  const allScenes = data?.scenes ?? []
+
+  // Determine which scenes to show
+  let scenes: typeof allScenes = []
+
+  if (hasConfiguration) {
+    // Configuration file exists
+    if (isScopeConfigured(scope, scopeId)) {
+      // This scope is explicitly configured (even if empty array)
+      let allowedSceneIds: string[] = []
+
+      if (scope === 'house') {
+        allowedSceneIds = getHouseScenes()
+      } else if (scope === 'floor' && scopeId) {
+        allowedSceneIds = getFloorScenes(scopeId)
+      } else if (scope === 'room' && scopeId) {
+        allowedSceneIds = getRoomScenes(scopeId)
+      }
+
+      scenes = filterScenes(allScenes, allowedSceneIds)
+    } else {
+      // This scope is not configured - show nothing
+      scenes = []
+    }
+  } else {
+    // No configuration file - show all scenes everywhere (backward compatible)
+    scenes = allScenes
+  }
+
+  // Don't render if no scenes to show
+  if (scenes.length === 0) {
+    return null
+  }
 
   return (
-    <Row gutter={[8, 8]} style={{ marginBottom: 16 }}>
-      {!data ? (
-        <Col key="loading">
-          <Button disabled>Loading...</Button>
-        </Col>
-      ) : (
-        scenes.map((s) => (
-          <Col key={s.id}>
-            <Button
-              onClick={async () => {
-                await activateScene({
-                  variables: {
-                    id: s.id,
-                  },
-                })
-              }}
-            >
-              {s.name}
-            </Button>
+    <>
+      {title && <div style={{ marginBottom: 8, fontWeight: 500 }}>{title}</div>}
+      <Row gutter={[8, 8]} style={{ marginBottom: 16 }}>
+        {!data ? (
+          <Col key="loading">
+            <Button disabled>Loading...</Button>
           </Col>
-        ))
-      )}
-    </Row>
+        ) : (
+          scenes.map((s) => (
+            <Col key={s.id}>
+              <Button
+                onClick={async () => {
+                  await activateScene({
+                    variables: {
+                      id: s.id,
+                    },
+                  })
+                }}
+              >
+                {s.name}
+              </Button>
+            </Col>
+          ))
+        )}
+      </Row>
+    </>
   )
 }
 

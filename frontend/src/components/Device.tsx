@@ -8,6 +8,7 @@ import LightColor from './deviceControls/LightColor'
 import Playback from './deviceControls/Playback'
 import Battery from './deviceControls/Battery'
 import PlayItemImage from './deviceControls/PlayItemImage'
+import { useDeviceImages } from '../useDeviceImages'
 
 const Device = ({
   id,
@@ -54,8 +55,32 @@ const Device = ({
   vocIndex?: number | null
   isOpen?: boolean | null
 }) => {
+  const { getDeviceImage } = useDeviceImages()
+  const deviceImage = getDeviceImage(id)
+
   return (
-    <Card title={name}>
+    <Card
+      title={name}
+      cover={
+        deviceImage ? (
+          <img
+            src={deviceImage}
+            alt={name}
+            style={{
+              width: '100%',
+              height: 150,
+              objectFit: 'contain',
+              backgroundColor: '#fff',
+              borderRadius: 0,
+            }}
+            onError={(e) => {
+              // Hide the cover if image fails to load
+              e.currentTarget.parentElement!.style.display = 'none'
+            }}
+          />
+        ) : undefined
+      }
+    >
       <Row align="middle" gutter={[8, 8]}>
         {isOn != null && (
           <Col>

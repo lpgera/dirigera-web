@@ -1,29 +1,15 @@
 import React from 'react'
-import {
-  MdOutlineBattery0Bar,
-  MdOutlineBattery1Bar,
-  MdOutlineBattery2Bar,
-  MdOutlineBattery3Bar,
-  MdOutlineBattery4Bar,
-  MdOutlineBattery5Bar,
-  MdOutlineBattery6Bar,
-  MdOutlineBatteryFull,
-  MdOutlineBatteryUnknown,
-} from 'react-icons/md'
-import { Button, Card, Col, Divider, Result, Row, Skeleton } from 'antd'
+import { Card, Col, Grid, Result, Row, Skeleton } from 'antd'
 import { gql } from '@apollo/client'
-import { useMutation, useQuery } from '@apollo/client/react'
-import { GoGear } from 'react-icons/go'
-import { InfoCircleOutlined } from '@ant-design/icons'
-import { useNavigate } from 'react-router-dom'
-import type {
-  QuickControlMutation,
-  QuickControlMutationVariables,
-  RoomsQuery,
-} from './Rooms.types.gen'
+import { useQuery } from '@apollo/client/react'
+import type { RoomsQuery } from './Rooms.types.gen'
 import Scenes from './Scenes'
 import { useRefetch } from '../useRefetch'
-import BatteryIcon from './BatteryIcon'
+import { useFloors } from '../useFloors'
+import FloorTabs from './FloorTabs'
+import RoomsGrid from './RoomsGrid'
+
+const { useBreakpoint } = Grid
 
 const columnSizes = {
   xs: 12,
@@ -32,11 +18,6 @@ const columnSizes = {
   lg: 8,
   xl: 6,
   xxl: 4,
-}
-
-const buttonStyles = {
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
 }
 
 export const ROOMS_QUERY = gql`
@@ -55,129 +36,58 @@ export const ROOMS_QUERY = gql`
       devices {
         id
         name
+        type
         isReachable
         batteryPercentage
+        isOn
+        lightLevel
+        colorTemperature
+        colorHue
+        colorSaturation
       }
     }
   }
 `
 
-const QUICK_CONTROL_MUTATION = gql`
-  mutation QuickControl(
-    $id: String!
-    $type: ControlType!
-    $isOn: Boolean
-    $playback: Playback
-  ) {
-    quickControl(id: $id, type: $type, isOn: $isOn, playback: $playback)
-  }
-`
-
 const Rooms = () => {
-  const navigate = useNavigate()
-
+  const screens = useBreakpoint()
   const { data, refetch, error } = useQuery<RoomsQuery>(ROOMS_QUERY)
-
-  const [quickControl, { loading: quickControlLoading }] = useMutation<
-    QuickControlMutation,
-    QuickControlMutationVariables
-  >(QUICK_CONTROL_MUTATION)
 
   useRefetch(refetch)
 
+  const { groupRoomsByFloor, hasFloors, floors } = useFloors()
+
   const rooms = data?.rooms ?? []
+  const groupedRooms = hasFloors ? groupRoomsByFloor(rooms) : null
+
+  // Determine if we should use side tabs (desktop) or top tabs (mobile)
+  const isDesktop = screens.md || screens.lg || screens.xl || screens.xxl
 
   return (
     <>
-      <Scenes />
-      <Row gutter={[16, 16]}>
-        {!data ? (
+      {/* House-level scenes - always visible */}
+      <Scenes scope="house" />
+
+      {!data ? (
+        <Row gutter={[16, 16]}>
           <Col key="loading" {...columnSizes}>
             <Card>
               <Skeleton active={true} />
             </Card>
           </Col>
-        ) : error ? (
-          <Col span={24}>
-            <Result status="error" title="Error" subTitle={error.message} />
-          </Col>
-        ) : (
-          rooms.map((room) => (
-            <Col key={room.id} {...columnSizes}>
-              <Card
-                title={room.name}
-                extra={
-                  <Button
-                    shape="circle"
-                    onClick={() => navigate(`room/${room.id}`)}
-                    icon={
-                      <InfoCircleOutlined
-                        style={{ fontSize: 32, color: '#1890ff', marginTop: 2 }}
-                      />
-                    }
-                    title="View room details"
-                  />
-                }
-              >
-                <Row align="middle" gutter={[8, 8]}>
-                  {room.quickControls.length === 0 && (
-                    <>No quick controls available</>
-                  )}
-                  {room.quickControls.map((qc) => (
-                    <Button
-                      key={qc.id}
-                      block
-                      style={buttonStyles}
-                      disabled={
-                        (qc.playback && qc.playback !== 'playbackPlaying') ||
-                        !qc.isReachable ||
-                        quickControlLoading
-                      }
-                      type={
-                        qc.isOn || qc.playback === 'playbackPlaying'
-                          ? 'primary'
-                          : 'default'
-                      }
-                      onClick={() =>
-                        quickControl({
-                          variables: {
-                            id: qc.id,
-                            type: qc.type,
-                            isOn: qc.isOn != null ? !qc.isOn : null,
-                            playback:
-                              qc.playback === 'playbackPlaying'
-                                ? 'playbackPaused'
-                                : null,
-                          },
-                        })
-                      }
-                    >
-                      {qc.name}
-                    </Button>
-                  ))}
-                </Row>
-                <Divider />
-                <Row>
-                  {room.devices
-                    .filter(
-                      (device) =>
-                        device.batteryPercentage !== null &&
-                        device.batteryPercentage !== undefined
-                    )
-                    .map((device) => (
-                      <Col key={device.id} style={{ marginRight: 8 }}>
-                        <BatteryIcon
-                          batteryPercentage={device.batteryPercentage}
-                          name={device.name}
-                        />
-                      </Col>
-                    ))}
-                </Row>
-              </Card>
-            </Col>
-          ))
-        )}
-      </Row>
+        </Row>
+      ) : error ? (
+        <Result status="error" title="Error" subTitle={error.message} />
+      ) : groupedRooms && floors && floors.length > 0 ? (
+        <FloorTabs
+          groupedRooms={groupedRooms}
+          floors={floors}
+          isDesktop={!!isDesktop}
+          columnSizes={columnSizes}
+        />
+      ) : (
+        <RoomsGrid rooms={rooms} columnSizes={columnSizes} />
+      )}
     </>
   )
 }

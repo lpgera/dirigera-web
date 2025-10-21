@@ -1,0 +1,10 @@
+{
+  "_comment": "Map device IDs to image filenames in the /devices folder. Add your device ID as the key and the image filename as the value.",
+  "_example": "To find device IDs, check the GraphQL API or browser console logs.",
+  "f537909b-b34e-4b74-8d76-bcb309eb6512_1": "hall_loft.png",
+  "0af050f6-a83e-4aaa-82a0-97cc40425e5f_1": "stue_reol.png",
+  "8cea2a31-c3ea-4a1e-87c6-f5e7937f9c64": "stue_sofa.png",
+  "d1721209-631e-4165-abaa-0e5e9edca464_1": "stue_vaeg.png",
+  "8cd14036-8004-4d55-ae53-faf0f24f72e2": "stue_spisebord.png",
+  "ea141153-87bc-40c7-821b-b08ee5780718_1": "havestue.png"
+}

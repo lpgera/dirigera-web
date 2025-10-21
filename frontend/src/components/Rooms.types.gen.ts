@@ -21,8 +21,14 @@ export type RoomsQuery = {
       __typename?: 'Device'
       id: string
       name: string
+      type: Types.ControlType
       isReachable: boolean
       batteryPercentage?: number | null
+      isOn?: boolean | null
+      lightLevel?: number | null
+      colorTemperature?: number | null
+      colorHue?: number | null
+      colorSaturation?: number | null
     }>
   }>
 }

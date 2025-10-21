@@ -1,0 +1,43 @@
+{
+  "_comment": "Configure floor groupings for rooms",
+  "_instructions": "Add room IDs to floor arrays. Rooms not listed will appear in 'Other' section.",
+  "_example": "Find room IDs from the GraphQL API or browser console",
+
+  "floors": [
+    {
+      "id": "second-floor",
+      "name": "Anden Sal",
+      "order": 3,
+      "rooms": ["f8bc8873-5335-438a-afda-bdaff7bc80eb"]
+    },
+    {
+      "id": "first-floor",
+      "name": "Første Sal",
+      "order": 2,
+      "rooms": [
+        "5d138710-51f1-4353-bf1d-0397f069cc1d",
+        "e084a08e-fc0f-45aa-9dcd-a7fbda101ad9",
+        "c94ed1e8-c825-42a6-ae94-599a077a3f1d"
+      ]
+    },
+    {
+      "id": "ground-floor",
+      "name": "Stueetage",
+      "order": 1,
+      "rooms": [
+        "78c2b381-749c-49b9-94ac-0fbff8d73b0c",
+        "4c10322b-b38f-40d9-974a-2b2f61b77b91",
+        "14073104-76e6-4160-b8c7-66c5cab549cc"
+      ]
+    },
+    {
+      "id": "basement",
+      "name": "Kælder",
+      "order": 0,
+      "rooms": [
+        "82aee614-0842-4a59-b4a5-237a9b06c517",
+        "fa729b1e-9649-42e2-bd1c-738c0b2823a0"
+      ]
+    }
+  ]
+}

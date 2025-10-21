@@ -1,0 +1,19 @@
+{
+  "_comment": "Configure which scenes are associated with the house, floors, or rooms",
+  "_instructions": "Add scene IDs to the appropriate scope. Scenes can be in multiple scopes.",
+  "_example": "Find scene IDs from the GraphQL API",
+
+  "house": ["29e37964-008a-4bb1-be74-14c05c614a3d"],
+
+  "floors": {
+    "ground-floor": [
+      "e1fbf3ef-6af0-492b-94bf-0756da5936c1",
+      "ee76345b-9960-496b-8d50-933a399599e3",
+      "e2e1ab96-521f-4685-a43b-0b731f2a38e7"
+    ]
+  },
+
+  "rooms": {
+    "78c2b381-749c-49b9-94ac-0fbff8d73b0c": []
+  }
+}
