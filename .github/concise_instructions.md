@@ -77,13 +77,13 @@ src/
 
 ```tsx
 // ✅ Server state
-const { data } = useQuery({ queryKey: ['tasks'], queryFn: fetchTasks })
+const { data } = useQuery({ queryKey: ["tasks"], queryFn: fetchTasks });
 
 // ✅ Client state
-const count = useTaskStore((s) => s.tasks.length)
+const count = useTaskStore((s) => s.tasks.length);
 
 // ✅ Local UI state
-const [isOpen, setIsOpen] = useState(false)
+const [isOpen, setIsOpen] = useState(false);
 
 // ❌ Never use useState for server data
 ```
@@ -92,62 +92,62 @@ const [isOpen, setIsOpen] = useState(false)
 
 ```tsx
 // ✅ Feature public API
-import { LoginForm, useAuth } from '@/features/auth'
+import { LoginForm, useAuth } from "@/features/auth";
 
 // ❌ Bypassing public API
-import { LoginForm } from '@/features/auth/components/ui/LoginForm'
+import { LoginForm } from "@/features/auth/components/ui/LoginForm";
 ```
 
 ### Container Example
 
 ```tsx
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { useUserStore } from '@/features/users/stores/userStore'
-import { fetchProfile, updateProfile } from '@/features/users/api'
-import { UserCard } from '../ui/UserCard'
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useUserStore } from "@/features/users/stores/userStore";
+import { fetchProfile, updateProfile } from "@/features/users/api";
+import { UserCard } from "../ui/UserCard";
 
 export function UserDashboard() {
-  const user = useUserStore((s) => s.currentUser)
-  const queryClient = useQueryClient()
+  const user = useUserStore((s) => s.currentUser);
+  const queryClient = useQueryClient();
 
   const { data: profile, isLoading } = useQuery({
-    queryKey: ['profile', user?.id],
+    queryKey: ["profile", user?.id],
     queryFn: () => fetchProfile(user!.id),
     enabled: !!user,
-  })
+  });
 
   const mutation = useMutation({
     mutationFn: updateProfile,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['profile'] }),
-  })
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["profile"] }),
+  });
 
-  if (isLoading) return <div>Loading...</div>
-  if (!profile) return <div>No profile found</div>
+  if (isLoading) return <div>Loading...</div>;
+  if (!profile) return <div>No profile found</div>;
 
-  return <UserCard user={user} profile={profile} onEdit={mutation.mutate} />
+  return <UserCard user={user} profile={profile} onEdit={mutation.mutate} />;
 }
 ```
 
 ### UI Example
 
 ```tsx
-import type { User, Profile, ProfileUpdateData } from '@/features/users/types'
+import type { User, Profile, ProfileUpdateData } from "@/features/users/types";
 
 interface UserCardProps {
-  user: User | null
-  profile: Profile
-  onEdit: (data: ProfileUpdateData) => void
+  user: User | null;
+  profile: Profile;
+  onEdit: (data: ProfileUpdateData) => void;
 }
 
 export function UserCard({ user, profile, onEdit }: UserCardProps) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
     onEdit({
-      name: formData.get('name') as string,
-      bio: formData.get('bio') as string,
-    })
-  }
+      name: formData.get("name") as string,
+      bio: formData.get("bio") as string,
+    });
+  };
 
   return (
     <div className="user-card">
@@ -158,20 +158,20 @@ export function UserCard({ user, profile, onEdit }: UserCardProps) {
         <button type="submit">Save</button>
       </form>
     </div>
-  )
+  );
 }
 ```
 
 ### Zustand Store
 
 ```tsx
-import { create } from 'zustand'
-import { immer } from 'zustand/middleware/immer'
+import { create } from "zustand";
+import { immer } from "zustand/middleware/immer";
 
 interface TaskStore {
-  tasks: Task[]
-  addTask: (task: Task) => void
-  removeTask: (id: string) => void
+  tasks: Task[];
+  addTask: (task: Task) => void;
+  removeTask: (id: string) => void;
 }
 
 export const useTaskStore = create<TaskStore>()(
@@ -179,19 +179,19 @@ export const useTaskStore = create<TaskStore>()(
     tasks: [],
     addTask: (task) =>
       set((state) => {
-        state.tasks.push(task)
+        state.tasks.push(task);
       }),
     removeTask: (id) =>
       set((state) => {
-        const index = state.tasks.findIndex((t) => t.id === id)
-        if (index !== -1) state.tasks.splice(index, 1)
+        const index = state.tasks.findIndex((t) => t.id === id);
+        if (index !== -1) state.tasks.splice(index, 1);
       }),
   }))
-)
+);
 
 // Selectors
 export const useCompletedTasks = () =>
-  useTaskStore((state) => state.tasks.filter((t) => t.completed))
+  useTaskStore((state) => state.tasks.filter((t) => t.completed));
 ```
 
 ### React Query Patterns
@@ -199,46 +199,46 @@ export const useCompletedTasks = () =>
 ```tsx
 // API Layer
 export const tasksApi = {
-  getAll: () => api.get<Task[]>('/tasks'),
-  create: (data: CreateTaskData) => api.post<Task>('/tasks', data),
+  getAll: () => api.get<Task[]>("/tasks"),
+  create: (data: CreateTaskData) => api.post<Task>("/tasks", data),
   update: (id: string, data: UpdateTaskData) =>
     api.patch<Task>(`/tasks/${id}`, data),
   delete: (id: string) => api.delete(`/tasks/${id}`),
-}
+};
 
 // Query Hook
 export function useTasks() {
   return useQuery({
-    queryKey: ['tasks'],
+    queryKey: ["tasks"],
     queryFn: tasksApi.getAll,
     staleTime: 5 * 60 * 1000,
-  })
+  });
 }
 
 // Mutation Hook with Optimistic Updates
 export function useUpdateTask() {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: ({ id, data }: { id: string; data: UpdateTaskData }) =>
       tasksApi.update(id, data),
     onMutate: async ({ id, data }) => {
-      await queryClient.cancelQueries({ queryKey: ['tasks'] })
-      const previous = queryClient.getQueryData(['tasks'])
+      await queryClient.cancelQueries({ queryKey: ["tasks"] });
+      const previous = queryClient.getQueryData(["tasks"]);
 
-      queryClient.setQueryData(['tasks'], (old: Task[] | undefined) =>
+      queryClient.setQueryData(["tasks"], (old: Task[] | undefined) =>
         old?.map((task) => (task.id === id ? { ...task, ...data } : task))
-      )
+      );
 
-      return { previous }
+      return { previous };
     },
     onError: (err, vars, context) => {
-      queryClient.setQueryData(['tasks'], context?.previous)
+      queryClient.setQueryData(["tasks"], context?.previous);
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['tasks'] })
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
     },
-  })
+  });
 }
 ```
 
@@ -247,74 +247,74 @@ export function useUpdateTask() {
 ### Component Test
 
 ```tsx
-import { render, screen } from '@testing-library/react'
-import { userEvent } from '@testing-library/user-event'
-import { TaskList } from './TaskList'
+import { render, screen } from "@testing-library/react";
+import { userEvent } from "@testing-library/user-event";
+import { TaskList } from "./TaskList";
 
-test('adds new task', async () => {
-  const user = userEvent.setup()
-  render(<TaskList />)
+test("adds new task", async () => {
+  const user = userEvent.setup();
+  render(<TaskList />);
 
-  await user.type(screen.getByRole('textbox'), 'New task')
-  await user.click(screen.getByRole('button', { name: /add/i }))
+  await user.type(screen.getByRole("textbox"), "New task");
+  await user.click(screen.getByRole("button", { name: /add/i }));
 
-  expect(screen.getByText('New task')).toBeInTheDocument()
-})
+  expect(screen.getByText("New task")).toBeInTheDocument();
+});
 ```
 
 ### API Mock (MSW)
 
 ```tsx
-import { http, HttpResponse } from 'msw'
-import { setupServer } from 'msw/node'
+import { http, HttpResponse } from "msw";
+import { setupServer } from "msw/node";
 
 export const handlers = [
-  http.get('/api/tasks', () => {
-    return HttpResponse.json([{ id: '1', title: 'Task 1', completed: false }])
+  http.get("/api/tasks", () => {
+    return HttpResponse.json([{ id: "1", title: "Task 1", completed: false }]);
   }),
-]
+];
 
-export const server = setupServer(...handlers)
+export const server = setupServer(...handlers);
 ```
 
 ## Storybook
 
 ```tsx
-import type { Meta, StoryObj } from '@storybook/react'
-import { Button } from './Button'
+import type { Meta, StoryObj } from "@storybook/react";
+import { Button } from "./Button";
 
 const meta = {
   component: Button,
-  tags: ['autodocs'],
-} satisfies Meta<typeof Button>
+  tags: ["autodocs"],
+} satisfies Meta<typeof Button>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
-  args: { variant: 'primary', children: 'Button' },
-}
+  args: { variant: "primary", children: "Button" },
+};
 ```
 
 ## Import Order
 
 ```tsx
 // 1. React
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from "react";
 
 // 2. External libraries
-import { useQuery } from '@tanstack/react-query'
+import { useQuery } from "@tanstack/react-query";
 
 // 3. Internal (alphabetical by path segment)
-import { Button } from '@/components/ui/Button'
-import { useAuth } from '@/features/auth'
-import { api } from '@/lib/api'
+import { Button } from "@/components/ui/Button";
+import { useAuth } from "@/features/auth";
+import { api } from "@/lib/api";
 
 // 4. Types
-import type { User } from '@/types/user'
+import type { User } from "@/types/user";
 
 // 5. Relative imports
-import { helper } from './utils'
+import { helper } from "./utils";
 ```
 
 ## TypeScript Rules
@@ -346,7 +346,7 @@ import { LoginForm } from "@/features/auth/components/ui/LoginForm";
 import { useAuth } from "@/features/auth";
 import { useState } from "react";
 
-// ❌ Using 'any'
+// ❌ Using "any"
 export function Component(props: any) { }
 
 // ❌ Manual spread with Zustand+Immer
@@ -361,15 +361,15 @@ return <div>{data.map(...)}</div>; // data might be undefined
 
 ```tsx
 // Suspense with useSuspenseQuery
-import { Suspense } from 'react'
-import { useSuspenseQuery } from '@tanstack/react-query'
+import { Suspense } from "react";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 function UserProfile({ userId }: { userId: string }) {
   const { data: user } = useSuspenseQuery({
-    queryKey: ['user', userId],
+    queryKey: ["user", userId],
     queryFn: () => fetchUser(userId),
-  })
-  return <div>{user.name}</div>
+  });
+  return <div>{user.name}</div>;
 }
 
 // Wrap with boundaries
@@ -380,16 +380,16 @@ export function UserProfileRoute() {
         <UserProfile userId="123" />
       </Suspense>
     </ErrorBoundary>
-  )
+  );
 }
 
 // useTransition for non-urgent updates
-const [isPending, startTransition] = useTransition()
+const [isPending, startTransition] = useTransition();
 const handleClick = () => {
   startTransition(() => {
-    setFilter(newValue)
-  })
-}
+    setFilter(newValue);
+  });
+};
 ```
 
 ---

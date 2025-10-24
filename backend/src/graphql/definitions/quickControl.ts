@@ -1,6 +1,6 @@
-import { gql } from 'graphql-tag'
-import type { Device, DeviceSet } from 'dirigera'
-import type { ControlType, Resolvers } from '../resolvers.gen.ts'
+import { gql } from "graphql-tag";
+import type { Device, DeviceSet } from "dirigera";
+import type { ControlType, Resolvers } from "../resolvers.gen.ts";
 
 export const typeDefs = gql`
   extend type Room {
@@ -24,25 +24,25 @@ export const typeDefs = gql`
       playback: Playback
     ): Boolean @loggedIn
   }
-`
+`;
 
 export function getDeviceQuickControls(devices: Device[], roomId: string) {
   return devices
     .filter(
       (device) =>
         device.room?.id === roomId &&
-        (device.capabilities.canReceive.includes('isOn') ||
-          device.capabilities.canReceive.includes('playback')) &&
+        (device.capabilities.canReceive.includes("isOn") ||
+          device.capabilities.canReceive.includes("playback")) &&
         device.deviceSet.length === 0
     )
     .map((device) => ({
       id: device.id,
       name: device.attributes.customName,
-      type: 'DEVICE' as ControlType,
+      type: "DEVICE" as ControlType,
       isReachable: device.isReachable,
       isOn: device.attributes.isOn,
       playback: device.attributes.playback,
-    }))
+    }));
 }
 
 export function getDeviceSetQuickControls(devices: Device[], roomId: string) {
@@ -51,33 +51,33 @@ export function getDeviceSetQuickControls(devices: Device[], roomId: string) {
       .filter(
         (d) =>
           d.room?.id === roomId &&
-          (d.capabilities.canReceive.includes('isOn') ||
-            d.capabilities.canReceive.includes('playback'))
+          (d.capabilities.canReceive.includes("isOn") ||
+            d.capabilities.canReceive.includes("playback"))
       )
       .flatMap((d) => d.deviceSet)
       .reduce((map, item) => {
         if (!map.has(item.id)) {
-          map.set(item.id, item)
+          map.set(item.id, item);
         }
-        return map
+        return map;
       }, new Map<string, DeviceSet>())
       .values(),
-  ]
+  ];
 
   return deviceSets.map((deviceSet) => {
     const devicesInSet = devices.filter((d) =>
       d.deviceSet.some((ds) => ds.id === deviceSet.id)
-    )
+    );
     return {
       id: deviceSet.id,
       name: deviceSet.name,
-      type: 'DEVICE_SET' as ControlType,
+      type: "DEVICE_SET" as ControlType,
       isReachable: devicesInSet.every((d) => d.isReachable),
       isOn: devicesInSet.some((d) => d.attributes.isOn),
       playback: devicesInSet.find((d) => d.attributes.playback)?.attributes
         .playback,
-    }
-  })
+    };
+  });
 }
 
 export const resolvers: Resolvers = {
@@ -86,7 +86,7 @@ export const resolvers: Resolvers = {
       return [
         ...getDeviceQuickControls(devices, id),
         ...getDeviceSetQuickControls(devices, id),
-      ].sort((a, b) => a.name.localeCompare(b.name))
+      ].sort((a, b) => a.name.localeCompare(b.name));
     },
   },
   Mutation: {
@@ -95,25 +95,25 @@ export const resolvers: Resolvers = {
       { id, type, isOn, playback },
       { dirigeraClient }
     ) => {
-      if (type === 'DEVICE_SET') {
+      if (type === "DEVICE_SET") {
         await dirigeraClient.deviceSets.setAttributes({
           id,
           attributes: {
             isOn: isOn != null ? isOn : undefined,
             playback: playback != null ? playback : undefined,
           },
-        })
+        });
       }
-      if (type === 'DEVICE') {
+      if (type === "DEVICE") {
         await dirigeraClient.devices.setAttributes({
           id,
           attributes: {
             isOn: isOn != null ? isOn : undefined,
             playback: playback != null ? playback : undefined,
           },
-        })
+        });
       }
-      return null
+      return null;
     },
   },
-}
+};

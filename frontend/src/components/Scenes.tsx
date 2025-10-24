@@ -1,15 +1,15 @@
-import React, { FC } from 'react'
-import { Button, Col, Row } from 'antd'
-import { gql } from '@apollo/client'
-import { useMutation, useQuery } from '@apollo/client/react'
+import React, { FC } from "react";
+import { Button, Col, Row } from "antd";
+import { gql } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client/react";
 import {
   ActiveSceneMutation,
   ActiveSceneMutationVariables,
   ScenesQuery,
   ScenesQueryVariables,
-} from './Scenes.types.gen'
-import { useRefetch } from '../useRefetch'
-import { useSceneScopes } from '../useSceneScopes'
+} from "./Scenes.types.gen";
+import { useRefetch } from "../useRefetch";
+import { useSceneScopes } from "../useSceneScopes";
 
 export const SCENES_QUERY = gql`
   query Scenes {
@@ -18,18 +18,18 @@ export const SCENES_QUERY = gql`
       name
     }
   }
-`
+`;
 
 interface ScenesProps {
-  scope?: 'house' | 'floor' | 'room'
-  scopeId?: string // floor ID or room ID when scope is 'floor' or 'room'
-  title?: string // Optional title for the scenes section
+  scope?: "house" | "floor" | "room";
+  scopeId?: string; // floor ID or room ID when scope is 'floor' or 'room'
+  title?: string; // Optional title for the scenes section
 }
 
-const Scenes: FC<ScenesProps> = ({ scope = 'house', scopeId, title }) => {
+const Scenes: FC<ScenesProps> = ({ scope = "house", scopeId, title }) => {
   const { data, refetch } = useQuery<ScenesQuery, ScenesQueryVariables>(
     SCENES_QUERY
-  )
+  );
 
   const [activateScene] = useMutation<
     ActiveSceneMutation,
@@ -38,9 +38,9 @@ const Scenes: FC<ScenesProps> = ({ scope = 'house', scopeId, title }) => {
     mutation ActiveScene($id: String!) {
       activateScene(id: $id)
     }
-  `)
+  `);
 
-  useRefetch(refetch)
+  useRefetch(refetch);
 
   const {
     getHouseScenes,
@@ -49,40 +49,40 @@ const Scenes: FC<ScenesProps> = ({ scope = 'house', scopeId, title }) => {
     filterScenes,
     hasConfiguration,
     isScopeConfigured,
-  } = useSceneScopes()
+  } = useSceneScopes();
 
-  const allScenes = data?.scenes ?? []
+  const allScenes = data?.scenes ?? [];
 
   // Determine which scenes to show
-  let scenes: typeof allScenes = []
+  let scenes: typeof allScenes = [];
 
   if (hasConfiguration) {
     // Configuration file exists
     if (isScopeConfigured(scope, scopeId)) {
       // This scope is explicitly configured (even if empty array)
-      let allowedSceneIds: string[] = []
+      let allowedSceneIds: string[] = [];
 
-      if (scope === 'house') {
-        allowedSceneIds = getHouseScenes()
-      } else if (scope === 'floor' && scopeId) {
-        allowedSceneIds = getFloorScenes(scopeId)
-      } else if (scope === 'room' && scopeId) {
-        allowedSceneIds = getRoomScenes(scopeId)
+      if (scope === "house") {
+        allowedSceneIds = getHouseScenes();
+      } else if (scope === "floor" && scopeId) {
+        allowedSceneIds = getFloorScenes(scopeId);
+      } else if (scope === "room" && scopeId) {
+        allowedSceneIds = getRoomScenes(scopeId);
       }
 
-      scenes = filterScenes(allScenes, allowedSceneIds)
+      scenes = filterScenes(allScenes, allowedSceneIds);
     } else {
       // This scope is not configured - show nothing
-      scenes = []
+      scenes = [];
     }
   } else {
     // No configuration file - show all scenes everywhere (backward compatible)
-    scenes = allScenes
+    scenes = allScenes;
   }
 
   // Don't render if no scenes to show
   if (scenes.length === 0) {
-    return null
+    return null;
   }
 
   return (
@@ -102,7 +102,7 @@ const Scenes: FC<ScenesProps> = ({ scope = 'house', scopeId, title }) => {
                     variables: {
                       id: s.id,
                     },
-                  })
+                  });
                 }}
               >
                 {s.name}
@@ -112,7 +112,7 @@ const Scenes: FC<ScenesProps> = ({ scope = 'house', scopeId, title }) => {
         )}
       </Row>
     </>
-  )
-}
+  );
+};
 
-export default Scenes
+export default Scenes;

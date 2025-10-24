@@ -1,26 +1,26 @@
-import type { Preview } from '@storybook/react'
-import { ConfigProvider, theme } from 'antd'
-import { loadErrorMessages, loadDevMessages } from '@apollo/client/dev'
-import { MockedProvider } from '@apollo/client/testing/react'
+import type { Preview } from "@storybook/react";
+import { ConfigProvider, theme } from "antd";
+import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
+import { MockedProvider } from "@apollo/client/testing/react";
 
-loadDevMessages()
-loadErrorMessages()
+loadDevMessages();
+loadErrorMessages();
 
 const preview: Preview = {
   parameters: {
     options: {
       storySort: {
-        method: 'alphabetical',
+        method: "alphabetical",
       },
     },
     backgrounds: {
       options: {
-        dark: { name: 'Dark', value: '#1e1e1e' },
+        dark: { name: "Dark", value: "#1e1e1e" },
       },
     },
   },
   initialGlobals: {
-    backgrounds: { value: 'dark' },
+    backgrounds: { value: "dark" },
   },
   decorators: [
     (Story, context) => (
@@ -31,6 +31,6 @@ const preview: Preview = {
       </ConfigProvider>
     ),
   ],
-}
+};
 
-export default preview
+export default preview;

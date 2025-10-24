@@ -1,13 +1,13 @@
-import React from 'react'
-import { gql } from '@apollo/client'
-import { useMutation } from '@apollo/client/react'
-import { Button, Col, Row } from 'antd'
-import { FaPause, FaPlay, FaStepBackward, FaStepForward } from 'react-icons/fa'
+import React from "react";
+import { gql } from "@apollo/client";
+import { useMutation } from "@apollo/client/react";
+import { Button, Col, Row } from "antd";
+import { FaPause, FaPlay, FaStepBackward, FaStepForward } from "react-icons/fa";
 import type {
   SetPlaybackMutation,
   SetPlaybackMutationVariables,
-} from './Playback.types.gen'
-import type { ControlType } from '../../graphql.types'
+} from "./Playback.types.gen";
+import type { ControlType } from "../../graphql.types";
 
 const SET_PLAYBACK_MUTATION = gql`
   mutation SetPlayback(
@@ -17,7 +17,7 @@ const SET_PLAYBACK_MUTATION = gql`
   ) {
     setPlayback(id: $id, type: $type, playback: $playback)
   }
-`
+`;
 
 const Playback = ({
   id,
@@ -27,17 +27,17 @@ const Playback = ({
   playbackNextAvailable,
   playbackPreviousAvailable,
 }: {
-  id: string
-  type: ControlType
-  isReachable: boolean
-  playback: string
-  playbackNextAvailable?: boolean | null
-  playbackPreviousAvailable?: boolean | null
+  id: string;
+  type: ControlType;
+  isReachable: boolean;
+  playback: string;
+  playbackNextAvailable?: boolean | null;
+  playbackPreviousAvailable?: boolean | null;
 }) => {
   const [setPlayback] = useMutation<
     SetPlaybackMutation,
     SetPlaybackMutationVariables
-  >(SET_PLAYBACK_MUTATION)
+  >(SET_PLAYBACK_MUTATION);
 
   return (
     <Row gutter={[8, 0]}>
@@ -48,9 +48,9 @@ const Playback = ({
           icon={
             <FaStepBackward
               style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
               }}
             />
           }
@@ -59,54 +59,54 @@ const Playback = ({
               variables: {
                 id,
                 type,
-                playback: 'playbackPrevious',
+                playback: "playbackPrevious",
               },
-            })
+            });
           }}
         />
       </Col>
       <Col>
         <Button
           shape="circle"
-          loading={playback === 'playbackBuffering'}
+          loading={playback === "playbackBuffering"}
           disabled={!isReachable}
           icon={
-            playback === 'playbackPlaying' ? (
+            playback === "playbackPlaying" ? (
               <FaPause
                 style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               />
             ) : (
               <FaPlay
                 style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               />
             )
           }
           onClick={async () => {
-            if (playback === 'playbackPaused') {
+            if (playback === "playbackPaused") {
               return await setPlayback({
                 variables: {
                   id,
                   type,
-                  playback: 'playbackPlaying',
+                  playback: "playbackPlaying",
                 },
-              })
+              });
             }
 
             await setPlayback({
               variables: {
                 id,
                 type,
-                playback: 'playbackPaused',
+                playback: "playbackPaused",
               },
-            })
+            });
           }}
         />
       </Col>
@@ -117,9 +117,9 @@ const Playback = ({
           icon={
             <FaStepForward
               style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
               }}
             />
           }
@@ -128,14 +128,14 @@ const Playback = ({
               variables: {
                 id,
                 type,
-                playback: 'playbackNext',
+                playback: "playbackNext",
               },
-            })
+            });
           }}
         />
       </Col>
     </Row>
-  )
-}
+  );
+};
 
-export default Playback
+export default Playback;

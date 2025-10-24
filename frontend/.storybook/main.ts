@@ -1,12 +1,12 @@
 export default {
-  stories: ['../src/**/*.stories.tsx'],
-  addons: ['storybook-addon-remix-react-router'],
+  stories: ["../src/**/*.stories.tsx"],
+  addons: ["storybook-addon-remix-react-router"],
   docs: {
-    autodocs: 'tag',
+    autodocs: "tag",
   },
-  staticDirs: ['../public'],
+  staticDirs: ["../public"],
   framework: {
-    name: '@storybook/react-vite',
+    name: "@storybook/react-vite",
     options: {},
   },
-}
+};

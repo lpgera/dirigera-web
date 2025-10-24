@@ -1,13 +1,13 @@
-import React from 'react'
-import { createHashRouter, RouterProvider } from 'react-router-dom'
-import { ConfigProvider, theme } from 'antd'
-import 'antd/dist/reset.css'
-import ApolloProvider from './ApolloProvider'
-import { AuthProvider } from './AuthContext'
-import { WebSocketUpdateProvider } from './WebSocketUpdateProvider'
-import Frame from './Frame'
-import Rooms from './Rooms'
-import Room from './Room'
+import React from "react";
+import { createHashRouter, RouterProvider } from "react-router-dom";
+import { ConfigProvider, theme } from "antd";
+import "antd/dist/reset.css";
+import ApolloProvider from "./ApolloProvider";
+import { AuthProvider } from "./AuthContext";
+import { WebSocketUpdateProvider } from "./WebSocketUpdateProvider";
+import Frame from "./Frame";
+import Rooms from "./Rooms";
+import Room from "./Room";
 
 function App() {
   return (
@@ -22,7 +22,7 @@ function App() {
             <RouterProvider
               router={createHashRouter([
                 {
-                  path: '/',
+                  path: "/",
                   element: <Frame />,
                   children: [
                     {
@@ -30,7 +30,7 @@ function App() {
                       element: <Rooms />,
                     },
                     {
-                      path: 'room/:roomId',
+                      path: "room/:roomId",
                       element: <Room />,
                     },
                   ],
@@ -41,7 +41,7 @@ function App() {
         </ConfigProvider>
       </ApolloProvider>
     </AuthProvider>
-  )
+  );
 }
 
-export default App
+export default App;

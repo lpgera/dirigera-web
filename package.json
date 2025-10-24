@@ -14,7 +14,8 @@
     "check-updates": "ncu -i -w",
     "prepare": "husky || true",
     "start": "npm run start -w backend",
-    "test": "npm run test -w backend"
+    "test": "npm run test -w backend",
+    "prettier": "prettier --write ."
   },
   "devDependencies": {
     "husky": "^9.1.7",

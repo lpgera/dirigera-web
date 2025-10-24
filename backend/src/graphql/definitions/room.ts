@@ -1,5 +1,5 @@
-import { gql } from 'graphql-tag'
-import { type Resolvers } from '../resolvers.gen.ts'
+import { gql } from "graphql-tag";
+import { type Resolvers } from "../resolvers.gen.ts";
 
 export const typeDefs = gql`
   type Room {
@@ -11,7 +11,7 @@ export const typeDefs = gql`
     rooms: [Room!]! @loggedIn
     room(id: String!): Room @loggedIn
   }
-`
+`;
 
 export const resolvers: Resolvers = {
   Query: {
@@ -23,13 +23,13 @@ export const resolvers: Resolvers = {
           quickControls: [],
           devices: [],
         }))
-        .sort((a, b) => a.name.localeCompare(b.name))
+        .sort((a, b) => a.name.localeCompare(b.name));
     },
     room: async (_, { id }, { homeState: { rooms } }) => {
-      const room = rooms.find((r) => r.id === id)
+      const room = rooms.find((r) => r.id === id);
 
       if (!room) {
-        return null
+        return null;
       }
 
       return {
@@ -37,7 +37,7 @@ export const resolvers: Resolvers = {
         name: room.name,
         quickControls: [],
         devices: [],
-      }
+      };
     },
   },
-}
+};

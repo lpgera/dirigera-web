@@ -1,11 +1,11 @@
-import React from 'react'
-import { useParams } from 'react-router-dom'
-import { Card, Col, Result, Row, Skeleton, Typography } from 'antd'
-import { gql } from '@apollo/client'
-import { useQuery } from '@apollo/client/react'
-import type { RoomQuery, RoomQueryVariables } from './Room.types.gen'
-import { useRefetch } from '../useRefetch'
-import Device from './Device'
+import React from "react";
+import { useParams } from "react-router-dom";
+import { Card, Col, Result, Row, Skeleton, Typography } from "antd";
+import { gql } from "@apollo/client";
+import { useQuery } from "@apollo/client/react";
+import type { RoomQuery, RoomQueryVariables } from "./Room.types.gen";
+import { useRefetch } from "../useRefetch";
+import Device from "./Device";
 
 const columnSizes = {
   xs: 24,
@@ -14,7 +14,7 @@ const columnSizes = {
   lg: 8,
   xl: 6,
   xxl: 4,
-}
+};
 
 export const ROOM_QUERY = gql`
   query Room($id: String!) {
@@ -46,19 +46,19 @@ export const ROOM_QUERY = gql`
       }
     }
   }
-`
+`;
 
 const Room = () => {
-  const { roomId } = useParams()
+  const { roomId } = useParams();
 
   const { data, refetch, error } = useQuery<RoomQuery, RoomQueryVariables>(
     ROOM_QUERY,
     {
-      variables: { id: roomId ?? '' },
+      variables: { id: roomId ?? "" },
     }
-  )
+  );
 
-  useRefetch(refetch)
+  useRefetch(refetch);
 
   return (
     <>
@@ -91,7 +91,7 @@ const Room = () => {
         )}
       </Row>
     </>
-  )
-}
+  );
+};
 
-export default Room
+export default Room;

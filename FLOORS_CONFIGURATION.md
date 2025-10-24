@@ -362,17 +362,17 @@ const {
   hasFloors, // Boolean - true if floors configured
   getFloorForRoom, // Function to get floor for room ID
   groupRoomsByFloor, // Function to group array of rooms
-} = useFloors()
+} = useFloors();
 ```
 
 ### Type Definitions
 
 ```typescript
 interface Floor {
-  id: string
-  name: string
-  order: number
-  rooms: string[]
+  id: string;
+  name: string;
+  order: number;
+  rooms: string[];
 }
 ```
 

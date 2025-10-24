@@ -85,29 +85,29 @@ src/
 
 ```tsx
 // ✅ Server state
-const { data } = useQuery({ queryKey: ['tasks'], queryFn: fetchTasks })
+const { data } = useQuery({ queryKey: ["tasks"], queryFn: fetchTasks });
 
 // ✅ Client state
-const count = useTaskStore((s) => s.tasks.length) // Precise selector
+const count = useTaskStore((s) => s.tasks.length); // Precise selector
 
 // ✅ Local UI state
-const [isOpen, setIsOpen] = useState(false)
+const [isOpen, setIsOpen] = useState(false);
 
 // ❌ Never use useState for server data
-const [tasks, setTasks] = useState([]) // Wrong!
+const [tasks, setTasks] = useState([]); // Wrong!
 ```
 
 ### Imports
 
 ```tsx
 // ✅ Feature public API
-import { LoginForm, useAuth } from '@/features/auth'
+import { LoginForm, useAuth } from "@/features/auth";
 
 // ❌ Bypassing public API
-import { LoginForm } from '@/features/auth/components/ui/LoginForm'
+import { LoginForm } from "@/features/auth/components/ui/LoginForm";
 
 // ✅ Shared components
-import { Button } from '@/components/ui/Button'
+import { Button } from "@/components/ui/Button";
 ```
 
 ### Component Examples
@@ -116,41 +116,41 @@ import { Button } from '@/components/ui/Button'
 
 ```tsx
 // features/users/components/containers/UserDashboard.tsx
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { useUserStore } from '@/features/users/stores/userStore'
-import { fetchProfile, updateProfile } from '@/features/users/api'
-import type { ProfileUpdateData } from '@/features/users/types'
+import { useUserStore } from "@/features/users/stores/userStore";
+import { fetchProfile, updateProfile } from "@/features/users/api";
+import type { ProfileUpdateData } from "@/features/users/types";
 
-import { UserCard } from '../ui/UserCard'
+import { UserCard } from "../ui/UserCard";
 
 export function UserDashboard() {
-  const user = useUserStore((s) => s.currentUser)
-  const queryClient = useQueryClient()
+  const user = useUserStore((s) => s.currentUser);
+  const queryClient = useQueryClient();
 
   const { data: profile, isLoading } = useQuery({
-    queryKey: ['profile', user?.id],
+    queryKey: ["profile", user?.id],
     queryFn: () => fetchProfile(user!.id),
     enabled: !!user,
-  })
+  });
 
   const mutation = useMutation({
     mutationFn: updateProfile,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['profile'] })
+      queryClient.invalidateQueries({ queryKey: ["profile"] });
     },
-  })
+  });
 
   const handleEdit = (data: ProfileUpdateData) => {
-    mutation.mutate(data)
-  }
+    mutation.mutate(data);
+  };
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
 
   if (!profile) {
-    return <div>No profile found</div>
+    return <div>No profile found</div>;
   }
 
   return (
@@ -160,7 +160,7 @@ export function UserDashboard() {
       onEdit={handleEdit}
       isUpdating={mutation.isPending}
     />
-  )
+  );
 }
 ```
 
@@ -168,24 +168,24 @@ export function UserDashboard() {
 
 ```tsx
 // features/users/components/ui/UserCard.tsx
-import type { User, Profile, ProfileUpdateData } from '@/features/users/types'
+import type { User, Profile, ProfileUpdateData } from "@/features/users/types";
 
 interface UserCardProps {
-  user: User | null
-  profile: Profile
-  onEdit: (data: ProfileUpdateData) => void
-  isUpdating: boolean
+  user: User | null;
+  profile: Profile;
+  onEdit: (data: ProfileUpdateData) => void;
+  isUpdating: boolean;
 }
 
 export function UserCard({ user, profile, onEdit, isUpdating }: UserCardProps) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
     onEdit({
-      name: formData.get('name') as string,
-      bio: formData.get('bio') as string,
-    })
-  }
+      name: formData.get("name") as string,
+      bio: formData.get("bio") as string,
+    });
+  };
 
   return (
     <div className="user-card">
@@ -194,11 +194,11 @@ export function UserCard({ user, profile, onEdit, isUpdating }: UserCardProps) {
         <input name="name" defaultValue={profile.name} />
         <textarea name="bio" defaultValue={profile.bio} />
         <button type="submit" disabled={isUpdating}>
-          {isUpdating ? 'Saving...' : 'Save'}
+          {isUpdating ? "Saving..." : "Save"}
         </button>
       </form>
     </div>
-  )
+  );
 }
 ```
 
@@ -206,10 +206,10 @@ export function UserCard({ user, profile, onEdit, isUpdating }: UserCardProps) {
 
 ```tsx
 // features/auth/index.ts - Public API
-export { LoginForm } from './components/ui/LoginForm'
-export { useAuth } from './hooks/useAuth'
-export { authStore } from './stores/authStore'
-export type { LoginCredentials } from './types'
+export { LoginForm } from "./components/ui/LoginForm";
+export { useAuth } from "./hooks/useAuth";
+export { authStore } from "./stores/authStore";
+export type { LoginCredentials } from "./types";
 ```
 
 ### Zustand Store
@@ -218,18 +218,18 @@ export type { LoginCredentials } from './types'
 
 ```tsx
 // features/tasks/stores/taskStore.ts
-import { create } from 'zustand'
-import { devtools, persist } from 'zustand/middleware'
-import { immer } from 'zustand/middleware/immer'
+import { create } from "zustand";
+import { devtools, persist } from "zustand/middleware";
+import { immer } from "zustand/middleware/immer";
 
-import type { Task } from '../types'
+import type { Task } from "../types";
 
 interface TaskStore {
-  tasks: Task[]
-  addTask: (task: Task) => void
-  removeTask: (id: string) => void
-  toggleTask: (id: string) => void
-  updateTask: (id: string, updates: Partial<Task>) => void
+  tasks: Task[];
+  addTask: (task: Task) => void;
+  removeTask: (id: string) => void;
+  toggleTask: (id: string) => void;
+  updateTask: (id: string, updates: Partial<Task>) => void;
 }
 
 export const useTaskStore = create<TaskStore>()(
@@ -240,50 +240,50 @@ export const useTaskStore = create<TaskStore>()(
 
         addTask: (task) =>
           set((state) => {
-            state.tasks.push(task) // Immer allows direct mutation
+            state.tasks.push(task); // Immer allows direct mutation
           }),
 
         removeTask: (id) =>
           set((state) => {
-            const index = state.tasks.findIndex((t) => t.id === id)
-            if (index !== -1) state.tasks.splice(index, 1)
+            const index = state.tasks.findIndex((t) => t.id === id);
+            if (index !== -1) state.tasks.splice(index, 1);
           }),
 
         toggleTask: (id) =>
           set((state) => {
-            const task = state.tasks.find((t) => t.id === id)
-            if (task) task.completed = !task.completed
+            const task = state.tasks.find((t) => t.id === id);
+            if (task) task.completed = !task.completed;
           }),
 
         updateTask: (id, updates) =>
           set((state) => {
-            const task = state.tasks.find((t) => t.id === id)
-            if (task) Object.assign(task, updates)
+            const task = state.tasks.find((t) => t.id === id);
+            if (task) Object.assign(task, updates);
           }),
       })),
       {
-        name: 'task-storage',
+        name: "task-storage",
         partialize: (state) => ({ tasks: state.tasks }),
       }
     )
   )
-)
+);
 ```
 
 **Computed Values (Selectors):**
 
 ```tsx
 // features/tasks/stores/selectors.ts
-import { useTaskStore } from './taskStore'
+import { useTaskStore } from "./taskStore";
 
 export const useCompletedTasks = () =>
-  useTaskStore((state) => state.tasks.filter((t) => t.completed))
+  useTaskStore((state) => state.tasks.filter((t) => t.completed));
 
 export const useActiveTasks = () =>
-  useTaskStore((state) => state.tasks.filter((t) => !t.completed))
+  useTaskStore((state) => state.tasks.filter((t) => !t.completed));
 
 export const useTaskById = (id: string) =>
-  useTaskStore((state) => state.tasks.find((t) => t.id === id))
+  useTaskStore((state) => state.tasks.find((t) => t.id === id));
 ```
 
 ### React Query
@@ -292,987 +292,903 @@ export const useTaskById = (id: string) =>
 
 ```tsx
 // features/tasks/api/tasks.ts
-import { api } from '@/lib/api'
+import { api } from "@/lib/api";
 
-import type { Task, CreateTaskData, UpdateTaskData } from '../types'
+import type { Task, CreateTaskData, UpdateTaskData } from "../types";
 
 export const tasksApi = {
-  getAll: () => api.get<Task[]>('/tasks'),
+  getAll: () => api.get<Task[]>("/tasks"),
 
   getById: (id: string) => api.get<Task>(`/tasks/${id}`),
 
-  create: (data: CreateTaskData) => api.post<Task>('/tasks', data),
+  create: (data: CreateTaskData) => api.post<Task>("/tasks", data),
 
   update: (id: string, data: UpdateTaskData) =>
     api.patch<Task>(`/tasks/${id}`, data),
 
   delete: (id: string) => api.delete(`/tasks/${id}`),
-}
+};
 ```
 
 **Query Hooks:**
 
 ```tsx
 // features/tasks/hooks/useTasks.ts
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { tasksApi } from '../api/tasks'
+import { tasksApi } from "../api/tasks";
+import type { CreateTaskData, UpdateTaskData } from "../types";
 
-// Query hook
-export function useTasks() {
+export const useTasks = () => {
   return useQuery({
-    queryKey: ['tasks'],
+    queryKey: ["tasks"],
     queryFn: tasksApi.getAll,
     staleTime: 5 * 60 * 1000, // 5 minutes
-  })
-}
+  });
+};
 
-// Mutation hooks with optimistic updates
-export function useCreateTask() {
-  const queryClient = useQueryClient()
+export const useTask = (id: string) => {
+  return useQuery({
+    queryKey: ["tasks", id],
+    queryFn: () => tasksApi.getById(id),
+    enabled: !!id,
+  });
+};
+
+export const useCreateTask = () => {
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: tasksApi.create,
-    onMutate: async (newTask) => {
-      // Cancel outgoing refetches
-      await queryClient.cancelQueries({ queryKey: ['tasks'] })
-
-      // Snapshot previous value
-      const previousTasks = queryClient.getQueryData(['tasks'])
-
-      // Optimistically update
-      queryClient.setQueryData(['tasks'], (old: Task[] = []) => [
-        ...old,
-        { ...newTask, id: 'temp-' + Date.now() },
-      ])
-
-      return { previousTasks }
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
     },
-    onError: (_err, _newTask, context) => {
-      // Rollback on error
-      queryClient.setQueryData(['tasks'], context?.previousTasks)
-    },
-    onSettled: () => {
-      // Refetch after mutation
-      queryClient.invalidateQueries({ queryKey: ['tasks'] })
-    },
-  })
-}
+  });
+};
 
-export function useUpdateTask() {
-  const queryClient = useQueryClient()
+export const useUpdateTask = () => {
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: ({ id, data }: { id: string; data: UpdateTaskData }) =>
       tasksApi.update(id, data),
-    onSuccess: (updatedTask) => {
-      // Update specific task in cache
-      queryClient.setQueryData(['tasks'], (old: Task[] = []) =>
-        old.map((task) => (task.id === updatedTask.id ? updatedTask : task))
-      )
-      // Also update individual task query
-      queryClient.setQueryData(['tasks', updatedTask.id], updatedTask)
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+      queryClient.invalidateQueries({ queryKey: ["tasks", variables.id] });
     },
-  })
-}
+  });
+};
 
-export function useDeleteTask() {
-  const queryClient = useQueryClient()
+export const useDeleteTask = () => {
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: tasksApi.delete,
-    onSuccess: (_data, deletedId) => {
-      queryClient.setQueryData(['tasks'], (old: Task[] = []) =>
-        old.filter((task) => task.id !== deletedId)
-      )
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
     },
-  })
-}
+  });
+};
 ```
 
-**Usage in Container:**
+**Optimistic Updates:**
 
 ```tsx
-// features/tasks/components/containers/TaskList.tsx
-export function TaskList() {
-  const { data: tasks, isLoading, error } = useTasks()
-  const createTask = useCreateTask()
-  const updateTask = useUpdateTask()
-  const deleteTask = useDeleteTask()
+// features/tasks/hooks/useOptimisticTasks.ts
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-  const handleCreate = (title: string) => {
-    createTask.mutate({ title, completed: false })
-  }
+import { tasksApi } from "../api/tasks";
+import type { Task, UpdateTaskData } from "../types";
 
-  const handleToggle = (id: string, completed: boolean) => {
-    updateTask.mutate({ id, data: { completed } })
-  }
+export const useOptimisticUpdateTask = () => {
+  const queryClient = useQueryClient();
 
-  if (isLoading) return <div>Loading tasks...</div>
-  if (error) return <div>Error: {error.message}</div>
+  return useMutation({
+    mutationFn: ({ id, data }: { id: string; data: UpdateTaskData }) =>
+      tasksApi.update(id, data),
 
-  return (
-    <TaskListUI
-      tasks={tasks ?? []}
-      onCreate={handleCreate}
-      onToggle={handleToggle}
-      onDelete={(id) => deleteTask.mutate(id)}
-      isCreating={createTask.isPending}
-    />
-  )
-}
-```
+    // Optimistically update before mutation
+    onMutate: async ({ id, data }) => {
+      // Cancel outgoing refetches
+      await queryClient.cancelQueries({ queryKey: ["tasks"] });
 
-**Suspense Query (React 18+):**
+      // Snapshot previous value
+      const previousTasks = queryClient.getQueryData<Task[]>(["tasks"]);
 
-```tsx
-// features/tasks/hooks/useTasks.ts
-import { useSuspenseQuery } from '@tanstack/react-query'
+      // Optimistically update
+      queryClient.setQueryData<Task[]>(["tasks"], (old) =>
+        old?.map((task) => (task.id === id ? { ...task, ...data } : task))
+      );
 
-export function useTasksSuspense() {
-  return useSuspenseQuery({
-    queryKey: ['tasks'],
-    queryFn: tasksApi.getAll,
-  })
-}
-
-// Usage with Suspense boundary
-export function TaskList() {
-  const { data: tasks } = useTasksSuspense() // No loading state needed
-
-  return <TaskListUI tasks={tasks} />
-}
-```
-
-````
-
-### Design Tokens
-```css
-/* styles/tokens/primitives.css */
-:root {
-  --color-blue-500: #3b82f6;
-  --spacing-4: 1rem;
-}
-
-/* styles/tokens/semantic.css */
-:root {
-  --color-primary: var(--color-blue-500);
-  --spacing-section: var(--spacing-4);
-}
-
-/* styles/tokens/components.css */
-:root {
-  --button-primary-bg: var(--color-primary);
-  --card-padding: var(--spacing-section);
-}
-
-/* Component usage */
-.button-primary {
-  background: var(--button-primary-bg);  /* ✅ Use component token */
-  /* background: var(--color-primary);     ❌ Don't skip layer */
-  /* background: #3b82f6;                  ❌ Never hardcode */
-}
-````
-
-## Storybook (CSF 3)
-
-Add stories for:
-
-- All shared UI components
-- Feature UI components used 3+ times
-
-```tsx
-// Button.stories.tsx
-import type { Meta, StoryObj } from '@storybook/react'
-
-import { Button } from './Button'
-
-const meta = {
-  title: 'UI/Button',
-  component: Button,
-  parameters: {
-    layout: 'centered',
-  },
-  tags: ['autodocs'],
-  argTypes: {
-    variant: {
-      control: 'select',
-      options: ['primary', 'secondary', 'danger'],
+      // Return context for rollback
+      return { previousTasks };
     },
-  },
-} satisfies Meta<typeof Button>
 
-export default meta
-type Story = StoryObj<typeof meta>
+    // Rollback on error
+    onError: (err, variables, context) => {
+      if (context?.previousTasks) {
+        queryClient.setQueryData(["tasks"], context.previousTasks);
+      }
+    },
 
-export const Primary: Story = {
-  args: {
-    children: 'Click me',
-    variant: 'primary',
-  },
-}
-
-export const Secondary: Story = {
-  args: {
-    children: 'Cancel',
-    variant: 'secondary',
-  },
-}
-
-export const WithIcon: Story = {
-  args: {
-    children: 'Save',
-    variant: 'primary',
-  },
-  render: (args) => (
-    <Button {...args}>
-      <span>💾</span> {args.children}
-    </Button>
-  ),
-}
+    // Refetch after success or error
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+    },
+  });
+};
 ```
 
-## Modern React 18+ Patterns
-
-### Suspense for Data Fetching
+**Infinite Queries:**
 
 ```tsx
-// app/routes/DashboardRoute.tsx
-import { Suspense } from 'react'
+// features/posts/hooks/useInfinitePosts.ts
+import { useInfiniteQuery } from "@tanstack/react-query";
 
-import { DashboardContainer } from '@/features/dashboard'
-import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
+import { postsApi } from "../api/posts";
 
-export function DashboardRoute() {
-  return (
-    <Suspense fallback={<LoadingSpinner />}>
-      <DashboardContainer />
-    </Suspense>
-  )
-}
+export const useInfinitePosts = () => {
+  return useInfiniteQuery({
+    queryKey: ["posts"],
+    queryFn: ({ pageParam = 1 }) => postsApi.getPage(pageParam),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage.hasMore ? allPages.length + 1 : undefined;
+    },
+  });
+};
 
-// features/dashboard/components/containers/DashboardContainer.tsx
-import { useSuspenseQuery } from '@tanstack/react-query'
-
-export function DashboardContainer() {
-  // useSuspenseQuery throws promise on loading - handled by Suspense
-  const { data } = useSuspenseQuery({
-    queryKey: ['dashboard'],
-    queryFn: fetchDashboard,
-  })
-
-  return <DashboardUI data={data} />
-}
-```
-
-### Error Boundaries
-
-```tsx
-// components/ui/ErrorBoundary.tsx
-import { Component, ReactNode } from 'react'
-
-interface Props {
-  children: ReactNode
-  fallback?: (error: Error, reset: () => void) => ReactNode
-}
-
-interface State {
-  hasError: boolean
-  error: Error | null
-}
-
-export class ErrorBoundary extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props)
-    this.state = { hasError: false, error: null }
-  }
-
-  static getDerivedStateFromError(error: Error): State {
-    return { hasError: true, error }
-  }
-
-  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error('Error caught by boundary:', error, errorInfo)
-  }
-
-  reset = () => {
-    this.setState({ hasError: false, error: null })
-  }
-
-  render() {
-    if (this.state.hasError && this.state.error) {
-      return (
-        this.props.fallback?.(this.state.error, this.reset) ?? (
-          <div className="error-fallback">
-            <h2>Something went wrong</h2>
-            <button onClick={this.reset}>Try again</button>
-          </div>
-        )
-      )
-    }
-
-    return this.props.children
-  }
-}
-
-// Usage in routes
-export function DashboardRoute() {
-  return (
-    <ErrorBoundary
-      fallback={(error, reset) => (
-        <div>
-          <p>Failed to load dashboard: {error.message}</p>
-          <button onClick={reset}>Retry</button>
-        </div>
-      )}
-    >
-      <Suspense fallback={<LoadingSpinner />}>
-        <DashboardContainer />
-      </Suspense>
-    </ErrorBoundary>
-  )
-}
-```
-
-### useTransition for Non-Urgent Updates
-
-```tsx
-// features/search/components/containers/SearchContainer.tsx
-import { useState, useTransition } from 'react'
-
-export function SearchContainer() {
-  const [query, setQuery] = useState('')
-  const [results, setResults] = useState<Item[]>([])
-  const [isPending, startTransition] = useTransition()
-
-  const handleSearch = (value: string) => {
-    setQuery(value) // Urgent: update input immediately
-
-    startTransition(() => {
-      // Non-urgent: filter results
-      setResults(performExpensiveFilter(value))
-    })
-  }
-
-  return (
-    <>
-      <input value={query} onChange={(e) => handleSearch(e.target.value)} />
-      {isPending && <span>Updating...</span>}
-      <ResultsList results={results} />
-    </>
-  )
-}
-```
-
-### useDeferredValue for Performance
-
-```tsx
-// features/products/components/containers/ProductGrid.tsx
-import { useDeferredValue, useMemo } from 'react'
-
-export function ProductGrid({ searchTerm }: { searchTerm: string }) {
-  const deferredSearchTerm = useDeferredValue(searchTerm)
-  const { data: products } = useQuery({
-    queryKey: ['products'],
-    queryFn: fetchProducts,
-  })
-
-  const filteredProducts = useMemo(
-    () => products?.filter((p) => p.name.includes(deferredSearchTerm)),
-    [products, deferredSearchTerm]
-  )
-
-  return (
-    <div className="product-grid">
-      {filteredProducts?.map((product) => (
-        <ProductCard key={product.id} product={product} />
-      ))}
-    </div>
-  )
-}
-```
-
-### useId for Accessible Components
-
-```tsx
-// components/ui/FormField.tsx
-import { useId } from 'react'
-
-interface Props {
-  label: string
-  error?: string
-  children: React.ReactNode
-}
-
-export function FormField({ label, error, children }: Props) {
-  const id = useId()
-  const errorId = useId()
-
-  return (
-    <div className="form-field">
-      <label htmlFor={id}>{label}</label>
-      {children}
-      {error && (
-        <span id={errorId} role="alert" aria-live="polite">
-          {error}
-        </span>
-      )}
-    </div>
-  )
-}
-```
-
-### useOptimistic for Instant Feedback
-
-```tsx
-// features/todos/components/containers/TodoList.tsx
-import { useOptimistic } from 'react'
-
-export function TodoList() {
-  const { data: todos } = useQuery({ queryKey: ['todos'], queryFn: fetchTodos })
-  const mutation = useMutation({ mutationFn: toggleTodo })
-
-  const [optimisticTodos, addOptimisticTodo] = useOptimistic(
-    todos ?? [],
-    (state, newTodo: Todo) => [...state, newTodo]
-  )
-
-  const handleAdd = async (text: string) => {
-    const tempTodo = { id: crypto.randomUUID(), text, completed: false }
-    addOptimisticTodo(tempTodo) // Instant UI update
-    await mutation.mutateAsync(tempTodo) // Server sync
-  }
+// Usage in component
+export function PostsList() {
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfinitePosts();
 
   return (
     <div>
-      {optimisticTodos.map((todo) => (
-        <TodoItem key={todo.id} todo={todo} />
-      ))}
+      {data?.pages.map((page) =>
+        page.posts.map((post) => <PostCard key={post.id} post={post} />)
+      )}
+      {hasNextPage && (
+        <button onClick={() => fetchNextPage()} disabled={isFetchingNextPage}>
+          {isFetchingNextPage ? "Loading..." : "Load More"}
+        </button>
+      )}
     </div>
-  )
+  );
 }
 ```
 
-### Lazy Loading Routes
+### Testing
+
+**Component Test:**
+
+```tsx
+// features/tasks/components/ui/TaskCard.test.tsx
+import { render, screen } from "@testing-library/react";
+import { userEvent } from "@testing-library/user-event";
+import { describe, it, expect, vi } from "vitest";
+
+import { TaskCard } from "./TaskCard";
+
+describe("TaskCard", () => {
+  it("renders task information", () => {
+    const task = {
+      id: "1",
+      title: "Test Task",
+      completed: false,
+    };
+
+    render(<TaskCard task={task} onToggle={vi.fn()} onDelete={vi.fn()} />);
+
+    expect(screen.getByText("Test Task")).toBeInTheDocument();
+  });
+
+  it("calls onToggle when checkbox is clicked", async () => {
+    const onToggle = vi.fn();
+    const task = {
+      id: "1",
+      title: "Test Task",
+      completed: false,
+    };
+
+    render(<TaskCard task={task} onToggle={onToggle} onDelete={vi.fn()} />);
+
+    await userEvent.click(screen.getByRole("checkbox"));
+
+    expect(onToggle).toHaveBeenCalledWith("1");
+  });
+});
+```
+
+**Hook Test:**
+
+```tsx
+// features/tasks/hooks/useTasks.test.ts
+import { renderHook, waitFor } from "@testing-library/react";
+import { describe, it, expect } from "vitest";
+
+import { createWrapper } from "@/test/utils";
+
+import { useTasks } from "./useTasks";
+
+describe("useTasks", () => {
+  it("fetches tasks successfully", async () => {
+    const { result } = renderHook(() => useTasks(), {
+      wrapper: createWrapper(),
+    });
+
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+
+    expect(result.current.data).toHaveLength(2);
+  });
+});
+```
+
+**MSW Handler:**
+
+```tsx
+// test/mocks/handlers/tasks.ts
+import { http, HttpResponse } from "msw";
+
+import type { Task } from "@/features/tasks/types";
+
+const tasks: Task[] = [
+  { id: "1", title: "Task 1", completed: false },
+  { id: "2", title: "Task 2", completed: true },
+];
+
+export const tasksHandlers = [
+  http.get("/api/tasks", () => {
+    return HttpResponse.json(tasks);
+  }),
+
+  http.get("/api/tasks/:id", ({ params }) => {
+    const task = tasks.find((t) => t.id === params.id);
+    if (!task) {
+      return new HttpResponse(null, { status: 404 });
+    }
+    return HttpResponse.json(task);
+  }),
+
+  http.post("/api/tasks", async ({ request }) => {
+    const newTask = (await request.json()) as Task;
+    tasks.push(newTask);
+    return HttpResponse.json(newTask, { status: 201 });
+  }),
+
+  http.patch("/api/tasks/:id", async ({ params, request }) => {
+    const updates = (await request.json()) as Partial<Task>;
+    const index = tasks.findIndex((t) => t.id === params.id);
+    if (index === -1) {
+      return new HttpResponse(null, { status: 404 });
+    }
+    tasks[index] = { ...tasks[index], ...updates };
+    return HttpResponse.json(tasks[index]);
+  }),
+
+  http.delete("/api/tasks/:id", ({ params }) => {
+    const index = tasks.findIndex((t) => t.id === params.id);
+    if (index === -1) {
+      return new HttpResponse(null, { status: 404 });
+    }
+    tasks.splice(index, 1);
+    return new HttpResponse(null, { status: 204 });
+  }),
+];
+```
+
+**Test Setup:**
+
+```tsx
+// test/utils.tsx
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import type { ReactNode } from "react";
+
+export function createWrapper() {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+  });
+
+  return ({ children }: { children: ReactNode }) => (
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  );
+}
+```
+
+**Vitest Config:**
+
+```ts
+// vitest.config.ts
+import { defineConfig } from "vitest/config";
+import react from "@vitejs/plugin-react";
+
+export default defineConfig({
+  plugins: [react()],
+  test: {
+    environment: "jsdom",
+    setupFiles: ["./test/setup.ts"],
+    globals: true,
+  },
+  resolve: {
+    alias: {
+      "@": "/src",
+    },
+  },
+});
+```
+
+**Test Setup File:**
+
+```ts
+// test/setup.ts
+import "@testing-library/jest-dom";
+import { afterAll, afterEach, beforeAll } from "vitest";
+
+import { server } from "./mocks/server";
+
+// Start MSW server
+beforeAll(() => server.listen({ onUnhandledRequest: "error" }));
+
+// Reset handlers after each test
+afterEach(() => server.resetHandlers());
+
+// Clean up after all tests
+afterAll(() => server.close());
+```
+
+### Storybook
+
+**Component Story:**
+
+```tsx
+// features/tasks/components/ui/TaskCard.stories.tsx
+import type { Meta, StoryObj } from "@storybook/react";
+
+import { TaskCard } from "./TaskCard";
+
+const meta = {
+  title: "Features/Tasks/TaskCard",
+  component: TaskCard,
+  parameters: {
+    layout: "centered",
+  },
+  tags: ["autodocs"],
+  argTypes: {
+    onToggle: { action: "toggled" },
+    onDelete: { action: "deleted" },
+  },
+} satisfies Meta<typeof TaskCard>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+  args: {
+    task: {
+      id: "1",
+      title: "Complete project documentation",
+      completed: false,
+    },
+  },
+};
+
+export const Completed: Story = {
+  args: {
+    task: {
+      id: "2",
+      title: "Review pull requests",
+      completed: true,
+    },
+  },
+};
+
+export const LongTitle: Story = {
+  args: {
+    task: {
+      id: "3",
+      title:
+        "This is a very long task title that should demonstrate how the component handles text overflow and wrapping",
+      completed: false,
+    },
+  },
+};
+```
+
+**Story with Decorators:**
+
+```tsx
+// features/auth/components/ui/LoginForm.stories.tsx
+import type { Meta, StoryObj } from "@storybook/react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+import { LoginForm } from "./LoginForm";
+
+const queryClient = new QueryClient();
+
+const meta = {
+  title: "Features/Auth/LoginForm",
+  component: LoginForm,
+  decorators: [
+    (Story) => (
+      <QueryClientProvider client={queryClient}>
+        <Story />
+      </QueryClientProvider>
+    ),
+  ],
+  parameters: {
+    layout: "centered",
+  },
+} satisfies Meta<typeof LoginForm>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};
+
+export const WithError: Story = {
+  play: async ({ canvasElement }) => {
+    // Simulate error state
+  },
+};
+```
+
+### Context (Dependency Injection Only)
+
+**API Client Context:**
+
+```tsx
+// lib/api/ApiContext.tsx
+import { createContext, useContext } from "react";
+import type { ReactNode } from "react";
+
+import { ApiClient } from "./client";
+
+const ApiContext = createContext<ApiClient | null>(null);
+
+interface ApiProviderProps {
+  client: ApiClient;
+  children: ReactNode;
+}
+
+export function ApiProvider({ client, children }: ApiProviderProps) {
+  return <ApiContext.Provider value={client}>{children}</ApiContext.Provider>;
+}
+
+export function useApiClient() {
+  const client = useContext(ApiContext);
+  if (!client) {
+    throw new Error("useApiClient must be used within ApiProvider");
+  }
+  return client;
+}
+```
+
+**Usage:**
+
+```tsx
+// app/App.tsx
+import { ApiProvider } from "@/lib/api/ApiContext";
+import { apiClient } from "@/lib/api/client";
+
+export function App() {
+  return (
+    <ApiProvider client={apiClient}>
+      <Router />
+    </ApiProvider>
+  );
+}
+
+// features/users/api/users.ts
+import { useApiClient } from "@/lib/api/ApiContext";
+
+export function useUserApi() {
+  const api = useApiClient();
+
+  return {
+    getAll: () => api.get<User[]>("/users"),
+    getById: (id: string) => api.get<User>(`/users/${id}`),
+  };
+}
+```
+
+### Router Setup
+
+**Routes Configuration:**
 
 ```tsx
 // app/router.tsx
-import { lazy, Suspense } from 'react'
-import { createBrowserRouter } from 'react-router-dom'
+import { createBrowserRouter } from "react-router-dom";
+import { Suspense, lazy } from "react";
 
-const Dashboard = lazy(() => import('@/features/dashboard'))
-const Settings = lazy(() => import('@/features/settings'))
+import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
+import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
+
+// Lazy load routes
+const Dashboard = lazy(() => import("./routes/Dashboard"));
+const Profile = lazy(() => import("./routes/Profile"));
+const Settings = lazy(() => import("./routes/Settings"));
 
 export const router = createBrowserRouter([
   {
-    path: '/',
-    element: <Layout />,
+    path: "/",
+    element: <RootLayout />,
+    errorElement: <ErrorPage />,
     children: [
       {
-        path: 'dashboard',
+        index: true,
         element: (
-          <Suspense fallback={<LoadingSpinner />}>
-            <Dashboard />
-          </Suspense>
+          <ErrorBoundary>
+            <Suspense fallback={<LoadingSpinner />}>
+              <Dashboard />
+            </Suspense>
+          </ErrorBoundary>
         ),
       },
       {
-        path: 'settings',
+        path: "profile",
         element: (
-          <Suspense fallback={<LoadingSpinner />}>
-            <Settings />
-          </Suspense>
+          <ErrorBoundary>
+            <Suspense fallback={<LoadingSpinner />}>
+              <Profile />
+            </Suspense>
+          </ErrorBoundary>
+        ),
+      },
+      {
+        path: "settings",
+        element: (
+          <ErrorBoundary>
+            <Suspense fallback={<LoadingSpinner />}>
+              <Settings />
+            </Suspense>
+          </ErrorBoundary>
         ),
       },
     ],
   },
-])
+]);
 ```
 
-## Testing
-
-### Setup
+**Root Layout:**
 
 ```tsx
-// test/setup.ts
-import '@testing-library/jest-dom'
-import { cleanup } from '@testing-library/react'
-import { afterEach } from 'vitest'
+// app/routes/RootLayout.tsx
+import { Outlet } from "react-router-dom";
 
-afterEach(() => {
-  cleanup()
-})
+import { Header } from "@/components/ui/Header";
+import { Sidebar } from "@/components/ui/Sidebar";
+
+export function RootLayout() {
+  return (
+    <div className="app-layout">
+      <Header />
+      <div className="content-wrapper">
+        <Sidebar />
+        <main>
+          <Outlet />
+        </main>
+      </div>
+    </div>
+  );
+}
 ```
 
-### UI Component Tests (Unit)
+### Design Tokens
 
-```tsx
-// components/ui/Button.test.tsx
-import { render, screen } from '@testing-library/react'
-import { userEvent } from '@testing-library/user-event'
-import { describe, expect, test, vi } from 'vitest'
+**Primitives:**
 
-import { Button } from './Button'
+```css
+/* styles/tokens/primitives.css */
+:root {
+  /* Colors */
+  --color-blue-50: #eff6ff;
+  --color-blue-100: #dbeafe;
+  --color-blue-500: #3b82f6;
+  --color-blue-600: #2563eb;
+  --color-blue-700: #1d4ed8;
 
-describe('Button', () => {
-  test('renders with children', () => {
-    render(<Button>Click me</Button>)
-    expect(screen.getByRole('button', { name: 'Click me' })).toBeInTheDocument()
-  })
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-500: #6b7280;
+  --color-gray-700: #374151;
+  --color-gray-900: #111827;
 
-  test('calls onClick when clicked', async () => {
-    const user = userEvent.setup()
-    const handleClick = vi.fn()
+  --color-red-500: #ef4444;
+  --color-green-500: #10b981;
 
-    render(<Button onClick={handleClick}>Click me</Button>)
-    await user.click(screen.getByRole('button'))
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
 
-    expect(handleClick).toHaveBeenCalledTimes(1)
-  })
+  /* Typography */
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "SF Mono", Monaco, "Cascadia Code", monospace;
 
-  test('applies variant classes', () => {
-    render(<Button variant="primary">Primary</Button>)
-    expect(screen.getByRole('button')).toHaveClass('button--primary')
-  })
-})
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  /* Borders */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+}
 ```
 
-### Container Tests (Integration with MSW)
+**Semantic Tokens:**
 
-```tsx
-// features/users/components/containers/UserDashboard.test.tsx
-import { render, screen, waitFor } from '@testing-library/react'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { http, HttpResponse } from 'msw'
-import { setupServer } from 'msw/node'
-import { afterAll, afterEach, beforeAll, describe, expect, test } from 'vitest'
+```css
+/* styles/tokens/semantic.css */
+:root {
+  /* Brand colors */
+  --color-primary: var(--color-blue-600);
+  --color-primary-hover: var(--color-blue-700);
+  --color-primary-light: var(--color-blue-50);
 
-import { UserDashboard } from './UserDashboard'
+  /* Status colors */
+  --color-success: var(--color-green-500);
+  --color-error: var(--color-red-500);
 
-const server = setupServer(
-  http.get('/api/users/profile', () => {
-    return HttpResponse.json({
-      id: '1',
-      name: 'John Doe',
-      email: 'john@example.com',
-    })
-  })
-)
+  /* Text colors */
+  --color-text-primary: var(--color-gray-900);
+  --color-text-secondary: var(--color-gray-700);
+  --color-text-muted: var(--color-gray-500);
 
-beforeAll(() => server.listen())
-afterEach(() => server.resetHandlers())
-afterAll(() => server.close())
+  /* Background colors */
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: var(--color-gray-50);
+  --color-bg-hover: var(--color-gray-100);
 
-describe('UserDashboard', () => {
-  test('fetches and displays user profile', async () => {
-    const queryClient = new QueryClient({
-      defaultOptions: {
-        queries: { retry: false },
-      },
-    })
-
-    render(
-      <QueryClientProvider client={queryClient}>
-        <UserDashboard />
-      </QueryClientProvider>
-    )
-
-    expect(screen.getByText(/loading/i)).toBeInTheDocument()
-
-    await waitFor(() => {
-      expect(screen.getByText('John Doe')).toBeInTheDocument()
-      expect(screen.getByText('john@example.com')).toBeInTheDocument()
-    })
-  })
-
-  test('handles error state', async () => {
-    server.use(
-      http.get('/api/users/profile', () => {
-        return HttpResponse.json({ error: 'Not found' }, { status: 404 })
-      })
-    )
-
-    const queryClient = new QueryClient({
-      defaultOptions: {
-        queries: { retry: false },
-      },
-    })
-
-    render(
-      <QueryClientProvider client={queryClient}>
-        <UserDashboard />
-      </QueryClientProvider>
-    )
-
-    await waitFor(() => {
-      expect(screen.getByText(/error/i)).toBeInTheDocument()
-    })
-  })
-})
+  /* Border colors */
+  --color-border: var(--color-gray-200);
+  --color-border-hover: var(--color-gray-300);
+}
 ```
 
-### Testing Zustand Stores
+**Component Tokens:**
 
-```tsx
-// features/tasks/stores/taskStore.test.ts
-import { act, renderHook } from '@testing-library/react'
-import { describe, expect, test, beforeEach } from 'vitest'
+```css
+/* styles/tokens/components.css */
+:root {
+  /* Button */
+  --button-primary-bg: var(--color-primary);
+  --button-primary-bg-hover: var(--color-primary-hover);
+  --button-primary-text: #ffffff;
+  --button-padding: var(--space-3) var(--space-6);
+  --button-radius: var(--radius-md);
+  --button-font-weight: var(--font-medium);
 
-import { useTaskStore } from './taskStore'
+  /* Input */
+  --input-bg: var(--color-bg-primary);
+  --input-border: var(--color-border);
+  --input-border-focus: var(--color-primary);
+  --input-padding: var(--space-3);
+  --input-radius: var(--radius-md);
 
-describe('taskStore', () => {
-  beforeEach(() => {
-    // Reset store before each test
-    useTaskStore.setState({ tasks: [] })
-  })
-
-  test('adds a task', () => {
-    const { result } = renderHook(() => useTaskStore())
-
-    act(() => {
-      result.current.addTask({ id: '1', title: 'Test task', completed: false })
-    })
-
-    expect(result.current.tasks).toHaveLength(1)
-    expect(result.current.tasks[0].title).toBe('Test task')
-  })
-
-  test('removes a task', () => {
-    const { result } = renderHook(() => useTaskStore())
-
-    act(() => {
-      result.current.addTask({ id: '1', title: 'Test', completed: false })
-      result.current.removeTask('1')
-    })
-
-    expect(result.current.tasks).toHaveLength(0)
-  })
-})
+  /* Card */
+  --card-bg: var(--color-bg-primary);
+  --card-border: var(--color-border);
+  --card-shadow: var(--shadow-sm);
+  --card-padding: var(--space-6);
+  --card-radius: var(--radius-lg);
+}
 ```
 
-### Testing Custom Hooks
+**Component Using Tokens:**
 
-```tsx
-// features/auth/hooks/useAuth.test.ts
-import { renderHook, waitFor } from '@testing-library/react'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { http, HttpResponse } from 'msw'
-import { setupServer } from 'msw/node'
-import { describe, expect, test } from 'vitest'
+```css
+/* components/ui/Button.module.css */
+.button {
+  padding: var(--button-padding);
+  background: var(--button-primary-bg);
+  color: var(--button-primary-text);
+  border-radius: var(--button-radius);
+  font-weight: var(--button-font-weight);
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
 
-import { useAuth } from './useAuth'
+.button:hover {
+  background: var(--button-primary-bg-hover);
+}
 
-const server = setupServer(
-  http.get('/api/auth/user', () => {
-    return HttpResponse.json({ id: '1', name: 'John' })
-  })
-)
-
-beforeAll(() => server.listen())
-afterAll(() => server.close())
-
-describe('useAuth', () => {
-  test('fetches current user', async () => {
-    const queryClient = new QueryClient()
-    const wrapper = ({ children }) => (
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-    )
-
-    const { result } = renderHook(() => useAuth(), { wrapper })
-
-    await waitFor(() => {
-      expect(result.current.user).toEqual({ id: '1', name: 'John' })
-    })
-  })
-})
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 ```
 
-### Testing with Suspense
+### Linting Configuration
 
-```tsx
-// features/dashboard/components/containers/DashboardContainer.test.tsx
-import { render, screen } from '@testing-library/react'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { Suspense } from 'react'
-import { describe, expect, test } from 'vitest'
-
-import { DashboardContainer } from './DashboardContainer'
-
-describe('DashboardContainer with Suspense', () => {
-  test('shows loading state then content', async () => {
-    const queryClient = new QueryClient()
-
-    render(
-      <QueryClientProvider client={queryClient}>
-        <Suspense fallback={<div>Loading...</div>}>
-          <DashboardContainer />
-        </Suspense>
-      </QueryClientProvider>
-    )
-
-    expect(screen.getByText('Loading...')).toBeInTheDocument()
-
-    await waitFor(() => {
-      expect(screen.getByText(/dashboard/i)).toBeInTheDocument()
-    })
-  })
-})
-```
-
-## Quick Decisions
-
-**When to extract to shared?** Used in 3+ places
-
-**UI vs Container split?** Only if UI component is reused
-
-**State tool choice?**
-
-- Server data → React Query
-- Global client state → Zustand
-- Dependency injection → Context
-- Local UI state → useState
-
-**Import layer?**
-
-- Feature code → `features/[domain]`
-- Reusable UI → `components/ui`
-- Utilities → `shared/utils`, `hooks`, etc.
-
-**Storybook?** Yes for shared UI + frequently reused feature UI
-
-**Design tokens?** Always use Layer 3 (component tokens) in CSS
-
-## Commands
-
-```bash
-npm run dev              # Dev server
-npm run storybook        # Open Storybook
-npm run lint            # ESLint (includes import boundaries)
-npm test                # Run tests
-npm run build           # Production build
-```
-
-## ESLint Configuration
-
-### Complete .eslintrc.cjs
+**ESLint Config:**
 
 ```js
-module.exports = {
-  root: true,
-  env: { browser: true, es2020: true },
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react-hooks/recommended',
-    'plugin:import/recommended',
-    'plugin:import/typescript',
-  ],
-  ignorePatterns: ['dist', '.eslintrc.cjs'],
-  parser: '@typescript-eslint/parser',
-  plugins: ['react-refresh', 'import'],
-  settings: {
-    'import/resolver': {
-      typescript: {
-        alwaysTryTypes: true,
-        project: './tsconfig.json',
+// eslint.config.js
+import js from "@eslint/js";
+import typescript from "@typescript-eslint/eslint-plugin";
+import typescriptParser from "@typescript-eslint/parser";
+import react from "eslint-plugin-react";
+import reactHooks from "eslint-plugin-react-hooks";
+import reactRefresh from "eslint-plugin-react-refresh";
+import importPlugin from "eslint-plugin-import";
+
+export default [
+  js.configs.recommended,
+  {
+    files: ["**/*.{ts,tsx}"],
+    languageOptions: {
+      parser: typescriptParser,
+      parserOptions: {
+        ecmaVersion: "latest",
+        sourceType: "module",
+        ecmaFeatures: {
+          jsx: true,
+        },
+      },
+    },
+    plugins: {
+      "@typescript-eslint": typescript,
+      react,
+      "react-hooks": reactHooks,
+      "react-refresh": reactRefresh,
+      import: importPlugin,
+    },
+    rules: {
+      ...typescript.configs["recommended"].rules,
+      ...react.configs["recommended"].rules,
+      ...reactHooks.configs["recommended"].rules,
+
+      // React
+      "react/react-in-jsx-scope": "off",
+      "react/prop-types": "off",
+
+      // TypeScript
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        { argsIgnorePattern: "^_" },
+      ],
+      "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/explicit-function-return-type": "off",
+
+      // Imports
+      "import/order": [
+        "error",
+        {
+          groups: [
+            "builtin",
+            "external",
+            "internal",
+            "parent",
+            "sibling",
+            "index",
+            "type",
+          ],
+          "newlines-between": "always",
+          alphabetize: {
+            order: "asc",
+            caseInsensitive: true,
+          },
+        },
+      ],
+
+      // React Refresh
+      "react-refresh/only-export-components": [
+        "warn",
+        { allowConstantExport: true },
+      ],
+    },
+    settings: {
+      react: {
+        version: "detect",
+      },
+      "import/resolver": {
+        typescript: {
+          alwaysTryTypes: true,
+          project: "./tsconfig.json",
+        },
       },
     },
   },
-  rules: {
-    // React Refresh
-    'react-refresh/only-export-components': [
-      'warn',
-      { allowConstantExport: true },
-    ],
+];
+```
 
-    // Code style - enforce double quotes and semicolons
-    quotes: ['error', 'double', { avoidEscape: true }],
-    semi: ['error', 'always'],
-    '@typescript-eslint/quotes': ['error', 'double', { avoidEscape: true }],
-    '@typescript-eslint/semi': ['error', 'always'],
+**Import Boundaries:**
 
-    // Import order
-    'import/order': [
-      'error',
-      {
-        groups: [
-          'builtin',
-          'external',
-          'internal',
-          ['parent', 'sibling'],
-          'index',
-          'object',
-          'type',
-        ],
-        pathGroups: [
-          {
-            pattern: 'react',
-            group: 'external',
-            position: 'before',
-          },
-          {
-            pattern: '@/app/**',
-            group: 'internal',
-            position: 'after',
-          },
-          {
-            pattern: '@/features/**',
-            group: 'internal',
-            position: 'after',
-          },
-          {
-            pattern: '@/components/**',
-            group: 'internal',
-            position: 'after',
-          },
-          {
-            pattern: '@/hooks/**',
-            group: 'internal',
-            position: 'after',
-          },
-          {
-            pattern: '@/stores/**',
-            group: 'internal',
-            position: 'after',
-          },
-          {
-            pattern: '@/lib/**',
-            group: 'internal',
-            position: 'after',
-          },
-          {
-            pattern: '@/utils/**',
-            group: 'internal',
-            position: 'after',
-          },
-          {
-            pattern: '@/types/**',
-            group: 'internal',
-            position: 'after',
-          },
-        ],
-        pathGroupsExcludedImportTypes: ['react'],
-        'newlines-between': 'always',
-        alphabetize: {
-          order: 'asc',
-          caseInsensitive: true,
+```js
+// Additional ESLint rules for architecture enforcement
+export default [
+  // ... previous config
+  {
+    rules: {
+      // Prevent circular dependencies
+      "import/no-cycle": ["error", { maxDepth: 2 }],
+
+      // Enforce layer boundaries
+      "import/no-restricted-paths": [
+        "error",
+        {
+          zones: [
+            // Shared cannot import from Features or App
+            {
+              target: "./src/(components|hooks|stores|lib|utils|types)",
+              from: "./src/(features|app)",
+              message: "Shared layer cannot import from Features or App",
+            },
+            // Features cannot import from App
+            {
+              target: "./src/features",
+              from: "./src/app",
+              message: "Features cannot import from App layer",
+            },
+            // Features cannot import from other features (enforce through index.ts)
+            {
+              target: "./src/features/*/!(index).ts",
+              from: "./src/features/*",
+              message:
+                "Features must import from other features via index.ts public API only",
+            },
+          ],
         },
-      },
-    ],
-
-    // Layer boundary enforcement
-    'import/no-restricted-paths': [
-      'error',
-      {
-        zones: [
-          // Shared cannot import from Features or App
-          {
-            target: './src/components',
-            from: './src/features',
-            message: 'Shared components cannot import from features',
-          },
-          {
-            target: './src/components',
-            from: './src/app',
-            message: 'Shared components cannot import from app',
-          },
-          {
-            target: './src/hooks',
-            from: './src/features',
-            message: 'Shared hooks cannot import from features',
-          },
-          {
-            target: './src/hooks',
-            from: './src/app',
-            message: 'Shared hooks cannot import from app',
-          },
-          {
-            target: './src/stores',
-            from: './src/features',
-            message: 'Shared stores cannot import from features',
-          },
-          {
-            target: './src/stores',
-            from: './src/app',
-            message: 'Shared stores cannot import from app',
-          },
-          {
-            target: './src/utils',
-            from: './src/features',
-            message: 'Shared utils cannot import from features',
-          },
-          {
-            target: './src/utils',
-            from: './src/app',
-            message: 'Shared utils cannot import from app',
-          },
-          {
-            target: './src/lib',
-            from: './src/features',
-            message: 'Shared lib cannot import from features',
-          },
-          {
-            target: './src/lib',
-            from: './src/app',
-            message: 'Shared lib cannot import from app',
-          },
-          {
-            target: './src/types',
-            from: './src/features',
-            message: 'Shared types cannot import from features',
-          },
-          {
-            target: './src/types',
-            from: './src/app',
-            message: 'Shared types cannot import from app',
-          },
-          // Features cannot import from App
-          {
-            target: './src/features',
-            from: './src/app',
-            message: 'Features cannot import from app layer',
-          },
-          // Features cannot import from other features (enforce through index.ts)
-          {
-            target: './src/features/*/!(index).ts',
-            from: './src/features/*',
-            message:
-              'Features must import from other features via index.ts public API only',
-          },
-        ],
-      },
-    ],
-
-    // Enforce public API usage
-    'import/no-internal-modules': [
-      'error',
-      {
-        allow: [
-          // Allow internal imports within same feature
-          '**/features/*/components/**',
-          '**/features/*/hooks/**',
-          '**/features/*/stores/**',
-          '**/features/*/api/**',
-          '**/features/*/utils/**',
-          '**/features/*/types/**',
-          // Allow shared internal imports
-          '**/components/**',
-          '**/hooks/**',
-          '**/stores/**',
-          '**/lib/**',
-          '**/utils/**',
-          '**/types/**',
-          '**/styles/**',
-          '**/config/**',
-          '**/constants/**',
-          // Allow node_modules
-          '**/*.css',
-          '**/*.scss',
-        ],
-      },
-    ],
+      ],
+    },
   },
-}
+
+  // Enforce public API usage
+  {
+    rules: {
+      "import/no-internal-modules": [
+        "error",
+        {
+          allow: [
+            // Allow internal imports within same feature
+            "**/features/*/components/**",
+            "**/features/*/hooks/**",
+            "**/features/*/stores/**",
+            "**/features/*/api/**",
+            "**/features/*/utils/**",
+            "**/features/*/types/**",
+            // Allow shared internal imports
+            "**/components/**",
+            "**/hooks/**",
+            "**/stores/**",
+            "**/lib/**",
+            "**/utils/**",
+            "**/types/**",
+            "**/styles/**",
+            "**/config/**",
+            "**/constants/**",
+            // Allow node_modules
+            "**/*.css",
+            "**/*.scss",
+          ],
+        },
+      ],
+    },
+  },
+];
 ```
 
 ### Required Dependencies
@@ -1378,57 +1294,57 @@ module.exports = {
 ### Good Examples ✅
 
 ```tsx
-import { useState, useTransition } from 'react'
+import { useState, useTransition } from "react";
 
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { Button } from '@/components/ui/Button'
-import { useAuth } from '@/features/auth'
-import { dashboardApi } from '@/features/dashboard/api'
+import { Button } from "@/components/ui/Button";
+import { useAuth } from "@/features/auth";
+import { dashboardApi } from "@/features/dashboard/api";
 
-import type { DashboardData } from '@/features/dashboard/types'
+import type { DashboardData } from "@/features/dashboard/types";
 
 export function Dashboard() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [isPending, startTransition] = useTransition()
-  const { user } = useAuth()
-  const queryClient = useQueryClient()
+  const [isOpen, setIsOpen] = useState(false);
+  const [isPending, startTransition] = useTransition();
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery({
-    queryKey: ['dashboard', user?.id],
+    queryKey: ["dashboard", user?.id],
     queryFn: () => dashboardApi.getData(user!.id),
     enabled: !!user,
-  })
+  });
 
   const mutation = useMutation({
     mutationFn: dashboardApi.update,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['dashboard'] })
+      queryClient.invalidateQueries({ queryKey: ["dashboard"] });
     },
-  })
+  });
 
   const handleClick = () => {
     startTransition(() => {
-      setIsOpen(true)
-    })
-  }
+      setIsOpen(true);
+    });
+  };
 
   const handleUpdate = (updates: Partial<DashboardData>) => {
-    mutation.mutate(updates)
-  }
+    mutation.mutate(updates);
+  };
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
 
   return (
     <div className="dashboard">
       <Button onClick={handleClick} disabled={isPending}>
-        {isPending ? 'Opening...' : 'Open'}
+        {isPending ? "Opening..." : "Open"}
       </Button>
       {data && <DashboardContent data={data} onUpdate={handleUpdate} />}
     </div>
-  )
+  );
 }
 ```
 
@@ -1436,16 +1352,16 @@ export function Dashboard() {
 
 ```tsx
 // Using Suspense with useSuspenseQuery
-import { Suspense } from 'react'
-import { useSuspenseQuery } from '@tanstack/react-query'
+import { Suspense } from "react";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 export function UserProfile({ userId }: { userId: string }) {
   const { data: user } = useSuspenseQuery({
-    queryKey: ['user', userId],
+    queryKey: ["user", userId],
     queryFn: () => fetchUser(userId),
-  })
+  });
 
-  return <div>{user.name}</div> // No loading state needed
+  return <div>{user.name}</div>; // No loading state needed
 }
 
 // Wrap with Suspense boundary
@@ -1454,11 +1370,11 @@ export function UserProfileRoute() {
     <Suspense fallback={<ProfileSkeleton />}>
       <UserProfile userId="123" />
     </Suspense>
-  )
+  );
 }
 
 // Using Error Boundary
-import { ErrorBoundary } from '@/components/ui/ErrorBoundary'
+import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
 
 export function DashboardRoute() {
   return (
@@ -1467,39 +1383,39 @@ export function DashboardRoute() {
         <Dashboard />
       </Suspense>
     </ErrorBoundary>
-  )
+  );
 }
 
 // Proper TypeScript with satisfies
-import type { RouteObject } from 'react-router-dom'
+import type { RouteObject } from "react-router-dom";
 
 export const routes = [
   {
-    path: '/dashboard',
+    path: "/dashboard",
     element: <Dashboard />,
   },
-] satisfies RouteObject[]
+] satisfies RouteObject[];
 
 // Using Immer with Zustand
-import { create } from 'zustand'
-import { immer } from 'zustand/middleware/immer'
+import { create } from "zustand";
+import { immer } from "zustand/middleware/immer";
 
 export const useStore = create<State>()(
   immer((set) => ({
     items: [],
     addItem: (item) =>
       set((state) => {
-        state.items.push(item) // Direct mutation with Immer
+        state.items.push(item); // Direct mutation with Immer
       }),
   }))
-)
+);
 ```
 
 ### Bad Examples ❌
 
 ```tsx
 // Single quotes - Wrong!
-import { Button } from '@/components/ui/Button';
+import { Button } from "@/components/ui/Button";
 
 // Missing semicolons - Wrong!
 const [isOpen, setIsOpen] = useState(false)
@@ -1518,7 +1434,7 @@ useEffect(() => {
 }, []);
 
 // Not using TypeScript properly - Wrong!
-export function Component(props: any) { // Don't use 'any'
+export function Component(props: any) { // Don't use "any"
   return <div>{props.data}</div>;
 }
 

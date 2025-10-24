@@ -118,9 +118,9 @@ House Scenes
 
 ```typescript
 interface FloorIconProps {
-  order: number // Floor order/number (0 = ground, 1 = first, etc.)
-  name: string // Floor name (for accessibility)
-  size?: number // Icon size in pixels (default: 32)
+  order: number; // Floor order/number (0 = ground, 1 = first, etc.)
+  name: string; // Floor name (for accessibility)
+  size?: number; // Icon size in pixels (default: 32)
 }
 ```
 
@@ -136,15 +136,15 @@ interface FloorIconProps {
 ```typescript
 const getFloorColor = (order: number): string => {
   const colors = [
-    '#4a90e2', // Blue
-    '#7b68ee', // Purple
-    '#50c878', // Green
-    '#ff6b6b', // Coral
-    '#ffd93d', // Yellow
-    '#a78bfa', // Light purple
-  ]
-  return colors[order % colors.length]
-}
+    "#4a90e2", // Blue
+    "#7b68ee", // Purple
+    "#50c878", // Green
+    "#ff6b6b", // Coral
+    "#ffd93d", // Yellow
+    "#a78bfa", // Light purple
+  ];
+  return colors[order % colors.length];
+};
 ```
 
 ### Responsive Detection
@@ -152,8 +152,8 @@ const getFloorColor = (order: number): string => {
 Uses Ant Design's `Grid.useBreakpoint()`:
 
 ```typescript
-const screens = useBreakpoint()
-const isDesktop = screens.md || screens.lg || screens.xl || screens.xxl
+const screens = useBreakpoint();
+const isDesktop = screens.md || screens.lg || screens.xl || screens.xxl;
 ```
 
 **Breakpoint Definitions:**
@@ -227,7 +227,7 @@ const isDesktop = screens.md || screens.lg || screens.xl || screens.xxl
 Edit `FloorIcon.tsx`:
 
 ```typescript
-const colors = ['#yourColor1', '#yourColor2', '#yourColor3']
+const colors = ["#yourColor1", "#yourColor2", "#yourColor3"];
 ```
 
 ### Adjusting Icon Size
@@ -250,14 +250,14 @@ To change where desktop layout starts:
 
 ```typescript
 // Currently: md (768px+)
-const isDesktop = screens.md || screens.lg || screens.xl || screens.xxl
+const isDesktop = screens.md || screens.lg || screens.xl || screens.xxl;
 
 // To start at lg (992px+):
-const isDesktop = screens.lg || screens.xl || screens.xxl
+const isDesktop = screens.lg || screens.xl || screens.xxl;
 
 // To start at sm (576px+):
 const isDesktop =
-  screens.sm || screens.md || screens.lg || screens.xl || screens.xxl
+  screens.sm || screens.md || screens.lg || screens.xl || screens.xxl;
 ```
 
 ## Floor Order

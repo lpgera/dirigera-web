@@ -1,23 +1,23 @@
 version: 2
 updates:
-  - package-ecosystem: 'npm'
-    directory: '/'
+  - package-ecosystem: "npm"
+    directory: "/"
     schedule:
-      interval: 'daily'
+      interval: "daily"
     groups:
       graphql-codegen:
         patterns:
-          - '@graphql-codegen/*'
+          - "@graphql-codegen/*"
       storybook:
         patterns:
-          - '@storybook/*'
-          - 'storybook*'
+          - "@storybook/*"
+          - "storybook*"
     open-pull-requests-limit: 20
-  - package-ecosystem: 'docker'
-    directory: '/'
+  - package-ecosystem: "docker"
+    directory: "/"
     schedule:
-      interval: 'daily'
-  - package-ecosystem: 'github-actions'
-    directory: '/'
+      interval: "daily"
+  - package-ecosystem: "github-actions"
+    directory: "/"
     schedule:
-      interval: 'daily'
+      interval: "daily"

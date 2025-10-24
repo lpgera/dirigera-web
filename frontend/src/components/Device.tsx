@@ -1,14 +1,14 @@
-import React from 'react'
-import { Card, Col, Row } from 'antd'
-import type { ControlType } from '../graphql.types'
-import IsOn from './deviceControls/IsOn'
-import LightLevel from './deviceControls/LightLevel'
-import Volume from './deviceControls/Volume'
-import LightColor from './deviceControls/LightColor'
-import Playback from './deviceControls/Playback'
-import Battery from './deviceControls/Battery'
-import PlayItemImage from './deviceControls/PlayItemImage'
-import { useDeviceImages } from '../useDeviceImages'
+import React from "react";
+import { Card, Col, Row } from "antd";
+import type { ControlType } from "../graphql.types";
+import IsOn from "./deviceControls/IsOn";
+import LightLevel from "./deviceControls/LightLevel";
+import Volume from "./deviceControls/Volume";
+import LightColor from "./deviceControls/LightColor";
+import Playback from "./deviceControls/Playback";
+import Battery from "./deviceControls/Battery";
+import PlayItemImage from "./deviceControls/PlayItemImage";
+import { useDeviceImages } from "../useDeviceImages";
 
 const Device = ({
   id,
@@ -33,30 +33,30 @@ const Device = ({
   vocIndex,
   isOpen,
 }: {
-  id: string
-  name: string
-  type: ControlType
-  isReachable: boolean
-  batteryPercentage?: number | null
-  isOn?: boolean | null
-  lightLevel?: number | null
-  colorTemperature?: number | null
-  colorSaturation?: number | null
-  colorHue?: number | null
-  playback?: string | null
-  playbackNextAvailable?: boolean | null
-  playbackPreviousAvailable?: boolean | null
-  volume?: number | null
-  playItem?: string | null
-  nextPlayItem?: string | null
-  temperature?: number | null
-  humidity?: number | null
-  pm25?: number | null
-  vocIndex?: number | null
-  isOpen?: boolean | null
+  id: string;
+  name: string;
+  type: ControlType;
+  isReachable: boolean;
+  batteryPercentage?: number | null;
+  isOn?: boolean | null;
+  lightLevel?: number | null;
+  colorTemperature?: number | null;
+  colorSaturation?: number | null;
+  colorHue?: number | null;
+  playback?: string | null;
+  playbackNextAvailable?: boolean | null;
+  playbackPreviousAvailable?: boolean | null;
+  volume?: number | null;
+  playItem?: string | null;
+  nextPlayItem?: string | null;
+  temperature?: number | null;
+  humidity?: number | null;
+  pm25?: number | null;
+  vocIndex?: number | null;
+  isOpen?: boolean | null;
 }) => {
-  const { getDeviceImage } = useDeviceImages()
-  const deviceImage = getDeviceImage(id)
+  const { getDeviceImage } = useDeviceImages();
+  const deviceImage = getDeviceImage(id);
 
   return (
     <Card
@@ -67,15 +67,15 @@ const Device = ({
             src={deviceImage}
             alt={name}
             style={{
-              width: '100%',
+              width: "100%",
               height: 150,
-              objectFit: 'contain',
-              backgroundColor: '#fff',
+              objectFit: "contain",
+              backgroundColor: "#fff",
               borderRadius: 0,
             }}
             onError={(e) => {
               // Hide the cover if image fails to load
-              e.currentTarget.parentElement!.style.display = 'none'
+              e.currentTarget.parentElement!.style.display = "none";
             }}
           />
         ) : undefined
@@ -155,18 +155,18 @@ const Device = ({
         )}
 
         {playItem != null && (
-          <Col style={{ textAlign: 'center', flexBasis: '100%' }}>
+          <Col style={{ textAlign: "center", flexBasis: "100%" }}>
             Now playing: {playItem}
           </Col>
         )}
 
         {nextPlayItem != null && (
-          <Col style={{ textAlign: 'center', flexBasis: '100%' }}>
+          <Col style={{ textAlign: "center", flexBasis: "100%" }}>
             Next: {nextPlayItem}
           </Col>
         )}
 
-        {playItem != null && type === 'DEVICE' && (
+        {playItem != null && type === "DEVICE" && (
           <Col flex="auto">
             <PlayItemImage id={id} />
           </Col>
@@ -176,7 +176,7 @@ const Device = ({
       {isOpen != null && (
         <Row>
           <Col>
-            <div>{isOpen ? 'Open' : 'Closed'}</div>
+            <div>{isOpen ? "Open" : "Closed"}</div>
           </Col>
         </Row>
       )}
@@ -221,7 +221,7 @@ const Device = ({
         </Row>
       )}
     </Card>
-  )
-}
+  );
+};
 
-export default Device
+export default Device;

@@ -493,7 +493,7 @@ const {
   getFloorScenes, // (floorId) => string[]
   getRoomScenes, // (roomId) => string[]
   filterScenes, // (scenes, allowedIds) => filtered scenes
-} = useSceneScopes()
+} = useSceneScopes();
 ```
 
 ## Benefits

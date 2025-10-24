@@ -11,7 +11,7 @@ generates:
       - typescript
   ./src/:
     documents:
-      - './**/*.tsx'
+      - "./**/*.tsx"
     preset: near-operation-file
     presetConfig:
       extension: .types.gen.ts

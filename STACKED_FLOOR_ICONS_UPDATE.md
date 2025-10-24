@@ -52,11 +52,11 @@ Tab 2:  ┌───┐      ← Floor 2 (gray, inactive)
 
 ```typescript
 interface FloorIconProps {
-  totalFloors: number // Total number of floors in building
-  currentFloor: number // Current floor being displayed (0-indexed)
-  floorOrder: number // This tab's floor order (0 = bottom)
-  isActive: boolean // Whether this tab is currently active
-  size?: number // Icon size (default: 48px)
+  totalFloors: number; // Total number of floors in building
+  currentFloor: number; // Current floor being displayed (0-indexed)
+  floorOrder: number; // This tab's floor order (0 = bottom)
+  isActive: boolean; // Whether this tab is currently active
+  size?: number; // Icon size (default: 48px)
 }
 ```
 
@@ -73,13 +73,13 @@ interface FloorIconProps {
 ```typescript
 if (isThisFloor && isActive) {
   // This tab's floor AND it's selected
-  color = 'bright-blue'
+  color = "bright-blue";
 } else if (isCurrent) {
   // This is the floor being viewed (in a different tab)
-  color = 'green'
+  color = "green";
 } else {
   // Other floors
-  color = 'gray'
+  color = "gray";
 }
 ```
 
@@ -96,14 +96,14 @@ const floors = Array.from({ length: totalFloors }, (_, i) => ({
   order: totalFloors - 1 - i, // Reverse order
   y: baseY + i * floorHeight, // Stack vertically
   isThisFloor: totalFloors - 1 - i === floorOrder,
-}))
+}));
 ```
 
 ### Floor Height Calculation
 
 ```typescript
-const floorHeight = 6 // Pixels between each floor
-const baseY = 8 // Top starting position
+const floorHeight = 6; // Pixels between each floor
+const baseY = 8; // Top starting position
 
 // Floor 2: y = 8
 // Floor 1: y = 8 + 6 = 14

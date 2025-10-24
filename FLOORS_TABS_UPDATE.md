@@ -66,13 +66,13 @@ House Scenes
 1. **Added Tabs Import**
 
    ```typescript
-   import { Tabs } from 'antd'
+   import { Tabs } from "antd";
    ```
 
 2. **Added State for Active Tab**
 
    ```typescript
-   const [activeFloorId, setActiveFloorId] = useState<string | null>(null)
+   const [activeFloorId, setActiveFloorId] = useState<string | null>(null);
    ```
 
 3. **Auto-select First Floor**
@@ -80,10 +80,10 @@ House Scenes
    ```typescript
    React.useEffect(() => {
      if (groupedRooms && groupedRooms.size > 0 && !activeFloorId) {
-       const firstFloorId = Array.from(groupedRooms.keys())[0]
-       setActiveFloorId(firstFloorId)
+       const firstFloorId = Array.from(groupedRooms.keys())[0];
+       setActiveFloorId(firstFloorId);
      }
-   }, [groupedRooms, activeFloorId])
+   }, [groupedRooms, activeFloorId]);
    ```
 
 4. **Replaced Stacked Layout with Tabs**

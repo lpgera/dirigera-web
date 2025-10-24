@@ -31,18 +31,18 @@ After code generation, check that the file includes the new fields in the `Rooms
 ```typescript
 // frontend/src/components/Rooms.types.gen.ts
 devices: Array<{
-  __typename?: 'Device'
-  id: string
-  name: string
-  type: Types.ControlType // NEW
-  isReachable: boolean
-  batteryPercentage?: number | null
-  isOn?: boolean | null // NEW
-  lightLevel?: number | null // NEW
-  colorTemperature?: number | null // NEW
-  colorHue?: number | null // NEW
-  colorSaturation?: number | null // NEW
-}>
+  __typename?: "Device";
+  id: string;
+  name: string;
+  type: Types.ControlType; // NEW
+  isReachable: boolean;
+  batteryPercentage?: number | null;
+  isOn?: boolean | null; // NEW
+  lightLevel?: number | null; // NEW
+  colorTemperature?: number | null; // NEW
+  colorHue?: number | null; // NEW
+  colorSaturation?: number | null; // NEW
+}>;
 ```
 
 ### 3. Test the Application

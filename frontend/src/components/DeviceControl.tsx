@@ -1,33 +1,33 @@
-import React from 'react'
-import { BulbOutlined } from '@ant-design/icons'
-import { Col, Row } from 'antd'
-import { useDeviceImages } from '../useDeviceImages'
-import IsOn from './deviceControls/IsOn'
-import LightLevel from './deviceControls/LightLevel'
-import LightColor from './deviceControls/LightColor'
-import { Device } from '../graphql.types'
+import React from "react";
+import { BulbOutlined } from "@ant-design/icons";
+import { Col, Row } from "antd";
+import { useDeviceImages } from "../useDeviceImages";
+import IsOn from "./deviceControls/IsOn";
+import LightLevel from "./deviceControls/LightLevel";
+import LightColor from "./deviceControls/LightColor";
+import { Device } from "../graphql.types";
 
 interface DeviceControlProps {
-  device: Device
+  device: Device;
 }
 
 const DeviceControl: React.FC<DeviceControlProps> = ({ device }) => {
-  const { getDeviceImage } = useDeviceImages()
-  const imagePath = getDeviceImage(device.id)
+  const { getDeviceImage } = useDeviceImages();
+  const imagePath = getDeviceImage(device.id);
 
   const hasControls =
     device.isOn != null ||
     device.lightLevel != null ||
     device.colorTemperature != null ||
     device.colorHue != null ||
-    device.colorSaturation != null
+    device.colorSaturation != null;
 
   return (
     <Row
       align="middle"
       gutter={8}
       style={{
-        padding: '8px 0',
+        padding: "8px 0",
       }}
     >
       {/* Device Image or Icon */}
@@ -39,13 +39,13 @@ const DeviceControl: React.FC<DeviceControlProps> = ({ device }) => {
             style={{
               width: 50,
               height: 50,
-              objectFit: 'cover',
+              objectFit: "cover",
               borderRadius: 8,
-              backgroundColor: 'rgba(255, 255, 255, 1)',
+              backgroundColor: "rgba(255, 255, 255, 1)",
               opacity: device.isReachable ? 1 : 0.5,
             }}
             onError={(e) => {
-              e.currentTarget.style.display = 'none'
+              e.currentTarget.style.display = "none";
             }}
           />
         ) : (
@@ -54,14 +54,39 @@ const DeviceControl: React.FC<DeviceControlProps> = ({ device }) => {
               width: 50,
               height: 50,
               borderRadius: 8,
-              backgroundColor: 'rgba(255, 255, 255, 0.1)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+              backgroundColor: "rgba(255, 255, 255, 0.1)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
               opacity: device.isReachable ? 1 : 0.5,
             }}
           >
             <BulbOutlined style={{ fontSize: 24 }} />
+          </div>
+        )}
+        {device.isReachable === false && (
+          //slash overlay for unreachable devices
+          <div
+            style={{
+              position: "relative",
+              top: -50,
+              width: 50,
+              height: 50,
+              borderRadius: 8,
+              backgroundColor: "rgba(255, 0, 0, 0.4)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <div
+              style={{
+                width: 300,
+                height: 4,
+                backgroundColor: "white",
+                transform: "rotate(45deg)",
+              }}
+            ></div>
           </div>
         )}
       </Col>
@@ -71,9 +96,9 @@ const DeviceControl: React.FC<DeviceControlProps> = ({ device }) => {
         flex="auto"
         style={{
           fontSize: 12,
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          whiteSpace: 'nowrap',
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          whiteSpace: "nowrap",
           minWidth: 0,
         }}
       >
@@ -129,7 +154,7 @@ const DeviceControl: React.FC<DeviceControlProps> = ({ device }) => {
         </>
       )}
     </Row>
-  )
-}
+  );
+};
 
-export default DeviceControl
+export default DeviceControl;

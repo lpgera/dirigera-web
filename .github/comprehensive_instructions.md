@@ -182,13 +182,13 @@ npm run test:watch  # Run tests in watch mode
 
 ```tsx
 // ✅ Correct - Feature public API
-import { LoginForm, useAuth } from '@/features/auth'
-import { Button } from '@/components/ui/Button'
-import { useDebounce } from '@/hooks/useDebounce'
+import { LoginForm, useAuth } from @/features/auth";
+import { Button } from "@/components/ui/Button";
+import { useDebounce } from "@/hooks/useDebounce";
 
 // ❌ Wrong - Bypassing public API
-import { LoginForm } from '@/features/auth/components/LoginForm'
-import { useAuthStore } from '@/features/auth/stores/authStore'
+import { LoginForm } from "@/features/auth/components/LoginForm";
+import { useAuthStore } from "@/features/auth/stores/authStore";
 ```
 
 **CSS Token Usage:**
@@ -423,69 +423,69 @@ features/tasks/
 #### API Layer (`features/tasks/api/getTasks.ts`)
 
 ```typescript
-import { apiClient } from '@/lib/apiClient'
-import { Task } from '../types'
+import { apiClient } from "@/lib/apiClient";
+import { Task } from "../types";
 
 export interface GetTasksParams {
-  status?: 'pending' | 'completed'
-  assigneeId?: string
-  limit?: number
+  status?: "pending" | "completed";
+  assigneeId?: string;
+  limit?: number;
 }
 
 export const getTasks = async (params?: GetTasksParams): Promise<Task[]> => {
-  const response = await apiClient.get<Task[]>('/tasks', { params })
-  return response.data
-}
+  const response = await apiClient.get<Task[]>("/tasks", { params });
+  return response.data;
+};
 
 export const getTaskById = async (id: string): Promise<Task> => {
-  const response = await apiClient.get<Task>(`/tasks/${id}`)
-  return response.data
-}
+  const response = await apiClient.get<Task>(`/tasks/${id}`);
+  return response.data;
+};
 ```
 
 #### Types (`features/tasks/types/task.types.ts`)
 
 ```typescript
 export interface Task {
-  id: string
-  title: string
-  description: string
-  status: 'pending' | 'in-progress' | 'completed'
-  priority: 'low' | 'medium' | 'high'
-  assigneeId: string
-  dueDate: string
-  createdAt: string
-  updatedAt: string
+  id: string;
+  title: string;
+  description: string;
+  status: "pending" | "in-progress" | "completed";
+  priority: "low" | "medium" | "high";
+  assigneeId: string;
+  dueDate: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface CreateTaskDTO {
-  title: string
-  description: string
-  assigneeId: string
-  dueDate: string
-  priority: Task['priority']
+  title: string;
+  description: string;
+  assigneeId: string;
+  dueDate: string;
+  priority: Task["priority"];
 }
 
 export interface UpdateTaskDTO extends Partial<CreateTaskDTO> {
-  status?: Task['status']
+  status?: Task["status"];
 }
 ```
 
 #### React Query Hook (`features/tasks/hooks/useTasks.ts`)
 
 ```typescript
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { getTasks, createTask, updateTask, deleteTask } from '../api'
-import { CreateTaskDTO, UpdateTaskDTO } from '../types'
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { getTasks, createTask, updateTask, deleteTask } from "../api";
+import { CreateTaskDTO, UpdateTaskDTO } from "../types";
 
 // Query keys
 export const taskKeys = {
-  all: ['tasks'] as const,
-  lists: () => [...taskKeys.all, 'list'] as const,
+  all: ["tasks"] as const,
+  lists: () => [...taskKeys.all, "list"] as const,
   list: (filters: string) => [...taskKeys.lists(), filters] as const,
-  details: () => [...taskKeys.all, 'detail'] as const,
+  details: () => [...taskKeys.all, "detail"] as const,
   detail: (id: string) => [...taskKeys.details(), id] as const,
-}
+};
 
 // Fetch all tasks
 export const useTasks = (filters?: GetTasksParams) => {
@@ -493,87 +493,87 @@ export const useTasks = (filters?: GetTasksParams) => {
     queryKey: taskKeys.list(JSON.stringify(filters)),
     queryFn: () => getTasks(filters),
     staleTime: 5 * 60 * 1000, // 5 minutes
-  })
-}
+  });
+};
 
 // Create task mutation
 export const useCreateTask = () => {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (data: CreateTaskDTO) => createTask(data),
     onSuccess: () => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: taskKeys.lists() })
+      queryClient.invalidateQueries({ queryKey: taskKeys.lists() });
     },
     onError: (error) => {
-      console.error('Failed to create task:', error)
+      console.error("Failed to create task:", error);
       // Handle error (show toast, etc.)
     },
-  })
-}
+  });
+};
 
 // Update task mutation
 export const useUpdateTask = () => {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: ({ id, data }: { id: string; data: UpdateTaskDTO }) =>
       updateTask(id, data),
     onSuccess: (updatedTask) => {
       // Update cache optimistically
-      queryClient.setQueryData(taskKeys.detail(updatedTask.id), updatedTask)
+      queryClient.setQueryData(taskKeys.detail(updatedTask.id), updatedTask);
       // Invalidate lists
-      queryClient.invalidateQueries({ queryKey: taskKeys.lists() })
+      queryClient.invalidateQueries({ queryKey: taskKeys.lists() });
     },
-  })
-}
+  });
+};
 
 // Delete task mutation
 export const useDeleteTask = () => {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (id: string) => deleteTask(id),
     onSuccess: (_, deletedId) => {
       // Remove from cache
-      queryClient.removeQueries({ queryKey: taskKeys.detail(deletedId) })
+      queryClient.removeQueries({ queryKey: taskKeys.detail(deletedId) });
       // Invalidate lists
-      queryClient.invalidateQueries({ queryKey: taskKeys.lists() })
+      queryClient.invalidateQueries({ queryKey: taskKeys.lists() });
     },
-  })
-}
+  });
+};
 ```
 
 #### Zustand Store for UI State (`features/tasks/stores/taskUIStore.ts`)
 
 ```typescript
-import { create } from 'zustand'
-import { devtools, persist } from 'zustand/middleware'
-import { Task } from '../types'
+import { create } from "zustand";
+import { devtools, persist } from "zustand/middleware";
+import { Task } from "../types";
 
 interface TaskUIState {
   // Filters
-  statusFilter: Task['status'] | 'all'
-  priorityFilter: Task['priority'] | 'all'
-  sortBy: 'dueDate' | 'priority' | 'createdAt'
-  sortOrder: 'asc' | 'desc'
+  statusFilter: Task["status"] | "all";
+  priorityFilter: Task["priority"] | "all";
+  sortBy: "dueDate" | "priority" | "createdAt";
+  sortOrder: "asc" | "desc";
 
   // UI state
-  viewMode: 'list' | 'grid' | 'kanban'
-  selectedTaskId: string | null
-  isCreateModalOpen: boolean
+  viewMode: "list" | "grid" | "kanban";
+  selectedTaskId: string | null;
+  isCreateModalOpen: boolean;
 
   // Actions
-  setStatusFilter: (status: Task['status'] | 'all') => void
-  setPriorityFilter: (priority: Task['priority'] | 'all') => void
-  setSortBy: (sortBy: TaskUIState['sortBy']) => void
-  toggleSortOrder: () => void
-  setViewMode: (mode: TaskUIState['viewMode']) => void
-  selectTask: (id: string | null) => void
-  openCreateModal: () => void
-  closeCreateModal: () => void
-  resetFilters: () => void
+  setStatusFilter: (status: Task["status"] | "all") => void;
+  setPriorityFilter: (priority: Task["priority"] | "all") => void;
+  setSortBy: (sortBy: TaskUIState["sortBy"]) => void;
+  toggleSortOrder: () => void;
+  setViewMode: (mode: TaskUIState["viewMode"]) => void;
+  selectTask: (id: string | null) => void;
+  openCreateModal: () => void;
+  closeCreateModal: () => void;
+  resetFilters: () => void;
 }
 
 export const useTaskUIStore = create<TaskUIState>()(
@@ -581,11 +581,11 @@ export const useTaskUIStore = create<TaskUIState>()(
     persist(
       (set) => ({
         // Initial state
-        statusFilter: 'all',
-        priorityFilter: 'all',
-        sortBy: 'dueDate',
-        sortOrder: 'asc',
-        viewMode: 'list',
+        statusFilter: "all",
+        priorityFilter: "all",
+        sortBy: "dueDate",
+        sortOrder: "asc",
+        viewMode: "list",
         selectedTaskId: null,
         isCreateModalOpen: false,
 
@@ -595,7 +595,7 @@ export const useTaskUIStore = create<TaskUIState>()(
         setSortBy: (sortBy) => set({ sortBy }),
         toggleSortOrder: () =>
           set((state) => ({
-            sortOrder: state.sortOrder === 'asc' ? 'desc' : 'asc',
+            sortOrder: state.sortOrder === "asc" ? "desc" : "asc",
           })),
         setViewMode: (mode) => set({ viewMode: mode }),
         selectTask: (id) => set({ selectedTaskId: id }),
@@ -603,14 +603,14 @@ export const useTaskUIStore = create<TaskUIState>()(
         closeCreateModal: () => set({ isCreateModalOpen: false }),
         resetFilters: () =>
           set({
-            statusFilter: 'all',
-            priorityFilter: 'all',
-            sortBy: 'dueDate',
-            sortOrder: 'asc',
+            statusFilter: "all",
+            priorityFilter: "all",
+            sortBy: "dueDate",
+            sortOrder: "asc",
           }),
       }),
       {
-        name: 'task-ui-storage', // localStorage key
+        name: "task-ui-storage", // localStorage key
         partialize: (state) => ({
           // Only persist these fields
           viewMode: state.viewMode,
@@ -619,22 +619,22 @@ export const useTaskUIStore = create<TaskUIState>()(
         }),
       }
     ),
-    { name: 'TaskUIStore' }
+    { name: "TaskUIStore" }
   )
-)
+);
 ```
 
 #### UI Component (`features/tasks/components/ui/TaskCard/TaskCard.tsx`)
 
 ```typescript
-import './TaskCard.css';
-import { Task } from '../../../types';
+import "./TaskCard.css";
+import { Task } from "../../../types";
 
 export interface TaskCardProps {
   task: Task;
   onEdit: (task: Task) => void;
   onDelete: (id: string) => void;
-  onStatusChange: (id: string, status: Task['status']) => void;
+  onStatusChange: (id: string, status: Task["status"]) => void;
 }
 
 export const TaskCard = ({
@@ -671,7 +671,7 @@ export const TaskCard = ({
           onClick={() => onStatusChange(task.id, getNextStatus(task.status))}
           className="task-card__button"
         >
-          {task.status === 'completed' ? 'Reopen' : 'Complete'}
+          {task.status === "completed" ? "Reopen" : "Complete"}
         </button>
         <button
           onClick={() => onEdit(task)}
@@ -691,9 +691,9 @@ export const TaskCard = ({
 };
 
 // Helper function
-const getNextStatus = (current: Task['status']): Task['status'] => {
-  if (current === 'completed') return 'pending';
-  return 'completed';
+const getNextStatus = (current: Task["status"]): Task["status"] => {
+  if (current === "completed") return "pending";
+  return "completed";
 };
 ```
 
@@ -832,70 +832,70 @@ const getNextStatus = (current: Task['status']): Task['status'] => {
 #### Storybook Story (`features/tasks/components/ui/TaskCard/TaskCard.stories.tsx`)
 
 ```typescript
-import type { Meta, StoryObj } from '@storybook/react'
-import { TaskCard } from './TaskCard'
-import { Task } from '../../../types'
+import type { Meta, StoryObj } from "@storybook/react";
+import { TaskCard } from "./TaskCard";
+import { Task } from "../../../types";
 
 const meta: Meta<typeof TaskCard> = {
-  title: 'Features/Tasks/TaskCard',
+  title: "Features/Tasks/TaskCard",
   component: TaskCard,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
-}
+};
 
-export default meta
-type Story = StoryObj<typeof TaskCard>
+export default meta;
+type Story = StoryObj<typeof TaskCard>;
 
 const mockTask: Task = {
-  id: '1',
-  title: 'Implement user authentication',
-  description: 'Add JWT-based authentication with refresh tokens',
-  status: 'in-progress',
-  priority: 'high',
-  assigneeId: 'user-123',
-  dueDate: '2024-12-31',
-  createdAt: '2024-01-01',
-  updatedAt: '2024-01-15',
-}
+  id: "1",
+  title: "Implement user authentication",
+  description: "Add JWT-based authentication with refresh tokens",
+  status: "in-progress",
+  priority: "high",
+  assigneeId: "user-123",
+  dueDate: "2024-12-31",
+  createdAt: "2024-01-01",
+  updatedAt: "2024-01-15",
+};
 
 export const Default: Story = {
   args: {
     task: mockTask,
-    onEdit: (task) => console.log('Edit', task),
-    onDelete: (id) => console.log('Delete', id),
-    onStatusChange: (id, status) => console.log('Status change', id, status),
+    onEdit: (task) => console.log("Edit", task),
+    onDelete: (id) => console.log("Delete", id),
+    onStatusChange: (id, status) => console.log("Status change", id, status),
   },
-}
+};
 
 export const Pending: Story = {
   args: {
     ...Default.args,
-    task: { ...mockTask, status: 'pending' },
+    task: { ...mockTask, status: "pending" },
   },
-}
+};
 
 export const Completed: Story = {
   args: {
     ...Default.args,
-    task: { ...mockTask, status: 'completed' },
+    task: { ...mockTask, status: "completed" },
   },
-}
+};
 
 export const LowPriority: Story = {
   args: {
     ...Default.args,
-    task: { ...mockTask, priority: 'low' },
+    task: { ...mockTask, priority: "low" },
   },
-}
+};
 
 export const MediumPriority: Story = {
   args: {
     ...Default.args,
-    task: { ...mockTask, priority: 'medium' },
+    task: { ...mockTask, priority: "medium" },
   },
-}
+};
 
 export const LongDescription: Story = {
   args: {
@@ -903,21 +903,21 @@ export const LongDescription: Story = {
     task: {
       ...mockTask,
       description:
-        'This is a very long description that should demonstrate how the card handles multiple lines of text. It should wrap properly and maintain good readability even with longer content.',
+        "This is a very long description that should demonstrate how the card handles multiple lines of text. It should wrap properly and maintain good readability even with longer content.",
     },
   },
-}
+};
 ```
 
 #### Container Component (`features/tasks/components/TaskDashboard/TaskDashboard.tsx`)
 
 ```typescript
-import { useMemo } from 'react';
-import { TaskCard } from '../ui/TaskCard';
-import { useTasks, useUpdateTask, useDeleteTask } from '../../hooks/useTasks';
-import { useTaskUIStore } from '../../stores/taskUIStore';
-import { Task } from '../../types';
-import './TaskDashboard.css';
+import { useMemo } from "react";
+import { TaskCard } from "../ui/TaskCard";
+import { useTasks, useUpdateTask, useDeleteTask } from "../../hooks/useTasks";
+import { useTaskUIStore } from "../../stores/taskUIStore";
+import { Task } from "../../types";
+import "./TaskDashboard.css";
 
 export const TaskDashboard = () => {
   // Get UI state from Zustand
@@ -945,10 +945,10 @@ export const TaskDashboard = () => {
     let result = tasks;
 
     // Apply filters
-    if (statusFilter !== 'all') {
+    if (statusFilter !== "all") {
       result = result.filter((task) => task.status === statusFilter);
     }
-    if (priorityFilter !== 'all') {
+    if (priorityFilter !== "all") {
       result = result.filter((task) => task.priority === priorityFilter);
     }
 
@@ -957,36 +957,36 @@ export const TaskDashboard = () => {
       let comparison = 0;
 
       switch (sortBy) {
-        case 'dueDate':
+        case "dueDate":
           comparison = new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime();
           break;
-        case 'priority':
+        case "priority":
           const priorityOrder = { low: 1, medium: 2, high: 3 };
           comparison = priorityOrder[a.priority] - priorityOrder[b.priority];
           break;
-        case 'createdAt':
+        case "createdAt":
           comparison = new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
           break;
       }
 
-      return sortOrder === 'asc' ? comparison : -comparison;
+      return sortOrder === "asc" ? comparison : -comparison;
     });
 
     return result;
   }, [tasks, statusFilter, priorityFilter, sortBy, sortOrder]);
 
   // Event handlers
-  const handleStatusChange = (id: string, status: Task['status']) => {
+  const handleStatusChange = (id: string, status: Task["status"]) => {
     updateTaskMutation.mutate({ id, data: { status } });
   };
 
   const handleEdit = (task: Task) => {
     // Open edit modal with task data
-    console.log('Edit task:', task);
+    console.log("Edit task:", task);
   };
 
   const handleDelete = (id: string) => {
-    if (confirm('Are you sure you want to delete this task?')) {
+    if (confirm("Are you sure you want to delete this task?")) {
       deleteTaskMutation.mutate(id);
     }
   };
@@ -1068,9 +1068,9 @@ export const TaskDashboard = () => {
 
 ```typescript
 // Components
-export { TaskDashboard } from './components/TaskDashboard'
-export { TaskCard } from './components/ui/TaskCard'
-export { TaskForm } from './components/ui/TaskForm'
+export { TaskDashboard } from "./components/TaskDashboard";
+export { TaskCard } from "./components/ui/TaskCard";
+export { TaskForm } from "./components/ui/TaskForm";
 
 // Hooks
 export {
@@ -1078,17 +1078,17 @@ export {
   useCreateTask,
   useUpdateTask,
   useDeleteTask,
-} from './hooks/useTasks'
-export { useTaskFilters } from './hooks/useTaskFilters'
+} from "./hooks/useTasks";
+export { useTaskFilters } from "./hooks/useTaskFilters";
 
 // Stores
-export { useTaskUIStore } from './stores/taskUIStore'
+export { useTaskUIStore } from "./stores/taskUIStore";
 
 // Types
-export type { Task, CreateTaskDTO, UpdateTaskDTO } from './types'
+export type { Task, CreateTaskDTO, UpdateTaskDTO } from "./types";
 
 // Constants (if any)
-export { TASK_STATUSES, TASK_PRIORITIES } from './constants'
+export { TASK_STATUSES, TASK_PRIORITIES } from "./constants";
 ```
 
 ### Example 2: Common Pattern - Modal with Form
@@ -1096,16 +1096,16 @@ export { TASK_STATUSES, TASK_PRIORITIES } from './constants'
 #### Shared Modal Component (`components/ui/Modal/Modal.tsx`)
 
 ```typescript
-import { ReactNode, useEffect } from 'react';
-import { createPortal } from 'react-dom';
-import './Modal.css';
+import { ReactNode, useEffect } from "react";
+import { createPortal } from "react-dom";
+import "./Modal.css";
 
 export interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
   children: ReactNode;
-  size?: 'sm' | 'md' | 'lg';
+  size?: "sm" | "md" | "lg";
   showCloseButton?: boolean;
 }
 
@@ -1114,23 +1114,23 @@ export const Modal = ({
   onClose,
   title,
   children,
-  size = 'md',
+  size = "md",
   showCloseButton = true,
 }: ModalProps) => {
   // Close on Escape key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === "Escape") onClose();
     };
 
     if (isOpen) {
-      document.addEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'hidden';
+      document.addEventListener("keydown", handleEscape);
+      document.body.style.overflow = "hidden";
     }
 
     return () => {
-      document.removeEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'unset';
+      document.removeEventListener("keydown", handleEscape);
+      document.body.style.overflow = "unset";
     };
   }, [isOpen, onClose]);
 
@@ -1165,9 +1165,9 @@ export const Modal = ({
 #### Form Component with Validation (`features/tasks/components/ui/TaskForm/TaskForm.tsx`)
 
 ```typescript
-import { useState, FormEvent } from 'react';
-import { CreateTaskDTO } from '../../../types';
-import './TaskForm.css';
+import { useState, FormEvent } from "react";
+import { CreateTaskDTO } from "../../../types";
+import "./TaskForm.css";
 
 export interface TaskFormProps {
   initialValues?: Partial<CreateTaskDTO>;
@@ -1183,11 +1183,11 @@ export const TaskForm = ({
   isSubmitting = false,
 }: TaskFormProps) => {
   const [formData, setFormData] = useState<CreateTaskDTO>({
-    title: initialValues.title || '',
-    description: initialValues.description || '',
-    assigneeId: initialValues.assigneeId || '',
-    dueDate: initialValues.dueDate || '',
-    priority: initialValues.priority || 'medium',
+    title: initialValues.title || "",
+    description: initialValues.description || "",
+    assigneeId: initialValues.assigneeId || "",
+    dueDate: initialValues.dueDate || "",
+    priority: initialValues.priority || "medium",
   });
 
   const [errors, setErrors] = useState<Partial<Record<keyof CreateTaskDTO, string>>>({});
@@ -1196,27 +1196,27 @@ export const TaskForm = ({
     const newErrors: typeof errors = {};
 
     if (!formData.title.trim()) {
-      newErrors.title = 'Title is required';
+      newErrors.title = "Title is required";
     } else if (formData.title.length < 3) {
-      newErrors.title = 'Title must be at least 3 characters';
+      newErrors.title = "Title must be at least 3 characters";
     }
 
     if (!formData.description.trim()) {
-      newErrors.description = 'Description is required';
+      newErrors.description = "Description is required";
     }
 
     if (!formData.assigneeId) {
-      newErrors.assigneeId = 'Assignee is required';
+      newErrors.assigneeId = "Assignee is required";
     }
 
     if (!formData.dueDate) {
-      newErrors.dueDate = 'Due date is required';
+      newErrors.dueDate = "Due date is required";
     } else {
       const dueDate = new Date(formData.dueDate);
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       if (dueDate < today) {
-        newErrors.dueDate = 'Due date must be in the future';
+        newErrors.dueDate = "Due date must be in the future";
       }
     }
 
@@ -1233,7 +1233,7 @@ export const TaskForm = ({
 
   const handleChange = (
     field: keyof CreateTaskDTO,
-    value: string | CreateTaskDTO['priority']
+    value: string | CreateTaskDTO["priority"]
   ) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     // Clear error when user starts typing
@@ -1252,8 +1252,8 @@ export const TaskForm = ({
           id="title"
           type="text"
           value={formData.title}
-          onChange={(e) => handleChange('title', e.target.value)}
-          className={`task-form__input ${errors.title ? 'task-form__input--error' : ''}`}
+          onChange={(e) => handleChange("title", e.target.value)}
+          className={`task-form__input ${errors.title ? "task-form__input--error" : ""}`}
           disabled={isSubmitting}
         />
         {errors.title && <span className="task-form__error">{errors.title}</span>}
@@ -1266,8 +1266,8 @@ export const TaskForm = ({
         <textarea
           id="description"
           value={formData.description}
-          onChange={(e) => handleChange('description', e.target.value)}
-          className={`task-form__textarea ${errors.description ? 'task-form__input--error' : ''}`}
+          onChange={(e) => handleChange("description", e.target.value)}
+          className={`task-form__textarea ${errors.description ? "task-form__input--error" : ""}`}
           rows={4}
           disabled={isSubmitting}
         />
@@ -1283,7 +1283,7 @@ export const TaskForm = ({
         <select
           id="priority"
           value={formData.priority}
-          onChange={(e) => handleChange('priority', e.target.value as any)}
+          onChange={(e) => handleChange("priority", e.target.value as any)}
           className="task-form__select"
           disabled={isSubmitting}
         >
@@ -1301,8 +1301,8 @@ export const TaskForm = ({
           id="dueDate"
           type="date"
           value={formData.dueDate}
-          onChange={(e) => handleChange('dueDate', e.target.value)}
-          className={`task-form__input ${errors.dueDate ? 'task-form__input--error' : ''}`}
+          onChange={(e) => handleChange("dueDate", e.target.value)}
+          className={`task-form__input ${errors.dueDate ? "task-form__input--error" : ""}`}
           disabled={isSubmitting}
         />
         {errors.dueDate && <span className="task-form__error">{errors.dueDate}</span>}
@@ -1316,8 +1316,8 @@ export const TaskForm = ({
           id="assigneeId"
           type="text"
           value={formData.assigneeId}
-          onChange={(e) => handleChange('assigneeId', e.target.value)}
-          className={`task-form__input ${errors.assigneeId ? 'task-form__input--error' : ''}`}
+          onChange={(e) => handleChange("assigneeId", e.target.value)}
+          className={`task-form__input ${errors.assigneeId ? "task-form__input--error" : ""}`}
           disabled={isSubmitting}
         />
         {errors.assigneeId && (
@@ -1339,7 +1339,7 @@ export const TaskForm = ({
           className="task-form__button task-form__button--primary"
           disabled={isSubmitting}
         >
-          {isSubmitting ? 'Saving...' : 'Save Task'}
+          {isSubmitting ? "Saving..." : "Save Task"}
         </button>
       </div>
     </form>
@@ -1351,10 +1351,10 @@ export const TaskForm = ({
 
 ```typescript
 // In TaskDashboard.tsx or separate CreateTaskModal.tsx
-import { Modal } from '@/components/ui/Modal';
-import { TaskForm } from '../ui/TaskForm';
-import { useCreateTask } from '../../hooks/useTasks';
-import { useTaskUIStore } from '../../stores/taskUIStore';
+import { Modal } from "@/components/ui/Modal";
+import { TaskForm } from "../ui/TaskForm";
+import { useCreateTask } from "../../hooks/useTasks";
+import { useTaskUIStore } from "../../stores/taskUIStore";
 
 export const CreateTaskModal = () => {
   const { isCreateModalOpen, closeCreateModal } = useTaskUIStore();
@@ -1391,7 +1391,7 @@ export const CreateTaskModal = () => {
 #### ❌ Anti-Pattern 1: Prop Drilling Hell
 
 ```typescript
-// DON'T DO THIS - Passing props through 5 levels
+// DON"T DO THIS - Passing props through 5 levels
 const App = () => {
   const [user, setUser] = useState(null);
   return <Dashboard user={user} setUser={setUser} />;
@@ -1434,21 +1434,21 @@ const UserProfile = () => {
 #### ❌ Anti-Pattern 2: Mixing Server and Client State
 
 ```typescript
-// DON'T DO THIS - Managing server data in Zustand
+// DON"T DO THIS - Managing server data in Zustand
 export const usePostsStore = create((set) => ({
   posts: [],
   isLoading: false,
   error: null,
   fetchPosts: async () => {
-    set({ isLoading: true })
+    set({ isLoading: true });
     try {
-      const posts = await getPosts()
-      set({ posts, isLoading: false })
+      const posts = await getPosts();
+      set({ posts, isLoading: false });
     } catch (error) {
-      set({ error, isLoading: false })
+      set({ error, isLoading: false });
     }
   },
-}))
+}));
 ```
 
 #### ✅ Solution: Use React Query for Server State
@@ -1457,31 +1457,31 @@ export const usePostsStore = create((set) => ({
 // Use React Query for server data
 export const usePosts = () => {
   return useQuery({
-    queryKey: ['posts'],
+    queryKey: ["posts"],
     queryFn: getPosts,
     staleTime: 5 * 60 * 1000,
-  })
-}
+  });
+};
 
 // Component
 const PostList = () => {
-  const { data: posts, isLoading, error } = usePosts()
+  const { data: posts, isLoading, error } = usePosts();
   // React Query handles caching, refetching, etc.
-}
+};
 ```
 
 #### ❌ Anti-Pattern 3: Hardcoded Styles
 
 ```typescript
-// DON'T DO THIS - Inline styles and hardcoded colors
+// DON"T DO THIS - Inline styles and hardcoded colors
 const Button = () => {
   return (
     <button
       style={{
-        background: '#3b82f6',
-        color: '#ffffff',
-        padding: '8px 16px',
-        borderRadius: '4px',
+        background: "#3b82f6",
+        color: "#ffffff",
+        padding: "8px 16px",
+        borderRadius: "4px",
       }}
     >
       Click me
@@ -1505,12 +1505,12 @@ const Button = () => {
 #### ❌ Anti-Pattern 4: Massive Components
 
 ```typescript
-// DON'T DO THIS - 500+ line component with everything
+// DON"T DO THIS - 500+ line component with everything
 const UserDashboard = () => {
   // 50 lines of state
   const [users, setUsers] = useState([]);
   const [filters, setFilters] = useState({});
-  const [sort, setSort] = useState('name');
+  const [sort, setSort] = useState("name");
   // ... 20 more useState
 
   // 100 lines of logic
@@ -1556,34 +1556,34 @@ const UserList = () => {
 #### ❌ Anti-Pattern 5: Bypassing Public APIs
 
 ```typescript
-// DON'T DO THIS - Deep imports
-import { LoginForm } from '@/features/auth/components/LoginForm'
-import { useAuthStore } from '@/features/auth/stores/authStore'
-import { validateEmail } from '@/features/auth/utils/validation'
+// DON"T DO THIS - Deep imports
+import { LoginForm } from "@/features/auth/components/LoginForm";
+import { useAuthStore } from "@/features/auth/stores/authStore";
+import { validateEmail } from "@/features/auth/utils/validation";
 ```
 
 #### ✅ Solution: Use Feature Public API
 
 ```typescript
 // DO THIS - Import from index.ts
-import { LoginForm, useAuth, validateEmail } from '@/features/auth'
+import { LoginForm, useAuth, validateEmail } from "@/features/auth";
 ```
 
 #### ❌ Anti-Pattern 6: God Objects/Stores
 
 ```typescript
-// DON'T DO THIS - One store for everything
+// DON"T DO THIS - One store for everything
 export const useAppStore = create((set) => ({
   user: null,
   posts: [],
   comments: [],
   settings: {},
-  theme: 'light',
+  theme: "light",
   notifications: [],
   cart: [],
   orders: [],
   // ... 50 more fields
-}))
+}));
 ```
 
 #### ✅ Solution: Split by Domain
@@ -1687,7 +1687,7 @@ features/user-management/
 ├── utils/                  # Feature-specific utilities
 │   ├── userValidation.ts
 │   └── index.ts
-└── index.ts                # Public API - exports what's usable outside
+└── index.ts                # Public API - exports what"s usable outside
 ```
 
 ### Import Rules & Boundaries
@@ -1695,26 +1695,26 @@ features/user-management/
 **Enforce with ESLint** (`eslint.config.js`):
 
 ```js
-'import/no-restricted-paths': [
-  'error',
+"import/no-restricted-paths": [
+  "error",
   {
     zones: [
       // Features cannot import from app layer
       {
-        target: './src/features',
-        from: './src/app',
+        target: "./src/features",
+        from: "./src/app",
       },
       // Shared modules cannot import from features or app
       {
         target: [
-          './src/components',
-          './src/hooks',
-          './src/lib',
-          './src/stores',
-          './src/types',
-          './src/utils',
+          "./src/components",
+          "./src/hooks",
+          "./src/lib",
+          "./src/stores",
+          "./src/types",
+          "./src/utils",
         ],
-        from: ['./src/features', './src/app'],
+        from: ["./src/features", "./src/app"],
       },
     ],
   },
@@ -1747,8 +1747,8 @@ Shared Layer (components, hooks, stores, utils, etc.)
 
 ✅ **Allowed cross-feature imports:**
 
-- Auth checks and user data: `import { useAuth } from '@/features/auth';`
-- Shared domain types: `import { User } from '@/features/users/types';`
+- Auth checks and user data: `import { useAuth } from "@/features/auth";`
+- Shared domain types: `import { User } from "@/features/users/types";`
 - Feature composition at App layer only
 
 ❌ **Not allowed:**
@@ -1783,14 +1783,14 @@ Use the right tool for the right job:
 // ✅ Server data with React Query
 export const useUsers = () => {
   return useQuery({
-    queryKey: ['users'],
+    queryKey: ["users"],
     queryFn: getUsers,
     staleTime: 5 * 60 * 1000, // 5 minutes
-  })
-}
+  });
+};
 
 // In component
-const { data: users, isLoading, error } = useUsers()
+const { data: users, isLoading, error } = useUsers();
 ```
 
 #### 2. Zustand - Global Client State
@@ -1819,19 +1819,19 @@ const { data: users, isLoading, error } = useUsers()
 export const useThemeStore = create<ThemeState>()(
   persist(
     (set) => ({
-      theme: 'light',
+      theme: "light",
       setTheme: (theme) => set({ theme }),
       toggleTheme: () =>
         set((state) => ({
-          theme: state.theme === 'light' ? 'dark' : 'light',
+          theme: state.theme === "light" ? "dark" : "light",
         })),
     }),
-    { name: 'theme-storage' }
+    { name: "theme-storage" }
   )
-)
+);
 
 // In any component
-const { theme, toggleTheme } = useThemeStore()
+const { theme, toggleTheme } = useThemeStore();
 ```
 
 #### 3. React Context - Dependency Injection
@@ -1880,7 +1880,7 @@ export const ConfigProvider = ({ children }: { children: ReactNode }) => {
 
 export const useConfig = () => {
   const context = useContext(ConfigContext);
-  if (!context) throw new Error('useConfig must be used within ConfigProvider');
+  if (!context) throw new Error("useConfig must be used within ConfigProvider");
   return context;
 };
 ```
@@ -1900,8 +1900,8 @@ export const useConfig = () => {
 
 ```typescript
 // ✅ Local state with useState
-const [isOpen, setIsOpen] = useState(false)
-const [inputValue, setInputValue] = useState('')
+const [isOpen, setIsOpen] = useState(false);
+const [inputValue, setInputValue] = useState("");
 ```
 
 ### When to Use What - Decision Matrix
@@ -1927,17 +1927,17 @@ export const useNotificationStore = create<NotificationState>((set, get) => ({
   isLoading: false,
 
   fetchNotifications: async () => {
-    set({ isLoading: true })
+    set({ isLoading: true });
     try {
-      const notifications = await getNotifications()
+      const notifications = await getNotifications();
       set({
         notifications,
         unreadCount: notifications.filter((n) => !n.read).length,
         isLoading: false,
-      })
+      });
     } catch (error) {
-      console.error('Failed to fetch notifications:', error)
-      set({ isLoading: false })
+      console.error("Failed to fetch notifications:", error);
+      set({ isLoading: false });
     }
   },
 
@@ -1948,10 +1948,10 @@ export const useNotificationStore = create<NotificationState>((set, get) => ({
         n.id === id ? { ...n, read: true } : n
       ),
       unreadCount: state.unreadCount - 1,
-    }))
+    }));
 
     try {
-      await markNotificationAsRead(id)
+      await markNotificationAsRead(id);
     } catch (error) {
       // Revert on error
       set((state) => ({
@@ -1959,10 +1959,10 @@ export const useNotificationStore = create<NotificationState>((set, get) => ({
           n.id === id ? { ...n, read: false } : n
         ),
         unreadCount: state.unreadCount + 1,
-      }))
+      }));
     }
   },
-}))
+}));
 ```
 
 ### Error Handling Strategy
@@ -1977,30 +1977,30 @@ const queryClient = new QueryClient({
       retry: 3,
       retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
       onError: (error) => {
-        console.error('Query error:', error)
+        console.error("Query error:", error);
         // Show toast notification
       },
     },
     mutations: {
       onError: (error) => {
-        console.error('Mutation error:', error)
+        console.error("Mutation error:", error);
         // Show error toast
       },
     },
   },
-})
+});
 
 // Per-query error handling
 const { data, error, isError } = useQuery({
-  queryKey: ['user', id],
+  queryKey: ["user", id],
   queryFn: () => getUser(id),
-  retry: false, // Don't retry on 404
+  retry: false, // Don"t retry on 404
   onError: (error) => {
     if (error.response?.status === 404) {
-      navigate('/not-found')
+      navigate("/not-found");
     }
   },
-})
+});
 ```
 
 #### Zustand Error Handling
@@ -2008,9 +2008,9 @@ const { data, error, isError } = useQuery({
 ```typescript
 // Store with error state
 interface UserState {
-  users: User[]
-  error: string | null
-  clearError: () => void
+  users: User[];
+  error: string | null;
+  clearError: () => void;
 }
 
 export const useUserStore = create<UserState>((set) => ({
@@ -2020,18 +2020,18 @@ export const useUserStore = create<UserState>((set) => ({
   clearError: () => set({ error: null }),
 
   deleteUser: async (id: string) => {
-    set({ error: null })
+    set({ error: null });
     try {
-      await deleteUser(id)
+      await deleteUser(id);
       set((state) => ({
         users: state.users.filter((u) => u.id !== id),
-      }))
+      }));
     } catch (error) {
-      set({ error: 'Failed to delete user' })
-      throw error // Re-throw so caller can handle
+      set({ error: "Failed to delete user" });
+      throw error; // Re-throw so caller can handle
     }
   },
-}))
+}));
 ```
 
 ## Testing Strategy
@@ -2080,24 +2080,24 @@ Test presentation and user interactions without real data.
 
 ```typescript
 // TaskCard.test.tsx
-import { render, screen, userEvent } from '@/test/utils';
-import { TaskCard } from './TaskCard';
-import { Task } from '../../../types';
+import { render, screen, userEvent } from "@/test/utils";
+import { TaskCard } from "./TaskCard";
+import { Task } from "../../../types";
 
 const mockTask: Task = {
-  id: '1',
-  title: 'Test Task',
-  description: 'Test Description',
-  status: 'pending',
-  priority: 'high',
-  assigneeId: 'user-1',
-  dueDate: '2024-12-31',
-  createdAt: '2024-01-01',
-  updatedAt: '2024-01-01',
+  id: "1",
+  title: "Test Task",
+  description: "Test Description",
+  status: "pending",
+  priority: "high",
+  assigneeId: "user-1",
+  dueDate: "2024-12-31",
+  createdAt: "2024-01-01",
+  updatedAt: "2024-01-01",
 };
 
-describe('TaskCard', () => {
-  it('renders task information correctly', () => {
+describe("TaskCard", () => {
+  it("renders task information correctly", () => {
     render(
       <TaskCard
         task={mockTask}
@@ -2107,12 +2107,12 @@ describe('TaskCard', () => {
       />
     );
 
-    expect(screen.getByText('Test Task')).toBeInTheDocument();
-    expect(screen.getByText('Test Description')).toBeInTheDocument();
-    expect(screen.getByText('high')).toBeInTheDocument();
+    expect(screen.getByText("Test Task")).toBeInTheDocument();
+    expect(screen.getByText("Test Description")).toBeInTheDocument();
+    expect(screen.getByText("high")).toBeInTheDocument();
   });
 
-  it('calls onEdit when edit button is clicked', async () => {
+  it("calls onEdit when edit button is clicked", async () => {
     const onEdit = vi.fn();
     render(
       <TaskCard
@@ -2123,11 +2123,11 @@ describe('TaskCard', () => {
       />
     );
 
-    await userEvent.click(screen.getByRole('button', { name: /edit/i }));
+    await userEvent.click(screen.getByRole("button", { name: /edit/i }));
     expect(onEdit).toHaveBeenCalledWith(mockTask);
   });
 
-  it('calls onDelete when delete button is clicked', async () => {
+  it("calls onDelete when delete button is clicked", async () => {
     const onDelete = vi.fn();
     render(
       <TaskCard
@@ -2138,21 +2138,21 @@ describe('TaskCard', () => {
       />
     );
 
-    await userEvent.click(screen.getByRole('button', { name: /delete/i }));
-    expect(onDelete).toHaveBeenCalledWith('1');
+    await userEvent.click(screen.getByRole("button", { name: /delete/i }));
+    expect(onDelete).toHaveBeenCalledWith("1");
   });
 
-  it('shows correct status badge class', () => {
+  it("shows correct status badge class", () => {
     const { container } = render(
       <TaskCard
-        task={{ ...mockTask, status: 'completed' }}
+        task={{ ...mockTask, status: "completed" }}
         onEdit={vi.fn()}
         onDelete={vi.fn()}
         onStatusChange={vi.fn()}
       />
     );
 
-    const statusBadge = container.querySelector('.task-card__status--completed');
+    const statusBadge = container.querySelector(".task-card__status--completed");
     expect(statusBadge).toBeInTheDocument();
   });
 });
@@ -2164,13 +2164,13 @@ Test components with real stores and mocked API calls.
 
 ```typescript
 // TaskDashboard.test.tsx
-import { render, screen, waitFor } from '@/test/utils';
-import { TaskDashboard } from './TaskDashboard';
-import { server } from '@/test/mocks/server';
-import { http, HttpResponse } from 'msw';
+import { render, screen, waitFor } from "@/test/utils";
+import { TaskDashboard } from "./TaskDashboard";
+import { server } from "@/test/mocks/server";
+import { http, HttpResponse } from "msw";
 
-describe('TaskDashboard', () => {
-  it('loads and displays tasks', async () => {
+describe("TaskDashboard", () => {
+  it("loads and displays tasks", async () => {
     render(<TaskDashboard />);
 
     // Loading state
@@ -2178,34 +2178,34 @@ describe('TaskDashboard', () => {
 
     // Wait for tasks to load
     await waitFor(() => {
-      expect(screen.getByText('Implement authentication')).toBeInTheDocument();
+      expect(screen.getByText("Implement authentication")).toBeInTheDocument();
     });
 
-    expect(screen.getByText('Fix bug in dashboard')).toBeInTheDocument();
+    expect(screen.getByText("Fix bug in dashboard")).toBeInTheDocument();
   });
 
-  it('filters tasks by status', async () => {
+  it("filters tasks by status", async () => {
     render(<TaskDashboard />);
 
     await waitFor(() => {
-      expect(screen.getByText('Implement authentication')).toBeInTheDocument();
+      expect(screen.getByText("Implement authentication")).toBeInTheDocument();
     });
 
     // Change filter
-    const statusFilter = screen.getByRole('combobox', { name: /status/i });
-    await userEvent.selectOptions(statusFilter, 'completed');
+    const statusFilter = screen.getByRole("combobox", { name: /status/i });
+    await userEvent.selectOptions(statusFilter, "completed");
 
     // Should only show completed tasks
     await waitFor(() => {
-      expect(screen.queryByText('Implement authentication')).not.toBeInTheDocument();
-      expect(screen.getByText('Complete project setup')).toBeInTheDocument();
+      expect(screen.queryByText("Implement authentication")).not.toBeInTheDocument();
+      expect(screen.getByText("Complete project setup")).toBeInTheDocument();
     });
   });
 
-  it('handles API errors gracefully', async () => {
+  it("handles API errors gracefully", async () => {
     // Mock API error
     server.use(
-      http.get('/api/tasks', () => {
+      http.get("/api/tasks", () => {
         return HttpResponse.error();
       })
     );
@@ -2217,22 +2217,22 @@ describe('TaskDashboard', () => {
     });
   });
 
-  it('deletes a task when confirmed', async () => {
-    const confirmSpy = vi.spyOn(window, 'confirm').mockReturnValue(true);
+  it("deletes a task when confirmed", async () => {
+    const confirmSpy = vi.spyOn(window, "confirm").mockReturnValue(true);
 
     render(<TaskDashboard />);
 
     await waitFor(() => {
-      expect(screen.getByText('Implement authentication')).toBeInTheDocument();
+      expect(screen.getByText("Implement authentication")).toBeInTheDocument();
     });
 
-    const deleteButton = screen.getAllByRole('button', { name: /delete/i })[0];
+    const deleteButton = screen.getAllByRole("button", { name: /delete/i })[0];
     await userEvent.click(deleteButton);
 
     expect(confirmSpy).toHaveBeenCalled();
 
     await waitFor(() => {
-      expect(screen.queryByText('Implement authentication')).not.toBeInTheDocument();
+      expect(screen.queryByText("Implement authentication")).not.toBeInTheDocument();
     });
 
     confirmSpy.mockRestore();
@@ -2244,13 +2244,13 @@ describe('TaskDashboard', () => {
 
 ```typescript
 // useTasks.test.ts
-import { renderHook, waitFor } from '@testing-library/react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { useTasks, useCreateTask } from './useTasks';
-import { getTasks, createTask } from '../api';
+import { renderHook, waitFor } from "@testing-library/react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useTasks, useCreateTask } from "./useTasks";
+import { getTasks, createTask } from "../api";
 
 // Mock API
-vi.mock('../api');
+vi.mock("../api");
 
 const createWrapper = () => {
   const queryClient = new QueryClient({
@@ -2266,11 +2266,11 @@ const createWrapper = () => {
   );
 };
 
-describe('useTasks', () => {
-  it('fetches tasks successfully', async () => {
+describe("useTasks", () => {
+  it("fetches tasks successfully", async () => {
     const mockTasks = [
-      { id: '1', title: 'Task 1', status: 'pending' },
-      { id: '2', title: 'Task 2', status: 'completed' },
+      { id: "1", title: "Task 1", status: "pending" },
+      { id: "2", title: "Task 2", status: "completed" },
     ];
     vi.mocked(getTasks).mockResolvedValue(mockTasks);
 
@@ -2287,8 +2287,8 @@ describe('useTasks', () => {
     expect(result.current.data).toEqual(mockTasks);
   });
 
-  it('handles errors', async () => {
-    vi.mocked(getTasks).mockRejectedValue(new Error('API Error'));
+  it("handles errors", async () => {
+    vi.mocked(getTasks).mockRejectedValue(new Error("API Error"));
 
     const { result } = renderHook(() => useTasks(), {
       wrapper: createWrapper(),
@@ -2302,9 +2302,9 @@ describe('useTasks', () => {
   });
 });
 
-describe('useCreateTask', () => {
-  it('creates a task successfully', async () => {
-    const newTask = { id: '3', title: 'New Task', status: 'pending' };
+describe("useCreateTask", () => {
+  it("creates a task successfully", async () => {
+    const newTask = { id: "3", title: "New Task", status: "pending" };
     vi.mocked(createTask).mockResolvedValue(newTask);
 
     const { result } = renderHook(() => useCreateTask(), {
@@ -2312,11 +2312,11 @@ describe('useCreateTask', () => {
     });
 
     result.current.mutate({
-      title: 'New Task',
-      description: 'Description',
-      assigneeId: 'user-1',
-      dueDate: '2024-12-31',
-      priority: 'medium',
+      title: "New Task",
+      description: "Description",
+      assigneeId: "user-1",
+      dueDate: "2024-12-31",
+      priority: "medium",
     });
 
     await waitFor(() => {
@@ -2332,83 +2332,83 @@ describe('useCreateTask', () => {
 
 ```typescript
 // taskUIStore.test.ts
-import { renderHook, act } from '@testing-library/react'
-import { useTaskUIStore } from './taskUIStore'
+import { renderHook, act } from "@testing-library/react";
+import { useTaskUIStore } from "./taskUIStore";
 
-describe('useTaskUIStore', () => {
+describe("useTaskUIStore", () => {
   beforeEach(() => {
     // Reset store before each test
-    const { resetFilters, closeCreateModal } = useTaskUIStore.getState()
-    resetFilters()
-    closeCreateModal()
-  })
+    const { resetFilters, closeCreateModal } = useTaskUIStore.getState();
+    resetFilters();
+    closeCreateModal();
+  });
 
-  it('sets status filter', () => {
-    const { result } = renderHook(() => useTaskUIStore())
+  it("sets status filter", () => {
+    const { result } = renderHook(() => useTaskUIStore());
 
-    expect(result.current.statusFilter).toBe('all')
-
-    act(() => {
-      result.current.setStatusFilter('completed')
-    })
-
-    expect(result.current.statusFilter).toBe('completed')
-  })
-
-  it('toggles sort order', () => {
-    const { result } = renderHook(() => useTaskUIStore())
-
-    expect(result.current.sortOrder).toBe('asc')
+    expect(result.current.statusFilter).toBe("all");
 
     act(() => {
-      result.current.toggleSortOrder()
-    })
+      result.current.setStatusFilter("completed");
+    });
 
-    expect(result.current.sortOrder).toBe('desc')
+    expect(result.current.statusFilter).toBe("completed");
+  });
 
-    act(() => {
-      result.current.toggleSortOrder()
-    })
+  it("toggles sort order", () => {
+    const { result } = renderHook(() => useTaskUIStore());
 
-    expect(result.current.sortOrder).toBe('asc')
-  })
-
-  it('opens and closes create modal', () => {
-    const { result } = renderHook(() => useTaskUIStore())
-
-    expect(result.current.isCreateModalOpen).toBe(false)
+    expect(result.current.sortOrder).toBe("asc");
 
     act(() => {
-      result.current.openCreateModal()
-    })
+      result.current.toggleSortOrder();
+    });
 
-    expect(result.current.isCreateModalOpen).toBe(true)
-
-    act(() => {
-      result.current.closeCreateModal()
-    })
-
-    expect(result.current.isCreateModalOpen).toBe(false)
-  })
-
-  it('resets all filters', () => {
-    const { result } = renderHook(() => useTaskUIStore())
+    expect(result.current.sortOrder).toBe("desc");
 
     act(() => {
-      result.current.setStatusFilter('completed')
-      result.current.setPriorityFilter('high')
-      result.current.setSortBy('priority')
-    })
+      result.current.toggleSortOrder();
+    });
+
+    expect(result.current.sortOrder).toBe("asc");
+  });
+
+  it("opens and closes create modal", () => {
+    const { result } = renderHook(() => useTaskUIStore());
+
+    expect(result.current.isCreateModalOpen).toBe(false);
 
     act(() => {
-      result.current.resetFilters()
-    })
+      result.current.openCreateModal();
+    });
 
-    expect(result.current.statusFilter).toBe('all')
-    expect(result.current.priorityFilter).toBe('all')
-    expect(result.current.sortBy).toBe('dueDate')
-  })
-})
+    expect(result.current.isCreateModalOpen).toBe(true);
+
+    act(() => {
+      result.current.closeCreateModal();
+    });
+
+    expect(result.current.isCreateModalOpen).toBe(false);
+  });
+
+  it("resets all filters", () => {
+    const { result } = renderHook(() => useTaskUIStore());
+
+    act(() => {
+      result.current.setStatusFilter("completed");
+      result.current.setPriorityFilter("high");
+      result.current.setSortBy("priority");
+    });
+
+    act(() => {
+      result.current.resetFilters();
+    });
+
+    expect(result.current.statusFilter).toBe("all");
+    expect(result.current.priorityFilter).toBe("all");
+    expect(result.current.sortBy).toBe("dueDate");
+  });
+});
 ```
 
 ### Mocking Patterns
@@ -2417,88 +2417,88 @@ describe('useTaskUIStore', () => {
 
 ```typescript
 // test/mocks/handlers.ts
-import { http, HttpResponse } from 'msw'
+import { http, HttpResponse } from "msw";
 
 export const handlers = [
   // Get all tasks
-  http.get('/api/tasks', () => {
+  http.get("/api/tasks", () => {
     return HttpResponse.json([
       {
-        id: '1',
-        title: 'Implement authentication',
-        status: 'in-progress',
-        priority: 'high',
+        id: "1",
+        title: "Implement authentication",
+        status: "in-progress",
+        priority: "high",
       },
       {
-        id: '2',
-        title: 'Fix bug in dashboard',
-        status: 'pending',
-        priority: 'medium',
+        id: "2",
+        title: "Fix bug in dashboard",
+        status: "pending",
+        priority: "medium",
       },
-    ])
+    ]);
   }),
 
   // Create task
-  http.post('/api/tasks', async ({ request }) => {
-    const newTask = await request.json()
+  http.post("/api/tasks", async ({ request }) => {
+    const newTask = await request.json();
     return HttpResponse.json(
       {
-        id: '3',
+        id: "3",
         ...newTask,
         createdAt: new Date().toISOString(),
       },
       { status: 201 }
-    )
+    );
   }),
 
   // Update task
-  http.patch('/api/tasks/:id', async ({ params, request }) => {
-    const updates = await request.json()
+  http.patch("/api/tasks/:id", async ({ params, request }) => {
+    const updates = await request.json();
     return HttpResponse.json({
       id: params.id,
       ...updates,
       updatedAt: new Date().toISOString(),
-    })
+    });
   }),
 
   // Delete task
-  http.delete('/api/tasks/:id', ({ params }) => {
-    return new HttpResponse(null, { status: 204 })
+  http.delete("/api/tasks/:id", ({ params }) => {
+    return new HttpResponse(null, { status: 204 });
   }),
-]
+];
 ```
 
 ```typescript
 // test/mocks/server.ts
-import { setupServer } from 'msw/node'
-import { handlers } from './handlers'
+import { setupServer } from "msw/node";
+import { handlers } from "./handlers";
 
-export const server = setupServer(...handlers)
+export const server = setupServer(...handlers);
 ```
 
 ```typescript
 // test/setup.ts
-import '@testing-library/jest-dom'
-import { server } from './mocks/server'
+import "@testing-library/jest-dom";
+import { server } from "./mocks/server";
 
 // Start server before all tests
-beforeAll(() => server.listen())
+beforeAll(() => server.listen());
 
 // Reset handlers after each test
-afterEach(() => server.resetHandlers())
+afterEach(() => server.resetHandlers());
 
 // Clean up after all tests
-afterAll(() => server.close())
+afterAll(() => server.close());
 ```
 
 ### Test Utilities
 
 ```typescript
 // test/utils.tsx
-import { ReactElement } from 'react';
-import { render, RenderOptions } from '@testing-library/react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { BrowserRouter } from 'react-router-dom';
+import { ReactElement } from "react";
+import { render, RenderOptions } from "@testing-library/react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter } from "react-router-dom";
 
 const createTestQueryClient = () =>
   new QueryClient({
@@ -2526,10 +2526,10 @@ const AllTheProviders = ({ children }: AllTheProvidersProps) => {
 
 const customRender = (
   ui: ReactElement,
-  options?: Omit<RenderOptions, 'wrapper'>
+  options?: Omit<RenderOptions, "wrapper">
 ) => render(ui, { wrapper: AllTheProviders, ...options });
 
-export * from '@testing-library/react';
+export * from "@testing-library/react";
 export { customRender as render };
 ```
 
@@ -2543,15 +2543,15 @@ Split by routes for the biggest impact.
 
 ```typescript
 // app/router.tsx
-import { lazy, Suspense } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
+import { lazy, Suspense } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 
 // Lazy load route components
-const Dashboard = lazy(() => import('./routes/Dashboard'));
-const TaskPage = lazy(() => import('./routes/TaskPage'));
-const UserProfile = lazy(() => import('./routes/UserProfile'));
-const Settings = lazy(() => import('./routes/Settings'));
+const Dashboard = lazy(() => import("./routes/Dashboard"));
+const TaskPage = lazy(() => import("./routes/TaskPage"));
+const UserProfile = lazy(() => import("./routes/UserProfile"));
+const Settings = lazy(() => import("./routes/Settings"));
 
 export const AppRouter = () => {
   return (
@@ -2575,9 +2575,9 @@ Split large, rarely-used components.
 
 ```typescript
 // Lazy load heavy components
-const ChartDashboard = lazy(() => import('@/components/ChartDashboard'));
-const RichTextEditor = lazy(() => import('@/components/RichTextEditor'));
-const VideoPlayer = lazy(() => import('@/components/VideoPlayer'));
+const ChartDashboard = lazy(() => import("@/components/ChartDashboard"));
+const RichTextEditor = lazy(() => import("@/components/RichTextEditor"));
+const VideoPlayer = lazy(() => import("@/components/VideoPlayer"));
 
 const Dashboard = () => {
   const [showChart, setShowChart] = useState(false);
@@ -2603,8 +2603,8 @@ Split entire features that aren't always needed.
 
 ```typescript
 // Lazy load feature modules
-const AdminPanel = lazy(() => import('@/features/admin'));
-const AdvancedReporting = lazy(() => import('@/features/reporting'));
+const AdminPanel = lazy(() => import("@/features/admin"));
+const AdvancedReporting = lazy(() => import("@/features/reporting"));
 
 const App = () => {
   const user = useAuthStore((state) => state.user);
@@ -2645,7 +2645,7 @@ export const TaskCard = memo(({ task, onEdit, onDelete }: TaskCardProps) => {
 
 // ❌ Bad: Over-memoization
 const Counter = () => {
-  // Don't memoize simple operations
+  // Don"t memoize simple operations
   const count = useMemo(() => 1 + 1, []); // Unnecessary
   return <div>{count}</div>;
 };
@@ -2734,7 +2734,7 @@ const TaskCounter = () => {
 };
 
 // ✅ Good: Use shallow for multiple values
-import { shallow } from 'zustand/shallow';
+import { shallow } from "zustand/shallow";
 
 const TaskFilters = () => {
   const { statusFilter, priorityFilter } = useTaskStore(
@@ -2760,9 +2760,9 @@ const TaskFilters = () => {
 
 ```typescript
 // vite.config.ts
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import { visualizer } from 'rollup-plugin-visualizer'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import { visualizer } from "rollup-plugin-visualizer";
 
 export default defineConfig({
   plugins: [
@@ -2781,20 +2781,20 @@ export default defineConfig({
       output: {
         manualChunks: {
           // Separate React
-          react: ['react', 'react-dom', 'react-router-dom'],
+          react: ["react", "react-dom", "react-router-dom"],
 
           // Separate React Query
-          'react-query': ['@tanstack/react-query'],
+          "react-query": ["@tanstack/react-query"],
 
           // Separate Zustand
-          zustand: ['zustand'],
+          zustand: ["zustand"],
 
           // Separate UI library (if using)
-          ui: ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu'],
+          ui: ["@radix-ui/react-dialog", "@radix-ui/react-dropdown-menu"],
 
           // Split by feature (for large features)
-          'feature-tasks': ['./src/features/tasks'],
-          'feature-users': ['./src/features/users'],
+          "feature-tasks": ["./src/features/tasks"],
+          "feature-users": ["./src/features/users"],
         },
       },
     },
@@ -2808,9 +2808,9 @@ export default defineConfig({
 
   // Optimize deps
   optimizeDeps: {
-    include: ['react', 'react-dom', 'react-router-dom'],
+    include: ["react", "react-dom", "react-router-dom"],
   },
-})
+});
 ```
 
 #### Analyze Bundle Size
@@ -2830,7 +2830,7 @@ npm run build
 
 ```typescript
 // ✅ Good: Lazy load images below the fold
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
 
 const LazyImage = ({ src, alt }: { src: string; alt: string }) => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -2845,7 +2845,7 @@ const LazyImage = ({ src, alt }: { src: string; alt: string }) => {
           observer.disconnect();
         }
       },
-      { rootMargin: '50px' }
+      { rootMargin: "50px" }
     );
 
     if (imgRef.current) {
@@ -2859,7 +2859,7 @@ const LazyImage = ({ src, alt }: { src: string; alt: string }) => {
     <img
       ref={imgRef}
       alt={alt}
-      className={isLoaded ? 'loaded' : 'loading'}
+      className={isLoaded ? "loaded" : "loading"}
     />
   );
 };
@@ -2886,7 +2886,7 @@ const TaskList = () => {
 
   const prefetchTask = (id: string) => {
     queryClient.prefetchQuery({
-      queryKey: ['task', id],
+      queryKey: ["task", id],
       queryFn: () => getTaskById(id),
       staleTime: 5 * 60 * 1000,
     });
@@ -2909,14 +2909,14 @@ const TaskList = () => {
 
 // ✅ Good: Use staleTime to reduce refetches
 const { data } = useQuery({
-  queryKey: ['users'],
+  queryKey: ["users"],
   queryFn: getUsers,
   staleTime: 5 * 60 * 1000, // Data stays fresh for 5 minutes
 });
 
 // ✅ Good: Use select to transform data
 const { data: taskTitles } = useQuery({
-  queryKey: ['tasks'],
+  queryKey: ["tasks"],
   queryFn: getTasks,
   select: (data) => data.map((task) => task.title), // Only extract titles
 });
@@ -2927,22 +2927,22 @@ const { data: taskTitles } = useQuery({
 ```typescript
 // Add performance monitoring
 // app/provider.tsx
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     // Monitor long tasks
-    if ('PerformanceObserver' in window) {
+    if ("PerformanceObserver" in window) {
       const observer = new PerformanceObserver((list) => {
         for (const entry of list.getEntries()) {
           if (entry.duration > 50) {
-            console.warn('Long task detected:', entry);
+            console.warn("Long task detected:", entry);
             // Send to analytics
           }
         }
       });
 
-      observer.observe({ entryTypes: ['longtask'] });
+      observer.observe({ entryTypes: ["longtask"] });
 
       return () => observer.disconnect();
     }
@@ -3036,8 +3036,8 @@ These are the raw design values - your source of truth.
 
   /* Typography */
   --font-family-sans:
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-family-mono: 'Fira Code', 'Courier New', monospace;
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-family-mono: "Fira Code", "Courier New", monospace;
 
   --font-size-xs: 0.75rem; /* 12px */
   --font-size-sm: 0.875rem; /* 14px */
@@ -3227,7 +3227,7 @@ Override Layer 2 (semantic) tokens for dark mode.
 
 ```css
 /* styles/themes/dark.css */
-[data-theme='dark'] {
+[data-theme="dark"] {
   /* Invert semantic colors */
   --color-background: var(--color-gray-950);
   --color-surface: var(--color-gray-900);
@@ -3305,52 +3305,52 @@ Override Layer 2 (semantic) tokens for dark mode.
 
 ```typescript
 // hooks/useTheme.ts
-import { useEffect } from 'react'
-import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
+import { useEffect } from "react";
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 interface ThemeState {
-  theme: 'light' | 'dark'
-  setTheme: (theme: 'light' | 'dark') => void
-  toggleTheme: () => void
+  theme: "light" | "dark";
+  setTheme: (theme: "light" | "dark") => void;
+  toggleTheme: () => void;
 }
 
 export const useThemeStore = create<ThemeState>()(
   persist(
     (set) => ({
-      theme: 'light',
+      theme: "light",
       setTheme: (theme) => set({ theme }),
       toggleTheme: () =>
         set((state) => ({
-          theme: state.theme === 'light' ? 'dark' : 'light',
+          theme: state.theme === "light" ? "dark" : "light",
         })),
     }),
-    { name: 'theme-storage' }
+    { name: "theme-storage" }
   )
-)
+);
 
 export const useTheme = () => {
-  const { theme, setTheme, toggleTheme } = useThemeStore()
+  const { theme, setTheme, toggleTheme } = useThemeStore();
 
   useEffect(() => {
     // Apply theme to document
-    document.documentElement.setAttribute('data-theme', theme)
-  }, [theme])
+    document.documentElement.setAttribute("data-theme", theme);
+  }, [theme]);
 
-  return { theme, setTheme, toggleTheme }
-}
+  return { theme, setTheme, toggleTheme };
+};
 ```
 
 ```typescript
 // components/ThemeToggle.tsx
-import { useTheme } from '@/hooks/useTheme';
+import { useTheme } from "@/hooks/useTheme";
 
 export const ThemeToggle = () => {
   const { theme, toggleTheme } = useTheme();
 
   return (
     <button onClick={toggleTheme} className="theme-toggle">
-      {theme === 'light' ? '🌙' : '☀️'}
+      {theme === "light" ? "🌙" : "☀️"}
     </button>
   );
 };
@@ -3485,31 +3485,31 @@ src/
 **Vite configuration** (`vite.config.ts`):
 
 ```ts
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import path from 'path'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import path from "path";
 
 export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
+      "@": path.resolve(__dirname, "./src"),
     },
   },
-})
+});
 ```
 
 This allows clean imports:
 
 ```tsx
 // ❌ Avoid
-import { Button } from '../../../components/ui/Button'
+import { Button } from "../../../components/ui/Button";
 
 // ✅ Use
-import { Button } from '@/components/ui/Button'
+import { Button } from "@/components/ui/Button";
 
 // ✅ Or feature imports via public API
-import { LoginForm, useAuth } from '@/features/auth'
+import { LoginForm, useAuth } from "@/features/auth";
 ```
 
 ## ESLint Configuration for Import Boundaries
@@ -3528,64 +3528,57 @@ npm install -D eslint-plugin-import eslint-import-resolver-typescript
 module.exports = {
   // ... other config
   settings: {
-    'import/resolver': {
+    "import/resolver": {
       typescript: {
         alwaysTryTypes: true,
-        project: './tsconfig.json',
+        project: "./tsconfig.json",
       },
     },
   },
   rules: {
     // Enforce import boundaries
-    'import/no-restricted-paths': [
-      'error',
+    "import/no-restricted-paths": [
+      "error",
       {
         zones: [
           // Disallow features from importing from app layer
           {
-            target: './src/features',
-            from: './src/app',
-            message:
-              'Features cannot import from the app layer. Move shared code to src/ or keep it in the feature.',
+            target: "./src/features",
+            from: "./src/app",
+            message: "Features cannot import from the app layer. Move shared code to src/ or keep it in the feature.",
           },
 
           // Disallow shared code from importing from features or app
           {
             target: [
-              './src/components',
-              './src/hooks',
-              './src/lib',
-              './src/stores',
-              './src/types',
-              './src/utils',
+              "./src/components",
+              "./src/hooks",
+              "./src/lib",
+              "./src/stores",
+              "./src/types",
+              "./src/utils",
             ],
-            from: ['./src/features', './src/app'],
-            message:
-              'Shared code cannot import from features or app. Move the code to the feature or make it truly shared.',
+            from: ["./src/features", "./src/app"],
+            message: "Shared code cannot import from features or app. Move the code to the feature or make it truly shared.",
           },
         ],
       },
     ],
 
     // Enforce index.ts usage for feature imports
-    'no-restricted-imports': [
-      'error',
+    "no-restricted-imports": [
+      "error",
       {
         patterns: [
           {
-            group: [
-              '@/features/*/components/*',
-              '@/features/*/hooks/*',
-              '@/features/*/stores/*',
-            ],
-            message:
-              'Import from the feature\'s public API (index.ts) instead: import { X } from "@/features/feature-name"',
+            group: ["@/features/*/components/*", "@/features/*/hooks/*", "@/features/*/stores/*"],
+            message: "Import from the feature\"s public API (index.ts) instead: import { X } from "@/features/feature-name"",
           },
         ],
       },
     ],
   },
-}
+};
 ```
 
 These rules will:
@@ -3658,7 +3651,7 @@ Import in your config:
 export const env = {
   apiUrl: import.meta.env.VITE_API_URL,
   appName: import.meta.env.VITE_APP_NAME,
-}
+};
 ```
 
 ## Importing Global Styles
@@ -3667,19 +3660,19 @@ In your main entry file (`src/main.tsx` or `src/index.tsx`):
 
 ```tsx
 // src/main.tsx
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import App from './app/App'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import App from "./app/App";
 
 // Import global styles and design tokens
-import './styles/reset.css' // CSS reset first
-import './styles/tokens/primitives.css' // Layer 1: Primitives
-import './styles/tokens/semantic.css' // Layer 2: Semantic
-import './styles/tokens/components.css' // Layer 3: Components
-import './styles/themes/dark.css' // Theme overrides
-import './styles/global.css' // Global styles last
+import "./styles/reset.css"; // CSS reset first
+import "./styles/tokens/primitives.css"; // Layer 1: Primitives
+import "./styles/tokens/semantic.css"; // Layer 2: Semantic
+import "./styles/tokens/components.css"; // Layer 3: Components
+import "./styles/themes/dark.css"; // Theme overrides
+import "./styles/global.css"; // Global styles last
 
 // Create React Query client
 const queryClient = new QueryClient({
@@ -3689,16 +3682,16 @@ const queryClient = new QueryClient({
       retry: 3,
     },
   },
-})
+});
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <App />
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </React.StrictMode>
-)
+);
 ```
 
 The order matters:
@@ -3732,7 +3725,7 @@ The order matters:
 - **One-click rebranding:** Change Layer 2 semantic tokens to rebrand entire application
 - **Effortless theming:** Override Layer 2 for dark mode, high contrast, etc.
 - **A/B testing:** Test different styles without touching components
-- **Design-dev sync:** Mirrors design tools like Figma's design token structure
+- **Design-dev sync:** Mirrors design tools like Figma"s design token structure
 - **Maintenance:** Change once, propagate everywhere
 - **Reduced complexity:** 3 layers instead of 4 balances power with simplicity
 
@@ -3791,13 +3784,13 @@ When in doubt, prioritize:
 
 ```typescript
 // ✅ Good patterns
-import { TaskCard } from '@/features/tasks';                    // Public API
+import { TaskCard } from "@/features/tasks";                    // Public API
 const count = useTaskStore((state) => state.tasks.length);     // Precise selector
-const { data } = useQuery({ queryKey: ['tasks'], ... });       // React Query for server
+const { data } = useQuery({ queryKey: ["tasks"], ... });       // React Query for server
 const [isOpen, setIsOpen] = useState(false);                   // useState for local UI
 
 // ❌ Anti-patterns to avoid
-import { TaskCard } from '@/features/tasks/components/ui/TaskCard';  // Bypassing public API
+import { TaskCard } from "@/features/tasks/components/ui/TaskCard";  // Bypassing public API
 const state = useTaskStore();                                         // Selecting entire state
 const [tasks, setTasks] = useState([]);                              // Local state for server data
 ```

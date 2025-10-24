@@ -1,22 +1,22 @@
-import React, { ReactNode, useContext } from 'react'
+import React, { ReactNode, useContext } from "react";
 import {
   ApolloClient,
   InMemoryCache,
   HttpLink,
   ApolloLink,
   CombinedGraphQLErrors,
-} from '@apollo/client'
-import { ApolloProvider } from '@apollo/client/react'
-import { persistCache } from 'apollo3-cache-persist'
-import { AuthContext, AuthContextType } from './AuthContext'
-import { ErrorLink } from '@apollo/client/link/error'
+} from "@apollo/client";
+import { ApolloProvider } from "@apollo/client/react";
+import { persistCache } from "apollo3-cache-persist";
+import { AuthContext, AuthContextType } from "./AuthContext";
+import { ErrorLink } from "@apollo/client/link/error";
 
-const cache = new InMemoryCache()
+const cache = new InMemoryCache();
 
 persistCache({
   cache,
   storage: window.localStorage,
-}).catch(console.error)
+}).catch(console.error);
 
 const client = (authContext: AuthContextType) =>
   new ApolloClient({
@@ -26,30 +26,30 @@ const client = (authContext: AuthContextType) =>
           CombinedGraphQLErrors.is(error) &&
           error.errors?.some((err) =>
             err.message.includes(
-              'You must be logged in to access this resource.'
+              "You must be logged in to access this resource."
             )
           )
         ) {
-          authContext.dispatch({ type: 'logout' })
+          authContext.dispatch({ type: "logout" });
         }
-        console.error(error)
+        console.error(error);
       }),
       new HttpLink({
-        uri: './graphql',
-        credentials: 'same-origin',
+        uri: "./graphql",
+        credentials: "same-origin",
         headers: {
-          'x-token': authContext.state.token ?? '',
+          "x-token": authContext.state.token ?? "",
         },
       }),
     ]),
     cache,
-  })
+  });
 
 const Provider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const authContext = useContext(AuthContext)
+  const authContext = useContext(AuthContext);
   return (
     <ApolloProvider client={client(authContext)}>{children}</ApolloProvider>
-  )
-}
+  );
+};
 
-export default Provider
+export default Provider;

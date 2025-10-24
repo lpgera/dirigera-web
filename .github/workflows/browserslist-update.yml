@@ -2,7 +2,7 @@ name: Update browserslist database
 
 on:
   schedule:
-    - cron: '0 16 * * 5'
+    - cron: "0 16 * * 5"
   workflow_dispatch:
 
 permissions:

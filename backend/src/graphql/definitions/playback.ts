@@ -1,4 +1,4 @@
-import { gql } from 'graphql-tag'
+import { gql } from "graphql-tag";
 
 export const typeDefs = gql`
   enum Playback {
@@ -9,6 +9,6 @@ export const typeDefs = gql`
     playbackIdle
     playbackBuffering
   }
-`
+`;
 
-export const resolvers = {}
+export const resolvers = {};

@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import { gql } from '@apollo/client'
-import { useMutation } from '@apollo/client/react'
-import { Button, Popover, Slider, Space } from 'antd'
-import { MdColorLens } from 'react-icons/md'
+import React, { useEffect, useState } from "react";
+import { gql } from "@apollo/client";
+import { useMutation } from "@apollo/client/react";
+import { Button, Popover, Slider, Space } from "antd";
+import { MdColorLens } from "react-icons/md";
 import type {
   SetColorHueAndSaturationMutation,
   SetColorHueAndSaturationMutationVariables,
   SetColorTemperatureMutation,
   SetColorTemperatureMutationVariables,
-} from './LightColor.types.gen'
-import type { ControlType } from '../../graphql.types'
+} from "./LightColor.types.gen";
+import type { ControlType } from "../../graphql.types";
 
 const SET_COLOR_TEMPERATURE_MUTATION = gql`
   mutation SetColorTemperature(
@@ -23,7 +23,7 @@ const SET_COLOR_TEMPERATURE_MUTATION = gql`
       colorTemperature: $colorTemperature
     )
   }
-`
+`;
 
 const SET_COLOR_HUE_AND_SATURATION_MUTATION = gql`
   mutation SetColorHueAndSaturation(
@@ -39,7 +39,7 @@ const SET_COLOR_HUE_AND_SATURATION_MUTATION = gql`
       colorSaturation: $colorSaturation
     )
   }
-`
+`;
 
 const LightColor = ({
   id,
@@ -49,40 +49,40 @@ const LightColor = ({
   colorHue,
   colorSaturation,
 }: {
-  id: string
-  type: ControlType
-  isReachable: boolean
-  colorTemperature?: number | null
-  colorHue?: number | null
-  colorSaturation?: number | null
+  id: string;
+  type: ControlType;
+  isReachable: boolean;
+  colorTemperature?: number | null;
+  colorHue?: number | null;
+  colorSaturation?: number | null;
 }) => {
   const [colorTemperatureValue, setColorTemperatureValue] =
-    useState(colorTemperature)
-  const [colorHueValue, setColorHueValue] = useState(colorHue)
+    useState(colorTemperature);
+  const [colorHueValue, setColorHueValue] = useState(colorHue);
   const [colorSaturationValue, setColorSaturationValue] =
-    useState(colorSaturation)
+    useState(colorSaturation);
   useEffect(() => {
-    setColorTemperatureValue(colorTemperature)
-  }, [colorTemperature])
+    setColorTemperatureValue(colorTemperature);
+  }, [colorTemperature]);
   useEffect(() => {
-    setColorHueValue(colorHue)
-  }, [colorHue])
+    setColorHueValue(colorHue);
+  }, [colorHue]);
   useEffect(() => {
-    setColorSaturationValue(colorSaturation)
-  }, [colorSaturation])
+    setColorSaturationValue(colorSaturation);
+  }, [colorSaturation]);
 
   const [setColorTemperature, { loading: setColorTemperatureLoading }] =
     useMutation<
       SetColorTemperatureMutation,
       SetColorTemperatureMutationVariables
-    >(SET_COLOR_TEMPERATURE_MUTATION)
+    >(SET_COLOR_TEMPERATURE_MUTATION);
   const [
     setColorHueAndSaturation,
     { loading: setColorHueAndSaturationLoading },
   ] = useMutation<
     SetColorHueAndSaturationMutation,
     SetColorHueAndSaturationMutationVariables
-  >(SET_COLOR_HUE_AND_SATURATION_MUTATION)
+  >(SET_COLOR_HUE_AND_SATURATION_MUTATION);
 
   return (
     <Popover
@@ -90,7 +90,7 @@ const LightColor = ({
         <Space
           direction="vertical"
           size="middle"
-          style={{ display: 'flex', padding: 8 }}
+          style={{ display: "flex", padding: 8 }}
         >
           {colorTemperatureValue != null && (
             <div>
@@ -101,8 +101,8 @@ const LightColor = ({
                 min={2202}
                 max={4000}
                 marks={{
-                  2202: 'Warm',
-                  4000: 'Cold',
+                  2202: "Warm",
+                  4000: "Cold",
                 }}
                 // step={62}
                 onChange={(newValue: number) =>
@@ -127,10 +127,10 @@ const LightColor = ({
                 value={colorHueValue}
                 disabled={!isReachable || setColorHueAndSaturationLoading}
                 marks={{
-                  0: 'Red',
-                  120: 'Green',
-                  240: 'Blue',
-                  359: 'Red',
+                  0: "Red",
+                  120: "Green",
+                  240: "Blue",
+                  359: "Red",
                 }}
                 max={359}
                 onChange={(newValue: number) => setColorHueValue(newValue)}
@@ -142,7 +142,7 @@ const LightColor = ({
                       colorHue: newValue,
                       colorSaturation: colorSaturationValue ?? 1,
                     },
-                  })
+                  });
                 }}
               />
             </div>
@@ -154,8 +154,8 @@ const LightColor = ({
                 value={colorSaturationValue}
                 disabled={!isReachable || setColorHueAndSaturationLoading}
                 marks={{
-                  0: 'White',
-                  1: 'Color',
+                  0: "White",
+                  1: "Color",
                 }}
                 max={1}
                 step={0.01}
@@ -184,15 +184,15 @@ const LightColor = ({
         shape="circle"
         title="Color"
         style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
         <MdColorLens />
       </Button>
     </Popover>
-  )
-}
+  );
+};
 
-export default LightColor
+export default LightColor;

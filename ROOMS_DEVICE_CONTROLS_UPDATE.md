@@ -32,10 +32,10 @@ devices {
 ### 2. Added New Imports
 
 ```typescript
-import { BulbOutlined } from '@ant-design/icons'
-import IsOn from './deviceControls/IsOn'
-import LightLevel from './deviceControls/LightLevel'
-import LightColor from './deviceControls/LightColor'
+import { BulbOutlined } from "@ant-design/icons";
+import IsOn from "./deviceControls/IsOn";
+import LightLevel from "./deviceControls/LightLevel";
+import LightColor from "./deviceControls/LightColor";
 ```
 
 ### 3. New Device Layout

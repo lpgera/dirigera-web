@@ -1,51 +1,51 @@
-import { before, describe, it } from 'node:test'
-import assert from 'node:assert'
+import { before, describe, it } from "node:test";
+import assert from "node:assert";
 
-let auth: typeof import('./auth.ts')
-let jwt: typeof import('../../jwt.ts')
+let auth: typeof import("./auth.ts");
+let jwt: typeof import("../../jwt.ts");
 
-describe('definitions/auth', () => {
+describe("definitions/auth", () => {
   before(async () => {
-    process.env.PASSWORD = 'password'
-    process.env.JWT_SECRET = 'secret'
-    auth = await import('./auth.ts')
-    jwt = await import('../../jwt.ts')
-  })
+    process.env.PASSWORD = "password";
+    process.env.JWT_SECRET = "secret";
+    auth = await import("./auth.ts");
+    jwt = await import("../../jwt.ts");
+  });
 
-  describe('login', () => {
-    it('should return a string if password is correct', async () => {
+  describe("login", () => {
+    it("should return a string if password is correct", async () => {
       const token = await auth.resolvers.Mutation?.login?.(
         {},
-        { password: 'password' },
+        { password: "password" },
         // @ts-ignore
         { isLoggedIn: false, dirigeraClient: null },
         null
-      )
-      assert.strictEqual(typeof token, 'string')
-    })
+      );
+      assert.strictEqual(typeof token, "string");
+    });
 
-    it('should return a token which can be verified', async () => {
+    it("should return a token which can be verified", async () => {
       const token = await auth.resolvers.Mutation?.login?.(
         {},
-        { password: 'password' },
+        { password: "password" },
         // @ts-ignore
         { isLoggedIn: false, dirigeraClient: null },
         null
-      )
+      );
       // @ts-ignore
-      const payload = jwt.verify(token)
-      assert.strictEqual(typeof payload, 'object')
-    })
+      const payload = jwt.verify(token);
+      assert.strictEqual(typeof payload, "object");
+    });
 
-    it('should return null if password is incorrect', async () => {
+    it("should return null if password is incorrect", async () => {
       const token = await auth.resolvers.Mutation?.login?.(
         {},
-        { password: 'invalid' },
+        { password: "invalid" },
         // @ts-ignore
         { isLoggedIn: false, dirigeraClient: null },
         null
-      )
-      assert.strictEqual(token, null)
-    })
-  })
-})
+      );
+      assert.strictEqual(token, null);
+    });
+  });
+});

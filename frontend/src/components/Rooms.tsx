@@ -1,15 +1,15 @@
-import React from 'react'
-import { Card, Col, Grid, Result, Row, Skeleton } from 'antd'
-import { gql } from '@apollo/client'
-import { useQuery } from '@apollo/client/react'
-import type { RoomsQuery } from './Rooms.types.gen'
-import Scenes from './Scenes'
-import { useRefetch } from '../useRefetch'
-import { useFloors } from '../useFloors'
-import FloorTabs from './FloorTabs'
-import RoomsGrid from './RoomsGrid'
+import React from "react";
+import { Card, Col, Grid, Result, Row, Skeleton } from "antd";
+import { gql } from "@apollo/client";
+import { useQuery } from "@apollo/client/react";
+import type { RoomsQuery } from "./Rooms.types.gen";
+import Scenes from "./Scenes";
+import { useRefetch } from "../useRefetch";
+import { useFloors } from "../useFloors";
+import FloorTabs from "./FloorTabs";
+import RoomsGrid from "./RoomsGrid";
 
-const { useBreakpoint } = Grid
+const { useBreakpoint } = Grid;
 
 const columnSizes = {
   xs: 12,
@@ -18,7 +18,7 @@ const columnSizes = {
   lg: 8,
   xl: 6,
   xxl: 4,
-}
+};
 
 export const ROOMS_QUERY = gql`
   query Rooms {
@@ -47,26 +47,36 @@ export const ROOMS_QUERY = gql`
       }
     }
   }
-`
+`;
 
 const Rooms = () => {
-  const screens = useBreakpoint()
-  const { data, refetch, error } = useQuery<RoomsQuery>(ROOMS_QUERY)
+  const screens = useBreakpoint();
+  const { data, refetch, error } = useQuery<RoomsQuery>(ROOMS_QUERY);
 
-  useRefetch(refetch)
+  useRefetch(refetch);
 
-  const { groupRoomsByFloor, hasFloors, floors } = useFloors()
+  const { groupRoomsByFloor, hasFloors, floors } = useFloors();
 
-  const rooms = data?.rooms ?? []
-  const groupedRooms = hasFloors ? groupRoomsByFloor(rooms) : null
+  const rooms = data?.rooms ?? [];
+  const groupedRooms = hasFloors ? groupRoomsByFloor(rooms) : null;
 
   // Determine if we should use side tabs (desktop) or top tabs (mobile)
-  const isDesktop = screens.md || screens.lg || screens.xl || screens.xxl
+  const isDesktop = screens.md || screens.lg || screens.xl || screens.xxl;
 
   return (
     <>
-      {/* House-level scenes - always visible */}
-      <Scenes scope="house" />
+      {/* House-level scenes - sticky */}
+      <div
+        style={{
+          position: "sticky",
+          top: 97,
+          zIndex: 50,
+          backgroundColor: "rgb(30 30 30)",
+          boxSizing: "border-box",
+        }}
+      >
+        <Scenes scope="house" />
+      </div>
 
       {!data ? (
         <Row gutter={[16, 16]}>
@@ -89,7 +99,7 @@ const Rooms = () => {
         <RoomsGrid rooms={rooms} columnSizes={columnSizes} />
       )}
     </>
-  )
-}
+  );
+};
 
-export default Rooms
+export default Rooms;

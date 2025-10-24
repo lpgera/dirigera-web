@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react'
-import { gql } from '@apollo/client'
-import { useMutation } from '@apollo/client/react'
-import { Slider } from 'antd'
+import React, { useEffect, useState } from "react";
+import { gql } from "@apollo/client";
+import { useMutation } from "@apollo/client/react";
+import { Slider } from "antd";
 import type {
   SetVolumeMutation,
   SetVolumeMutationVariables,
-} from './Volume.types.gen'
-import type { ControlType } from '../../graphql.types'
+} from "./Volume.types.gen";
+import type { ControlType } from "../../graphql.types";
 
 const SET_VOLUME_MUTATION = gql`
   mutation SetVolume($id: String!, $type: ControlType!, $volume: Int!) {
     setVolume(id: $id, type: $type, volume: $volume)
   }
-`
+`;
 
 const Volume = ({
   id,
@@ -20,20 +20,20 @@ const Volume = ({
   isReachable,
   volume,
 }: {
-  id: string
-  type: ControlType
-  isReachable: boolean
-  volume: number
+  id: string;
+  type: ControlType;
+  isReachable: boolean;
+  volume: number;
 }) => {
-  const [volumeValue, setVolumeValue] = useState(volume)
+  const [volumeValue, setVolumeValue] = useState(volume);
   useEffect(() => {
-    setVolumeValue(volume ?? null)
-  }, [volume])
+    setVolumeValue(volume ?? null);
+  }, [volume]);
 
   const [setVolume, { loading }] = useMutation<
     SetVolumeMutation,
     SetVolumeMutationVariables
-  >(SET_VOLUME_MUTATION)
+  >(SET_VOLUME_MUTATION);
 
   return (
     <Slider
@@ -50,10 +50,10 @@ const Volume = ({
             type,
             volume: newValue,
           },
-        })
+        });
       }}
     />
-  )
-}
+  );
+};
 
-export default Volume
+export default Volume;

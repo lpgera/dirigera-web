@@ -1,1 +1,1 @@
-declare const __COMMIT_SHA__: string | null
+declare const __COMMIT_SHA__: string | null;

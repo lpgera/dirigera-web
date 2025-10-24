@@ -1,35 +1,35 @@
-import * as Types from '../graphql.types'
+import * as Types from "../graphql.types";
 
 export type SetColorTemperatureMutationVariables = Types.Exact<{
-  id: Types.Scalars['String']
-  type: Types.ControlType
-  colorTemperature: Types.Scalars['Int']
-}>
+  id: Types.Scalars["String"];
+  type: Types.ControlType;
+  colorTemperature: Types.Scalars["Int"];
+}>;
 
 export type SetColorTemperatureMutation = {
-  __typename?: 'Mutation'
-  setColorTemperature?: boolean | null
-}
+  __typename?: "Mutation";
+  setColorTemperature?: boolean | null;
+};
 
 export type SetColorHueAndSaturationMutationVariables = Types.Exact<{
-  id: Types.Scalars['String']
-  type: Types.ControlType
-  colorHue: Types.Scalars['Float']
-  colorSaturation: Types.Scalars['Float']
-}>
+  id: Types.Scalars["String"];
+  type: Types.ControlType;
+  colorHue: Types.Scalars["Float"];
+  colorSaturation: Types.Scalars["Float"];
+}>;
 
 export type SetColorHueAndSaturationMutation = {
-  __typename?: 'Mutation'
-  setColorHueAndSaturation?: boolean | null
-}
+  __typename?: "Mutation";
+  setColorHueAndSaturation?: boolean | null;
+};
 
 export type SetPlaybackMutationVariables = Types.Exact<{
-  id: Types.Scalars['String']
-  type: Types.ControlType
-  playback: Types.Scalars['String']
-}>
+  id: Types.Scalars["String"];
+  type: Types.ControlType;
+  playback: Types.Scalars["String"];
+}>;
 
 export type SetPlaybackMutation = {
-  __typename?: 'Mutation'
-  setPlayback?: boolean | null
-}
+  __typename?: "Mutation";
+  setPlayback?: boolean | null;
+};
