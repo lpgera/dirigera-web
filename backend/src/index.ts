@@ -68,7 +68,7 @@ async function start() {
     console.log(`Server is listening on port ${port}`)
   })
 
-  process.on('SIGINT', () => {
+  process.once('SIGINT', () => {
     console.log('Received SIGINT, shutting down server...')
     client.stopListeningForUpdates()
     wss.clients.forEach((ws) => ws.terminate())
