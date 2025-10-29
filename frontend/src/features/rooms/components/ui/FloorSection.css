@@ -1,0 +1,22 @@
+/* FloorSection Component */
+.floor-section {
+  margin-bottom: var(--floor-tabs-section-spacing, 48px);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-lg);
+  background-color: transparent;
+  transition: background-color 0.3s ease;
+}
+
+.floor-section-active {
+  background-color: var(--color-primary-bg-hover);
+}
+
+.floor-section-title {
+  margin-bottom: var(--spacing-md);
+  display: flex;
+  align-items: center;
+  gap: var(--floor-tabs-title-gap, 12px);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}

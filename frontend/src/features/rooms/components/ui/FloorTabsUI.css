@@ -1,19 +1,28 @@
+/* Component tokens */
+.floor-tabs {
+  --floor-tabs-nav-width: 200px;
+  --floor-tabs-nav-top: 146px;
+  --floor-tabs-gap: var(--spacing-md);
+  --floor-tabs-section-spacing: 48px;
+  --floor-tabs-title-gap: 12px;
+}
+
 .floor-tabs {
   display: flex;
-  gap: var(--spacing-md);
+  gap: var(--floor-tabs-gap);
 }
 
 .floor-tabs-nav {
   position: sticky;
-  top: 146px;
+  top: var(--floor-tabs-nav-top);
   align-self: flex-start;
-  min-width: 200px;
-  max-width: 200px;
+  min-width: var(--floor-tabs-nav-width);
+  max-width: var(--floor-tabs-nav-width);
 }
 
 .floor-tabs-nav-button {
   height: auto;
-  padding: 12px;
+  padding: var(--spacing-md);
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -27,7 +36,7 @@
 }
 
 .floor-section {
-  margin-bottom: 48px;
+  margin-bottom: var(--floor-tabs-section-spacing);
   padding: var(--spacing-md);
   border-radius: var(--radius-lg);
   background-color: transparent;
@@ -35,14 +44,14 @@
 }
 
 .floor-section-active {
-  background-color: rgba(24, 144, 255, 0.1);
+  background-color: var(--color-primary-bg-hover);
 }
 
 .floor-section-title {
   margin-bottom: var(--spacing-md);
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--floor-tabs-title-gap);
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-semibold);
   color: var(--color-text-primary);

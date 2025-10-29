@@ -77,7 +77,7 @@ export default defineConfig({
     __COMMIT_SHA__: JSON.stringify(process.env.COMMIT_SHA ?? null),
   },
   server: {
-    port: 3000,
+    port: 3099,
     host: true,
     proxy: {
       "/graphql": {
