@@ -1,0 +1,64 @@
+.app-layout {
+  background-color: var(--color-background);
+  min-height: 100vh;
+}
+
+.app-layout-content {
+  min-height: 100vh;
+  padding-right: var(--spacing-md);
+  padding-left: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+}
+
+.layout-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--header-z-index);
+  background-color: var(--header-bg);
+  padding-bottom: var(--spacing-md);
+  padding-top: var(--spacing-md);
+  box-sizing: border-box;
+  gap: var(--spacing-md);
+}
+
+.layout-header-logo {
+  display: block;
+  text-decoration: none;
+}
+
+.layout-header-logo-circle {
+  width: 46px;
+  height: 46px;
+  background-color: var(--color-primary);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.layout-header-logo:hover .layout-header-logo-circle {
+  transform: scale(1.05);
+}
+
+.layout-header-logo-icon {
+  color: #fbd912;
+}
+
+.layout-header-title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  margin: 0;
+  line-height: var(--line-height-tight);
+}
+
+.layout-header-title-link {
+  color: var(--color-text-primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.layout-header-title-link:hover {
+  color: var(--color-primary);
+}

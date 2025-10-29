@@ -1,7 +1,8 @@
 import React from "react";
-import { Col, Layout, Row, Typography } from "antd";
+import { Row, Col } from "@/components/ui";
 import { BsFillHouseFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import "./Layout.css";
 
 interface LayoutHeaderProps {
   title?: string;
@@ -12,47 +13,20 @@ export function LayoutHeader({
   title = "Peter Bangs vej 213",
 }: LayoutHeaderProps) {
   return (
-    <Row
-      gutter={8}
-      style={{
-        position: "sticky",
-        top: 0,
-        zIndex: "var(--header-z-index)",
-        backgroundColor: "var(--header-bg)",
-        paddingBottom: "var(--spacing-md)",
-        paddingTop: "var(--spacing-md)",
-        boxSizing: "border-box",
-        gap: "var(--spacing-md)",
-      }}
-    >
-      <Col flex="0">
-        <Link to="/">
-          <div
-            style={{
-              width: 46,
-              height: 46,
-              backgroundColor: "var(--color-primary)",
-              borderRadius: "50%",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <BsFillHouseFill
-              size={32}
-              style={{
-                color: "#fbd912",
-              }}
-            />
+    <Row gutter={8} className="layout-header">
+      <Col flex="none">
+        <Link to="/" className="layout-header-logo">
+          <div className="layout-header-logo-circle">
+            <BsFillHouseFill size={32} className="layout-header-logo-icon" />
           </div>
         </Link>
       </Col>
       <Col flex="auto">
-        <Typography.Title>
-          <Link to="/" style={{ color: "var(--color-text-primary)" }}>
+        <h1 className="layout-header-title">
+          <Link to="/" className="layout-header-title-link">
             {title}
           </Link>
-        </Typography.Title>
+        </h1>
       </Col>
     </Row>
   );
@@ -64,18 +38,8 @@ interface AppLayoutProps {
 
 export function AppLayout({ children }: AppLayoutProps) {
   return (
-    <Layout style={{ backgroundColor: "var(--color-background)" }}>
-      <Layout.Content
-        style={{
-          minHeight: "100vh",
-          paddingRight: "var(--spacing-md)",
-          paddingLeft: "var(--spacing-md)",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        {children}
-      </Layout.Content>
-    </Layout>
+    <div className="app-layout">
+      <div className="app-layout-content">{children}</div>
+    </div>
   );
 }

@@ -1,7 +1,6 @@
 import React, { ReactNode } from "react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { ConfigProvider, theme } from "antd";
 import { ApolloProvider } from "@apollo/client/react";
 import { queryClient } from "@/lib/react-query";
 import { createApolloClient } from "@/lib/apollo";
@@ -21,13 +20,7 @@ export function Providers({ children }: ProvidersProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <ApolloProvider client={apolloClient}>
-        <ConfigProvider
-          theme={{
-            algorithm: theme.darkAlgorithm,
-          }}
-        >
-          <WebSocketProvider>{children}</WebSocketProvider>
-        </ConfigProvider>
+        <WebSocketProvider>{children}</WebSocketProvider>
       </ApolloProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

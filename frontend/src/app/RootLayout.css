@@ -1,0 +1,14 @@
+.root-layout-logout {
+  display: flex;
+  align-items: flex-end;
+  position: absolute;
+  top: var(--spacing-md);
+  right: var(--spacing-md);
+  z-index: 101;
+}
+
+.root-layout-content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}

@@ -4,6 +4,7 @@ import { useIsAuthenticated } from "@/features/auth";
 import { Login } from "@/features/auth";
 import { Logout } from "@/features/auth";
 import { AppLayout, LayoutHeader } from "./Layout";
+import "./RootLayout.css";
 
 export function RootLayout() {
   const isAuthenticated = useIsAuthenticated();
@@ -11,19 +12,10 @@ export function RootLayout() {
   return (
     <AppLayout>
       <LayoutHeader />
-      <div
-        style={{
-          display: "flex",
-          alignItems: "flex-end",
-          position: "absolute",
-          top: 16,
-          right: 16,
-          zIndex: 101,
-        }}
-      >
+      <div className="root-layout-logout">
         <Logout />
       </div>
-      <div style={{ flex: "auto", display: "flex", flexDirection: "column" }}>
+      <div className="root-layout-content">
         {isAuthenticated ? <Outlet /> : <Login />}
       </div>
     </AppLayout>

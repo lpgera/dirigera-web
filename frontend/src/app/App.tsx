@@ -3,7 +3,6 @@ import { createHashRouter, RouterProvider } from "react-router-dom";
 import { RootLayout } from "./RootLayout";
 import { Providers } from "./Providers";
 import "@/styles/global.css";
-import "antd/dist/reset.css";
 
 const router = createHashRouter([
   {
