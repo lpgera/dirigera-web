@@ -1,0 +1,67 @@
+/* Component Design Tokens - Component-specific tokens */
+:root {
+  /* Button */
+  --button-primary-bg: var(--color-primary);
+  --button-primary-bg-hover: var(--color-primary-hover);
+  --button-primary-text: var(--color-text-on-primary);
+  --button-primary-border: var(--color-primary);
+  --button-padding-x: var(--spacing-md);
+  --button-padding-y: var(--spacing-sm);
+  --button-border-radius: var(--radius-md);
+  --button-font-weight: var(--font-weight-medium);
+
+  /* Card */
+  --card-bg: var(--color-surface);
+  --card-bg-hover: var(--color-surface-hover);
+  --card-border: var(--color-border);
+  --card-border-radius: var(--radius-lg);
+  --card-padding: var(--spacing-md);
+  --card-shadow: var(--shadow-md);
+
+  /* Input */
+  --input-bg: var(--color-background-elevated);
+  --input-border: var(--color-border);
+  --input-border-focus: var(--color-primary);
+  --input-text: var(--color-text-primary);
+  --input-placeholder: var(--color-text-tertiary);
+  --input-padding-x: var(--spacing-md);
+  --input-padding-y: var(--spacing-sm);
+  --input-border-radius: var(--radius-md);
+
+  /* Modal */
+  --modal-bg: var(--color-background-elevated);
+  --modal-overlay-bg: rgba(0, 0, 0, 0.75);
+  --modal-border-radius: var(--radius-xl);
+  --modal-padding: var(--spacing-xl);
+  --modal-shadow: var(--shadow-xl);
+
+  /* Device Card */
+  --device-card-bg: var(--card-bg);
+  --device-card-bg-hover: var(--card-bg-hover);
+  --device-card-border: var(--card-border);
+  --device-card-border-radius: var(--card-border-radius);
+  --device-card-padding: var(--card-padding);
+  --device-card-shadow: var(--card-shadow);
+
+  /* Room Card */
+  --room-card-bg: var(--card-bg);
+  --room-card-bg-hover: var(--card-bg-hover);
+  --room-card-border: var(--card-border);
+  --room-card-border-radius: var(--card-border-radius);
+  --room-card-padding: var(--card-padding);
+  --room-card-shadow: var(--card-shadow);
+
+  /* Header */
+  --header-bg: var(--color-background);
+  --header-border: var(--color-border);
+  --header-height: 64px;
+  --header-padding: var(--spacing-md);
+  --header-z-index: var(--z-index-sticky);
+
+  /* Tabs */
+  --tabs-border: var(--color-border);
+  --tabs-active-border: var(--color-primary);
+  --tabs-active-text: var(--color-primary);
+  --tabs-text: var(--color-text-secondary);
+  --tabs-hover-text: var(--color-text-primary);
+}

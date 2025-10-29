@@ -1,10 +1,27 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
+import path from "path";
 
 const target = process.env.BACKEND_URL ?? "http://localhost:4000";
 
 export default defineConfig({
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+      "@/app": path.resolve(__dirname, "./src/app"),
+      "@/features": path.resolve(__dirname, "./src/features"),
+      "@/components/ui": path.resolve(__dirname, "./src/components/ui"),
+      "@/hooks": path.resolve(__dirname, "./src/hooks"),
+      "@/stores": path.resolve(__dirname, "./src/stores"),
+      "@/lib": path.resolve(__dirname, "./src/lib"),
+      "@/utils": path.resolve(__dirname, "./src/utils"),
+      "@/types": path.resolve(__dirname, "./src/types"),
+      "@/config": path.resolve(__dirname, "./src/config"),
+      "@/constants": path.resolve(__dirname, "./src/constants"),
+      "@/styles": path.resolve(__dirname, "./src/styles"),
+    },
+  },
   plugins: [
     react(),
     VitePWA({

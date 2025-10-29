@@ -1,165 +1,411 @@
-# Dirigera Web - AI Coding Assistant Instructions
+# Repository Instructions
 
-## Architecture Overview
+## Tech Stack
 
-This is a **TypeScript monorepo** with npm workspaces (`backend/` and `frontend/`) for controlling IKEA Dirigera smart home devices. The backend serves both GraphQL APIs and the built frontend as static files.
+- **React 18+** with TypeScript (strict mode) - Suspense, useTransition, ErrorBoundary
+- **Zustand 4+** with Immer middleware (client state)
+- **React Query v5** (server state with optimistic updates)
+- **Context** (DI only, not state)
+- **Vitest + Testing Library** with MSW v2
+- **Storybook 8+** (CSF 3 format)
+- **Pure CSS** with 3-layer design tokens
+- **UI/Container split** (only when reused 3+ times)
 
-### Key Technology Stack
+## Workflow
 
-- **Backend**: Express + Apollo GraphQL Server + WebSocket updates
-- **Frontend**: React + Vite + Ant Design + Apollo Client + PWA
-- **Code Generation**: GraphQL Code Generator for type-safe operations
-- **Testing**: Node.js native test runner (backend only)
-- **Development**: Docker Compose for local development with hot reload
+Analyze the requirements and start with a simple implementation. As complexity grows, refactor to introduce layers, state management, and design tokens. Always prioritize maintainability and clarity.
 
-## Development Workflows
+Use playwright for evaluating the UI.
 
-### Starting Development Environment
+Use storybook for developing and documenting components in isolation.
 
-```bash
-# Full development with Docker (recommended)
-docker-compose up
+Always evaluate if a component already exists in the shared library before creating a new one. Attempt to reuse and extend existing components when possible.
 
-# Or manually with npm workspaces
-npm run watch -w backend    # Starts backend on :4000
-npm run watch -w frontend   # Starts frontend on :3000
-```
+When refactoring, aim to adhere to the established architecture and patterns. Ensure that new code follows the same conventions for imports, state management, and component structure. Aim to split components into UI and Containers, and adhere to single responsibility principles.
 
-### Code Generation (Critical)
+Split large features into smaller, manageable tasks. Implement and test each task incrementally to ensure stability and correctness.
 
-- **Backend**: `npm run graphql-codegen -w backend` generates `src/graphql/resolvers.gen.ts`
-- **Frontend**: `npm run graphql-codegen -w frontend` generates types throughout `src/`
-- Always run codegen after GraphQL schema changes before editing resolvers/components
-- Backend codegen uses GRAPHQL_SCHEMA_URL environment variable (defaults to http://localhost:4000/graphql)
-- Frontend codegen uses http://127.0.0.1:3000/graphql during development
+## Architecture
 
-### Testing & Building
-
-```bash
-npm test                    # Runs backend tests only (Node.js native test runner)
-npm run test-watch -w backend  # Watch mode for backend tests
-npm run build              # Builds frontend for production
-npm start                  # Starts production server
-npm run authenticate -w backend  # Get Dirigera gateway access token
-```
-
-### Linting & Code Quality
-
-```bash
-npm run check-updates      # Check for package updates across workspaces
-npx prettier --write .     # Format code (auto-runs on git commits via husky)
-```
-
-## GraphQL Patterns
-
-### Schema-First Architecture
-
-- GraphQL schema defined in `backend/src/graphql/definitions/*.ts` files
-- Each definition exports `typeDefs` and `resolvers`
-- Resolvers use generated types from `resolvers.gen.ts`
-- Example pattern:
-  ```typescript
-  export const typeDefs = gql`
-    extend type Mutation {
-      setIsOn(id: String!, type: ControlType!, isOn: Boolean!): Boolean @loggedIn
-    }
-  `
-  export const resolvers: Resolvers = {
-    Mutation: { setIsOn: async (_, { id, type, isOn }, { dirigera }) => { ... } }
-  }
-  ```
-
-### Frontend Type Generation
-
-- Uses **near-operation-file preset** - generates `.types.gen.ts` files next to components
-- Components import types: `import type { RoomQuery } from './Room.types.gen.ts'`
-- All GraphQL operations in components trigger type generation
-- Pattern: `const QUERY = gql\`...\``followed by`useLazyQuery<QueryType, QueryVariables>`
-
-### Authentication Pattern
-
-- Uses `@loggedIn` directive in schema for protected operations
-- JWT tokens stored in React context (`AuthContext`)
-- WebSocket connection includes token in URL params: `ws://host/websocket?token=...`
-- Backend verifies JWT on both HTTP and WebSocket connections
-
-## File Structure Conventions
-
-### Backend Organization
+### Layer Structure
 
 ```
-backend/src/
-├── index.ts              # Express server + WebSocket setup
-├── dirigera.ts           # IKEA Dirigera API client
-├── jwt.ts               # JWT utilities with tests
-└── graphql/
-    ├── server.ts        # Apollo server configuration
-    ├── context.ts       # GraphQL context (user auth, etc.)
-    ├── definitions/     # Schema definitions + resolvers
-    └── directives/      # Custom GraphQL directives
+App (routes, pages)
+  ↓ can import
+Features (business domains: auth, users, posts)
+  ↓ can import
+Shared (components/ui, hooks, utils, lib, stores, types)
 ```
 
-### Frontend Organization
+**Rule:** Unidirectional imports only. Shared cannot import Features/App.
+
+### Component Pattern
+
+- **Container**: Data fetching, state, business logic, handlers
+- **UI**: Pure presentation, props only, no store/API access
+- **Split only when reused 3+ times**
+
+### Design Tokens (3 Layers)
 
 ```
-frontend/src/components/
-├── App.tsx              # Router + providers setup
-├── Frame.tsx            # Layout component
-├── AuthContext.tsx     # Authentication state
-├── WebSocketUpdateProvider.tsx  # Real-time updates
-└── deviceControls/      # Reusable device control components
+Primitives (--color-blue-500)
+  → Semantic (--color-primary)
+    → Component (--button-primary-bg)
 ```
 
-## Smart Home Domain Patterns
+Always use component tokens in CSS.
 
-### Device Control Components
+## Folder Structure
 
-- Located in `frontend/src/components/deviceControls/`
-- Each control has its own GraphQL mutation and types
-- Examples: `IsOn.tsx`, `LightLevel.tsx`, `Volume.tsx`
-- Use Ant Design components for UI consistency
-- Pattern: Accept `{ id, name, type, isReachable, [controlValue] }` props
-- Always include loading states and disable controls when `!isReachable`
+```
+src/
+├── app/              # Routes, App component, router
+├── features/         # Business domains
+│   └── auth/
+│       ├── api/
+│       ├── components/
+│       │   ├── ui/          # Presentational
+│       │   └── containers/  # Data + logic
+│       ├── hooks/
+│       ├── stores/
+│       ├── types/
+│       └── index.ts         # Public API exports only
+├── components/ui/    # Shared components
+├── hooks/
+├── stores/
+├── lib/              # Third-party wrappers
+├── utils/
+├── types/
+├── config/
+├── constants/
+└── styles/
+    └── tokens/
+        ├── primitives.css
+        ├── semantic.css
+        └── components.css
+```
 
-### Real-time Updates
+## Key Rules
 
-- WebSocket connection established in `WebSocketUpdateProvider`
-- Backend broadcasts device state changes via WebSocket
-- Frontend components refetch data on WebSocket messages using `useRefetch.ts`
-- Pattern: `useRefetch(refetch)` triggers refetch on both WebSocket messages and tab focus
-- WebSocket URL constructed dynamically with JWT token in query params
+### State Management
 
-## Environment Configuration
+```tsx
+// ✅ Server state
+const { data } = useQuery({ queryKey: ["tasks"], queryFn: fetchTasks });
 
-Required `.env` variables:
+// ✅ Client state
+const count = useTaskStore((s) => s.tasks.length);
 
-- `GATEWAY_IP`: IKEA Dirigera gateway IP (optional - auto-discovery)
-- `ACCESS_TOKEN`: Gateway access token (get via `npx dirigera authenticate`)
-- `JWT_SECRET`: For signing auth tokens
-- `PASSWORD`: Web interface password
-- `PORT`: Server port (default: 4000)
+// ✅ Local UI state
+const [isOpen, setIsOpen] = useState(false);
 
-## Storybook Integration
+// ❌ Never use useState for server data
+```
 
-- Stories located next to components (`.stories.tsx`)
-- Run with `npm run storybook -w frontend`
-- Used for component development and documentation
-- Chromatic integration for visual testing
-- Stories use Apollo MockedProvider with comprehensive mock data
-- Includes `withRouter` decorator for components using React Router
+### Imports
 
-## Common Patterns
+```tsx
+// ✅ Feature public API
+import { LoginForm, useAuth } from "@/features/auth";
 
-- **GraphQL operations**: Always include proper typing with generated types
-- **Component props**: Use generated GraphQL types for device/room data
-- **Error handling**: Follow existing patterns in device controls
-- **State management**: React Context for auth, Apollo Client for data
-- **Styling**: Use Ant Design components with dark theme configuration
+// ❌ Bypassing public API
+import { LoginForm } from "@/features/auth/components/ui/LoginForm";
+```
 
-## Testing Approach
+### Container Example
 
-- Backend: Node.js native test runner with `.test.ts` files
-- Tests focus on business logic (JWT, GraphQL resolvers, auth)
-- No frontend tests currently - relies on Storybook for component validation
-- Use `describe`, `it`, and `before` from `node:test` module
-- Test pattern: Import modules dynamically after setting up environment variables
+```tsx
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useUserStore } from "@/features/users/stores/userStore";
+import { fetchProfile, updateProfile } from "@/features/users/api";
+import { UserCard } from "../ui/UserCard";
+
+export function UserDashboard() {
+  const user = useUserStore((s) => s.currentUser);
+  const queryClient = useQueryClient();
+
+  const { data: profile, isLoading } = useQuery({
+    queryKey: ["profile", user?.id],
+    queryFn: () => fetchProfile(user!.id),
+    enabled: !!user,
+  });
+
+  const mutation = useMutation({
+    mutationFn: updateProfile,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["profile"] }),
+  });
+
+  if (isLoading) return <div>Loading...</div>;
+  if (!profile) return <div>No profile found</div>;
+
+  return <UserCard user={user} profile={profile} onEdit={mutation.mutate} />;
+}
+```
+
+### UI Example
+
+```tsx
+import type { User, Profile, ProfileUpdateData } from "@/features/users/types";
+
+interface UserCardProps {
+  user: User | null;
+  profile: Profile;
+  onEdit: (data: ProfileUpdateData) => void;
+}
+
+export function UserCard({ user, profile, onEdit }: UserCardProps) {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    onEdit({
+      name: formData.get("name") as string,
+      bio: formData.get("bio") as string,
+    });
+  };
+
+  return (
+    <div className="user-card">
+      <h2>{user?.name}</h2>
+      <form onSubmit={handleSubmit}>
+        <input name="name" defaultValue={profile.name} />
+        <textarea name="bio" defaultValue={profile.bio} />
+        <button type="submit">Save</button>
+      </form>
+    </div>
+  );
+}
+```
+
+### Zustand Store
+
+```tsx
+import { create } from "zustand";
+import { immer } from "zustand/middleware/immer";
+
+interface TaskStore {
+  tasks: Task[];
+  addTask: (task: Task) => void;
+  removeTask: (id: string) => void;
+}
+
+export const useTaskStore = create<TaskStore>()(
+  immer((set) => ({
+    tasks: [],
+    addTask: (task) =>
+      set((state) => {
+        state.tasks.push(task);
+      }),
+    removeTask: (id) =>
+      set((state) => {
+        const index = state.tasks.findIndex((t) => t.id === id);
+        if (index !== -1) state.tasks.splice(index, 1);
+      }),
+  }))
+);
+
+// Selectors
+export const useCompletedTasks = () =>
+  useTaskStore((state) => state.tasks.filter((t) => t.completed));
+```
+
+### React Query Patterns
+
+```tsx
+// API Layer
+export const tasksApi = {
+  getAll: () => api.get<Task[]>("/tasks"),
+  create: (data: CreateTaskData) => api.post<Task>("/tasks", data),
+  update: (id: string, data: UpdateTaskData) =>
+    api.patch<Task>(`/tasks/${id}`, data),
+  delete: (id: string) => api.delete(`/tasks/${id}`),
+};
+
+// Query Hook
+export function useTasks() {
+  return useQuery({
+    queryKey: ["tasks"],
+    queryFn: tasksApi.getAll,
+    staleTime: 5 * 60 * 1000,
+  });
+}
+
+// Mutation Hook with Optimistic Updates
+export function useUpdateTask() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, data }: { id: string; data: UpdateTaskData }) =>
+      tasksApi.update(id, data),
+    onMutate: async ({ id, data }) => {
+      await queryClient.cancelQueries({ queryKey: ["tasks"] });
+      const previous = queryClient.getQueryData(["tasks"]);
+
+      queryClient.setQueryData(["tasks"], (old: Task[] | undefined) =>
+        old?.map((task) => (task.id === id ? { ...task, ...data } : task))
+      );
+
+      return { previous };
+    },
+    onError: (err, vars, context) => {
+      queryClient.setQueryData(["tasks"], context?.previous);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+    },
+  });
+}
+```
+
+## Testing
+
+### Component Test
+
+```tsx
+import { render, screen } from "@testing-library/react";
+import { userEvent } from "@testing-library/user-event";
+import { TaskList } from "./TaskList";
+
+test("adds new task", async () => {
+  const user = userEvent.setup();
+  render(<TaskList />);
+
+  await user.type(screen.getByRole("textbox"), "New task");
+  await user.click(screen.getByRole("button", { name: /add/i }));
+
+  expect(screen.getByText("New task")).toBeInTheDocument();
+});
+```
+
+### API Mock (MSW)
+
+```tsx
+import { http, HttpResponse } from "msw";
+import { setupServer } from "msw/node";
+
+export const handlers = [
+  http.get("/api/tasks", () => {
+    return HttpResponse.json([{ id: "1", title: "Task 1", completed: false }]);
+  }),
+];
+
+export const server = setupServer(...handlers);
+```
+
+## Storybook
+
+```tsx
+import type { Meta, StoryObj } from "@storybook/react";
+import { Button } from "./Button";
+
+const meta = {
+  component: Button,
+  tags: ["autodocs"],
+} satisfies Meta<typeof Button>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Primary: Story = {
+  args: { variant: "primary", children: "Button" },
+};
+```
+
+## Import Order
+
+```tsx
+// 1. React
+import { useState, useEffect } from "react";
+
+// 2. External libraries
+import { useQuery } from "@tanstack/react-query";
+
+// 3. Internal (alphabetical by path segment)
+import { Button } from "@/components/ui/Button";
+import { useAuth } from "@/features/auth";
+import { api } from "@/lib/api";
+
+// 4. Types
+import type { User } from "@/types/user";
+
+// 5. Relative imports
+import { helper } from "./utils";
+```
+
+## TypeScript Rules
+
+- Use `satisfies` for type validation while preserving inference
+- Never use `any` - use `unknown` if truly dynamic
+- Enable strict mode: `strictNullChecks`, `noImplicitAny`, `exactOptionalPropertyTypes`
+- Use `type` for objects, `interface` for extensible shapes
+- Leverage discriminated unions for variants
+
+## Code Style
+
+- **Double quotes** for strings
+- **Semicolons** required
+- **2-space** indentation
+- **100 char** line length
+- Named exports (no default exports except for route components)
+
+## Anti-Patterns to Avoid
+
+```tsx
+// ❌ useState for server data
+const [users, setUsers] = useState([]);
+
+// ❌ Bypassing feature public API
+import { LoginForm } from "@/features/auth/components/ui/LoginForm";
+
+// ❌ Wrong import order
+import { useAuth } from "@/features/auth";
+import { useState } from "react";
+
+// ❌ Using "any"
+export function Component(props: any) { }
+
+// ❌ Manual spread with Zustand+Immer
+set((state) => ({ ...state, items: [...state.items, item] }));
+
+// ❌ No error handling
+const { data } = useQuery({ queryKey: ["users"], queryFn: fetchUsers });
+return <div>{data.map(...)}</div>; // data might be undefined
+```
+
+## Modern React Patterns
+
+```tsx
+// Suspense with useSuspenseQuery
+import { Suspense } from "react";
+import { useSuspenseQuery } from "@tanstack/react-query";
+
+function UserProfile({ userId }: { userId: string }) {
+  const { data: user } = useSuspenseQuery({
+    queryKey: ["user", userId],
+    queryFn: () => fetchUser(userId),
+  });
+  return <div>{user.name}</div>;
+}
+
+// Wrap with boundaries
+export function UserProfileRoute() {
+  return (
+    <ErrorBoundary>
+      <Suspense fallback={<Skeleton />}>
+        <UserProfile userId="123" />
+      </Suspense>
+    </ErrorBoundary>
+  );
+}
+
+// useTransition for non-urgent updates
+const [isPending, startTransition] = useTransition();
+const handleClick = () => {
+  startTransition(() => {
+    setFilter(newValue);
+  });
+};
+```
+
+---
+
+**Remember:** Start simple, scale when needed. Respect layer boundaries. Use design tokens. Test behavior, not implementation.
