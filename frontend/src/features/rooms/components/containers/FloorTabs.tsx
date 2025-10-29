@@ -1,11 +1,9 @@
 import React from "react";
-import { Grid } from "antd";
+import { useBreakpoint } from "@/components/ui";
 import { FloorTabsUI } from "../ui/FloorTabsUI";
 import { useFloors } from "@/hooks";
 import type { Room } from "@/graphql.types";
 import type { ColumnSizes } from "../../types";
-
-const { useBreakpoint } = Grid;
 
 interface FloorTabsProps {
   rooms: Room[];

@@ -1,13 +1,18 @@
 import React from "react";
-import { Card, Col, Grid, Result, Row, Skeleton } from "antd";
+import {
+  Card,
+  Col,
+  Row,
+  Skeleton,
+  Result,
+  useBreakpoint,
+} from "@/components/ui";
 import { useRooms } from "../../hooks/useRooms";
 import { useFloors } from "@/hooks";
 import { RoomsGrid } from "./RoomsGrid";
 import { FloorTabs } from "./FloorTabs";
 import Scenes from "@/components/Scenes";
 import type { ColumnSizes } from "../../types";
-
-const { useBreakpoint } = Grid;
 
 const columnSizes: ColumnSizes = {
   xs: 12,

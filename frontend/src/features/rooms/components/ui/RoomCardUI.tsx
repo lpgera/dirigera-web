@@ -1,7 +1,8 @@
 import React from "react";
-import { Button, Card, Col, Divider, Row } from "antd";
+import { Button, Card, Divider } from "@/components/ui";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import type { Device } from "@/graphql.types";
+import "./RoomCardUI.css";
 
 interface RoomCardUIProps {
   roomName: string;
@@ -51,28 +52,28 @@ export function RoomCardUI({
       {renderScenes}
 
       {devicesWithoutBattery.length > 0 && (
-        <Row gutter={[8, 16]} style={{ marginBottom: 16 }}>
+        <div className="room-card-devices">
           {devicesWithoutBattery.map((device, index) => (
-            <Col key={device.id} span={24}>
+            <div key={device.id} className="room-card-device">
               {renderDeviceControl(device)}
               {index < devicesWithoutBattery.length - 1 && (
                 <Divider style={{ margin: "4px 0" }} />
               )}
-            </Col>
+            </div>
           ))}
-        </Row>
+        </div>
       )}
 
       {devicesWithBattery.length > 0 && (
         <>
           <Divider />
-          <Row>
+          <div className="room-card-batteries">
             {devicesWithBattery.map((device) => (
-              <Col key={device.id} style={{ marginRight: 8 }}>
+              <div key={device.id} className="room-card-battery">
                 {renderBatteryIcon(device)}
-              </Col>
+              </div>
             ))}
-          </Row>
+          </div>
         </>
       )}
     </Card>

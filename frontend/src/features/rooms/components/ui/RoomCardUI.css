@@ -1,0 +1,20 @@
+.room-card-devices {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.room-card-device {
+  width: 100%;
+}
+
+.room-card-batteries {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.room-card-battery {
+  flex: 0 0 auto;
+}

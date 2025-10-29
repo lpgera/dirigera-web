@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Button, Col, Row, Space } from "antd";
+import { Button, Row, Col, Space } from "@/components/ui";
 import { FloorIcon } from "@/components/ui/FloorIcon";
 import Scenes from "@/components/Scenes";
 import { RoomCard } from "../containers/RoomCard";
 import type { Floor } from "@/hooks";
 import type { Room } from "@/graphql.types";
 import type { ColumnSizes } from "../../types";
+import "./FloorTabsUI.css";
 
 interface FloorTabsUIProps {
   groupedRooms: Map<string, { floor: Floor | null; rooms: Room[] }>;
@@ -77,31 +78,16 @@ export function FloorTabsUI({
   };
 
   return (
-    <div style={{ display: "flex", gap: 16 }}>
-      <div
-        style={{
-          position: "sticky",
-          top: 146,
-          alignSelf: "flex-start",
-          minWidth: 200,
-          maxWidth: 200,
-        }}
-      >
+    <div className="floor-tabs">
+      <div className="floor-tabs-nav">
         <Space direction="vertical" size="small" style={{ width: "100%" }}>
           {floors.map((floor) => (
             <Button
               key={floor.id}
-              type={floor.id === activeFloorId ? "default" : "text"}
+              variant={floor.id === activeFloorId ? "default" : "text"}
               onClick={() => scrollToFloor(floor.id)}
               block
-              style={{
-                height: "auto",
-                padding: "12px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "flex-start",
-                gap: 8,
-              }}
+              className="floor-tabs-nav-button"
             >
               <FloorIcon
                 totalFloors={floors.length}
@@ -109,13 +95,13 @@ export function FloorTabsUI({
                 isActive={floor.id === activeFloorId}
                 size={32}
               />
-              <span style={{ textAlign: "left" }}>{floor.name}</span>
+              <span>{floor.name}</span>
             </Button>
           ))}
         </Space>
       </div>
 
-      <div style={{ flex: 1, minWidth: 0 }}>
+      <div className="floor-tabs-content">
         {floors.map((floor) => {
           const floorData = groupedRooms.get(floor.id);
           const floorRooms = floorData?.rooms || [];
@@ -130,25 +116,9 @@ export function FloorTabsUI({
                   floorRefs.current.delete(floor.id);
                 }
               }}
-              style={{
-                marginBottom: 48,
-                padding: 16,
-                borderRadius: 8,
-                backgroundColor:
-                  floor.id === activeFloorId
-                    ? "var(--ant-color-primary-bg)"
-                    : "transparent",
-                transition: "background-color 0.3s ease",
-              }}
+              className={`floor-section ${floor.id === activeFloorId ? "floor-section-active" : ""}`}
             >
-              <h2
-                style={{
-                  marginBottom: 16,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 12,
-                }}
-              >
+              <h2 className="floor-section-title">
                 <FloorIcon
                   totalFloors={floors.length}
                   floorOrder={floor.order}

@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Row } from "antd";
+import { Row, Col } from "@/components/ui";
 import type { Room } from "@/graphql.types";
 import type { ColumnSizes } from "../../types";
 
