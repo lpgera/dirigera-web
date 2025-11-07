@@ -1,0 +1,43 @@
+{
+  "stepId": "step-007",
+  "featureId": "feat-1762259340950-7r6xn",
+  "name": "Create FloorTabContent Subcomponent",
+  "objective": "Build a FloorTabContent component that displays content for the currently selected floor tab with proper accessibility attributes, loading states, and smooth transitions between content changes.",
+  "context": {
+    "previousSteps": [
+      "FLOORTABS_ANALYSIS.md documents the current tab content rendering and any loading or transition logic",
+      "frontend/src/components/FloorTabs/types.ts defines FloorTabContentProps interface",
+      "frontend/src/components/FloorTabs/FloorTabItem.tsx provides tab items that control which content is shown",
+      "frontend/src/components/FloorTabs/FloorTabsList.tsx manages the tab selection state"
+    ],
+    "relevantFiles": [
+      "FLOORTABS_ANALYSIS.md",
+      "frontend/src/components/FloorTabs.tsx",
+      "frontend/src/components/FloorTabs/types.ts"
+    ],
+    "codeSnippets": {}
+  },
+  "instructions": "1. Create frontend/src/components/FloorTabs/FloorTabContent.tsx file. 2. Import React, FloorTabContentProps from types.ts, and any necessary hooks like useState or useEffect if transitions are needed. 3. Review FLOORTABS_ANALYSIS.md to understand current content rendering approach, whether content is passed as children or rendered based on active floor data, and any loading or error states. 4. Define FloorTabContent as functional component accepting FloorTabContentProps (activeFloor object, children as ReactNode or render function, optional isLoading boolean, className, id for accessibility linking). 5. Implement the component return with a container div with role tabpanel for semantic HTML and accessibility. 6. Add accessibility attributes: role equals tabpanel, aria-labelledby pointing to the corresponding tab button ID using activeFloor.id with suffix like tab, id attribute set to panel ID using activeFloor.id with suffix like panel for aria-controls linking, tabIndex set to 0 to make content focusable. 7. Conditionally render content based on isLoading prop: if isLoading is true show loading indicator or skeleton, otherwise render the actual content. 8. Handle content rendering: if children is provided render it directly, if activeFloor data should drive content render based on floor properties, support both patterns for flexibility. 9. Add optional fade or slide transition effects when activeFloor changes using CSS transitions or animation libraries, wrap content in transition container if needed. 10. Apply styling through CSS classes for content container, padding, spacing, and any visual styling from current implementation, merge with provided className prop. 11. Consider adding key prop based on activeFloor.id to force remount on floor change if needed for transitions or state reset. 12. Add error boundary consideration: document in JSDoc if parent should wrap with error boundary or if component should handle errors internally. 13. Optimize rendering with React.memo if content doesn't need to re-render when unrelated props change. 14. Add comprehensive JSDoc comment explaining component purpose, props, accessibility features, and usage examples showing both children and data-driven rendering patterns. 15. Ensure component maintains focus management: when content changes, consider whether focus should move to panel or stay on tab.",
+  "validationCriteria": [
+    "Criterion 1: File frontend/src/components/FloorTabs/FloorTabContent.tsx exists and exports FloorTabContent component",
+    "Criterion 2: Component accepts FloorTabContentProps with proper TypeScript typing from types.ts",
+    "Criterion 3: Component renders a container with role tabpanel and proper ARIA attributes (aria-labelledby, id, tabIndex)",
+    "Criterion 4: Component correctly links to corresponding tab via aria-labelledby using activeFloor.id",
+    "Criterion 5: Component handles loading state by conditionally rendering loading indicator when isLoading is true",
+    "Criterion 6: Component supports flexible content rendering through children prop or activeFloor data",
+    "Criterion 7: Component applies appropriate styling and merges with provided className prop",
+    "Criterion 8: Component includes smooth transitions when activeFloor changes if applicable",
+    "Criterion 9: JSDoc comments document the component API, accessibility features, and usage patterns",
+    "Criterion 10: No TypeScript compilation errors and component follows WAI-ARIA tabs pattern for tabpanel role"
+  ],
+  "expectedOutputs": {
+    "filesModified": [],
+    "filesCreated": [
+      "frontend/src/components/FloorTabs/FloorTabContent.tsx"
+    ],
+    "testsToRun": [
+      "npx tsc --noEmit",
+      "npm run lint"
+    ]
+  }
+}

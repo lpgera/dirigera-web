@@ -1,0 +1,13 @@
+{
+  "featureId": "feat-1762259340950-7r6xn",
+  "status": "completed",
+  "currentStep": null,
+  "completedSteps": [],
+  "startedAt": "2025-11-04T12:29:00.953Z",
+  "updatedAt": "2025-11-04T12:41:19.509Z",
+  "blockers": [],
+  "metadata": {
+    "totalSteps": 10,
+    "estimatedComplexity": "medium"
+  }
+}

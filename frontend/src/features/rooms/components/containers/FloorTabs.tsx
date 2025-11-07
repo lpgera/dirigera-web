@@ -3,7 +3,7 @@ import { Row, Col } from "@/components/ui";
 import { useBreakpoint } from "@/components/ui";
 import { FloorTabsUI } from "../ui/FloorTabsUI";
 import { useFloors } from "@/hooks";
-import Scenes from "@/components/Scenes";
+import { Scenes } from "@/features/scenes";
 import { RoomCard } from "./RoomCard";
 import type { Room } from "@/graphql.types";
 import type { ColumnSizes } from "../../types";

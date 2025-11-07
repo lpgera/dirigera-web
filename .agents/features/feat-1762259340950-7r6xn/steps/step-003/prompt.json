@@ -1,0 +1,40 @@
+{
+  "stepId": "step-003",
+  "featureId": "feat-1762259340950-7r6xn",
+  "name": "Create Custom Hooks",
+  "objective": "Extract all stateful logic and side effects from the FloorTabs component into a custom useFloorTabs hook that manages tab selection, active state, and business logic, providing a clean interface for components to consume.",
+  "context": {
+    "previousSteps": [
+      "FLOORTABS_ANALYSIS.md documents all current state management, handlers, and side effects in the existing component",
+      "frontend/src/components/FloorTabs/types.ts defines UseFloorTabsReturn and UseFloorTabsOptions interfaces"
+    ],
+    "relevantFiles": [
+      "FLOORTABS_ANALYSIS.md",
+      "frontend/src/components/FloorTabs.tsx",
+      "frontend/src/components/FloorTabs/types.ts"
+    ],
+    "codeSnippets": {}
+  },
+  "instructions": "1. Create directory frontend/src/components/FloorTabs/hooks/ if it does not exist. 2. Create frontend/src/components/FloorTabs/hooks/useFloorTabs.ts file. 3. Import necessary React hooks (useState, useEffect, useCallback, useMemo) and the type definitions from types.ts (UseFloorTabsOptions, UseFloorTabsReturn, Floor). 4. Review FLOORTABS_ANALYSIS.md to identify all state variables (like activeFloorId, selectedFloor), side effects (useEffect hooks), and handler functions (like handleFloorChange, handleTabClick) from the current implementation. 5. Define the useFloorTabs function signature accepting UseFloorTabsOptions parameter with destructured properties (floors array, initialFloorId, onFloorChange callback, any other configuration). 6. Implement state management using useState for activeFloorId, initialize with initialFloorId or first floor from array. 7. Create a memoized activeFloor derived value using useMemo that finds the current floor object from the floors array based on activeFloorId. 8. Implement handleFloorChange function using useCallback that updates activeFloorId state and calls the onFloorChange callback if provided, include validation to ensure floor exists. 9. Implement handleTabClick function using useCallback that wraps handleFloorChange and can include additional logic like preventing clicks on already active tabs or disabled tabs. 10. Add useEffect hooks for any side effects identified in the analysis (like syncing with external state, URL parameters, or localStorage). 11. Return an object matching UseFloorTabsReturn interface containing activeFloorId, activeFloor, handleFloorChange, handleTabClick, and any other utility methods or derived state. 12. Add comprehensive JSDoc comments explaining the hook purpose, parameters, and return values. 13. Create frontend/src/components/FloorTabs/hooks/index.ts as a barrel export file that re-exports useFloorTabs. 14. Ensure all functions use proper TypeScript typing and follow React hooks best practices (dependencies arrays, stable references with useCallback).",
+  "validationCriteria": [
+    "Criterion 1: File frontend/src/components/FloorTabs/hooks/useFloorTabs.ts exists and exports the useFloorTabs hook function",
+    "Criterion 2: The hook accepts UseFloorTabsOptions parameter and returns UseFloorTabsReturn type as defined in types.ts",
+    "Criterion 3: All state management logic from the original component is encapsulated in the hook including activeFloorId state and derived activeFloor value",
+    "Criterion 4: Handler functions (handleFloorChange, handleTabClick) are properly memoized with useCallback and include appropriate validation",
+    "Criterion 5: All side effects from the original component are preserved in useEffect hooks with correct dependency arrays",
+    "Criterion 6: File frontend/src/components/FloorTabs/hooks/index.ts exists and exports useFloorTabs",
+    "Criterion 7: No TypeScript compilation errors and all React hooks rules are followed",
+    "Criterion 8: JSDoc comments document the hook API clearly"
+  ],
+  "expectedOutputs": {
+    "filesModified": [],
+    "filesCreated": [
+      "frontend/src/components/FloorTabs/hooks/useFloorTabs.ts",
+      "frontend/src/components/FloorTabs/hooks/index.ts"
+    ],
+    "testsToRun": [
+      "npx tsc --noEmit",
+      "npm run lint"
+    ]
+  }
+}

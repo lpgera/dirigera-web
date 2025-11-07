@@ -1,9 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { RoomCardUI } from "../ui/RoomCardUI";
-import Scenes from "@/components/Scenes";
-import DeviceControl from "@/components/DeviceControl";
-import BatteryIcon from "@/components/BatteryIcon";
+import { Scenes } from "@/features/scenes";
+import { DeviceControl, BatteryIndicator } from "@/features/devices";
 import type { Room, Device } from "@/graphql.types";
 
 interface RoomCardProps {
@@ -24,7 +23,7 @@ export function RoomCard({ room }: RoomCardProps) {
   );
 
   const renderBatteryIcon = (device: Device) => (
-    <BatteryIcon
+    <BatteryIndicator
       batteryPercentage={device.batteryPercentage!}
       name={device.name}
     />

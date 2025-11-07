@@ -1,0 +1,12 @@
+{
+  "stepId": "step-001",
+  "featureId": "feat-1762259340950-7r6xn",
+  "status": "failed",
+  "attempts": 1,
+  "startedAt": "2025-11-04T12:41:19.501Z",
+  "error": {
+    "message": "Validation failed",
+    "details": "No files were modified, but files were expected to change",
+    "recoverable": true
+  }
+}

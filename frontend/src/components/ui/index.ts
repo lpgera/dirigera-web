@@ -3,3 +3,6 @@ export { Card } from "./Card";
 export { Row, Col, useBreakpoint } from "./Grid";
 export { Divider, Space, Skeleton, Result } from "./Utils";
 export { FloorIcon } from "./FloorIcon";
+export { Switch } from "./Switch";
+export { Modal } from "./Modal";
+export { Slider } from "./Slider";

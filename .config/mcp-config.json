@@ -7,6 +7,9 @@
     "context7": {
       "command": "npx",
       "args": ["@mcp-dev/context7@latest"]
+    },
+    "workspace-code-search": {
+      "url": "http://localhost:8978/sse"
     }
   }
 }

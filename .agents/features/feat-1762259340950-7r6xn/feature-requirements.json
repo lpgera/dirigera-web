@@ -1,0 +1,160 @@
+{
+  "id": "feat-1762259340950-7r6xn",
+  "name": "Floor Tabs Subcomponents Refactoring",
+  "userRequest": "implement the feature described in C:\\src\\GitHub\\dirigera-web\\dirigera-web\\FLOORTABS_SUBCOMPONENTS_REFACTORING_PLAN.md using the instructions in the folder C:\\src\\GitHub\\dirigera-web\\dirigera-web\\.github\\instructions",
+  "createdAt": "2025-11-04T12:29:00.950Z",
+  "overview": "Refactor the floor tabs component to use proper subcomponents architecture for better maintainability, reusability, and separation of concerns. This involves breaking down monolithic components into smaller, focused subcomponents with clear responsibilities.",
+  "goals": [
+    "Improve code maintainability by creating smaller, focused components",
+    "Enhance reusability of UI components across the application",
+    "Establish clear separation of concerns between presentation and logic",
+    "Create a more testable component architecture",
+    "Follow React best practices and patterns",
+    "Maintain existing functionality while improving structure"
+  ],
+  "affectedComponents": [
+    "frontend/src/components/FloorTabs.tsx",
+    "frontend/src/components/FloorTabs/index.tsx",
+    "frontend/src/components/FloorTabs/FloorTabsList.tsx",
+    "frontend/src/components/FloorTabs/FloorTabItem.tsx",
+    "frontend/src/components/FloorTabs/FloorTabContent.tsx",
+    "frontend/src/components/FloorTabs/types.ts",
+    "frontend/src/components/FloorTabs/hooks/useFloorTabs.ts",
+    "frontend/src/components/FloorTabs/utils/floorTabsHelpers.ts"
+  ],
+  "dependencies": [
+    "React",
+    "TypeScript"
+  ],
+  "estimatedComplexity": "medium",
+  "steps": [
+    {
+      "stepId": "step-001",
+      "name": "Analyze Current Implementation",
+      "description": "Read and analyze the FLOORTABS_SUBCOMPONENTS_REFACTORING_PLAN.md document and the .github/instructions folder to understand the specific requirements, patterns, and guidelines. Document the current FloorTabs component structure, identify all props, state, and logic that needs to be preserved. Create a mapping of current functionality to proposed subcomponents.",
+      "dependencies": [],
+      "estimatedFiles": [
+        "FLOORTABS_SUBCOMPONENTS_REFACTORING_PLAN.md",
+        ".github/instructions/*",
+        "frontend/src/components/FloorTabs.tsx"
+      ]
+    },
+    {
+      "stepId": "step-002",
+      "name": "Create Type Definitions",
+      "description": "Create a new types.ts file in the FloorTabs directory that defines all TypeScript interfaces and types for the component and its subcomponents. Include types for floor data, tab state, event handlers, and component props. Ensure type safety across all subcomponents.",
+      "dependencies": [
+        "Analyze Current Implementation"
+      ],
+      "estimatedFiles": [
+        "frontend/src/components/FloorTabs/types.ts"
+      ]
+    },
+    {
+      "stepId": "step-003",
+      "name": "Create Custom Hooks",
+      "description": "Extract stateful logic and side effects into custom hooks. Create useFloorTabs hook to manage tab selection, active state, and tab-related business logic. This hook should encapsulate all state management and provide clean interfaces for components to consume.",
+      "dependencies": [
+        "Create Type Definitions"
+      ],
+      "estimatedFiles": [
+        "frontend/src/components/FloorTabs/hooks/useFloorTabs.ts",
+        "frontend/src/components/FloorTabs/hooks/index.ts"
+      ]
+    },
+    {
+      "stepId": "step-004",
+      "name": "Create Utility Functions",
+      "description": "Extract pure functions and helper methods into a utils directory. Create floorTabsHelpers.ts for data transformation, validation, and other utility functions that don't require React context. Keep these functions pure and easily testable.",
+      "dependencies": [
+        "Create Type Definitions"
+      ],
+      "estimatedFiles": [
+        "frontend/src/components/FloorTabs/utils/floorTabsHelpers.ts",
+        "frontend/src/components/FloorTabs/utils/index.ts"
+      ]
+    },
+    {
+      "stepId": "step-005",
+      "name": "Create FloorTabItem Subcomponent",
+      "description": "Build the FloorTabItem component that represents a single tab. This should be a presentational component that receives props for the tab data, active state, and click handlers. Implement proper accessibility attributes (ARIA labels, roles, keyboard navigation). Keep this component focused solely on rendering a single tab.",
+      "dependencies": [
+        "Create Type Definitions",
+        "Create Utility Functions"
+      ],
+      "estimatedFiles": [
+        "frontend/src/components/FloorTabs/FloorTabItem.tsx"
+      ]
+    },
+    {
+      "stepId": "step-006",
+      "name": "Create FloorTabsList Subcomponent",
+      "description": "Build the FloorTabsList component that manages the collection of FloorTabItem components. This component should handle the layout and arrangement of tabs, iterate over floor data, and pass appropriate props to each FloorTabItem. Include keyboard navigation support for accessibility.",
+      "dependencies": [
+        "Create FloorTabItem Subcomponent",
+        "Create Custom Hooks"
+      ],
+      "estimatedFiles": [
+        "frontend/src/components/FloorTabs/FloorTabsList.tsx"
+      ]
+    },
+    {
+      "stepId": "step-007",
+      "name": "Create FloorTabContent Subcomponent",
+      "description": "Build the FloorTabContent component that displays the content for the currently selected tab. This component should conditionally render based on the active tab state and handle content transitions. Ensure proper loading states and error boundaries if needed.",
+      "dependencies": [
+        "Create Type Definitions",
+        "Create Custom Hooks"
+      ],
+      "estimatedFiles": [
+        "frontend/src/components/FloorTabs/FloorTabContent.tsx"
+      ]
+    },
+    {
+      "stepId": "step-008",
+      "name": "Refactor Main FloorTabs Component",
+      "description": "Refactor the main FloorTabs component to orchestrate the subcomponents. Remove all logic that has been extracted to hooks and utils. The main component should now primarily compose FloorTabsList and FloorTabContent, passing down necessary props and state from the custom hooks. Keep this component as a thin orchestration layer.",
+      "dependencies": [
+        "Create FloorTabsList Subcomponent",
+        "Create FloorTabContent Subcomponent"
+      ],
+      "estimatedFiles": [
+        "frontend/src/components/FloorTabs/index.tsx"
+      ]
+    },
+    {
+      "stepId": "step-009",
+      "name": "Update Exports and Imports",
+      "description": "Create a clean public API by updating the main index.ts file to export the FloorTabs component and any types that should be publicly accessible. Update all files that import FloorTabs to use the new structure. Ensure no internal subcomponents are exported unless intentionally made public.",
+      "dependencies": [
+        "Refactor Main FloorTabs Component"
+      ],
+      "estimatedFiles": [
+        "frontend/src/components/FloorTabs/index.tsx",
+        "frontend/src/components/index.ts",
+        "frontend/src/pages/**/*.tsx"
+      ]
+    },
+    {
+      "stepId": "step-010",
+      "name": "Testing and Validation",
+      "description": "Verify that all existing functionality works correctly with the refactored structure. Test tab switching, keyboard navigation, accessibility features, and edge cases. Ensure no regressions in behavior. Run existing tests if any, and update them to work with the new structure. Perform manual testing of all user interactions.",
+      "dependencies": [
+        "Update Exports and Imports"
+      ],
+      "estimatedFiles": [
+        "frontend/src/components/FloorTabs/**/*.tsx",
+        "frontend/src/components/FloorTabs/**/*.test.tsx"
+      ]
+    }
+  ],
+  "risks": [
+    "Breaking existing functionality during refactoring - mitigate by thorough testing at each step",
+    "Introducing performance regressions with additional component layers - monitor render performance",
+    "Missing edge cases in the refactored logic - comprehensive testing required",
+    "Breaking changes to components that depend on FloorTabs - ensure API compatibility",
+    "Incomplete understanding of original requirements leading to lost functionality",
+    "TypeScript type errors when integrating with existing codebase"
+  ],
+  "rollbackStrategy": "Use git to create a feature branch before starting work. Each step should be committed separately with clear commit messages. If issues arise, revert to the last stable commit. Keep the original FloorTabs.tsx file as FloorTabs.backup.tsx until the refactoring is complete and validated. Maintain backward compatibility in the public API so dependent components continue to work. If critical issues are discovered in production, the entire refactoring can be reverted by restoring the original monolithic component file."
+}

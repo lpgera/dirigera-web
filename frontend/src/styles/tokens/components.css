@@ -64,4 +64,40 @@
   --tabs-active-text: var(--color-primary);
   --tabs-text: var(--color-text-secondary);
   --tabs-hover-text: var(--color-text-primary);
+
+  /* Scenes Component */
+  --scenes-list-gap: var(--spacing-sm);
+  --scenes-list-title-size: var(--font-size-md);
+  --scene-button-min-height: 40px;
+  --scene-button-padding: var(--spacing-sm) var(--spacing-md);
+
+  /* Device Control */
+  --device-control-padding: var(--spacing-sm);
+  --device-control-gap: var(--spacing-xs);
+  --device-icon-size: 24px;
+  --device-image-size: 50px;
+  --device-unreachable-overlay: rgba(255, 0, 0, 0.4);
+
+  /* Battery Indicator */
+  --battery-low-color: var(--color-warning);
+  --battery-critical-color: var(--color-error);
+  --battery-good-color: var(--color-success);
+  --battery-threshold-low: 20;
+  --battery-threshold-critical: 10;
+
+  /* Switch */
+  --switch-width: 44px;
+  --switch-height: 22px;
+  --switch-bg: var(--color-border);
+  --switch-bg-checked: var(--color-primary);
+  --switch-handle-size: 18px;
+  --switch-handle-bg: var(--color-bg);
+
+  /* Slider */
+  --slider-track-height: 4px;
+  --slider-track-bg: var(--color-border);
+  --slider-track-bg-active: var(--color-primary);
+  --slider-thumb-size: 14px;
+  --slider-thumb-bg: var(--color-primary);
+  --slider-thumb-border: 2px solid var(--color-bg);
 }

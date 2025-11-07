@@ -1,0 +1,56 @@
+{
+  "stepId": "step-010",
+  "featureId": "feat-1762259340950-7r6xn",
+  "name": "Testing and Validation",
+  "objective": "Comprehensively test the refactored FloorTabs component to ensure all functionality works correctly, no regressions exist, accessibility is maintained, and edge cases are handled properly through both automated tests and manual validation.",
+  "context": {
+    "previousSteps": [
+      "All subcomponents have been created: FloorTabItem, FloorTabsList, FloorTabContent",
+      "Main FloorTabs component has been refactored to orchestrate subcomponents",
+      "Custom hook useFloorTabs manages state and logic",
+      "Utility functions are extracted to floorTabsHelpers.ts",
+      "All imports and exports have been updated throughout the codebase",
+      "FLOORTABS_ANALYSIS.md documents original functionality that must be preserved"
+    ],
+    "relevantFiles": [
+      "FLOORTABS_ANALYSIS.md",
+      "frontend/src/components/FloorTabs/",
+      "frontend/src/components/FloorTabs/**/*.test.tsx"
+    ],
+    "codeSnippets": {}
+  },
+  "instructions": "1. Review FLOORTABS_ANALYSIS.md to create a comprehensive checklist of all functionality that must work: tab selection, active state management, click handlers, keyboard navigation, content rendering, loading states, edge cases like empty floors array or invalid floor IDs. 2. Check if existing test files exist for FloorTabs component, locate any .test.tsx or .spec.tsx files in the component directory or tests folder. 3. If existing tests exist, run them with npm test to identify failures, update test imports to use new component structure, update test assertions to work with new subcomponent architecture, ensure tests still cover same functionality. 4. Create or update unit tests for utility functions in floorTabsHelpers.test.ts: test findFloorById with valid and invalid IDs, test getNextFloor and getPreviousFloor with edge cases (first floor, last floor, single floor, empty array), test any validation or formatting functions, ensure all functions handle null and undefined inputs gracefully. 5. Create or update tests for useFloorTabs hook in useFloorTabs.test.ts using React Testing Library hooks testing utilities: test initial state with different initialFloorId values, test handleFloorChange updates state correctly, test callback functions are called with correct parameters, test edge cases like changing to non-existent floor. 6. Create or update component tests for FloorTabItem.test.tsx: test renders floor name correctly, test applies active class when isActive is true, test onClick handler is called with correct floor ID, test keyboard events (Enter, Space) trigger onClick, test accessibility attributes (role, aria-selected, aria-controls) are present, test disabled state if supported. 7. Create or update component tests for FloorTabsList.test.tsx: test renders correct number of FloorTabItem components, test passes correct props to each item, test keyboard navigation (ArrowRight, ArrowLeft, Home, End keys), test focus management when navigating with keyboard, test accessibility attributes (role tablist, aria-orientation). 8. Create or update component tests for FloorTabContent.test.tsx: test renders children content, test shows loading state when isLoading is true, test accessibility attributes (role tabpanel, aria-labelledby), test content changes when activeFloor changes. 9. Create or update integration tests for main FloorTabs component: test complete tab switching flow from click to content update, test initial render with default floor, test onFloorChange callback is invoked, test component works with different floor data structures. 10. Perform manual testing in running application: click each tab and verify content updates, use keyboard to navigate tabs (Tab key to focus, Arrow keys to move, Enter to select), test with screen reader if possible to verify ARIA labels are announced correctly, test edge cases (single floor, many floors, empty state), test responsive behavior if component has different layouts, verify no console errors or warnings. 11. Run accessibility audit using browser dev tools or axe DevTools extension, check for ARIA violations, verify keyboard navigation follows WAI-ARIA tabs pattern, ensure focus indicators are visible. 12. Run full test suite with npm test and ensure all tests pass. 13. Run build process with npm run build to ensure no production build issues. 14. Document any known issues or limitations discovered during testing in a TESTING_NOTES.md file. 15. Create a test coverage report if tooling supports it and verify critical paths are covered.",
+  "validationCriteria": [
+    "Criterion 1: All existing tests have been updated to work with new component structure and pass successfully",
+    "Criterion 2: Unit tests exist for all utility functions in floorTabsHelpers.ts with edge case coverage",
+    "Criterion 3: Tests exist for useFloorTabs hook covering state management and callbacks",
+    "Criterion 4: Component tests exist for FloorTabItem, FloorTabsList, and FloorTabContent covering rendering and interactions",
+    "Criterion 5: Integration tests verify complete tab switching workflow from user interaction to content update",
+    "Criterion 6: Manual testing confirms tab clicking works correctly in running application",
+    "Criterion 7: Keyboard navigation works correctly (Tab, Arrow keys, Enter, Space, Home, End)",
+    "Criterion 8: Accessibility audit shows no critical violations and ARIA attributes are correct",
+    "Criterion 9: All functionality documented in FLOORTABS_ANALYSIS.md works as expected with no regressions",
+    "Criterion 10: Full test suite passes (npm test) and application builds successfully (npm run build)",
+    "Criterion 11: No console errors or warnings appear during normal usage",
+    "Criterion 12: Edge cases are handled gracefully (empty floors, invalid IDs, single floor)"
+  ],
+  "expectedOutputs": {
+    "filesModified": [
+      "Existing test files updated to work with new structure"
+    ],
+    "filesCreated": [
+      "frontend/src/components/FloorTabs/utils/floorTabsHelpers.test.ts",
+      "frontend/src/components/FloorTabs/hooks/useFloorTabs.test.ts",
+      "frontend/src/components/FloorTabs/FloorTabItem.test.tsx",
+      "frontend/src/components/FloorTabs/FloorTabsList.test.tsx",
+      "frontend/src/components/FloorTabs/FloorTabContent.test.tsx",
+      "TESTING_NOTES.md"
+    ],
+    "testsToRun": [
+      "npm test",
+      "npm run lint",
+      "npm run build",
+      "npx tsc --noEmit"
+    ]
+  }
+}

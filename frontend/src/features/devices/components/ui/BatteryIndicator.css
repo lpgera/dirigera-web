@@ -1,0 +1,28 @@
+.battery-indicator-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.battery-modal-icon {
+  text-align: center;
+  font-size: 48px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.battery-modal-content {
+  text-align: center;
+  font-size: 18px;
+}
+
+.battery-modal-name {
+  margin-bottom: 8px;
+  font-weight: var(--font-weight-semibold, 600);
+}
+
+.battery-modal-percentage {
+  color: var(--color-text-primary, rgba(0, 0, 0, 0.88));
+}

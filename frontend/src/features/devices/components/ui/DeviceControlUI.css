@@ -1,0 +1,71 @@
+.device-control {
+  padding: 8px 0;
+}
+
+.device-control-image-wrapper {
+  position: relative;
+  width: 50px;
+  height: 50px;
+}
+
+.device-control-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 1);
+  opacity: 1;
+}
+
+.device-control-image-unreachable {
+  opacity: 0.5;
+}
+
+.device-control-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+}
+
+.device-control-icon-unreachable {
+  opacity: 0.5;
+}
+
+.device-control-unreachable-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  background-color: rgba(255, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.device-control-unreachable-slash {
+  width: 300px;
+  height: 4px;
+  background-color: white;
+  transform: rotate(45deg);
+}
+
+.device-control-name {
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.device-control-slider {
+  min-width: 80px;
+  max-width: 150px;
+}

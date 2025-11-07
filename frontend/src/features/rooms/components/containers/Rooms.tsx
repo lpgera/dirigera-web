@@ -11,7 +11,7 @@ import { useRooms } from "../../hooks/useRooms";
 import { useFloors } from "@/hooks";
 import { RoomsGrid } from "./RoomsGrid";
 import { FloorTabs } from "./FloorTabs";
-import Scenes from "@/components/Scenes";
+import { Scenes } from "@/features/scenes";
 import type { ColumnSizes } from "../../types";
 
 const columnSizes: ColumnSizes = {

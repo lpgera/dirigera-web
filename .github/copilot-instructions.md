@@ -1,5 +1,8 @@
 # Repository Instructions
 
+For any request, use the @search_code tool to check what the code does.
+Prefer that first before resorting to command line grepping etc.
+
 ## Tech Stack
 
 - **React 18+** with TypeScript (strict mode) - Suspense, useTransition, ErrorBoundary

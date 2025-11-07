@@ -1,0 +1,111 @@
+.slider-container {
+  position: relative;
+  width: 100%;
+  padding: 4px 0;
+}
+
+.slider-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.slider-wrapper {
+  position: relative;
+  width: 100%;
+  padding: 8px 0;
+}
+
+.slider-input {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+.slider-input:disabled {
+  cursor: not-allowed;
+}
+
+.slider-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-primary, #1677ff);
+  cursor: pointer;
+  border: 2px solid var(--color-bg, white);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s;
+}
+
+.slider-input::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-primary, #1677ff);
+  cursor: pointer;
+  border: 2px solid var(--color-bg, white);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s;
+}
+
+.slider-input:hover::-webkit-slider-thumb {
+  box-shadow: 0 0 0 6px rgba(22, 119, 255, 0.1);
+}
+
+.slider-input:hover::-moz-range-thumb {
+  box-shadow: 0 0 0 6px rgba(22, 119, 255, 0.1);
+}
+
+.slider-input:active::-webkit-slider-thumb {
+  box-shadow: 0 0 0 8px rgba(22, 119, 255, 0.2);
+}
+
+.slider-input:active::-moz-range-thumb {
+  box-shadow: 0 0 0 8px rgba(22, 119, 255, 0.2);
+}
+
+.slider-tooltip {
+  position: absolute;
+  top: -32px;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.75);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.slider-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 4px solid transparent;
+  border-top-color: rgba(0, 0, 0, 0.75);
+}
+
+.slider-marks {
+  position: relative;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.slider-mark {
+  position: absolute;
+  transform: translateX(-50%);
+  cursor: pointer;
+}
+
+.slider-mark-text {
+  font-size: 12px;
+  color: var(--color-text-secondary, rgba(0, 0, 0, 0.45));
+  white-space: nowrap;
+}

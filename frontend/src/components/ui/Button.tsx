@@ -2,11 +2,11 @@ import React, { ButtonHTMLAttributes } from "react";
 import "./Button.css";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "default" | "text";
-  shape?: "default" | "circle";
-  block?: boolean;
-  icon?: React.ReactNode;
-  loading?: boolean;
+  variant?: "primary" | "default" | "text" | undefined;
+  shape?: "default" | "circle" | undefined;
+  block?: boolean | undefined;
+  icon?: React.ReactNode | undefined;
+  loading?: boolean | undefined;
 }
 
 export function Button({

@@ -1,0 +1,50 @@
+{
+  "stepId": "step-009",
+  "featureId": "feat-1762259340950-7r6xn",
+  "name": "Update Exports and Imports",
+  "objective": "Establish a clean public API for the FloorTabs component by properly configuring exports in index files, updating all import statements throughout the codebase to use the new structure, and ensuring backward compatibility while hiding internal implementation details.",
+  "context": {
+    "previousSteps": [
+      "frontend/src/components/FloorTabs/index.tsx now contains the refactored main FloorTabs component",
+      "All subcomponents (FloorTabsList, FloorTabItem, FloorTabContent) are created in the FloorTabs directory",
+      "frontend/src/components/FloorTabs/types.ts contains all type definitions",
+      "frontend/src/components/FloorTabs/hooks/useFloorTabs.ts contains the custom hook",
+      "FLOORTABS_ANALYSIS.md documents all files that currently import FloorTabs"
+    ],
+    "relevantFiles": [
+      "FLOORTABS_ANALYSIS.md",
+      "frontend/src/components/FloorTabs.tsx",
+      "frontend/src/components/FloorTabs/index.tsx",
+      "frontend/src/components/index.ts",
+      "frontend/src/pages/"
+    ],
+    "codeSnippets": {}
+  },
+  "instructions": "1. Review FLOORTABS_ANALYSIS.md to identify all files that currently import FloorTabs component and note their import patterns. 2. Verify frontend/src/components/FloorTabs/index.tsx exports FloorTabs as default export. 3. In frontend/src/components/FloorTabs/index.tsx add named exports for public API: export the main FloorTabs component as default, export type FloorTabsProps and Floor from types.ts for consumers who need type definitions, optionally export useFloorTabs hook if it should be public for advanced use cases, optionally export subcomponents (FloorTabsList, FloorTabItem, FloorTabContent) if they should be composable independently, do NOT export internal utilities or helper functions. 4. Update or create frontend/src/components/index.ts to re-export FloorTabs: add line like export { default as FloorTabs } from './FloorTabs' and export type { FloorTabsProps, Floor } from './FloorTabs/types' for centralized component exports. 5. Search codebase for all imports of FloorTabs using pattern like import FloorTabs from or import { FloorTabs } to find all usage locations. 6. Update each import statement to use new structure: if importing from old FloorTabs.tsx change to import from FloorTabs directory (import FloorTabs from '@/components/FloorTabs' or similar based on path aliases), ensure imports use default import syntax (import FloorTabs from) not named imports unless specifically importing types or subcomponents, update any type imports to use (import type { FloorTabsProps } from). 7. Check for any files that imported internal functions or state that are no longer exported, refactor those files to use the public API only or copy necessary utility functions if they were shared. 8. Remove or archive the old frontend/src/components/FloorTabs.tsx file after confirming all imports are updated, rename it to FloorTabs.tsx.old or move to archive folder as backup. 9. Update any test files that import FloorTabs to use new import paths. 10. Search for dynamic imports or lazy loading of FloorTabs component (React.lazy, import() statements) and update those paths. 11. Check package.json or tsconfig.json for any path aliases that might need updating if FloorTabs path changed. 12. Run TypeScript compiler to catch any import errors or missing exports. 13. Document the public API in a comment at top of index.tsx explaining what is exported and intended usage patterns.",
+  "validationCriteria": [
+    "Criterion 1: frontend/src/components/FloorTabs/index.tsx exports FloorTabs as default and necessary types as named exports",
+    "Criterion 2: frontend/src/components/index.ts re-exports FloorTabs for centralized component access",
+    "Criterion 3: All files previously importing FloorTabs have been updated to use new import paths",
+    "Criterion 4: No imports reference the old FloorTabs.tsx file directly",
+    "Criterion 5: Internal subcomponents and utilities are not exported unless intentionally made public",
+    "Criterion 6: TypeScript compilation succeeds with no import or export errors (npx tsc --noEmit)",
+    "Criterion 7: All test files have updated imports and tests still pass",
+    "Criterion 8: Old FloorTabs.tsx file is removed or archived",
+    "Criterion 9: Public API is documented in comments explaining available exports",
+    "Criterion 10: Application builds and runs successfully with updated imports"
+  ],
+  "expectedOutputs": {
+    "filesModified": [
+      "frontend/src/components/FloorTabs/index.tsx",
+      "frontend/src/components/index.ts",
+      "All files that import FloorTabs (identified in analysis)"
+    ],
+    "filesCreated": [],
+    "testsToRun": [
+      "npx tsc --noEmit",
+      "npm run lint",
+      "npm run build",
+      "npm test"
+    ]
+  }
+}

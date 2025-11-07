@@ -1,0 +1,41 @@
+{
+  "stepId": "step-004",
+  "featureId": "feat-1762259340950-7r6xn",
+  "name": "Create Utility Functions",
+  "objective": "Extract all pure functions and helper methods from the FloorTabs component into a dedicated utils directory, creating floorTabsHelpers.ts with testable, reusable utility functions for data transformation, validation, and other non-React logic.",
+  "context": {
+    "previousSteps": [
+      "FLOORTABS_ANALYSIS.md documents all utility functions and helper methods in the current component",
+      "frontend/src/components/FloorTabs/types.ts defines Floor and other type definitions",
+      "frontend/src/components/FloorTabs/hooks/useFloorTabs.ts contains the stateful logic that may use these utilities"
+    ],
+    "relevantFiles": [
+      "FLOORTABS_ANALYSIS.md",
+      "frontend/src/components/FloorTabs.tsx",
+      "frontend/src/components/FloorTabs/types.ts"
+    ],
+    "codeSnippets": {}
+  },
+  "instructions": "1. Create directory frontend/src/components/FloorTabs/utils/ if it does not exist. 2. Create frontend/src/components/FloorTabs/utils/floorTabsHelpers.ts file. 3. Import necessary types from types.ts (Floor and any other relevant types). 4. Review FLOORTABS_ANALYSIS.md and the current FloorTabs.tsx to identify all pure functions including data transformations, sorting or filtering logic, validation functions, formatting functions, and calculation methods. 5. Create a findFloorById function that takes floors array and floorId, returns the matching Floor object or undefined, with proper TypeScript typing. 6. Create a getFloorIndex function that takes floors array and floorId, returns the numeric index or negative one if not found. 7. Create a isValidFloorId function that takes floors array and floorId, returns boolean indicating if the floor exists in the array. 8. Create a getNextFloor function that takes floors array and currentFloorId, returns the next Floor object in sequence or wraps to first, handles edge cases. 9. Create a getPreviousFloor function that takes floors array and currentFloorId, returns the previous Floor object or wraps to last. 10. Create a sortFloorsByLevel function if floors need sorting, takes floors array and returns sorted copy without mutating original. 11. Create a filterActiveFloors function if there is logic to filter floors based on active status or other criteria. 12. Create any formatting functions like formatFloorName or getFloorDisplayLabel if the component transforms floor data for display. 13. Add validation functions like validateFloorData or isFloorAccessible if there are business rules to check. 14. Ensure all functions are pure (no side effects, same input produces same output), properly typed with TypeScript, and include JSDoc comments explaining purpose, parameters, return values, and examples. 15. Create frontend/src/components/FloorTabs/utils/index.ts as barrel export file that re-exports all helper functions. 16. Follow functional programming principles: avoid mutations, return new objects/arrays, handle null/undefined cases gracefully.",
+  "validationCriteria": [
+    "Criterion 1: File frontend/src/components/FloorTabs/utils/floorTabsHelpers.ts exists and exports all utility functions",
+    "Criterion 2: All functions are pure with no side effects or external dependencies beyond their parameters",
+    "Criterion 3: Functions include findFloorById, getFloorIndex, isValidFloorId, and navigation helpers (getNextFloor, getPreviousFloor) at minimum, plus any other utilities identified in the analysis",
+    "Criterion 4: All functions have proper TypeScript type signatures using types from types.ts",
+    "Criterion 5: Each function includes comprehensive JSDoc comments with parameter descriptions and usage examples",
+    "Criterion 6: Functions handle edge cases gracefully (empty arrays, invalid IDs, null/undefined values)",
+    "Criterion 7: File frontend/src/components/FloorTabs/utils/index.ts exists and exports all helpers",
+    "Criterion 8: No TypeScript compilation errors and functions follow immutability principles"
+  ],
+  "expectedOutputs": {
+    "filesModified": [],
+    "filesCreated": [
+      "frontend/src/components/FloorTabs/utils/floorTabsHelpers.ts",
+      "frontend/src/components/FloorTabs/utils/index.ts"
+    ],
+    "testsToRun": [
+      "npx tsc --noEmit",
+      "npm run lint"
+    ]
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "stepId": "step-006",
+  "featureId": "feat-1762259340950-7r6xn",
+  "name": "Create FloorTabsList Subcomponent",
+  "objective": "Build a FloorTabsList component that manages the collection and layout of FloorTabItem components, handles keyboard navigation between tabs, and provides proper accessibility structure for the tab list.",
+  "context": {
+    "previousSteps": [
+      "FLOORTABS_ANALYSIS.md documents the current tabs list structure and navigation logic",
+      "frontend/src/components/FloorTabs/types.ts defines FloorTabsListProps interface",
+      "frontend/src/components/FloorTabs/FloorTabItem.tsx provides the individual tab component",
+      "frontend/src/components/FloorTabs/utils/floorTabsHelpers.ts contains navigation utilities like getNextFloor and getPreviousFloor"
+    ],
+    "relevantFiles": [
+      "FLOORTABS_ANALYSIS.md",
+      "frontend/src/components/FloorTabs.tsx",
+      "frontend/src/components/FloorTabs/types.ts",
+      "frontend/src/components/FloorTabs/FloorTabItem.tsx",
+      "frontend/src/components/FloorTabs/utils/floorTabsHelpers.ts"
+    ],
+    "codeSnippets": {}
+  },
+  "instructions": "1. Create frontend/src/components/FloorTabs/FloorTabsList.tsx file. 2. Import React, useRef, useCallback, FloorTabsListProps from types.ts, FloorTabItem component, and utility functions (getNextFloor, getPreviousFloor, findFloorById) from utils. 3. Review FLOORTABS_ANALYSIS.md to understand current tabs list container structure, layout approach, and keyboard navigation patterns. 4. Define FloorTabsList as functional component accepting FloorTabsListProps (floors array, activeFloorId, onTabClick handler, optional orientation horizontal or vertical, className). 5. Create a ref using useRef to track the tab list container element for focus management. 6. Implement handleKeyDown function using useCallback that handles keyboard navigation: ArrowRight or ArrowDown moves to next tab, ArrowLeft or ArrowUp moves to previous tab, Home key moves to first tab, End key moves to last tab. Use utility functions to find next and previous floors, call onTabClick with new floor ID, manage focus by finding and focusing the newly selected tab button element. 7. Implement the component return with a container div with role tablist, aria-orientation set to orientation prop or horizontal by default, onKeyDown handler attached, ref assigned to container ref. 8. Map over floors array to render FloorTabItem for each floor, pass floor object, isActive computed by comparing floor.id with activeFloorId, onClick handler that calls onTabClick with floor.id, key prop set to floor.id for React list rendering. 9. Apply layout styling through CSS classes based on orientation prop (horizontal flex row or vertical flex column), include any spacing or styling from current implementation, merge with provided className prop. 10. Add focus management logic: when activeFloorId changes via keyboard navigation, find the corresponding tab button element within the container and call focus method on it. 11. Consider adding useEffect hook if focus management requires synchronization with activeFloorId changes. 12. Optimize with React.memo if appropriate, though this component may re-render when floors or activeFloorId changes. 13. Add comprehensive JSDoc comment explaining component purpose, props, keyboard navigation support, and usage example. 14. Ensure component follows accessibility best practices with proper ARIA roles and keyboard interaction patterns per WAI-ARIA authoring practices for tabs.",
+  "validationCriteria": [
+    "Criterion 1: File frontend/src/components/FloorTabs/FloorTabsList.tsx exists and exports FloorTabsList component",
+    "Criterion 2: Component accepts FloorTabsListProps with proper TypeScript typing from types.ts",
+    "Criterion 3: Component renders a container with role tablist and appropriate aria-orientation attribute",
+    "Criterion 4: Component maps over floors array and renders FloorTabItem for each floor with correct props (floor, isActive, onClick, key)",
+    "Criterion 5: Component implements keyboard navigation handling ArrowRight, ArrowLeft, ArrowDown, ArrowUp, Home, and End keys",
+    "Criterion 6: Keyboard navigation uses utility functions from floorTabsHelpers.ts to determine next and previous floors",
+    "Criterion 7: Component manages focus correctly when navigating with keyboard, moving focus to newly selected tab",
+    "Criterion 8: Component supports both horizontal and vertical orientation through props and styling",
+    "Criterion 9: JSDoc comments document the component API and keyboard navigation behavior",
+    "Criterion 10: No TypeScript compilation errors and component follows WAI-ARIA tabs pattern for accessibility"
+  ],
+  "expectedOutputs": {
+    "filesModified": [],
+    "filesCreated": [
+      "frontend/src/components/FloorTabs/FloorTabsList.tsx"
+    ],
+    "testsToRun": [
+      "npx tsc --noEmit",
+      "npm run lint"
+    ]
+  }
+}

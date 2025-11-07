@@ -1,0 +1,35 @@
+{
+  "stepId": "step-002",
+  "featureId": "feat-1762259340950-7r6xn",
+  "name": "Create Type Definitions",
+  "objective": "Create a comprehensive types.ts file that defines all TypeScript interfaces and types needed for the FloorTabs component architecture, ensuring type safety and clear contracts between all subcomponents.",
+  "context": {
+    "previousSteps": [
+      "FLOORTABS_ANALYSIS.md has been created documenting all current props, state, handlers, and the mapping to proposed subcomponents"
+    ],
+    "relevantFiles": [
+      "FLOORTABS_ANALYSIS.md",
+      "frontend/src/components/FloorTabs.tsx",
+      ".github/instructions/"
+    ],
+    "codeSnippets": {}
+  },
+  "instructions": "1. Create the directory structure frontend/src/components/FloorTabs/ if it does not exist. 2. Create frontend/src/components/FloorTabs/types.ts as a new file. 3. Review FLOORTABS_ANALYSIS.md to identify all props, state variables, and data structures used in the current FloorTabs component. 4. Define a Floor interface representing the data structure for a single floor (include properties like id, name, level, isActive, or similar based on current implementation). 5. Define a FloorTabsProps interface for the main container component props (include floors array, activeFloorId, callbacks like onFloorChange, any styling or configuration props). 6. Define a FloorTabsListProps interface for the list container subcomponent (include floors array, activeFloorId, onTabClick handler, layout/styling props). 7. Define a FloorTabItemProps interface for individual tab items (include floor object, isActive boolean, onClick handler, any visual state props like isDisabled or isLoading). 8. Define a FloorTabContentProps interface for the content display subcomponent (include activeFloor object, children or content prop, loading states). 9. Define a UseFloorTabsReturn interface for the custom hook return type (include state values like activeFloorId, derived values, handler functions like handleFloorChange, any utility methods). 10. Define a UseFloorTabsOptions interface for the custom hook parameters (include initial floor, floors array, callbacks, configuration options). 11. Add event handler types like FloorChangeHandler as function types with proper parameters and return types. 12. Export all interfaces and types. 13. Add JSDoc comments to each interface explaining its purpose and usage. 14. Follow TypeScript best practices: use readonly for arrays that should not be mutated, use optional properties with question mark where appropriate, prefer interfaces over types for object shapes, use union types for string literals where values are constrained.",
+  "validationCriteria": [
+    "Criterion 1: The file frontend/src/components/FloorTabs/types.ts exists and contains all necessary type definitions",
+    "Criterion 2: All interfaces are properly exported and include JSDoc documentation",
+    "Criterion 3: Type definitions cover Floor data structure, all component props interfaces (FloorTabsProps, FloorTabsListProps, FloorTabItemProps, FloorTabContentProps), hook interfaces (UseFloorTabsReturn, UseFloorTabsOptions), and event handler types",
+    "Criterion 4: Types use TypeScript best practices including readonly modifiers, optional properties, and proper function signatures",
+    "Criterion 5: No TypeScript compilation errors when the file is created",
+    "Criterion 6: Types are granular enough to provide type safety but flexible enough to support the planned subcomponent architecture"
+  ],
+  "expectedOutputs": {
+    "filesModified": [],
+    "filesCreated": [
+      "frontend/src/components/FloorTabs/types.ts"
+    ],
+    "testsToRun": [
+      "npx tsc --noEmit"
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "stepId": "step-005",
+  "featureId": "feat-1762259340950-7r6xn",
+  "name": "Create FloorTabItem Subcomponent",
+  "objective": "Build a presentational FloorTabItem component that renders a single tab with proper accessibility, styling, and event handling, following React best practices and the established type system.",
+  "context": {
+    "previousSteps": [
+      "FLOORTABS_ANALYSIS.md documents the current tab rendering logic and styling",
+      "frontend/src/components/FloorTabs/types.ts defines FloorTabItemProps and Floor interfaces",
+      "frontend/src/components/FloorTabs/hooks/useFloorTabs.ts provides state management",
+      "frontend/src/components/FloorTabs/utils/floorTabsHelpers.ts contains utility functions"
+    ],
+    "relevantFiles": [
+      "FLOORTABS_ANALYSIS.md",
+      "frontend/src/components/FloorTabs.tsx",
+      "frontend/src/components/FloorTabs/types.ts",
+      ".github/instructions/"
+    ],
+    "codeSnippets": {}
+  },
+  "instructions": "1. Create frontend/src/components/FloorTabs/FloorTabItem.tsx file. 2. Import React and FloorTabItemProps from types.ts. 3. Review FLOORTABS_ANALYSIS.md to understand current tab rendering including HTML structure, CSS classes, and event handlers. 4. Define FloorTabItem as a functional component accepting FloorTabItemProps (floor object, isActive boolean, onClick handler, optional isDisabled, className). 5. Implement the component return with a button or div element with role tab for semantic HTML. 6. Add accessibility attributes: role equals tab, aria-selected set to isActive value, aria-controls pointing to associated tab panel ID using floor.id, aria-label with descriptive text like Floor floor.name, tabIndex set to 0 when active or negative 1 when inactive for keyboard navigation. 7. Implement onClick handler that calls the provided onClick prop with floor.id, prevent default if needed. 8. Add keyboard event handler onKeyDown to support Enter and Space keys for activation, arrow keys for navigation hints if needed. 9. Apply conditional CSS classes based on isActive state (like active, selected), isDisabled state, and merge with any provided className prop. 10. Render floor display content inside the button: floor name or label, optional floor level or number, any icons or badges from current implementation. 11. Add hover and focus styles through CSS classes for visual feedback. 12. Use React.memo to optimize re-renders since this is a presentational component. 13. Add comprehensive JSDoc comment explaining component purpose, props, and usage example. 14. Follow project styling conventions from .github/instructions whether using CSS modules, styled-components, or Tailwind. 15. Ensure the component is fully controlled (no internal state) and purely presentational.",
+  "validationCriteria": [
+    "Criterion 1: File frontend/src/components/FloorTabs/FloorTabItem.tsx exists and exports FloorTabItem component",
+    "Criterion 2: Component accepts FloorTabItemProps with proper TypeScript typing from types.ts",
+    "Criterion 3: Component implements full accessibility with ARIA attributes (role, aria-selected, aria-controls, aria-label, tabIndex)",
+    "Criterion 4: Component handles onClick events and passes floor.id to the handler function",
+    "Criterion 5: Component supports keyboard navigation with onKeyDown handler for Enter and Space keys",
+    "Criterion 6: Component applies conditional styling based on isActive and isDisabled states",
+    "Criterion 7: Component is wrapped with React.memo for performance optimization",
+    "Criterion 8: Component is purely presentational with no internal state management",
+    "Criterion 9: JSDoc comments document the component API clearly",
+    "Criterion 10: No TypeScript compilation errors and component follows project styling conventions"
+  ],
+  "expectedOutputs": {
+    "filesModified": [],
+    "filesCreated": [
+      "frontend/src/components/FloorTabs/FloorTabItem.tsx"
+    ],
+    "testsToRun": [
+      "npx tsc --noEmit",
+      "npm run lint"
+    ]
+  }
+}

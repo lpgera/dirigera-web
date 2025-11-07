@@ -1,0 +1,29 @@
+{
+  "stepId": "step-001",
+  "featureId": "feat-1762259340950-7r6xn",
+  "name": "Analyze Current Implementation",
+  "objective": "Analyze the existing FloorTabs component and create a comprehensive mapping document that identifies all current functionality, props, state, and logic, then map these to the proposed subcomponent architecture based on the refactoring plan and project guidelines.",
+  "context": {
+    "previousSteps": [],
+    "relevantFiles": [
+      "FLOORTABS_SUBCOMPONENTS_REFACTORING_PLAN.md",
+      ".github/instructions/",
+      "frontend/src/components/FloorTabs.tsx"
+    ],
+    "codeSnippets": {}
+  },
+  "instructions": "1. Read FLOORTABS_SUBCOMPONENTS_REFACTORING_PLAN.md completely to understand the refactoring goals, proposed architecture, and subcomponent breakdown. 2. Review all files in .github/instructions/ to understand project patterns, coding standards, component architecture guidelines, and testing requirements. 3. Analyze frontend/src/components/FloorTabs.tsx thoroughly: extract all props and their types, identify all state variables and their purposes, document all event handlers and callbacks, list all side effects and lifecycle logic, note all child components and their relationships, identify any context usage or global state dependencies. 4. Create a new markdown file named FLOORTABS_ANALYSIS.md in the project root with sections: Current Component Structure (props interface, state variables, methods/handlers), Functionality Inventory (list each feature with its implementation details), Dependencies Analysis (imports, external hooks, context usage), Proposed Subcomponent Mapping (table mapping current functionality to FloorTabsList, FloorTabItem, FloorTabContent, types.ts, useFloorTabs hook, and floorTabsHelpers.ts), Data Flow Diagram (describe how data flows between parent and proposed subcomponents), Migration Considerations (breaking changes, backwards compatibility, testing strategy). 5. In the mapping section, be specific about which props go to which subcomponent, which state should be managed by the custom hook, which utility functions belong in helpers, and which types need to be extracted to types.ts. 6. Identify any potential challenges or risks in the refactoring process.",
+  "validationCriteria": [
+    "Criterion 1: FLOORTABS_ANALYSIS.md file exists in project root with all required sections completed",
+    "Criterion 2: All props from current FloorTabs component are documented with their types and purposes",
+    "Criterion 3: All state variables and their usage patterns are identified and documented",
+    "Criterion 4: A clear mapping table exists showing which functionality moves to which proposed subcomponent",
+    "Criterion 5: Data flow between proposed subcomponents is clearly described",
+    "Criterion 6: Potential migration risks and backwards compatibility concerns are identified"
+  ],
+  "expectedOutputs": {
+    "filesModified": [],
+    "filesCreated": ["FLOORTABS_ANALYSIS.md"],
+    "testsToRun": []
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "stepId": "step-008",
+  "featureId": "feat-1762259340950-7r6xn",
+  "name": "Refactor Main FloorTabs Component",
+  "objective": "Refactor the main FloorTabs component into a thin orchestration layer that composes the subcomponents (FloorTabsList and FloorTabContent) using the custom hook for state management, removing all extracted logic and maintaining backward compatibility with the existing API.",
+  "context": {
+    "previousSteps": [
+      "FLOORTABS_ANALYSIS.md documents the original component API and all functionality",
+      "frontend/src/components/FloorTabs/types.ts defines FloorTabsProps interface",
+      "frontend/src/components/FloorTabs/hooks/useFloorTabs.ts provides state management",
+      "frontend/src/components/FloorTabs/FloorTabsList.tsx renders the tab list",
+      "frontend/src/components/FloorTabs/FloorTabContent.tsx renders the tab content",
+      "frontend/src/components/FloorTabs/utils/floorTabsHelpers.ts contains utility functions"
+    ],
+    "relevantFiles": [
+      "FLOORTABS_ANALYSIS.md",
+      "frontend/src/components/FloorTabs.tsx",
+      "frontend/src/components/FloorTabs/types.ts",
+      "frontend/src/components/FloorTabs/hooks/useFloorTabs.ts",
+      "frontend/src/components/FloorTabs/FloorTabsList.tsx",
+      "frontend/src/components/FloorTabs/FloorTabContent.tsx"
+    ],
+    "codeSnippets": {}
+  },
+  "instructions": "1. Create frontend/src/components/FloorTabs/index.tsx file (this will replace the old FloorTabs.tsx). 2. Import React, FloorTabsProps from types.ts, useFloorTabs hook from hooks directory, FloorTabsList and FloorTabContent components. 3. Review FLOORTABS_ANALYSIS.md to ensure the new component maintains the same external API (same props interface) as the original for backward compatibility. 4. Define FloorTabs as functional component accepting FloorTabsProps (floors array, initialFloorId or defaultFloorId, onFloorChange callback, children for content, optional orientation, className, isLoading, any other props from original). 5. Call useFloorTabs hook at component top, passing appropriate options (floors, initialFloorId, onFloorChange callback), destructure returned values (activeFloorId, activeFloor, handleTabClick or handleFloorChange). 6. Remove all state management code (useState, useEffect) that is now in the hook, remove all handler functions that are now in the hook, remove all utility function logic that is now in helpers. 7. Implement the component return with a container div that wraps both FloorTabsList and FloorTabContent, apply any root-level styling or className from props. 8. Render FloorTabsList component passing floors array, activeFloorId from hook, onTabClick handler from hook, orientation prop if provided, any styling props. 9. Render FloorTabContent component passing activeFloor from hook, children prop for content rendering, isLoading prop if provided, id for accessibility linking. 10. Ensure the component structure maintains accessibility with proper relationship between tabs and panels through ARIA attributes. 11. Add any wrapper styling or layout that positions tabs and content appropriately (tabs above content, tabs beside content, etc based on original layout). 12. Keep component logic minimal: it should only compose subcomponents and pass props, no business logic or state management. 13. Add comprehensive JSDoc comment explaining component purpose, props, composition of subcomponents, and usage example showing typical implementation. 14. Export FloorTabs as default export to maintain backward compatibility with existing imports. 15. Consider exporting subcomponents as named exports for advanced use cases where consumers want direct access (export FloorTabsList, FloorTabItem, FloorTabContent, useFloorTabs).",
+  "validationCriteria": [
+    "Criterion 1: File frontend/src/components/FloorTabs/index.tsx exists and exports FloorTabs as default export",
+    "Criterion 2: Component accepts FloorTabsProps maintaining backward compatibility with original API",
+    "Criterion 3: Component uses useFloorTabs hook for all state management, no local useState or useEffect for tab logic",
+    "Criterion 4: Component renders FloorTabsList with correct props (floors, activeFloorId, onTabClick)",
+    "Criterion 5: Component renders FloorTabContent with correct props (activeFloor, children, isLoading)",
+    "Criterion 6: Component contains minimal logic, acting only as composition layer for subcomponents",
+    "Criterion 7: Component maintains proper accessibility structure with tabs and content properly linked",
+    "Criterion 8: All business logic, state management, and utilities have been removed and delegated to hooks and utils",
+    "Criterion 9: JSDoc comments document the component API and architecture",
+    "Criterion 10: No TypeScript compilation errors and component can be imported as before for backward compatibility"
+  ],
+  "expectedOutputs": {
+    "filesModified": [],
+    "filesCreated": [
+      "frontend/src/components/FloorTabs/index.tsx"
+    ],
+    "testsToRun": [
+      "npx tsc --noEmit",
+      "npm run lint"
+    ]
+  }
+}
