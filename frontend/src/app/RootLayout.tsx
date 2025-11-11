@@ -11,13 +11,21 @@ export function RootLayout() {
 
   return (
     <AppLayout>
-      <LayoutHeader />
       <div className="root-layout-logout">
         <Logout />
       </div>
       <div className="root-layout-content">
-        {isAuthenticated ? <Outlet /> : <Login />}
+        {isAuthenticated ? (
+          <>
+            {/* <LayoutHeader /> */}
+            <Outlet />
+          </>
+        ) : (
+          <Login />
+        )}
       </div>
     </AppLayout>
   );
 }
+
+export default RootLayout;

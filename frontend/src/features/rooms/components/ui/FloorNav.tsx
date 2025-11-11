@@ -8,15 +8,18 @@ interface FloorNavProps {
   floors: Floor[];
   activeFloorId: string | null;
   onFloorClick: (floorId: string) => void;
+  children?: React.ReactNode;
 }
 
 export function FloorNav({
   floors,
   activeFloorId,
   onFloorClick,
+  children,
 }: FloorNavProps) {
   return (
     <nav className="floor-nav">
+      {children}
       {floors.map((floor) => (
         <Button
           key={floor.id}

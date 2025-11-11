@@ -33,18 +33,6 @@ export function Rooms() {
 
   return (
     <>
-      <div
-        style={{
-          position: "sticky",
-          top: 97,
-          zIndex: 50,
-          backgroundColor: "var(--color-background)",
-          boxSizing: "border-box",
-        }}
-      >
-        <Scenes scope="house" />
-      </div>
-
       {loading && !rooms.length ? (
         <Row gutter={[16, 16]}>
           <Col key="loading" {...columnSizes}>
@@ -63,3 +51,5 @@ export function Rooms() {
     </>
   );
 }
+
+export default Rooms;
