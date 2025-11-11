@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col } from "@/components/ui";
 import { BsFillHouseFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import "./Layout.css";
+import { Logout } from "@/features/auth";
 
 interface LayoutHeaderProps {
   title?: string;
@@ -28,18 +28,11 @@ export function LayoutHeader({
           </Link>
         </h1>
       </Col>
+      <Col flex="none">
+        <div className="root-layout-logout">
+          <Logout />
+        </div>
+      </Col>
     </Row>
-  );
-}
-
-interface AppLayoutProps {
-  children: React.ReactNode;
-}
-
-export function AppLayout({ children }: AppLayoutProps) {
-  return (
-    <div className="app-layout">
-      <div className="app-layout-content">{children}</div>
-    </div>
   );
 }

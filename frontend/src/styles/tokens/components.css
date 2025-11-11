@@ -20,13 +20,25 @@
 
   /* Input */
   --input-bg: var(--color-background-elevated);
-  --input-border: var(--color-border);
+  --input-bg-disabled: var(--color-gray-100);
+  --input-border-color: var(--color-border);
+  --input-border-hover: var(--color-gray-400);
   --input-border-focus: var(--color-primary);
-  --input-text: var(--color-text-primary);
-  --input-placeholder: var(--color-text-tertiary);
+  --input-border-error: var(--color-error);
+  --input-text-color: var(--color-text-primary);
+  --input-placeholder-color: var(--color-text-tertiary);
+  --input-focus-shadow: rgba(59, 130, 246, 0.1);
+  --input-error-shadow: rgba(239, 68, 68, 0.1);
   --input-padding-x: var(--spacing-md);
   --input-padding-y: var(--spacing-sm);
   --input-border-radius: var(--radius-md);
+
+  /* Form */
+  --form-item-gap: var(--spacing-md);
+  --form-inline-gap: var(--spacing-sm);
+  --form-label-gap: var(--spacing-xs);
+  --form-label-color: var(--color-text-primary);
+  --form-error-color: var(--color-error);
 
   /* Modal */
   --modal-bg: var(--color-background-elevated);

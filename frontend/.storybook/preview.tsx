@@ -1,7 +1,7 @@
 import type { Preview } from "@storybook/react";
-import { ConfigProvider, theme } from "antd";
 import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
 import { MockedProvider } from "@apollo/client/testing/react";
+import "../src/styles/global.css";
 
 loadDevMessages();
 loadErrorMessages();
@@ -24,11 +24,9 @@ const preview: Preview = {
   },
   decorators: [
     (Story, context) => (
-      <ConfigProvider theme={{ algorithm: theme.darkAlgorithm }}>
-        <MockedProvider mocks={context.parameters.mocks ?? []}>
-          {Story()}
-        </MockedProvider>
-      </ConfigProvider>
+      <MockedProvider mocks={context.parameters.mocks ?? []}>
+        {Story()}
+      </MockedProvider>
     ),
   ],
 };

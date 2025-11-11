@@ -1,0 +1,45 @@
+/* Form Component Styles */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--form-item-gap);
+}
+
+.form-inline {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--form-inline-gap);
+}
+
+.form-horizontal {
+  flex-direction: column;
+}
+
+.form-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--form-label-gap);
+}
+
+.form-inline .form-item {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--form-inline-gap);
+}
+
+.form-label {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  color: var(--form-label-color);
+}
+
+.form-control {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-error {
+  color: var(--form-error-color);
+  font-size: var(--font-size-sm);
+  margin-top: var(--spacing-xs);
+}

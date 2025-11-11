@@ -6,3 +6,6 @@ export { FloorIcon } from "./FloorIcon";
 export { Switch } from "./Switch";
 export { Modal } from "./Modal";
 export { Slider } from "./Slider";
+export { Input, PasswordInput } from "./Input";
+export { Form, FormItem } from "./Form";
+export { Typography } from "./Typography";

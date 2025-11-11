@@ -36,6 +36,26 @@
   align-items: center;
 }
 
+.row-justify-start {
+  justify-content: flex-start;
+}
+
+.row-justify-end {
+  justify-content: flex-end;
+}
+
+.row-justify-center {
+  justify-content: center;
+}
+
+.row-justify-space-around {
+  justify-content: space-around;
+}
+
+.row-justify-space-between {
+  justify-content: space-between;
+}
+
 .col {
   padding-left: calc(var(--spacing-md) * 0.5);
   padding-right: calc(var(--spacing-md) * 0.5);

@@ -1,6 +1,15 @@
-import React from "react";
-import { Button, Col, Form, Input, Result, Row, Typography } from "antd";
+import React, { FormEvent } from "react";
 import { IoMdLogIn } from "react-icons/io";
+import {
+  Button,
+  Col,
+  Form,
+  FormItem,
+  PasswordInput,
+  Result,
+  Row,
+  Typography,
+} from "@/components/ui";
 
 interface LoginFormProps {
   onSubmit: (password: string) => void;
@@ -9,8 +18,13 @@ interface LoginFormProps {
 }
 
 export function LoginForm({ onSubmit, loading, error }: LoginFormProps) {
-  const handleFinish = (values: Record<string, string>) => {
-    onSubmit(values.password);
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const password = formData.get("password") as string;
+    if (password) {
+      onSubmit(password);
+    }
   };
 
   return (
@@ -21,19 +35,21 @@ export function LoginForm({ onSubmit, loading, error }: LoginFormProps) {
           extra={
             <Row justify="center">
               <Col>
-                <Form layout="inline" onFinish={handleFinish}>
-                  <Form.Item name="password">
-                    <Input.Password
+                <Form layout="inline" onSubmit={handleSubmit}>
+                  <FormItem>
+                    <PasswordInput
+                      name="password"
                       placeholder="Enter password"
                       style={{ width: "200px" }}
                       disabled={loading}
+                      autoFocus
                     />
-                  </Form.Item>
-                  <Form.Item>
+                  </FormItem>
+                  <FormItem>
                     <Button
                       shape="circle"
-                      type="primary"
-                      htmlType="submit"
+                      variant="primary"
+                      type="submit"
                       title="Login"
                       loading={loading}
                       icon={
@@ -46,7 +62,7 @@ export function LoginForm({ onSubmit, loading, error }: LoginFormProps) {
                         />
                       }
                     />
-                  </Form.Item>
+                  </FormItem>
                 </Form>
                 {error && (
                   <Typography.Text type="danger" style={{ marginTop: 8 }}>

@@ -4,11 +4,13 @@ import "./Grid.css";
 interface RowProps extends HTMLAttributes<HTMLDivElement> {
   gutter?: [number, number] | number;
   align?: "top" | "middle" | "bottom";
+  justify?: "start" | "end" | "center" | "space-around" | "space-between";
 }
 
 export function Row({
   gutter,
   align,
+  justify,
   children,
   className = "",
   ...props
@@ -20,9 +22,13 @@ export function Row({
       : "";
 
   const alignClass = align ? `row-align-${align}` : "";
+  const justifyClass = justify ? `row-justify-${justify}` : "";
 
   return (
-    <div className={`row ${gutterClass} ${alignClass} ${className}`} {...props}>
+    <div
+      className={`row ${gutterClass} ${alignClass} ${justifyClass} ${className}`}
+      {...props}
+    >
       {children}
     </div>
   );
