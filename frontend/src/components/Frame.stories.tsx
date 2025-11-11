@@ -4,10 +4,10 @@ import "antd/dist/reset.css";
 import Frame from "./Frame";
 import { AuthContext } from "./AuthContext";
 import Rooms, { ROOMS_QUERY } from "./Rooms";
-import { SCENES_QUERY } from "./Scenes";
 import RoomComponent, { ROOM_QUERY } from "./Room";
 import { DEVICE_PLAY_ITEM_IMAGE_URL_QUERY } from "./deviceControls/PlayItemImage";
 import { withRouter } from "storybook-addon-remix-react-router";
+import { SCENES_QUERY } from "@/features/scenes/api/scenesApi";
 
 const defaultDeviceParams = {
   batteryPercentage: null,
