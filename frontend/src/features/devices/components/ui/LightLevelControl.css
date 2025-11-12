@@ -1,0 +1,25 @@
+.light-level-control {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm, 8px);
+  width: 100%;
+}
+
+.light-level-control-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.light-level-control-label {
+  font-size: var(--font-size-sm, 14px);
+  color: var(--color-text-secondary, rgba(255, 255, 255, 0.7));
+  font-weight: var(--font-weight-normal, 400);
+  margin: 0;
+}
+
+.light-level-control-value {
+  font-size: var(--font-size-sm, 14px);
+  color: var(--color-text-primary, #fff);
+  font-weight: var(--font-weight-medium, 500);
+}

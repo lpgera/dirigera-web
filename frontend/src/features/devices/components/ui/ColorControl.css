@@ -1,0 +1,143 @@
+.color-control {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md, 16px);
+  width: 100%;
+}
+
+.color-control-tabs {
+  display: flex;
+  gap: 0;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-lg, 12px);
+  padding: 4px;
+  width: 100%;
+}
+
+.color-control-tab {
+  flex: 1;
+  padding: var(--spacing-sm, 8px) var(--spacing-md, 16px);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-md, 8px);
+  color: var(--color-text-secondary, rgba(255, 255, 255, 0.6));
+  font-size: var(--font-size-sm, 14px);
+  font-weight: var(--font-weight-medium, 500);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.color-control-tab:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-text-primary, #fff);
+}
+
+.color-control-tab.active {
+  background: var(--color-surface, rgba(255, 255, 255, 0.1));
+  color: var(--color-text-primary, #fff);
+}
+
+.color-control-tab:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.color-control-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg, 20px);
+}
+
+.color-control-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm, 8px);
+}
+
+.color-control-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.color-control-label {
+  font-size: var(--font-size-sm, 14px);
+  color: var(--color-text-secondary, rgba(255, 255, 255, 0.7));
+  font-weight: var(--font-weight-normal, 400);
+  margin: 0;
+}
+
+.color-control-value {
+  font-size: var(--font-size-sm, 14px);
+  color: var(--color-text-primary, #fff);
+  font-weight: var(--font-weight-medium, 500);
+}
+
+.color-control-preview {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.color-control-slider-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.color-control-slider-track {
+  position: relative;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.color-control-slider {
+  position: relative;
+}
+
+/* Override slider styles for color control */
+.color-control-slider .slider-input {
+  background: transparent !important;
+}
+
+.color-control-slider .slider-input::-webkit-slider-thumb {
+  width: 20px;
+  height: 20px;
+  background: white;
+  border: 3px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.color-control-slider .slider-input::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: white;
+  border: 3px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.color-control-slider .slider-input:hover::-webkit-slider-thumb {
+  box-shadow:
+    0 0 0 6px rgba(255, 255, 255, 0.1),
+    0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.color-control-slider .slider-input:hover::-moz-range-thumb {
+  box-shadow:
+    0 0 0 6px rgba(255, 255, 255, 0.1),
+    0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.color-control-slider .slider-input:active::-webkit-slider-thumb {
+  box-shadow:
+    0 0 0 8px rgba(255, 255, 255, 0.15),
+    0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.color-control-slider .slider-input:active::-moz-range-thumb {
+  box-shadow:
+    0 0 0 8px rgba(255, 255, 255, 0.15),
+    0 2px 4px rgba(0, 0, 0, 0.3);
+}

@@ -4,8 +4,7 @@ import { DeviceToggle } from "./DeviceToggle";
 import { LightLevelControl } from "./LightLevelControl";
 import { VolumeControl } from "./VolumeControl";
 import { BatteryIndicator } from "./BatteryIndicator";
-import { ColorTemperatureControl } from "./ColorTemperatureControl";
-import { ColorHueSaturationControl } from "./ColorHueSaturationControl";
+import { ColorControl } from "./ColorControl";
 import { PlaybackControl } from "./PlaybackControl";
 import { PlayItemDisplay } from "./PlayItemDisplay";
 import { SensorDisplay } from "./SensorDisplay";
@@ -147,30 +146,27 @@ export function DeviceControlUI({
         )}
       </Row>
 
-      {/* Color Temperature Control */}
-      {device.colorTemperature != null && (
+      {/* Color Control (combines Temperature and Hue/Saturation) */}
+      {(device.colorTemperature != null ||
+        (device.colorHue != null && device.colorSaturation != null)) && (
         <Row gutter={8} className="device-control-row">
           <Col flex="auto">
-            <ColorTemperatureControl
-              colorTemperature={device.colorTemperature}
+            <ColorControl
+              colorHue={device.colorHue ?? undefined}
+              colorSaturation={device.colorSaturation ?? undefined}
+              colorTemperature={device.colorTemperature ?? undefined}
               isReachable={device.isReachable}
-              onChange={onColorTemperatureChange}
-              loading={loading.colorTemperature}
-            />
-          </Col>
-        </Row>
-      )}
-
-      {/* Color Hue & Saturation Control */}
-      {device.colorHue != null && device.colorSaturation != null && (
-        <Row gutter={8} className="device-control-row">
-          <Col flex="auto">
-            <ColorHueSaturationControl
-              colorHue={device.colorHue}
-              colorSaturation={device.colorSaturation}
-              isReachable={device.isReachable}
-              onChange={onColorHueSaturationChange}
-              loading={loading.colorHueSaturation}
+              onColorHueSaturationChange={
+                device.colorHue != null && device.colorSaturation != null
+                  ? onColorHueSaturationChange
+                  : undefined
+              }
+              onColorTemperatureChange={
+                device.colorTemperature != null
+                  ? onColorTemperatureChange
+                  : undefined
+              }
+              loading={loading.colorTemperature || loading.colorHueSaturation}
             />
           </Col>
         </Row>

@@ -147,8 +147,8 @@
   --slider-thumb-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
   --slider-thumb-hover-shadow: 0 0 0 6px rgba(22, 119, 255, 0.1);
   --slider-thumb-active-shadow: 0 0 0 8px rgba(22, 119, 255, 0.2);
-  --slider-container-padding: 0.25rem 0; /* 4px 0 */
-  --slider-wrapper-padding: var(--spacing-sm) 0;
+  --slider-container-padding: 0 0; /* 4px 0 */
+  --slider-wrapper-padding: 0 0;
   --slider-disabled-opacity: 0.5;
   --slider-tooltip-offset: -2rem; /* -32px */
   --slider-tooltip-bg: rgba(0, 0, 0, 0.75);
