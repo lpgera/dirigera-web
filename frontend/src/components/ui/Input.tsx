@@ -2,6 +2,7 @@ import React, { InputHTMLAttributes } from "react";
 import "./Input.css";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+  /** Show error state styling */
   error?: boolean;
 }
 
@@ -14,6 +15,7 @@ export function Input({ className = "", error = false, ...props }: InputProps) {
 }
 
 interface PasswordInputProps extends InputHTMLAttributes<HTMLInputElement> {
+  /** Show error state styling */
   error?: boolean;
 }
 

@@ -6,8 +6,8 @@
 
 .battery-modal-icon {
   text-align: center;
-  font-size: 48px;
-  margin-bottom: 16px;
+  font-size: var(--battery-modal-icon-size);
+  margin-bottom: var(--spacing-md);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -15,14 +15,14 @@
 
 .battery-modal-content {
   text-align: center;
-  font-size: 18px;
+  font-size: var(--battery-modal-content-size);
 }
 
 .battery-modal-name {
-  margin-bottom: 8px;
-  font-weight: var(--font-weight-semibold, 600);
+  margin-bottom: var(--spacing-sm);
+  font-weight: var(--font-weight-semibold);
 }
 
 .battery-modal-percentage {
-  color: var(--color-text-primary, rgba(0, 0, 0, 0.88));
+  color: var(--color-text-primary);
 }

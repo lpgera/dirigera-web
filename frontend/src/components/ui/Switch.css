@@ -1,14 +1,14 @@
 .switch {
   position: relative;
   display: inline-block;
-  width: 44px;
-  height: 22px;
+  width: var(--switch-width);
+  height: var(--switch-height);
   cursor: pointer;
 }
 
 .switch-disabled {
   cursor: not-allowed;
-  opacity: 0.5;
+  opacity: var(--switch-disabled-opacity);
 }
 
 .switch-input {
@@ -24,33 +24,33 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: var(--color-border, #d9d9d9);
-  transition: 0.3s;
-  border-radius: 22px;
+  background-color: var(--switch-bg);
+  transition: var(--switch-transition);
+  border-radius: var(--switch-border-radius);
 }
 
 .switch-slider:before {
   position: absolute;
   content: "";
-  height: 18px;
-  width: 18px;
-  left: 2px;
-  bottom: 2px;
-  background-color: var(--color-bg, white);
-  transition: 0.3s;
+  height: var(--switch-handle-size);
+  width: var(--switch-handle-size);
+  left: var(--switch-handle-offset);
+  bottom: var(--switch-handle-offset);
+  background-color: var(--switch-handle-bg);
+  transition: var(--switch-transition);
   border-radius: 50%;
 }
 
 .switch-input:checked + .switch-slider {
-  background-color: var(--color-primary, #1677ff);
+  background-color: var(--switch-bg-checked);
 }
 
 .switch-input:checked + .switch-slider:before {
-  transform: translateX(22px);
+  transform: translateX(var(--switch-width) - var(--switch-handle-size) - var(--switch-handle-offset) * 2);
 }
 
 .switch-input:focus + .switch-slider {
-  box-shadow: 0 0 1px var(--color-primary, #1677ff);
+  box-shadow: 0 0 1px var(--switch-bg-checked);
 }
 
 .switch-disabled .switch-slider {

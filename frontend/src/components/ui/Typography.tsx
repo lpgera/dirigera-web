@@ -2,6 +2,7 @@ import React, { AnchorHTMLAttributes, HTMLAttributes } from "react";
 import "./Typography.css";
 
 interface TextProps extends HTMLAttributes<HTMLSpanElement> {
+  /** Text color variant */
   type?: "primary" | "secondary" | "success" | "warning" | "danger";
 }
 
@@ -17,7 +18,10 @@ export function Text({ type, className = "", children, ...props }: TextProps) {
   );
 }
 
-interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {}
+interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
+  /** Link content */
+  children?: React.ReactNode;
+}
 
 export function Link({ className = "", children, ...props }: LinkProps) {
   return (

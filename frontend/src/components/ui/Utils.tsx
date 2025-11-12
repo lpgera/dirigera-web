@@ -10,7 +10,9 @@ export function Divider({
 }
 
 interface SpaceProps extends HTMLAttributes<HTMLDivElement> {
+  /** Layout direction */
   direction?: "vertical" | "horizontal";
+  /** Spacing size between items */
   size?: "small" | "middle" | "large";
 }
 
@@ -42,7 +44,9 @@ export function Space({
 }
 
 interface SkeletonProps {
+  /** Show animated loading state */
   active?: boolean;
+  /** Configure paragraph skeleton lines */
   paragraph?: { rows?: number };
 }
 
@@ -62,9 +66,13 @@ export function Skeleton({
 }
 
 interface ResultProps {
+  /** Result status type */
   status: "error" | "success" | "warning" | "info" | "403" | "404" | "500";
+  /** Main title text */
   title?: React.ReactNode;
+  /** Subtitle or description */
   subTitle?: React.ReactNode;
+  /** Extra content (e.g., action buttons) */
   extra?: React.ReactNode;
 }
 

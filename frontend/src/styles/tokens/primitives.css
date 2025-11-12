@@ -1,97 +1,104 @@
 /* Primitive Design Tokens - Raw color values */
 :root {
-  /* Colors - Grays */
-  --color-gray-50: #fafafa;
-  --color-gray-100: #f5f5f5;
-  --color-gray-200: #e5e5e5;
-  --color-gray-300: #d4d4d4;
-  --color-gray-400: #a3a3a3;
-  --color-gray-500: #737373;
-  --color-gray-600: #525252;
-  --color-gray-700: #404040;
-  --color-gray-800: #262626;
-  --color-gray-900: #1f1f1f;
-  --color-gray-950: #0a0a0a;
+  /* Base Colors - Define one base color per hue */
+  --color-gray-base: #737373;
+  --color-blue-base: #3b82f6;
+  --color-green-base: #22c55e;
+  --color-red-base: #ef4444;
+  --color-yellow-base: #eab308;
 
-  /* Colors - Blue */
-  --color-blue-50: #eff6ff;
-  --color-blue-100: #dbeafe;
-  --color-blue-200: #bfdbfe;
-  --color-blue-300: #93c5fd;
-  --color-blue-400: #60a5fa;
-  --color-blue-500: #3b82f6;
-  --color-blue-600: #0059aa;
-  --color-blue-700: #1d4ed8;
-  --color-blue-800: #1e40af;
-  --color-blue-900: #1e3a8a;
+  /* Colors - Grays - Generated from base using relative colors */
+  --color-gray-50: oklch(from var(--color-gray-base) calc(l + 0.45) c h);
+  --color-gray-100: oklch(from var(--color-gray-base) calc(l + 0.40) c h);
+  --color-gray-200: oklch(from var(--color-gray-base) calc(l + 0.30) c h);
+  --color-gray-300: oklch(from var(--color-gray-base) calc(l + 0.20) c h);
+  --color-gray-400: oklch(from var(--color-gray-base) calc(l + 0.10) c h);
+  --color-gray-500: var(--color-gray-base);
+  --color-gray-600: oklch(from var(--color-gray-base) calc(l - 0.10) c h);
+  --color-gray-700: oklch(from var(--color-gray-base) calc(l - 0.20) c h);
+  --color-gray-800: oklch(from var(--color-gray-base) calc(l - 0.30) c h);
+  --color-gray-900: oklch(from var(--color-gray-base) calc(l - 0.35) c h);
+  --color-gray-950: oklch(from var(--color-gray-base) calc(l - 0.42) c h);
 
-  /* Colors - Green */
-  --color-green-50: #f0fdf4;
-  --color-green-100: #dcfce7;
-  --color-green-200: #bbf7d0;
-  --color-green-300: #86efac;
-  --color-green-400: #4ade80;
-  --color-green-500: #22c55e;
-  --color-green-600: #16a34a;
-  --color-green-700: #15803d;
-  --color-green-800: #166534;
-  --color-green-900: #14532d;
+  /* Colors - Blue - Generated from base using relative colors */
+  --color-blue-50: oklch(from var(--color-blue-base) calc(l + 0.35) calc(c - 0.08) h);
+  --color-blue-100: oklch(from var(--color-blue-base) calc(l + 0.30) calc(c - 0.06) h);
+  --color-blue-200: oklch(from var(--color-blue-base) calc(l + 0.20) calc(c - 0.04) h);
+  --color-blue-300: oklch(from var(--color-blue-base) calc(l + 0.10) calc(c - 0.02) h);
+  --color-blue-400: oklch(from var(--color-blue-base) calc(l + 0.05) c h);
+  --color-blue-500: var(--color-blue-base);
+  --color-blue-600: oklch(from var(--color-blue-base) calc(l - 0.15) c h);
+  --color-blue-700: oklch(from var(--color-blue-base) calc(l - 0.20) c h);
+  --color-blue-800: oklch(from var(--color-blue-base) calc(l - 0.25) c h);
+  --color-blue-900: oklch(from var(--color-blue-base) calc(l - 0.30) c h);
 
-  /* Colors - Red */
-  --color-red-50: #fef2f2;
-  --color-red-100: #fee2e2;
-  --color-red-200: #fecaca;
-  --color-red-300: #fca5a5;
-  --color-red-400: #f87171;
-  --color-red-500: #ef4444;
-  --color-red-600: #dc2626;
-  --color-red-700: #b91c1c;
-  --color-red-800: #991b1b;
-  --color-red-900: #7f1d1d;
+  /* Colors - Green - Generated from base using relative colors */
+  --color-green-50: oklch(from var(--color-green-base) calc(l + 0.35) calc(c - 0.10) h);
+  --color-green-100: oklch(from var(--color-green-base) calc(l + 0.30) calc(c - 0.08) h);
+  --color-green-200: oklch(from var(--color-green-base) calc(l + 0.20) calc(c - 0.05) h);
+  --color-green-300: oklch(from var(--color-green-base) calc(l + 0.12) calc(c - 0.02) h);
+  --color-green-400: oklch(from var(--color-green-base) calc(l + 0.06) c h);
+  --color-green-500: var(--color-green-base);
+  --color-green-600: oklch(from var(--color-green-base) calc(l - 0.08) c h);
+  --color-green-700: oklch(from var(--color-green-base) calc(l - 0.15) c h);
+  --color-green-800: oklch(from var(--color-green-base) calc(l - 0.20) c h);
+  --color-green-900: oklch(from var(--color-green-base) calc(l - 0.28) c h);
 
-  /* Colors - Yellow */
-  --color-yellow-50: #fefce8;
-  --color-yellow-100: #fef9c3;
-  --color-yellow-200: #fef08a;
-  --color-yellow-300: #fde047;
-  --color-yellow-400: #facc15;
-  --color-yellow-500: #eab308;
-  --color-yellow-600: #ca8a04;
-  --color-yellow-700: #a16207;
-  --color-yellow-800: #854d0e;
-  --color-yellow-900: #713f12;
+  /* Colors - Red - Generated from base using relative colors */
+  --color-red-50: oklch(from var(--color-red-base) calc(l + 0.35) calc(c - 0.10) h);
+  --color-red-100: oklch(from var(--color-red-base) calc(l + 0.30) calc(c - 0.08) h);
+  --color-red-200: oklch(from var(--color-red-base) calc(l + 0.20) calc(c - 0.05) h);
+  --color-red-300: oklch(from var(--color-red-base) calc(l + 0.10) calc(c - 0.02) h);
+  --color-red-400: oklch(from var(--color-red-base) calc(l + 0.05) c h);
+  --color-red-500: var(--color-red-base);
+  --color-red-600: oklch(from var(--color-red-base) calc(l - 0.10) c h);
+  --color-red-700: oklch(from var(--color-red-base) calc(l - 0.18) c h);
+  --color-red-800: oklch(from var(--color-red-base) calc(l - 0.22) c h);
+  --color-red-900: oklch(from var(--color-red-base) calc(l - 0.28) c h);
+
+  /* Colors - Yellow - Generated from base using relative colors */
+  --color-yellow-50: oklch(from var(--color-yellow-base) calc(l + 0.25) calc(c - 0.12) h);
+  --color-yellow-100: oklch(from var(--color-yellow-base) calc(l + 0.20) calc(c - 0.08) h);
+  --color-yellow-200: oklch(from var(--color-yellow-base) calc(l + 0.12) calc(c - 0.04) h);
+  --color-yellow-300: oklch(from var(--color-yellow-base) calc(l + 0.08) c h);
+  --color-yellow-400: oklch(from var(--color-yellow-base) calc(l + 0.02) calc(c + 0.02) h);
+  --color-yellow-500: var(--color-yellow-base);
+  --color-yellow-600: oklch(from var(--color-yellow-base) calc(l - 0.12) c h);
+  --color-yellow-700: oklch(from var(--color-yellow-base) calc(l - 0.22) c h);
+  --color-yellow-800: oklch(from var(--color-yellow-base) calc(l - 0.30) c h);
+  --color-yellow-900: oklch(from var(--color-yellow-base) calc(l - 0.35) c h);
 
   /* Spacing */
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 20px;
-  --space-6: 24px;
-  --space-8: 32px;
-  --space-10: 40px;
-  --space-12: 48px;
-  --space-16: 64px;
-  --space-20: 80px;
-  --space-24: 96px;
+  --space-1: 0.25rem; /* 4px */
+  --space-2: 0.5rem; /* 8px */
+  --space-3: 0.75rem; /* 12px */
+  --space-4: 1rem; /* 16px */
+  --space-5: 1.25rem; /* 20px */
+  --space-6: 1.5rem; /* 24px */
+  --space-8: 2rem; /* 32px */
+  --space-10: 2.5rem; /* 40px */
+  --space-12: 3rem; /* 48px */
+  --space-16: 4rem; /* 64px */
+  --space-20: 5rem; /* 80px */
+  --space-24: 6rem; /* 96px */
 
   /* Border Radius */
-  --radius-sm: 2px;
-  --radius-md: 4px;
-  --radius-lg: 8px;
-  --radius-xl: 12px;
-  --radius-2xl: 16px;
+  --radius-sm: 0.125rem; /* 2px */
+  --radius-md: 0.25rem; /* 4px */
+  --radius-lg: 0.5rem; /* 8px */
+  --radius-xl: 0.75rem; /* 12px */
+  --radius-2xl: 1rem; /* 16px */
   --radius-full: 9999px;
 
   /* Font Sizes */
-  --font-size-xs: 12px;
-  --font-size-sm: 14px;
-  --font-size-base: 16px;
-  --font-size-lg: 18px;
-  --font-size-xl: 20px;
-  --font-size-2xl: 24px;
-  --font-size-3xl: 30px;
-  --font-size-4xl: 36px;
+  --font-size-xs: 0.75rem; /* 12px */
+  --font-size-sm: 0.875rem; /* 14px */
+  --font-size-base: 1rem; /* 16px */
+  --font-size-lg: 1.125rem; /* 18px */
+  --font-size-xl: 1.25rem; /* 20px */
+  --font-size-2xl: 1.5rem; /* 24px */
+  --font-size-3xl: 1.875rem; /* 30px */
+  --font-size-4xl: 2.25rem; /* 36px */
 
   /* Font Weights */
   --font-weight-normal: 400;

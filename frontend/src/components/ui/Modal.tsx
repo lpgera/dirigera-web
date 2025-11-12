@@ -4,13 +4,21 @@ import { Button } from "./Button";
 import "./Modal.css";
 
 export interface ModalProps {
+  /** Whether the modal is visible */
   open?: boolean | undefined;
+  /** Callback when cancel button or close action is triggered */
   onCancel?: (() => void) | undefined;
+  /** Callback when OK button is clicked */
   onOk?: (() => void) | undefined;
+  /** Modal title */
   title?: React.ReactNode | undefined;
+  /** Footer content - pass null to hide footer */
   footer?: React.ReactNode | null | undefined;
+  /** Modal body content */
   children?: React.ReactNode | undefined;
+  /** Modal width in pixels or CSS string */
   width?: number | string | undefined;
+  /** Additional CSS class name */
   className?: string | undefined;
 }
 

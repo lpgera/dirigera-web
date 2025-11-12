@@ -53,22 +53,22 @@
 }
 
 .skeleton-line {
-  height: 16px;
+  height: var(--skeleton-line-height);
   border-radius: var(--radius-sm);
 }
 
 .skeleton-line:last-child {
-  width: 60%;
+  width: var(--skeleton-line-last-width);
 }
 
 .result {
-  padding: var(--spacing-2xl);
+  padding: var(--result-padding);
   text-align: center;
 }
 
 .result-icon {
-  font-size: 72px;
-  margin-bottom: var(--spacing-lg);
+  font-size: var(--result-icon-size);
+  margin-bottom: var(--result-icon-margin);
 }
 
 .result-icon-error {

@@ -2,10 +2,15 @@ import React, { ButtonHTMLAttributes } from "react";
 import "./Button.css";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  /** Button visual style variant */
   variant?: "primary" | "default" | "text" | undefined;
+  /** Button shape - use 'circle' for icon-only buttons */
   shape?: "default" | "circle" | undefined;
+  /** Make button full width */
   block?: boolean | undefined;
+  /** Icon to display in the button */
   icon?: React.ReactNode | undefined;
+  /** Show loading spinner */
   loading?: boolean | undefined;
 }
 

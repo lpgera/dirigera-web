@@ -1,8 +1,10 @@
 import React, { HTMLAttributes } from "react";
 import "./Card.css";
 
-interface CardProps extends HTMLAttributes<HTMLDivElement> {
+interface CardProps extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
+  /** Card title */
   title?: React.ReactNode;
+  /** Extra content (e.g., actions) displayed in the card header */
   extra?: React.ReactNode;
 }
 

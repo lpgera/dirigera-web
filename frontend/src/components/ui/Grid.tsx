@@ -2,8 +2,11 @@ import React, { HTMLAttributes } from "react";
 import "./Grid.css";
 
 interface RowProps extends HTMLAttributes<HTMLDivElement> {
+  /** Spacing between grid columns - single number or [horizontal, vertical] */
   gutter?: [number, number] | number;
+  /** Vertical alignment of columns */
   align?: "top" | "middle" | "bottom";
+  /** Horizontal distribution of columns */
   justify?: "start" | "end" | "center" | "space-around" | "space-between";
 }
 
@@ -35,13 +38,21 @@ export function Row({
 }
 
 interface ColProps extends HTMLAttributes<HTMLDivElement> {
+  /** Number of columns to span (out of 24) */
   span?: number;
+  /** Column span for extra small screens (<576px) */
   xs?: number;
+  /** Column span for small screens (≥576px) */
   sm?: number;
+  /** Column span for medium screens (≥768px) */
   md?: number;
+  /** Column span for large screens (≥992px) */
   lg?: number;
+  /** Column span for extra large screens (≥1200px) */
   xl?: number;
+  /** Column span for extra extra large screens (≥1600px) */
   xxl?: number;
+  /** Flex value - e.g., 'auto', 'none', '100px', or a number */
   flex?: string | number;
 }
 

@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 1000;
+  z-index: var(--z-index-modal);
 }
 
 .modal-overlay {
@@ -13,8 +13,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(2px);
+  background-color: var(--modal-overlay-bg);
+  backdrop-filter: blur(var(--modal-overlay-blur));
 }
 
 .modal-wrap {
@@ -27,42 +27,42 @@
   align-items: center;
   justify-content: center;
   overflow: auto;
-  padding: 16px;
+  padding: var(--modal-wrap-padding);
 }
 
 .modal {
   position: relative;
-  background-color: var(--color-surface, white);
-  border-radius: var(--radius-lg, 8px);
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  background-color: var(--modal-bg);
+  border-radius: var(--modal-border-radius);
+  box-shadow: var(--modal-shadow);
   max-width: 100%;
-  z-index: 1001;
+  z-index: calc(var(--modal-z-index) + 1);
 }
 
 .modal-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 24px;
-  border-bottom: 1px solid var(--color-border, #f0f0f0);
+  padding: var(--modal-header-padding);
+  border-bottom: var(--card-border-width) solid var(--color-border);
 }
 
 .modal-title {
-  font-size: var(--font-size-lg, 16px);
-  font-weight: var(--font-weight-semibold, 600);
-  color: var(--color-text-primary, rgba(0, 0, 0, 0.88));
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
 }
 
 .modal-close {
   background: none;
   border: none;
-  font-size: 24px;
+  font-size: var(--modal-close-size);
   line-height: 1;
   cursor: pointer;
-  color: var(--color-text-secondary, rgba(0, 0, 0, 0.45));
+  color: var(--color-text-secondary);
   padding: 0;
-  width: 24px;
-  height: 24px;
+  width: var(--modal-close-size);
+  height: var(--modal-close-size);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -70,19 +70,19 @@
 }
 
 .modal-close:hover {
-  color: var(--color-text-primary, rgba(0, 0, 0, 0.88));
+  color: var(--color-text-primary);
 }
 
 .modal-body {
-  padding: 24px;
-  color: var(--color-text-primary, rgba(0, 0, 0, 0.88));
+  padding: var(--modal-body-padding);
+  color: var(--color-text-primary);
 }
 
 .modal-footer {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 8px;
-  padding: 10px 16px;
-  border-top: 1px solid var(--color-border, #f0f0f0);
+  gap: var(--modal-footer-gap);
+  padding: var(--modal-footer-padding);
+  border-top: var(--card-border-width) solid var(--color-border);
 }

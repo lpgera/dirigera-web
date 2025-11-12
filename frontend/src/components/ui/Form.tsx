@@ -2,6 +2,7 @@ import React, { FormHTMLAttributes } from "react";
 import "./Form.css";
 
 interface FormProps extends FormHTMLAttributes<HTMLFormElement> {
+  /** Form layout direction */
   layout?: "vertical" | "horizontal" | "inline";
 }
 
@@ -23,9 +24,13 @@ export function Form({
 }
 
 interface FormItemProps {
+  /** Label text for the form item */
   label?: React.ReactNode;
+  /** Error message to display */
   error?: string;
+  /** Form control element */
   children: React.ReactNode;
+  /** Additional CSS class name */
   className?: string;
 }
 

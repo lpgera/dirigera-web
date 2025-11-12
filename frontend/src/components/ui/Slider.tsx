@@ -2,16 +2,27 @@ import React, { useState } from "react";
 import "./Slider.css";
 
 export interface SliderProps {
+  /** Current slider value (controlled) */
   value?: number | undefined;
+  /** Default slider value (uncontrolled) */
   defaultValue?: number | undefined;
+  /** Minimum value */
   min?: number | undefined;
+  /** Maximum value */
   max?: number | undefined;
+  /** Step size for value changes */
   step?: number | undefined;
+  /** Disable the slider */
   disabled?: boolean | undefined;
+  /** Callback fired while dragging */
   onChange?: ((value: number) => void) | undefined;
+  /** Callback fired when drag ends */
   onChangeComplete?: ((value: number) => void) | undefined;
+  /** Additional CSS class name */
   className?: string | undefined;
+  /** Marks to display along the slider */
   marks?: Record<number, string | React.ReactNode> | undefined;
+  /** Show value tooltip while dragging */
   tooltip?: boolean | undefined;
 }
 

@@ -2,9 +2,13 @@ import React from "react";
 import "./Switch.css";
 
 export interface SwitchProps {
+  /** Whether the switch is checked */
   checked?: boolean | undefined;
+  /** Callback when switch state changes */
   onChange?: (checked: boolean) => void | undefined;
+  /** Disable the switch */
   disabled?: boolean | undefined;
+  /** Additional CSS class name */
   className?: string | undefined;
 }
 
