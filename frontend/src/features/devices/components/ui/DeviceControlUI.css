@@ -1,5 +1,11 @@
 .device-control {
-  padding: var(--device-control-padding) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm, 12px);
+}
+
+.device-control-row {
+  width: 100%;
 }
 
 .device-control-image-wrapper {

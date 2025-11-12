@@ -1,0 +1,53 @@
+.playback-control {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs, 8px);
+}
+
+.playback-control-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--border-color, #d9d9d9);
+  border-radius: var(--border-radius-circle, 50%);
+  background-color: var(--background-color, #ffffff);
+  color: var(--text-primary, #333);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 16px;
+}
+
+.playback-control-button:hover:not(:disabled) {
+  border-color: var(--primary-color, #1890ff);
+  color: var(--primary-color, #1890ff);
+}
+
+.playback-control-button:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.playback-control-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.playback-control-button-primary {
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  background-color: var(--primary-color, #1890ff);
+  color: #ffffff;
+  border-color: var(--primary-color, #1890ff);
+}
+
+.playback-control-button-primary:hover:not(:disabled) {
+  background-color: var(--primary-color-hover, #40a9ff);
+  border-color: var(--primary-color-hover, #40a9ff);
+}
+
+.playback-control-button-primary:disabled {
+  background-color: var(--primary-color, #1890ff);
+  border-color: var(--primary-color, #1890ff);
+}

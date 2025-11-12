@@ -1,0 +1,27 @@
+.play-item-display {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs, 8px);
+  width: 100%;
+  padding: var(--spacing-sm, 12px);
+  background-color: var(--background-secondary, #fafafa);
+  border-radius: var(--border-radius-md, 4px);
+}
+
+.play-item-display-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xxs, 4px);
+}
+
+.play-item-display-label {
+  font-size: var(--font-size-xs, 12px);
+  color: var(--text-secondary, #666);
+  font-weight: 500;
+}
+
+.play-item-display-value {
+  font-size: var(--font-size-sm, 14px);
+  color: var(--text-primary, #333);
+  word-break: break-word;
+}

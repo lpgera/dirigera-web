@@ -1,0 +1,39 @@
+.door-window-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm, 12px);
+  padding: var(--spacing-sm, 12px);
+  background-color: var(--background-secondary, #fafafa);
+  border-radius: var(--border-radius-md, 4px);
+}
+
+.door-window-status-label {
+  font-size: var(--font-size-sm, 14px);
+  color: var(--text-secondary, #666);
+  font-weight: 500;
+}
+
+.door-window-status-indicator {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs, 8px);
+  padding: var(--spacing-xs, 8px) var(--spacing-sm, 12px);
+  border-radius: var(--border-radius-sm, 2px);
+  font-size: var(--font-size-sm, 14px);
+  font-weight: 600;
+}
+
+.door-window-status-indicator-open {
+  background-color: var(--status-warning-bg, #fff7e6);
+  color: var(--status-warning, #fa8c16);
+}
+
+.door-window-status-indicator-closed {
+  background-color: var(--status-success-bg, #f6ffed);
+  color: var(--status-success, #52c41a);
+}
+
+.door-window-status-text {
+  font-size: var(--font-size-sm, 14px);
+}
