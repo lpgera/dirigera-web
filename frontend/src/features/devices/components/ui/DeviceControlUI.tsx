@@ -108,6 +108,7 @@ export function DeviceControlUI({
           <DeviceImage
             imagePath={imagePath}
             name={device.name}
+            isOn={!!device.isOn}
             isReachable={device.isReachable}
             {...(device.lightLevel != null && {
               lightLevel: device.lightLevel,

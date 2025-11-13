@@ -109,6 +109,7 @@
   --device-image-bg: var(--color-surface);
   --device-icon-border-color: var(--color-border);
   --device-icon-bg: var(--color-surface);
+  --device-icon-off-color: var(--color-text-disabled);
   --device-unreachable-opacity: 0.5;
   --device-unreachable-overlay: rgba(255, 0, 0, 0.4);
   --device-unreachable-slash-width: 18.75rem; /* 300px */
