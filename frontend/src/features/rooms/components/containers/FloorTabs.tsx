@@ -100,16 +100,16 @@ export function FloorTabs({ rooms, columnSizes }: FloorTabsProps) {
         <Row gutter={[16, 16]}>
           {floorRooms.map((room) => (
             <React.Fragment key={room.id}>
-              <Col {...columnSizes}>
+              {/* <Col {...columnSizes}>
                 <div style={{ marginBottom: 8, fontSize: 12, color: "#888" }}>
                   Standard RoomCard
                 </div>
                 <RoomCard room={room} />
-              </Col>
+              </Col> */}
               <Col {...columnSizes}>
-                <div style={{ marginBottom: 8, fontSize: 12, color: "#888" }}>
+                {/* <div style={{ marginBottom: 8, fontSize: 12, color: "#888" }}>
                   Compact RoomCard
-                </div>
+                </div> */}
                 <CompactRoomCard
                   room={room}
                   onDeviceClick={handleDeviceClick}
