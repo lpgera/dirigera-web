@@ -10,6 +10,8 @@ export interface SwitchProps {
   disabled?: boolean | undefined;
   /** Additional CSS class name */
   className?: string | undefined;
+  /** Label text to display above the switch */
+  label?: string | undefined;
 }
 
 export function Switch({
@@ -17,6 +19,7 @@ export function Switch({
   onChange,
   disabled = false,
   className = "",
+  label,
 }: SwitchProps) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (onChange) {
@@ -29,15 +32,22 @@ export function Switch({
     .join(" ");
 
   return (
-    <label className={classes}>
-      <input
-        type="checkbox"
-        checked={checked}
-        onChange={handleChange}
-        disabled={disabled}
-        className="switch-input"
-      />
-      <span className="switch-slider" />
-    </label>
+    <div className="switch-container">
+      {label && (
+        <div className="switch-label-row">
+          <label className="switch-label">{label}</label>
+        </div>
+      )}
+      <label className={classes}>
+        <input
+          type="checkbox"
+          checked={checked}
+          onChange={handleChange}
+          disabled={disabled}
+          className="switch-input"
+        />
+        <span className="switch-slider" />
+      </label>
+    </div>
   );
 }

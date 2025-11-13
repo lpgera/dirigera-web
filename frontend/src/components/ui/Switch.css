@@ -1,3 +1,23 @@
+.switch-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm, 8px);
+  width: 100%;
+}
+
+.switch-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.switch-label {
+  font-size: var(--font-size-sm, 14px);
+  color: var(--color-text-secondary, rgba(255, 255, 255, 0.7));
+  font-weight: var(--font-weight-normal, 400);
+  margin: 0;
+}
+
 .switch {
   position: relative;
   display: inline-block;

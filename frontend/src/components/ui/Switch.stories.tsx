@@ -42,6 +42,22 @@ export const DisabledChecked: Story = {
   },
 };
 
+export const WithLabel: Story = {
+  args: {
+    label: "Enable feature",
+    checked: false,
+    disabled: false,
+  },
+};
+
+export const WithLabelChecked: Story = {
+  args: {
+    label: "Enable notifications",
+    checked: true,
+    disabled: false,
+  },
+};
+
 export const Interactive: Story = {
   render: () => {
     const [checked, setChecked] = React.useState(false);
@@ -73,6 +89,27 @@ export const MultipleStates: Story = {
         <Switch checked={true} disabled onChange={() => {}} />
         <span>Disabled Checked</span>
       </div>
+    </div>
+  ),
+};
+
+export const WithLabels: Story = {
+  render: () => (
+    <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+      <Switch label="Dark mode" checked={false} onChange={() => {}} />
+      <Switch label="Notifications" checked={true} onChange={() => {}} />
+      <Switch
+        label="Auto-update"
+        checked={false}
+        disabled
+        onChange={() => {}}
+      />
+      <Switch
+        label="Privacy mode"
+        checked={true}
+        disabled
+        onChange={() => {}}
+      />
     </div>
   ),
 };

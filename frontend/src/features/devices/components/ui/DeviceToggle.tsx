@@ -18,6 +18,7 @@ export function DeviceToggle({
       checked={isOn}
       disabled={!isReachable || loading}
       onChange={onChange}
+      label={isOn ? "On" : "Off"}
     />
   );
 }
