@@ -8,6 +8,7 @@ export interface ColorControlProps {
   colorSaturation?: number | undefined;
   colorTemperature?: number | undefined;
   isReachable: boolean;
+  disabled?: boolean | undefined;
   onColorHueChange?: ((colorHue: number) => void) | undefined;
   onColorSaturationChange?: ((colorSaturation: number) => void) | undefined;
   onColorTemperatureChange?: ((colorTemperature: number) => void) | undefined;
@@ -25,6 +26,7 @@ export function ColorControl({
   colorSaturation,
   colorTemperature,
   isReachable,
+  disabled = false,
   onColorHueChange,
   onColorSaturationChange,
   onColorTemperatureChange,
@@ -35,13 +37,10 @@ export function ColorControl({
   const hasColorControls =
     colorHue !== undefined && colorSaturation !== undefined;
   const hasTemperatureControl = colorTemperature !== undefined;
-  console.log(colorHue, colorSaturation);
   // Default to Color tab if available, otherwise Temperature
   const [activeTab, setActiveTab] = useState<"color" | "temperature">(
     hasColorControls ? "color" : "temperature"
   );
-  console.log(activeTab, hasColorControls);
-
   useEffect(() => {
     setActiveTab(hasColorControls ? "color" : "temperature");
   }, [hasColorControls]);
@@ -95,7 +94,7 @@ export function ColorControl({
                   min={0}
                   max={359}
                   value={colorHue}
-                  disabled={!isReachable || loading}
+                  disabled={!isReachable || loading || disabled}
                   onChange={onColorHueChange}
                   onChangeComplete={(value) =>
                     onColorHueSaturationChangeComplete?.(value, colorSaturation)
@@ -128,7 +127,7 @@ export function ColorControl({
                   max={1}
                   step={0.01}
                   value={colorSaturation}
-                  disabled={!isReachable || loading}
+                  disabled={!isReachable || loading || disabled}
                   onChange={onColorSaturationChange}
                   onChangeComplete={(value) =>
                     onColorHueSaturationChangeComplete?.(colorHue, value)
@@ -159,7 +158,7 @@ export function ColorControl({
                   min={2202}
                   max={4000}
                   value={colorTemperature}
-                  disabled={!isReachable || loading}
+                  disabled={!isReachable || loading || disabled}
                   onChange={onColorTemperatureChange}
                   onChangeComplete={onColorTemperatureChangeComplete}
                   className="color-control-slider"

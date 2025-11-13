@@ -5,6 +5,7 @@ import "./LightLevelControl.css";
 export interface LightLevelControlProps {
   lightLevel: number;
   isReachable: boolean;
+  disabled?: boolean | undefined;
   onChange: (lightLevel: number) => void;
   loading?: boolean | undefined;
 }
@@ -12,6 +13,7 @@ export interface LightLevelControlProps {
 export function LightLevelControl({
   lightLevel,
   isReachable,
+  disabled = false,
   onChange,
   loading = false,
 }: LightLevelControlProps) {
@@ -39,7 +41,7 @@ export function LightLevelControl({
             min={1}
             max={100}
             value={localValue}
-            disabled={!isReachable || loading}
+            disabled={!isReachable || loading || disabled}
             onChange={setLocalValue}
             onChangeComplete={onChange}
             className="light-level-control-slider"

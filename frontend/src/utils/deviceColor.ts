@@ -80,5 +80,5 @@ export function calculateDeviceColor(
     }
   }
 
-  return undefined;
+  return "rgb(255, 217, 146)";
 }

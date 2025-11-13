@@ -140,6 +140,7 @@ export function DeviceControlUI({
             {device.lightLevel != null && (
               <Col flex="auto" className="device-control-slider">
                 <LightLevelControl
+                  disabled={!device.isReachable || !device.isOn}
                   lightLevel={device.lightLevel}
                   isReachable={device.isReachable}
                   onChange={onLightLevelChange}
@@ -177,6 +178,7 @@ export function DeviceControlUI({
         <Row gutter={8} className="device-control-row">
           <Col flex="auto">
             <ColorControl
+              disabled={!device.isReachable || !device.isOn}
               colorHue={localHue}
               colorSaturation={localSaturation}
               colorTemperature={localTemperature}
