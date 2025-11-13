@@ -1,10 +1,16 @@
 /* FloorSection Component */
 .floor-section {
-  margin-bottom: var(--floor-tabs-section-spacing, 48px);
   padding: var(--spacing-md);
   border-radius: var(--radius-lg);
   background-color: transparent;
   transition: background-color 0.3s ease;
+  
+  /* Snap immediately to each section */
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+    
+  /* Full viewport height to fit container */
+  min-height: 100vh;
 }
 
 .floor-section-active {

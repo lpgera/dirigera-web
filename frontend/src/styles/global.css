@@ -16,6 +16,8 @@ body {
   color: var(--color-text-primary);
   line-height: var(--line-height-normal);
   font-size: var(--font-size-base);
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
 }
 
 #root {
