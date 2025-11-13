@@ -11,11 +11,17 @@ export function DeviceControl({ device }: DeviceControlProps) {
   const { getDeviceImage } = useDeviceImages();
   const imagePath = getDeviceImage(device.id);
 
-  const { handleIsOnChange, handleLightLevelChange, handleVolumeChange, loading } =
-    useDeviceControl({
-      id: device.id,
-      type: device.type,
-    });
+  const {
+    handleIsOnChange,
+    handleLightLevelChange,
+    handleVolumeChange,
+    handleColorTemperatureChange,
+    handleColorHueSaturationChange,
+    loading,
+  } = useDeviceControl({
+    id: device.id,
+    type: device.type,
+  });
 
   return (
     <DeviceControlUI
@@ -24,6 +30,11 @@ export function DeviceControl({ device }: DeviceControlProps) {
       onIsOnChange={handleIsOnChange}
       onLightLevelChange={handleLightLevelChange}
       onVolumeChange={handleVolumeChange}
+      onColorTemperatureChange={handleColorTemperatureChange}
+      onColorHueSaturationChange={handleColorHueSaturationChange}
+      onPlaybackPlayPause={() => {}}
+      onPlaybackPrevious={() => {}}
+      onPlaybackNext={() => {}}
       loading={loading}
     />
   );

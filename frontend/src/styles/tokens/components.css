@@ -158,10 +158,24 @@
   --slider-tooltip-arrow-size: 0.25rem; /* 4px */
   --slider-marks-margin-top: var(--spacing-sm);
 
+  /* Custom Slider (Color & Light Controls) */
+  --custom-slider-track-height: 1rem; /* 8px */
+  --custom-slider-track-border-radius: var(--radius-md);
+  --custom-slider-thumb-height: 1rem; /* 20px */
+  --custom-slider-thumb-width: 1rem; /* 20px */
+  --custom-slider-thumb-margin-top: 2px;
+  --custom-slider-thumb-bg: white;
+  --custom-slider-thumb-border: 3px solid rgba(0, 0, 0, 0.2);
+  --custom-slider-thumb-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --custom-slider-thumb-hover-shadow:
+    0 0 0 6px rgba(255, 255, 255, 0.1), 0 2px 4px rgba(0, 0, 0, 0.3);
+  --custom-slider-thumb-active-shadow:
+    0 0 0 8px rgba(255, 255, 255, 0.15), 0 2px 4px rgba(0, 0, 0, 0.3);
+
   /* Utils */
   --skeleton-line-height: 1rem; /* 16px */
   --skeleton-line-last-width: 60%;
-  
+
   /* Result */
   --result-padding: var(--spacing-2xl);
   --result-icon-size: 4.5rem; /* 72px */

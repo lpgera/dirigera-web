@@ -3,6 +3,8 @@ import {
   SET_IS_ON_MUTATION,
   SET_LIGHT_LEVEL_MUTATION,
   SET_VOLUME_MUTATION,
+  SET_COLOR_TEMPERATURE_MUTATION,
+  SET_COLOR_HUE_AND_SATURATION_MUTATION,
 } from "../api/devicesApi";
 import type {
   SetIsOnMutation,
@@ -16,6 +18,12 @@ import type {
   SetVolumeMutation,
   SetVolumeMutationVariables,
 } from "@/components/deviceControls/Volume.types.gen";
+import type {
+  SetColorTemperatureMutation,
+  SetColorTemperatureMutationVariables,
+  SetColorHueAndSaturationMutation,
+  SetColorHueAndSaturationMutationVariables,
+} from "@/components/deviceControls/LightColor.types.gen";
 import type { ControlType } from "@/graphql.types";
 
 export interface UseDeviceControlProps {
@@ -38,6 +46,18 @@ export function useDeviceControl({ id, type }: UseDeviceControlProps) {
     SetVolumeMutation,
     SetVolumeMutationVariables
   >(SET_VOLUME_MUTATION);
+
+  const [setColorTemperature, { loading: colorTemperatureLoading }] =
+    useMutation<
+      SetColorTemperatureMutation,
+      SetColorTemperatureMutationVariables
+    >(SET_COLOR_TEMPERATURE_MUTATION);
+
+  const [setColorHueAndSaturation, { loading: colorHueSaturationLoading }] =
+    useMutation<
+      SetColorHueAndSaturationMutation,
+      SetColorHueAndSaturationMutationVariables
+    >(SET_COLOR_HUE_AND_SATURATION_MUTATION);
 
   const handleIsOnChange = async (isOn: boolean) => {
     await setIsOn({
@@ -69,14 +89,43 @@ export function useDeviceControl({ id, type }: UseDeviceControlProps) {
     });
   };
 
+  const handleColorTemperatureChange = async (colorTemperature: number) => {
+    await setColorTemperature({
+      variables: {
+        id,
+        type,
+        colorTemperature,
+      },
+    });
+  };
+
+  const handleColorHueSaturationChange = async (
+    colorHue: number,
+    colorSaturation: number
+  ) => {
+    await setColorHueAndSaturation({
+      variables: {
+        id,
+        type,
+        colorHue,
+        colorSaturation,
+      },
+    });
+  };
+
   return {
     handleIsOnChange,
     handleLightLevelChange,
     handleVolumeChange,
+    handleColorTemperatureChange,
+    handleColorHueSaturationChange,
     loading: {
       isOn: isOnLoading,
       lightLevel: lightLevelLoading,
       volume: volumeLoading,
+      colorTemperature: colorTemperatureLoading,
+      colorHueSaturation: colorHueSaturationLoading,
+      playback: false,
     },
   };
 }

@@ -29,7 +29,7 @@
   border-radius: var(--switch-border-radius);
 }
 
-.switch-slider:before {
+.switch-slider::before {
   position: absolute;
   content: "";
   height: var(--switch-handle-size);
@@ -45,8 +45,8 @@
   background-color: var(--switch-bg-checked);
 }
 
-.switch-input:checked + .switch-slider:before {
-  transform: translateX(var(--switch-width) - var(--switch-handle-size) - var(--switch-handle-offset) * 2);
+.switch-input:checked + .switch-slider::before {
+  transform: translateX(calc(var(--switch-width) - var(--switch-handle-size) - var(--switch-handle-offset) * 2));
 }
 
 .switch-input:focus + .switch-slider {

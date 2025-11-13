@@ -17,3 +17,33 @@ export const SET_VOLUME_MUTATION = gql`
     setVolume(id: $id, type: $type, volume: $volume)
   }
 `;
+
+export const SET_COLOR_TEMPERATURE_MUTATION = gql`
+  mutation SetColorTemperature(
+    $id: String!
+    $type: ControlType!
+    $colorTemperature: Int!
+  ) {
+    setColorTemperature(
+      id: $id
+      type: $type
+      colorTemperature: $colorTemperature
+    )
+  }
+`;
+
+export const SET_COLOR_HUE_AND_SATURATION_MUTATION = gql`
+  mutation SetColorHueAndSaturation(
+    $id: String!
+    $type: ControlType!
+    $colorHue: Float!
+    $colorSaturation: Float!
+  ) {
+    setColorHueAndSaturation(
+      id: $id
+      type: $type
+      colorHue: $colorHue
+      colorSaturation: $colorSaturation
+    )
+  }
+`;
