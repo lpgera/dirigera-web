@@ -98,7 +98,7 @@ export function FloorTabs({ rooms, columnSizes }: FloorTabsProps) {
         <Scenes scope="floor" scopeId={floor.id} />
 
         <Row gutter={[16, 16]}>
-          {rooms.map((room) => (
+          {floorRooms.map((room) => (
             <React.Fragment key={room.id}>
               <Col {...columnSizes}>
                 <div style={{ marginBottom: 8, fontSize: 12, color: "#888" }}>
