@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { CompactRoomCardUI } from "../ui/CompactRoomCardUI";
 import { Scenes } from "@/features/scenes";
-import { DeviceImage, BatteryIndicator } from "@/features/devices";
+import {
+  DeviceImage,
+  BatteryIndicator,
+  DeviceControl,
+} from "@/features/devices";
 import { useDeviceImages } from "@/hooks/useDeviceImages";
 import { useDeviceColor } from "@/features/devices/stores/deviceColorStore";
+import { Modal } from "@/components/ui";
 import type { Room, Device } from "@/graphql.types";
 
 interface CompactRoomCardProps {
@@ -13,8 +18,10 @@ interface CompactRoomCardProps {
 
 export function CompactRoomCard({ room, onDeviceClick }: CompactRoomCardProps) {
   const { getDeviceImage } = useDeviceImages();
+  const [selectedDevice, setSelectedDevice] = useState<Device | null>(null);
 
   const handleDeviceClick = (device: Device) => {
+    setSelectedDevice(device);
     if (onDeviceClick) {
       onDeviceClick(device);
     }
@@ -48,13 +55,25 @@ export function CompactRoomCard({ room, onDeviceClick }: CompactRoomCardProps) {
   );
 
   return (
-    <CompactRoomCardUI
-      roomName={room.name}
-      devices={room.devices}
-      renderScenes={renderScenes}
-      renderDeviceImage={renderDeviceImage}
-      renderBatteryIcon={renderBatteryIcon}
-      onDeviceClick={handleDeviceClick}
-    />
+    <>
+      <CompactRoomCardUI
+        roomName={room.name}
+        devices={room.devices}
+        renderScenes={renderScenes}
+        renderDeviceImage={renderDeviceImage}
+        renderBatteryIcon={renderBatteryIcon}
+        onDeviceClick={handleDeviceClick}
+      />
+
+      <Modal
+        open={!!selectedDevice}
+        onCancel={() => setSelectedDevice(null)}
+        title={selectedDevice?.name}
+        footer={null}
+        width={400}
+      >
+        {selectedDevice && <DeviceControl device={selectedDevice} />}
+      </Modal>
+    </>
   );
 }
