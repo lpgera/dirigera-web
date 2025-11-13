@@ -9,12 +9,12 @@ import { PlaybackControl } from "./PlaybackControl";
 import { PlayItemDisplay } from "./PlayItemDisplay";
 import { SensorDisplay } from "./SensorDisplay";
 import { DoorWindowStatus } from "./DoorWindowStatus";
-import { calculateDeviceColor, hsvToRgb } from "@/utils/deviceColor";
 import {
   useDeviceColorStore,
   useDeviceHue,
   useDeviceSaturation,
   useDeviceTemperature,
+  useDeviceColor,
 } from "@/features/devices/stores/deviceColorStore";
 import { useEffect } from "react";
 import type { Device } from "@/graphql.types";
@@ -43,7 +43,6 @@ export interface DeviceControlUIProps {
     playback: boolean;
   };
 }
-
 export function DeviceControlUI({
   device,
   imagePath,
@@ -61,6 +60,9 @@ export function DeviceControlUI({
   const localHue = useDeviceHue(device.id);
   const localSaturation = useDeviceSaturation(device.id);
   const localTemperature = useDeviceTemperature(device.id);
+  const deviceColor = useDeviceColor(device.id);
+  console.log(device.name, device.lightLevel);
+
   const {
     syncDeviceColor,
     setDeviceHue,
@@ -98,16 +100,6 @@ export function DeviceControlUI({
     device.pm25 != null ||
     device.vocIndex != null;
 
-  // Calculate device color from local store values for live preview
-  const deviceColor =
-    device.colorHue != null && device.colorSaturation != null
-      ? hsvToRgb(localHue || 0, localSaturation || 0)
-      : calculateDeviceColor(
-          device.colorHue ?? undefined,
-          device.colorSaturation ?? undefined,
-          device.colorTemperature ?? undefined
-        );
-  console.log(device.name, device.colorHue, device.colorSaturation);
   return (
     <div className="device-control">
       <Row align="middle" gutter={8} className="device-control-row">

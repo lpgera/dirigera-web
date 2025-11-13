@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
+import { hsvToRgb, calculateDeviceColor } from "@/utils/deviceColor";
 
 interface DeviceColorState {
   hue?: number | undefined;
@@ -86,3 +87,25 @@ export const useDeviceSaturation = (deviceId: string) =>
 
 export const useDeviceTemperature = (deviceId: string) =>
   useDeviceColorStore((state) => state.deviceColors[deviceId]?.temperature);
+
+/**
+ * Calculates and returns the computed device color based on local store values.
+ * Prioritizes hue/saturation over temperature for RGB calculation.
+ */
+export const useDeviceColor = (deviceId: string) =>
+  useDeviceColorStore((state) => {
+    const deviceState = state.deviceColors[deviceId];
+    if (!deviceState) {
+      return undefined;
+    }
+
+    const { hue, saturation, temperature } = deviceState;
+
+    // If we have both hue and saturation, calculate RGB from HSV
+    if (hue !== undefined && saturation !== undefined) {
+      return hsvToRgb(hue, saturation);
+    }
+
+    // Otherwise, use the utility function to calculate from available values
+    return calculateDeviceColor(hue, saturation, temperature);
+  });

@@ -6,5 +6,6 @@ export {
   useDeviceHue,
   useDeviceSaturation,
   useDeviceTemperature,
+  useDeviceColor,
 } from "./stores/deviceColorStore";
 export type * from "./types";
