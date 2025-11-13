@@ -1,5 +1,5 @@
 import React from "react";
-import { Card } from "@/components/ui";
+import { Card, Divider } from "@/components/ui";
 import { Row, Col } from "@/components/ui/Grid";
 import type { Device } from "@/graphql.types";
 import "./CompactRoomCardUI.css";
@@ -9,6 +9,7 @@ interface CompactRoomCardUIProps {
   devices: Device[];
   renderScenes?: React.ReactNode;
   renderDeviceImage: (device: Device, onClick: () => void) => React.ReactNode;
+  renderBatteryIcon: (device: Device) => React.ReactNode;
   onDeviceClick: (device: Device) => void;
 }
 
@@ -17,18 +18,31 @@ export function CompactRoomCardUI({
   devices,
   renderScenes,
   renderDeviceImage,
+  renderBatteryIcon,
   onDeviceClick,
 }: CompactRoomCardUIProps) {
+  const devicesWithoutBattery = devices.filter(
+    (device) =>
+      device.batteryPercentage === null ||
+      device.batteryPercentage === undefined
+  );
+
+  const devicesWithBattery = devices.filter(
+    (device) =>
+      device.batteryPercentage !== null &&
+      device.batteryPercentage !== undefined
+  );
+
   return (
     <Card title={roomName}>
       {/* Scene buttons section */}
       {renderScenes}
 
       {/* Device images section */}
-      {devices.length > 0 && (
+      {devicesWithoutBattery.length > 0 && (
         <div className="compact-room-card-devices">
           <Row gutter={[8, 8]}>
-            {devices.map((device) => (
+            {devicesWithoutBattery.map((device) => (
               <Col key={device.id} flex="none">
                 <div
                   className="compact-room-card-device"
@@ -48,6 +62,20 @@ export function CompactRoomCardUI({
             ))}
           </Row>
         </div>
+      )}
+
+      {/* Battery devices section */}
+      {devicesWithBattery.length > 0 && (
+        <>
+          <Divider />
+          <div className="compact-room-card-batteries">
+            {devicesWithBattery.map((device) => (
+              <div key={device.id} className="compact-room-card-battery">
+                {renderBatteryIcon(device)}
+              </div>
+            ))}
+          </div>
+        </>
       )}
     </Card>
   );

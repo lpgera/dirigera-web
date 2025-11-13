@@ -1,7 +1,8 @@
 import React from "react";
-import { RoomsGridUI } from "../ui/RoomsGridUI";
+import { Row, Col } from "@/components/ui";
 import { RoomCard } from "./RoomCard";
-import type { Room } from "@/graphql.types";
+import { CompactRoomCard } from "./CompactRoomCard";
+import type { Room, Device } from "@/graphql.types";
 import type { ColumnSizes } from "../../types";
 
 interface RoomsGridProps {
@@ -10,13 +11,28 @@ interface RoomsGridProps {
 }
 
 export function RoomsGrid({ rooms, columnSizes }: RoomsGridProps) {
-  const renderRoomCard = (room: Room) => <RoomCard room={room} />;
+  const handleDeviceClick = (device: Device) => {
+    console.log("Device clicked:", device.name);
+  };
 
   return (
-    <RoomsGridUI
-      rooms={rooms}
-      columnSizes={columnSizes}
-      renderRoomCard={renderRoomCard}
-    />
+    <Row gutter={[16, 16]}>
+      {rooms.map((room) => (
+        <React.Fragment key={room.id}>
+          <Col {...columnSizes}>
+            <div style={{ marginBottom: 8, fontSize: 12, color: "#888" }}>
+              Standard RoomCard
+            </div>
+            <RoomCard room={room} />
+          </Col>
+          <Col {...columnSizes}>
+            <div style={{ marginBottom: 8, fontSize: 12, color: "#888" }}>
+              Compact RoomCard
+            </div>
+            <CompactRoomCard room={room} onDeviceClick={handleDeviceClick} />
+          </Col>
+        </React.Fragment>
+      ))}
+    </Row>
   );
 }

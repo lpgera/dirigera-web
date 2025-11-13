@@ -21,3 +21,13 @@
 .compact-room-card-device:active {
   transform: scale(0.95);
 }
+
+.compact-room-card-batteries {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+}
+
+.compact-room-card-battery {
+  display: inline-block;
+}

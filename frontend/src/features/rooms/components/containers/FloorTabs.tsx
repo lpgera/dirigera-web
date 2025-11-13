@@ -5,9 +5,11 @@ import { FloorTabsUI } from "../ui/FloorTabsUI";
 import { useFloors } from "@/hooks";
 import { Scenes } from "@/features/scenes";
 import { RoomCard } from "./RoomCard";
-import type { Room } from "@/graphql.types";
+import type { Device, Room } from "@/graphql.types";
 import type { ColumnSizes } from "../../types";
 import type { Floor } from "@/hooks";
+import React from "react";
+import { CompactRoomCard } from "./CompactRoomCard";
 
 interface FloorTabsProps {
   rooms: Room[];
@@ -88,16 +90,32 @@ export function FloorTabs({ rooms, columnSizes }: FloorTabsProps) {
   const renderFloorContent = (floor: Floor) => {
     const floorData = groupedRooms.get(floor.id);
     const floorRooms = floorData?.rooms || [];
-
+    const handleDeviceClick = (device: Device) => {
+      console.log("Device clicked:", device.name);
+    };
     return (
       <>
         <Scenes scope="floor" scopeId={floor.id} />
 
-        <Row gutter={[16, 16]} style={{ marginTop: 16 }}>
-          {floorRooms.map((room) => (
-            <Col key={room.id} {...columnSizes}>
-              <RoomCard room={room} />
-            </Col>
+        <Row gutter={[16, 16]}>
+          {rooms.map((room) => (
+            <React.Fragment key={room.id}>
+              <Col {...columnSizes}>
+                <div style={{ marginBottom: 8, fontSize: 12, color: "#888" }}>
+                  Standard RoomCard
+                </div>
+                <RoomCard room={room} />
+              </Col>
+              <Col {...columnSizes}>
+                <div style={{ marginBottom: 8, fontSize: 12, color: "#888" }}>
+                  Compact RoomCard
+                </div>
+                <CompactRoomCard
+                  room={room}
+                  onDeviceClick={handleDeviceClick}
+                />
+              </Col>
+            </React.Fragment>
           ))}
         </Row>
       </>

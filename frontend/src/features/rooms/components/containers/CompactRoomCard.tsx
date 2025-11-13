@@ -1,7 +1,7 @@
 import React from "react";
 import { CompactRoomCardUI } from "../ui/CompactRoomCardUI";
 import { Scenes } from "@/features/scenes";
-import { DeviceImage } from "@/features/devices";
+import { DeviceImage, BatteryIndicator } from "@/features/devices";
 import { useDeviceImages } from "@/hooks/useDeviceImages";
 import { useDeviceColor } from "@/features/devices/stores/deviceColorStore";
 import type { Room, Device } from "@/graphql.types";
@@ -40,12 +40,20 @@ export function CompactRoomCard({ room, onDeviceClick }: CompactRoomCardProps) {
     );
   };
 
+  const renderBatteryIcon = (device: Device) => (
+    <BatteryIndicator
+      batteryPercentage={device.batteryPercentage!}
+      name={device.name}
+    />
+  );
+
   return (
     <CompactRoomCardUI
       roomName={room.name}
       devices={room.devices}
       renderScenes={renderScenes}
       renderDeviceImage={renderDeviceImage}
+      renderBatteryIcon={renderBatteryIcon}
       onDeviceClick={handleDeviceClick}
     />
   );
