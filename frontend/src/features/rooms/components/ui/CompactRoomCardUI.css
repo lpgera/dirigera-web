@@ -1,0 +1,23 @@
+.compact-room-card-devices {
+  margin-top: var(--spacing-sm);
+}
+
+.compact-room-card-device {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  outline: none;
+}
+
+.compact-room-card-device:hover {
+  transform: scale(1.05);
+}
+
+.compact-room-card-device:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-md);
+}
+
+.compact-room-card-device:active {
+  transform: scale(0.95);
+}
