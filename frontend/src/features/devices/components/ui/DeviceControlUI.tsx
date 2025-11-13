@@ -9,6 +9,14 @@ import { PlaybackControl } from "./PlaybackControl";
 import { PlayItemDisplay } from "./PlayItemDisplay";
 import { SensorDisplay } from "./SensorDisplay";
 import { DoorWindowStatus } from "./DoorWindowStatus";
+import { calculateDeviceColor, hsvToRgb } from "@/utils/deviceColor";
+import {
+  useDeviceColorStore,
+  useDeviceHue,
+  useDeviceSaturation,
+  useDeviceTemperature,
+} from "@/features/devices/stores/deviceColorStore";
+import { useEffect } from "react";
 import type { Device } from "@/graphql.types";
 import "./DeviceControlUI.css";
 
@@ -49,6 +57,33 @@ export function DeviceControlUI({
   onPlaybackNext,
   loading,
 }: DeviceControlUIProps) {
+  // Use Zustand store for local color state
+  const localHue = useDeviceHue(device.id);
+  const localSaturation = useDeviceSaturation(device.id);
+  const localTemperature = useDeviceTemperature(device.id);
+  const {
+    syncDeviceColor,
+    setDeviceHue,
+    setDeviceSaturation,
+    setDeviceTemperature,
+  } = useDeviceColorStore();
+
+  // Sync server state to local state when device props change
+  useEffect(() => {
+    syncDeviceColor(
+      device.id,
+      device.colorHue ?? undefined,
+      device.colorSaturation ?? undefined,
+      device.colorTemperature ?? undefined
+    );
+  }, [
+    device.id,
+    device.colorHue,
+    device.colorSaturation,
+    device.colorTemperature,
+    syncDeviceColor,
+  ]);
+
   const hasControls =
     device.isOn != null ||
     device.lightLevel != null ||
@@ -63,6 +98,16 @@ export function DeviceControlUI({
     device.pm25 != null ||
     device.vocIndex != null;
 
+  // Calculate device color from local store values for live preview
+  const deviceColor =
+    device.colorHue != null && device.colorSaturation != null
+      ? hsvToRgb(localHue || 0, localSaturation || 0)
+      : calculateDeviceColor(
+          device.colorHue ?? undefined,
+          device.colorSaturation ?? undefined,
+          device.colorTemperature ?? undefined
+        );
+  console.log(device.name, device.colorHue, device.colorSaturation);
   return (
     <div className="device-control">
       <Row align="middle" gutter={8} className="device-control-row">
@@ -72,6 +117,10 @@ export function DeviceControlUI({
             imagePath={imagePath}
             name={device.name}
             isReachable={device.isReachable}
+            {...(device.lightLevel != null && {
+              lightLevel: device.lightLevel,
+            })}
+            {...(deviceColor && { lightColor: deviceColor })}
           />
         </Col>
 
@@ -136,16 +185,23 @@ export function DeviceControlUI({
         <Row gutter={8} className="device-control-row">
           <Col flex="auto">
             <ColorControl
-              colorHue={device.colorHue ?? undefined}
-              colorSaturation={device.colorSaturation ?? undefined}
-              colorTemperature={device.colorTemperature ?? undefined}
+              colorHue={localHue}
+              colorSaturation={localSaturation}
+              colorTemperature={localTemperature}
               isReachable={device.isReachable}
-              onColorHueSaturationChange={
+              onColorHueChange={(hue) => setDeviceHue(device.id, hue)}
+              onColorSaturationChange={(sat) =>
+                setDeviceSaturation(device.id, sat)
+              }
+              onColorTemperatureChange={(temp) =>
+                setDeviceTemperature(device.id, temp)
+              }
+              onColorHueSaturationChangeComplete={
                 device.colorHue != null && device.colorSaturation != null
                   ? onColorHueSaturationChange
                   : undefined
               }
-              onColorTemperatureChange={
+              onColorTemperatureChangeComplete={
                 device.colorTemperature != null
                   ? onColorTemperatureChange
                   : undefined

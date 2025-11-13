@@ -27,8 +27,14 @@ export const ColorOnly: Story = {
   args: {
     colorHue: 120,
     colorSaturation: 0.8,
-    onColorHueSaturationChange: (hue, sat) => {
-      console.log("Color changed:", { hue, sat });
+    onColorHueChange: (hue: number) => {
+      console.log("Hue changed:", hue);
+    },
+    onColorSaturationChange: (sat: number) => {
+      console.log("Saturation changed:", sat);
+    },
+    onColorHueSaturationChangeComplete: (hue: number, sat: number) => {
+      console.log("Color change complete:", { hue, sat });
     },
   },
 };
@@ -36,8 +42,11 @@ export const ColorOnly: Story = {
 export const TemperatureOnly: Story = {
   args: {
     colorTemperature: 2700,
-    onColorTemperatureChange: (temp) => {
-      console.log("Temperature changed:", temp);
+    onColorTemperatureChange: (temp: number) => {
+      console.log("Temperature changing:", temp);
+    },
+    onColorTemperatureChangeComplete: (temp: number) => {
+      console.log("Temperature change complete:", temp);
     },
   },
 };
@@ -47,11 +56,20 @@ export const BothControls: Story = {
     colorHue: 30,
     colorSaturation: 0.8,
     colorTemperature: 2700,
-    onColorHueSaturationChange: (hue, sat) => {
-      console.log("Color changed:", { hue, sat });
+    onColorHueChange: (hue: number) => {
+      console.log("Hue changed:", hue);
     },
-    onColorTemperatureChange: (temp) => {
-      console.log("Temperature changed:", temp);
+    onColorSaturationChange: (sat: number) => {
+      console.log("Saturation changed:", sat);
+    },
+    onColorHueSaturationChangeComplete: (hue: number, sat: number) => {
+      console.log("Color change complete:", { hue, sat });
+    },
+    onColorTemperatureChange: (temp: number) => {
+      console.log("Temperature changing:", temp);
+    },
+    onColorTemperatureChangeComplete: (temp: number) => {
+      console.log("Temperature change complete:", temp);
     },
   },
 };
@@ -62,11 +80,20 @@ export const Unreachable: Story = {
     colorSaturation: 0.6,
     colorTemperature: 3000,
     isReachable: false,
-    onColorHueSaturationChange: (hue, sat) => {
-      console.log("Color changed:", { hue, sat });
+    onColorHueChange: (hue: number) => {
+      console.log("Hue changed:", hue);
     },
-    onColorTemperatureChange: (temp) => {
-      console.log("Temperature changed:", temp);
+    onColorSaturationChange: (sat: number) => {
+      console.log("Saturation changed:", sat);
+    },
+    onColorHueSaturationChangeComplete: (hue: number, sat: number) => {
+      console.log("Color change complete:", { hue, sat });
+    },
+    onColorTemperatureChange: (temp: number) => {
+      console.log("Temperature changing:", temp);
+    },
+    onColorTemperatureChangeComplete: (temp: number) => {
+      console.log("Temperature change complete:", temp);
     },
   },
 };
@@ -77,11 +104,20 @@ export const Loading: Story = {
     colorSaturation: 0.7,
     colorTemperature: 3500,
     loading: true,
-    onColorHueSaturationChange: (hue, sat) => {
-      console.log("Color changed:", { hue, sat });
+    onColorHueChange: (hue: number) => {
+      console.log("Hue changed:", hue);
     },
-    onColorTemperatureChange: (temp) => {
-      console.log("Temperature changed:", temp);
+    onColorSaturationChange: (sat: number) => {
+      console.log("Saturation changed:", sat);
+    },
+    onColorHueSaturationChangeComplete: (hue: number, sat: number) => {
+      console.log("Color change complete:", { hue, sat });
+    },
+    onColorTemperatureChange: (temp: number) => {
+      console.log("Temperature changing:", temp);
+    },
+    onColorTemperatureChangeComplete: (temp: number) => {
+      console.log("Temperature change complete:", temp);
     },
   },
 };
