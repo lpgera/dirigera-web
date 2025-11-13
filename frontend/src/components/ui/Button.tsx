@@ -12,6 +12,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: React.ReactNode | undefined;
   /** Show loading spinner */
   loading?: boolean | undefined;
+  style?: React.CSSProperties | undefined;
 }
 
 export function Button({
@@ -23,6 +24,7 @@ export function Button({
   children,
   className = "",
   disabled,
+  style,
   ...props
 }: ButtonProps) {
   const classes = [
@@ -36,7 +38,12 @@ export function Button({
     .join(" ");
 
   return (
-    <button className={classes} disabled={disabled || loading} {...props}>
+    <button
+      className={classes}
+      style={style}
+      disabled={disabled || loading}
+      {...props}
+    >
       {loading ? "..." : icon}
       {children && <span>{children}</span>}
     </button>

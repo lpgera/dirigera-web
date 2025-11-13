@@ -1,5 +1,5 @@
-import { BulbOutlined } from "@ant-design/icons";
 import { Row, Col } from "@/components/ui/Grid";
+import { DeviceImage } from "./DeviceImage";
 import { DeviceToggle } from "./DeviceToggle";
 import { LightLevelControl } from "./LightLevelControl";
 import { VolumeControl } from "./VolumeControl";
@@ -68,36 +68,20 @@ export function DeviceControlUI({
       <Row align="middle" gutter={8} className="device-control-row">
         {/* Device Image or Icon */}
         <Col flex="none">
-          <div className="device-control-image-wrapper">
-            {imagePath ? (
-              <img
-                src={imagePath}
-                alt={device.name}
-                className={`device-control-image ${!device.isReachable ? "device-control-image-unreachable" : ""}`}
-                onError={(e) => {
-                  e.currentTarget.style.display = "none";
-                }}
-              />
-            ) : (
-              <div
-                className={`device-control-icon ${!device.isReachable ? "device-control-icon-unreachable" : ""}`}
-              >
-                <BulbOutlined style={{ fontSize: 24 }} />
-              </div>
-            )}
-            {device.isReachable === false && (
-              <div className="device-control-unreachable-overlay">
-                <div className="device-control-unreachable-slash" />
-              </div>
-            )}
-          </div>
+          <DeviceImage
+            imagePath={imagePath}
+            name={device.name}
+            isReachable={device.isReachable}
+          />
         </Col>
 
         {/* Device Name */}
         <Col flex="auto" className="device-control-name">
           {device.name}
         </Col>
+      </Row>
 
+      <Row gutter={8} className="device-control-row">
         {/* Device Controls */}
         {hasControls && (
           <>

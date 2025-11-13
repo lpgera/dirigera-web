@@ -1,0 +1,54 @@
+.device-image-wrapper {
+  position: relative;
+  width: var(--device-image-size);
+  height: var(--device-image-size);
+}
+
+.device-image {
+  width: var(--device-image-size);
+  height: var(--device-image-size);
+  object-fit: cover;
+  border-radius: var(--device-image-border-radius);
+  background-color: var(--device-image-bg);
+  opacity: 1;
+}
+
+.device-image-unreachable {
+  opacity: var(--device-unreachable-opacity);
+}
+
+.device-icon {
+  width: var(--device-image-size);
+  height: var(--device-image-size);
+  border-radius: var(--device-image-border-radius);
+  background-color: var(--device-icon-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+}
+
+.device-icon-unreachable {
+  opacity: var(--device-unreachable-opacity);
+}
+
+.device-unreachable-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--device-image-size);
+  height: var(--device-image-size);
+  border-radius: var(--device-image-border-radius);
+  background-color: var(--device-unreachable-overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.device-unreachable-slash {
+  width: var(--device-unreachable-slash-width);
+  height: var(--device-unreachable-slash-height);
+  background-color: white;
+  transform: rotate(45deg);
+}

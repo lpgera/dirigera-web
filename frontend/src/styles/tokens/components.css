@@ -125,11 +125,11 @@
   --battery-modal-content-size: var(--font-size-lg);
 
   /* Switch */
-  --switch-width: 2.75rem; /* 44px */
-  --switch-height: 1.375rem; /* 22px */
-  --switch-bg: var(--color-border);
+  --switch-width: 2rem; /* 44px */
+  --switch-height: 1rem; /* 22px */
+  --switch-bg: var(--color-border-light);
   --switch-bg-checked: var(--color-primary);
-  --switch-handle-size: 1.125rem; /* 18px */
+  --switch-handle-size: 0.75rem; /* 18px */
   --switch-handle-offset: 0.125rem; /* 2px */
   --switch-handle-bg: var(--color-text-primary);
   --switch-border-radius: var(--switch-height);
@@ -143,7 +143,7 @@
   --slider-track-border-radius: var(--radius-sm);
   --slider-thumb-size: 0.875rem; /* 14px */
   --slider-thumb-bg: var(--color-primary);
-  --slider-thumb-border: 2px solid var(--color-text-primary);
+  --slider-thumb-border: 1px solid var(--color-text-primary);
   --slider-thumb-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
   --slider-thumb-hover-shadow: 0 0 0 6px rgba(22, 119, 255, 0.1);
   --slider-thumb-active-shadow: 0 0 0 8px rgba(22, 119, 255, 0.2);
