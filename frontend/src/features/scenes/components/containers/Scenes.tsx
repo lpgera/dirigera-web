@@ -1,10 +1,8 @@
-import { Col } from "@/components/ui";
 import { useScenes } from "../../hooks/useScenes";
 import { useActivateScene } from "../../hooks/useActivateScene";
 import { useSceneScopes } from "@/hooks/useSceneScopes";
 import { useRefetch } from "@/hooks/useRefetch";
-import { SceneButton } from "../ui/SceneButton";
-import { ScenesList } from "../ui/ScenesList";
+import { ScenesUI } from "../ui/ScenesUI";
 
 interface ScenesProps {
   scope?: "house" | "floor" | "room" | undefined;
@@ -50,8 +48,8 @@ export function Scenes({ scope = "house", scopeId, title }: ScenesProps) {
     }
   }
 
-  // Don't render if loading or no scenes to show
-  if (loading || filteredScenes.length === 0) {
+  // Don't render if loading
+  if (loading) {
     return null;
   }
 
@@ -60,16 +58,11 @@ export function Scenes({ scope = "house", scopeId, title }: ScenesProps) {
   };
 
   return (
-    <ScenesList title={title}>
-      {filteredScenes.map((scene: { id: string; name: string }) => (
-        <Col key={scene.id} xs={12} sm={8} md={6} lg={4}>
-          <SceneButton
-            name={scene.name}
-            onClick={() => handleActivateScene(scene.id)}
-            loading={activating}
-          />
-        </Col>
-      ))}
-    </ScenesList>
+    <ScenesUI
+      scenes={filteredScenes}
+      title={title}
+      onActivateScene={handleActivateScene}
+      loading={activating}
+    />
   );
 }

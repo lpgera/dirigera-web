@@ -100,19 +100,11 @@ export function FloorTabs({ rooms, columnSizes }: FloorTabsProps) {
         <Row gutter={[16, 16]}>
           {floorRooms.map((room) => (
             <React.Fragment key={room.id}>
-              {/* <Col {...columnSizes}>
-                <div style={{ marginBottom: 8, fontSize: 12, color: "#888" }}>
-                  Standard RoomCard
-                </div>
-                <RoomCard room={room} />
-              </Col> */}
               <Col {...columnSizes}>
-                {/* <div style={{ marginBottom: 8, fontSize: 12, color: "#888" }}>
-                  Compact RoomCard
-                </div> */}
                 <CompactRoomCard
                   room={room}
                   onDeviceClick={handleDeviceClick}
+                  scenes={<Scenes scope="room" scopeId={room.id} />}
                 />
               </Col>
             </React.Fragment>

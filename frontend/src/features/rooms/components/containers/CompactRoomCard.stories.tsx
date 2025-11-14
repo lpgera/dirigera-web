@@ -1,17 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { CompactRoomCard } from "./CompactRoomCard";
 import { SCENES_QUERY } from "@/features/scenes/api/scenesApi";
+import { ScenesUI } from "@/features/scenes/components/ui/ScenesUI";
 import type { Room } from "@/graphql.types";
 
 /**
  * CompactRoomCard displays a room with:
  * - Room name header
- * - Scene buttons (configured via scenes.config.json)
+ * - Scene buttons (can be passed as a prop or fetched internally)
  * - Device images in a grid layout
  * - Click handlers for each device
  *
- * Scenes are fetched via GraphQL and filtered based on room ID in scenes.config.json.
- * If no scenes are configured for a room, the scene section is hidden.
+ * The scenes prop allows for better separation of concerns and easier Storybook visualization.
+ * If scenes are not provided, they will be fetched via GraphQL and filtered based on room ID.
  */
 
 const mockScenes = [
@@ -127,6 +128,9 @@ const meta = {
       description: "Callback when a device is clicked",
       action: "device-clicked",
     },
+    scenes: {
+      description: "Optional scenes to display as buttons (React.ReactNode)",
+    },
   },
 } satisfies Meta<typeof CompactRoomCard>;
 
@@ -176,12 +180,22 @@ export const WithScenes: Story = {
       id: "living-room",
       name: "Living Room with Scenes",
     },
+    scenes: (
+      <ScenesUI
+        scenes={[
+          { id: "scene-1", name: "Cozy" },
+          { id: "scene-2", name: "Bright" },
+          { id: "scene-3", name: "Movie Time" },
+        ]}
+        onActivateScene={(sceneId) => console.log(`Scene ${sceneId} activated`)}
+      />
+    ),
   },
   parameters: {
     docs: {
       description: {
         story:
-          "Scenes are configured via scenes.config.json. In this example, room 'living-room' has scenes configured, which will appear as buttons above the device list.",
+          "Demonstrates the component with scenes passed as a prop, making it easier to visualize in Storybook without relying on scenes.config.json or GraphQL.",
       },
     },
   },
@@ -310,6 +324,71 @@ export const AllDeviceStates: Story = {
       description: {
         story:
           "Shows various device states: on/off, brightness levels, unreachable, and RGB colors. Click any device to trigger the onClick handler.",
+      },
+    },
+  },
+};
+
+export const WithCustomScenes: Story = {
+  args: {
+    room: mockRoom,
+    scenes: (
+      <ScenesUI
+        scenes={[
+          { id: "scene-morning", name: "Morning" },
+          { id: "scene-evening", name: "Evening" },
+          { id: "scene-night", name: "Night" },
+        ]}
+        onActivateScene={(sceneId) => console.log(`Scene ${sceneId} activated`)}
+      />
+    ),
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Demonstrates passing custom scenes as a prop for better control and easier visualization in Storybook.",
+      },
+    },
+  },
+};
+
+export const WithManyScenesPassedAsProp: Story = {
+  args: {
+    room: mockRoom,
+    scenes: (
+      <ScenesUI
+        scenes={[
+          { id: "scene-cozy", name: "Cozy" },
+          { id: "scene-bright", name: "Bright" },
+          { id: "scene-movie", name: "Movie Time" },
+          { id: "scene-reading", name: "Reading" },
+          { id: "scene-party", name: "Party" },
+        ]}
+        onActivateScene={(sceneId) => console.log(`Scene ${sceneId} activated`)}
+      />
+    ),
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Shows how the component handles multiple scenes when passed as a prop.",
+      },
+    },
+  },
+};
+
+export const WithNoScenesPassedAsProp: Story = {
+  args: {
+    room: mockRoom,
+    scenes: null,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "When scenes prop is explicitly set to null, no scenes will be displayed. This is different from not passing the prop, which would fetch scenes internally.",
       },
     },
   },

@@ -14,9 +14,14 @@ import type { Room, Device } from "@/graphql.types";
 interface CompactRoomCardProps {
   room: Room;
   onDeviceClick?: (device: Device) => void;
+  scenes?: React.ReactNode;
 }
 
-export function CompactRoomCard({ room, onDeviceClick }: CompactRoomCardProps) {
+export function CompactRoomCard({
+  room,
+  onDeviceClick,
+  scenes,
+}: CompactRoomCardProps) {
   const { getDeviceImage } = useDeviceImages();
   const [selectedDevice, setSelectedDevice] = useState<Device | null>(null);
 
@@ -27,7 +32,7 @@ export function CompactRoomCard({ room, onDeviceClick }: CompactRoomCardProps) {
     }
   };
 
-  const renderScenes = <Scenes scope="room" scopeId={room.id} />;
+  const renderScenes = scenes ?? <Scenes scope="room" scopeId={room.id} />;
 
   const renderDeviceImage = (device: Device, onClick: () => void) => {
     const imagePath = getDeviceImage(device.id);
