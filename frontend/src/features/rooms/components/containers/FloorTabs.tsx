@@ -1,15 +1,10 @@
-import { useState, useEffect, useRef } from "react";
-import { Row, Col } from "@/components/ui";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useBreakpoint } from "@/components/ui";
 import { FloorTabsUI } from "../ui/FloorTabsUI";
+import { FloorContent } from "../ui/FloorContent";
 import { useFloors } from "@/hooks";
-import { Scenes } from "@/features/scenes";
-import { RoomCard } from "./RoomCard";
 import type { Device, Room } from "@/graphql.types";
 import type { ColumnSizes } from "../../types";
-import type { Floor } from "@/hooks";
-import React from "react";
-import { CompactRoomCard } from "./CompactRoomCard";
 
 interface FloorTabsProps {
   rooms: Room[];
@@ -87,36 +82,26 @@ export function FloorTabs({ rooms, columnSizes }: FloorTabsProps) {
     }
   };
 
-  const renderFloorContent = (floor: {
-    id: string;
-    name: string;
-    order: number;
-  }) => {
-    const floorData = groupedRooms.get(floor.id);
-    const floorRooms = floorData?.rooms || [];
-    const handleDeviceClick = (device: Device) => {
-      console.log("Device clicked:", device.name);
-    };
-    return (
-      <>
-        <Scenes scope="floor" scopeId={floor.id} />
+  const handleDeviceClick = useCallback((device: Device) => {
+    console.log("Device clicked:", device.name);
+  }, []);
 
-        <Row gutter={[16, 16]}>
-          {floorRooms.map((room) => (
-            <React.Fragment key={room.id}>
-              <Col {...columnSizes}>
-                <CompactRoomCard
-                  room={room}
-                  onDeviceClick={handleDeviceClick}
-                  scenes={<Scenes scope="room" scopeId={room.id} />}
-                />
-              </Col>
-            </React.Fragment>
-          ))}
-        </Row>
-      </>
-    );
-  };
+  const renderFloorContent = useCallback(
+    (floor: { id: string; name: string; order: number }) => {
+      const floorData = groupedRooms.get(floor.id);
+      const floorRooms = floorData?.rooms || [];
+
+      return (
+        <FloorContent
+          floorId={floor.id}
+          rooms={floorRooms}
+          columnSizes={columnSizes}
+          onDeviceClick={handleDeviceClick}
+        />
+      );
+    },
+    [groupedRooms, columnSizes, handleDeviceClick]
+  );
 
   return (
     <FloorTabsUI
