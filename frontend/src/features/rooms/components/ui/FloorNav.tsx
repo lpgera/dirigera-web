@@ -1,22 +1,33 @@
 import { Button } from "@/components/ui";
 import { FloorIcon } from "@/components/ui/FloorIcon";
-import type { Floor } from "@/hooks";
 
 import "./FloorNav.css";
 
-interface FloorNavProps {
-  floors: Floor[];
+export interface FloorNavItem {
+  id: string;
+  name: string;
+  order: number;
+}
+
+interface FloorNavUIProps {
+  floors: FloorNavItem[];
   activeFloorId: string | null;
-  onFloorClick: (floorId: string) => void;
+  iconSize?: number;
+  onFloorClick?: (floorId: string) => void;
   children?: React.ReactNode;
 }
 
-export function FloorNav({
+/**
+ * Pure presentational component for floor navigation.
+ * Renders a vertical list of floor navigation buttons.
+ */
+export function FloorNavUI({
   floors,
   activeFloorId,
-  onFloorClick,
+  iconSize = 32,
+  onFloorClick = () => {},
   children,
-}: FloorNavProps) {
+}: FloorNavUIProps) {
   return (
     <nav className="floor-nav">
       {children}
@@ -32,7 +43,7 @@ export function FloorNav({
             totalFloors={floors.length}
             floorOrder={floor.order}
             isActive={floor.id === activeFloorId}
-            size={32}
+            size={iconSize}
           />
           <span>{floor.name}</span>
         </Button>
@@ -40,3 +51,6 @@ export function FloorNav({
     </nav>
   );
 }
+
+// Export both names for backward compatibility during migration
+export { FloorNavUI as FloorNav };

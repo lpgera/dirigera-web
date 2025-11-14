@@ -1,42 +1,51 @@
 import { FloorIcon } from "@/components/ui/FloorIcon";
 
-import type { Floor } from "@/hooks";
-
 import "./FloorSection.css";
 
-interface FloorSectionProps {
-  floor: Floor;
+interface FloorSectionUIProps {
+  floorId: string;
+  floorName: string;
+  floorOrder: number;
   totalFloors: number;
-  isActive: boolean;
-  isDesktop: boolean;
-  onRefChange: (element: HTMLDivElement | null) => void;
+  isActive?: boolean;
+  iconSize?: number;
+  onRefChange?: (element: HTMLDivElement | null) => void;
   children: React.ReactNode;
 }
 
-export function FloorSection({
-  floor,
+/**
+ * Pure presentational component for displaying a floor section.
+ * Contains a header with floor icon and name, plus content area for rooms.
+ */
+export function FloorSectionUI({
+  floorId,
+  floorName,
+  floorOrder,
   totalFloors,
-  isActive,
-  isDesktop,
+  isActive = false,
+  iconSize = 48,
   onRefChange,
   children,
-}: FloorSectionProps) {
+}: FloorSectionUIProps) {
   return (
     <div
       ref={onRefChange}
       className={`floor-section ${isActive ? "floor-section-active" : ""}`}
-      data-floor-id={floor.id}
+      data-floor-id={floorId}
     >
       <h2 className="floor-section-title">
         <FloorIcon
           totalFloors={totalFloors}
-          floorOrder={floor.order}
+          floorOrder={floorOrder}
           isActive={isActive}
-          size={isDesktop ? 48 : 40}
+          size={iconSize}
         />
-        {floor.name}
+        {floorName}
       </h2>
       {children}
     </div>
   );
 }
+
+// Export both names for backward compatibility during migration
+export { FloorSectionUI as FloorSection };

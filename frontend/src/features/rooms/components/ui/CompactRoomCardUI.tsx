@@ -1,24 +1,22 @@
 import React from "react";
 import { Card, Divider } from "@/components/ui";
 import { Row, Col } from "@/components/ui/Grid";
+import { DeviceImage, BatteryIndicator } from "@/features/devices";
 import type { Device } from "@/graphql.types";
+import type { ProcessedDevice } from "../../types";
 import "./CompactRoomCardUI.css";
 
 interface CompactRoomCardUIProps {
   roomName: string;
-  devices: Device[];
-  renderScenes?: React.ReactNode;
-  renderDeviceImage: (device: Device, onClick: () => void) => React.ReactNode;
-  renderBatteryIcon: (device: Device) => React.ReactNode;
-  onDeviceClick: (device: Device) => void;
+  devices: ProcessedDevice[];
+  scenes?: React.ReactNode;
+  onDeviceClick?: (device: Device) => void;
 }
 
 export function CompactRoomCardUI({
   roomName,
   devices,
-  renderScenes,
-  renderDeviceImage,
-  renderBatteryIcon,
+  scenes,
   onDeviceClick,
 }: CompactRoomCardUIProps) {
   const devicesWithoutBattery = devices.filter(
@@ -36,7 +34,7 @@ export function CompactRoomCardUI({
   return (
     <Card title={roomName}>
       {/* Scene buttons section */}
-      {renderScenes}
+      {scenes}
 
       {/* Device images section */}
       {devicesWithoutBattery.length > 0 && (
@@ -46,17 +44,28 @@ export function CompactRoomCardUI({
               <Col key={device.id} flex="none">
                 <div
                   className="compact-room-card-device"
-                  onClick={() => onDeviceClick(device)}
+                  onClick={() => onDeviceClick?.(device)}
                   role="button"
                   tabIndex={0}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") {
                       e.preventDefault();
-                      onDeviceClick(device);
+                      onDeviceClick?.(device);
                     }
                   }}
                 >
-                  {renderDeviceImage(device, () => onDeviceClick(device))}
+                  <DeviceImage
+                    imagePath={device.imagePath}
+                    name={device.name}
+                    isOn={!!device.isOn}
+                    isReachable={device.isReachable}
+                    {...(device.lightLevel != null && {
+                      lightLevel: device.lightLevel,
+                    })}
+                    {...(device.deviceColor && {
+                      lightColor: device.deviceColor,
+                    })}
+                  />
                 </div>
               </Col>
             ))}
@@ -71,7 +80,10 @@ export function CompactRoomCardUI({
           <div className="compact-room-card-batteries">
             {devicesWithBattery.map((device) => (
               <div key={device.id} className="compact-room-card-battery">
-                {renderBatteryIcon(device)}
+                <BatteryIndicator
+                  batteryPercentage={device.batteryPercentage!}
+                  name={device.name}
+                />
               </div>
             ))}
           </div>

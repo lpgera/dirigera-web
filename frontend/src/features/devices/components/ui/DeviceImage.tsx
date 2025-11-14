@@ -1,4 +1,4 @@
-import { BulbOutlined } from "@ant-design/icons";
+import { MdLightbulbOutline } from "react-icons/md";
 import "./DeviceImage.css";
 
 export interface DeviceImageProps {
@@ -60,7 +60,7 @@ export function DeviceImage({
               color: isOn ? lightColor : "var(--device-icon-off-color)",
             }}
           >
-            <BulbOutlined style={{ fontSize: 24 }} />
+            <MdLightbulbOutline style={{ fontSize: 24 }} />
           </div>
         )}
         {isReachable === false && (

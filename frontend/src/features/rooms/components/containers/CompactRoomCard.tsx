@@ -1,15 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { CompactRoomCardUI } from "../ui/CompactRoomCardUI";
 import { Scenes } from "@/features/scenes";
-import {
-  DeviceImage,
-  BatteryIndicator,
-  DeviceControl,
-} from "@/features/devices";
+import { DeviceControl } from "@/features/devices";
 import { useDeviceImages } from "@/hooks/useDeviceImages";
 import { useDeviceColor } from "@/features/devices/stores/deviceColorStore";
 import { Modal } from "@/components/ui";
 import type { Room, Device } from "@/graphql.types";
+import type { ProcessedDevice } from "../../types";
 
 interface CompactRoomCardProps {
   room: Room;
@@ -34,39 +31,21 @@ export function CompactRoomCard({
 
   const renderScenes = scenes ?? <Scenes scope="room" scopeId={room.id} />;
 
-  const renderDeviceImage = (device: Device, onClick: () => void) => {
-    const imagePath = getDeviceImage(device.id);
-    const deviceColor = useDeviceColor(device.id);
-
-    return (
-      <DeviceImage
-        imagePath={imagePath}
-        name={device.name}
-        isOn={!!device.isOn}
-        isReachable={device.isReachable}
-        {...(device.lightLevel != null && {
-          lightLevel: device.lightLevel,
-        })}
-        {...(deviceColor && { lightColor: deviceColor })}
-      />
-    );
-  };
-
-  const renderBatteryIcon = (device: Device) => (
-    <BatteryIndicator
-      batteryPercentage={device.batteryPercentage!}
-      name={device.name}
-    />
-  );
+  // Process devices: compute imagePath and deviceColor for each device
+  const processedDevices: ProcessedDevice[] = useMemo(() => {
+    return room.devices.map((device) => ({
+      ...device,
+      imagePath: getDeviceImage(device.id),
+      deviceColor: useDeviceColor(device.id),
+    }));
+  }, [room.devices, getDeviceImage]);
 
   return (
     <>
       <CompactRoomCardUI
         roomName={room.name}
-        devices={room.devices}
-        renderScenes={renderScenes}
-        renderDeviceImage={renderDeviceImage}
-        renderBatteryIcon={renderBatteryIcon}
+        devices={processedDevices}
+        scenes={renderScenes}
         onDeviceClick={handleDeviceClick}
       />
 

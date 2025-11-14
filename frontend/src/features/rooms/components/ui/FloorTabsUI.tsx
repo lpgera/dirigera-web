@@ -1,47 +1,61 @@
-import { FloorNav } from "./FloorNav";
-import { FloorSection } from "./FloorSection";
-
-import type { Floor } from "@/hooks";
+import { FloorNavUI, type FloorNavItem } from "./FloorNav";
+import { FloorSectionUI } from "./FloorSection";
 
 import "./FloorTabsUI.css";
 
-interface FloorTabsUIProps {
-  floors: Floor[];
-  isDesktop: boolean;
-  activeFloorId: string | null;
-  onFloorClick: (floorId: string) => void;
-  onFloorRefChange: (floorId: string, element: HTMLDivElement | null) => void;
-  renderFloorContent: (floor: Floor) => React.ReactNode;
+export interface FloorData {
+  id: string;
+  name: string;
+  order: number;
 }
 
+interface FloorTabsUIProps {
+  floors: FloorData[];
+  activeFloorId: string | null;
+  iconSize?: number;
+  onFloorClick?: (floorId: string) => void;
+  onFloorRefChange?: (floorId: string, element: HTMLDivElement | null) => void;
+  children: (floor: FloorData) => React.ReactNode;
+}
+
+/**
+ * Pure presentational component for floor-based navigation and content.
+ * Uses composition to render floor navigation and floor sections.
+ * Each floor section's content is provided via the children render prop.
+ */
 export function FloorTabsUI({
   floors,
-  isDesktop,
   activeFloorId,
-  onFloorClick,
+  iconSize = 48,
+  onFloorClick = () => {},
   onFloorRefChange,
-  renderFloorContent,
+  children,
 }: FloorTabsUIProps) {
   return (
     <div className="floor-tabs">
-      <FloorNav
+      <FloorNavUI
         floors={floors}
         activeFloorId={activeFloorId}
         onFloorClick={onFloorClick}
+        iconSize={32}
       />
 
       <div className="floor-tabs-content">
         {floors.map((floor) => (
-          <FloorSection
+          <FloorSectionUI
             key={floor.id}
-            floor={floor}
+            floorId={floor.id}
+            floorName={floor.name}
+            floorOrder={floor.order}
             totalFloors={floors.length}
             isActive={floor.id === activeFloorId}
-            isDesktop={isDesktop}
-            onRefChange={(el) => onFloorRefChange(floor.id, el)}
+            iconSize={iconSize}
+            {...(onFloorRefChange && {
+              onRefChange: (el) => onFloorRefChange(floor.id, el),
+            })}
           >
-            {renderFloorContent(floor)}
-          </FloorSection>
+            {children(floor)}
+          </FloorSectionUI>
         ))}
       </div>
     </div>

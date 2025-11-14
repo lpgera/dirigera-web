@@ -15,3 +15,8 @@ export interface ColumnSizes {
   xl: number;
   xxl: number;
 }
+
+export interface ProcessedDevice extends Device {
+  imagePath: string | undefined;
+  deviceColor: string | undefined;
+}

@@ -87,7 +87,11 @@ export function FloorTabs({ rooms, columnSizes }: FloorTabsProps) {
     }
   };
 
-  const renderFloorContent = (floor: Floor) => {
+  const renderFloorContent = (floor: {
+    id: string;
+    name: string;
+    order: number;
+  }) => {
     const floorData = groupedRooms.get(floor.id);
     const floorRooms = floorData?.rooms || [];
     const handleDeviceClick = (device: Device) => {
@@ -117,11 +121,12 @@ export function FloorTabs({ rooms, columnSizes }: FloorTabsProps) {
   return (
     <FloorTabsUI
       floors={floors}
-      isDesktop={!!isDesktop}
       activeFloorId={activeFloorId}
+      iconSize={isDesktop ? 48 : 40}
       onFloorClick={handleFloorClick}
       onFloorRefChange={handleFloorRefChange}
-      renderFloorContent={renderFloorContent}
-    />
+    >
+      {renderFloorContent}
+    </FloorTabsUI>
   );
 }
