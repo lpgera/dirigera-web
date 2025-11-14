@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { useBreakpoint } from "@/components/ui";
+import { Row, Col, useBreakpoint } from "@/components/ui";
 import { FloorTabsUI } from "../ui/FloorTabsUI";
-import { FloorContent } from "../ui/FloorContent";
 import { useFloors } from "@/hooks";
+import { Scenes } from "@/features/scenes";
+import { CompactRoomCard } from "./CompactRoomCard";
 import type { Device, Room } from "@/graphql.types";
 import type { ColumnSizes } from "../../types";
 
@@ -86,23 +87,6 @@ export function FloorTabs({ rooms, columnSizes }: FloorTabsProps) {
     console.log("Device clicked:", device.name);
   }, []);
 
-  const renderFloorContent = useCallback(
-    (floor: { id: string; name: string; order: number }) => {
-      const floorData = groupedRooms.get(floor.id);
-      const floorRooms = floorData?.rooms || [];
-
-      return (
-        <FloorContent
-          floorId={floor.id}
-          rooms={floorRooms}
-          columnSizes={columnSizes}
-          onDeviceClick={handleDeviceClick}
-        />
-      );
-    },
-    [groupedRooms, columnSizes, handleDeviceClick]
-  );
-
   return (
     <FloorTabsUI
       floors={floors}
@@ -111,7 +95,28 @@ export function FloorTabs({ rooms, columnSizes }: FloorTabsProps) {
       onFloorClick={handleFloorClick}
       onFloorRefChange={handleFloorRefChange}
     >
-      {renderFloorContent}
+      {(floor) => {
+        const floorData = groupedRooms.get(floor.id);
+        const floorRooms = floorData?.rooms || [];
+
+        return (
+          <>
+            <Scenes scope="floor" scopeId={floor.id} />
+
+            <Row gutter={[16, 16]}>
+              {floorRooms.map((room) => (
+                <Col key={room.id} {...columnSizes}>
+                  <CompactRoomCard
+                    room={room}
+                    onDeviceClick={handleDeviceClick}
+                    scenes={<Scenes scope="room" scopeId={room.id} />}
+                  />
+                </Col>
+              ))}
+            </Row>
+          </>
+        );
+      }}
     </FloorTabsUI>
   );
 }

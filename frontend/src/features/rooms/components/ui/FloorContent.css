@@ -1,0 +1,4 @@
+/* FloorContent Component - wrapper for floor content with proper spacing */
+.floor-content {
+  /* Content is managed by children, this just provides a wrapper if needed */
+}
