@@ -5,7 +5,7 @@
     "build": "vite build",
     "build-storybook": "storybook build",
     "graphql-codegen": "graphql-codegen",
-    "storybook": "storybook dev -p 6006",
+    "storybook": "cross-env STORYBOOK_DISABLE_TELEMETRY=1 storybook dev -p 6006",
     "watch": "vite",
     "test": "vitest"
   },
@@ -30,6 +30,7 @@
     "antd": "^5.27.4",
     "apollo3-cache-persist": "^0.15.0",
     "chromatic": "^13.3.0",
+    "cross-env": "^10.1.0",
     "happy-dom": "^20.0.10",
     "immer": "^10.2.0",
     "jsdom": "^27.0.1",

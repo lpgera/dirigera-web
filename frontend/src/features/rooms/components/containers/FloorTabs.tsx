@@ -6,6 +6,13 @@ import { Scenes } from "@/features/scenes";
 import { CompactRoomCard } from "./CompactRoomCard";
 import type { Device, Room } from "@/graphql.types";
 import type { ColumnSizes } from "../../types";
+import { FloorPlanRenderer } from "@jesperkihlberg/floor-plan";
+
+// Import types
+import type { FloorPlanConfig } from "@jesperkihlberg/floor-plan";
+
+// Import config
+import floorsConfig from "@jesperkihlberg/floor-plan/floors-config.json";
 
 interface FloorTabsProps {
   rooms: Room[];
@@ -102,6 +109,10 @@ export function FloorTabs({ rooms, columnSizes }: FloorTabsProps) {
         return (
           <>
             <Scenes scope="floor" scopeId={floor.id} />
+            <FloorPlanRenderer
+              config={floorsConfig.floors[0] as FloorPlanConfig}
+              scale={0.8}
+            />
 
             <Row gutter={[16, 16]}>
               {floorRooms.map((room) => (

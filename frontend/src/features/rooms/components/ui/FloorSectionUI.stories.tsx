@@ -4,6 +4,13 @@ import { CompactRoomCardUI } from "./CompactRoomCardUI";
 import { ScenesUI } from "@/features/scenes/components/ui/ScenesUI";
 import type { ProcessedDevice } from "../../types";
 import { Row, Col } from "@/components/ui";
+import { FloorPlanRenderer } from "@jesperkihlberg/floor-plan";
+
+// Import types
+import type { FloorPlanConfig } from "@jesperkihlberg/floor-plan";
+
+// Import config
+import floorsConfig from "@jesperkihlberg/floor-plan/floors-config.json";
 
 /**
  * FloorSectionUI is a pure presentational component that displays:
@@ -120,7 +127,15 @@ export const Default: Story = {
     isActive: false,
     iconSize: 48,
     children: (
-      <Row gutter={[16, 16]}>
+      <Row>
+        <Col
+          style={{ textAlign: "center", background: "#030303", padding: 16 }}
+        >
+          <FloorPlanRenderer
+            config={floorsConfig.floors[1] as FloorPlanConfig}
+            scale={0.8}
+          />
+        </Col>
         <Col {...columnSizes}>
           <CompactRoomCardUI
             roomName="Living Room"
