@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { FloorSectionUI } from "./FloorSection";
 import { CompactRoomCardUI } from "./CompactRoomCardUI";
 import { ScenesUI } from "@/features/scenes/components/ui/ScenesUI";
-import type { ProcessedDevice } from "../../types";
+import type { Device } from "@/graphql.types";
 import { Row, Col } from "@/components/ui";
 import { FloorPlanRenderer } from "@jesperkihlberg/floor-plan";
 
@@ -19,7 +19,16 @@ import floorsConfig from "@jesperkihlberg/floor-plan/floors-config.json";
  * - Active state styling
  */
 
-const mockDevices: ProcessedDevice[] = [
+const mockGetDeviceImage = (deviceId: string) => {
+  const imageMap: Record<string, string> = {
+    "device-1": "https://picsum.photos/id/199/80/80",
+    "device-2": "https://picsum.photos/id/200/80/80",
+    "device-3": "https://picsum.photos/id/201/80/80",
+  };
+  return imageMap[deviceId];
+};
+
+const mockDevices: Device[] = [
   {
     __typename: "Device",
     id: "device-1",
@@ -32,8 +41,6 @@ const mockDevices: ProcessedDevice[] = [
     colorTemperature: 3000,
     colorHue: null,
     colorSaturation: null,
-    imagePath: "https://picsum.photos/id/199/80/80",
-    deviceColor: "#ffeab3",
   },
   {
     __typename: "Device",
@@ -47,8 +54,6 @@ const mockDevices: ProcessedDevice[] = [
     colorTemperature: null,
     colorHue: null,
     colorSaturation: null,
-    imagePath: "https://picsum.photos/id/200/80/80",
-    deviceColor: "rgb(255, 217, 146)",
   },
   {
     __typename: "Device",
@@ -62,8 +67,6 @@ const mockDevices: ProcessedDevice[] = [
     colorTemperature: null,
     colorHue: 120,
     colorSaturation: 0.8,
-    imagePath: "https://picsum.photos/id/201/80/80",
-    deviceColor: "#00FF00",
   },
 ];
 
@@ -141,6 +144,7 @@ export const Default: Story = {
             roomName="Living Room"
             devices={mockDevices}
             onDeviceClick={(device) => console.log("Clicked:", device.name)}
+            getDeviceImage={mockGetDeviceImage}
           />
         </Col>
         <Col {...columnSizes}>
@@ -148,6 +152,7 @@ export const Default: Story = {
             roomName="Kitchen"
             devices={mockDevices.slice(0, 2)}
             onDeviceClick={(device) => console.log("Clicked:", device.name)}
+            getDeviceImage={mockGetDeviceImage}
           />
         </Col>
       </Row>
@@ -170,6 +175,7 @@ export const Active: Story = {
             roomName="Living Room"
             devices={mockDevices}
             onDeviceClick={(device) => console.log("Clicked:", device.name)}
+            getDeviceImage={mockGetDeviceImage}
           />
         </Col>
         <Col {...columnSizes}>
@@ -177,6 +183,7 @@ export const Active: Story = {
             roomName="Kitchen"
             devices={mockDevices.slice(0, 2)}
             onDeviceClick={(device) => console.log("Clicked:", device.name)}
+            getDeviceImage={mockGetDeviceImage}
           />
         </Col>
       </Row>
@@ -199,6 +206,7 @@ export const FirstFloor: Story = {
             roomName="Master Bedroom"
             devices={mockDevices}
             onDeviceClick={(device) => console.log("Clicked:", device.name)}
+            getDeviceImage={mockGetDeviceImage}
           />
         </Col>
         <Col {...columnSizes}>
@@ -206,6 +214,7 @@ export const FirstFloor: Story = {
             roomName="Bedroom 2"
             devices={mockDevices.slice(0, 1)}
             onDeviceClick={(device) => console.log("Clicked:", device.name)}
+            getDeviceImage={mockGetDeviceImage}
           />
         </Col>
         <Col {...columnSizes}>
@@ -213,6 +222,7 @@ export const FirstFloor: Story = {
             roomName="Bathroom"
             devices={mockDevices.slice(1, 3)}
             onDeviceClick={(device) => console.log("Clicked:", device.name)}
+            getDeviceImage={mockGetDeviceImage}
           />
         </Col>
       </Row>
@@ -235,6 +245,7 @@ export const SecondFloor: Story = {
             roomName="Office"
             devices={mockDevices.slice(0, 2)}
             onDeviceClick={(device) => console.log("Clicked:", device.name)}
+            getDeviceImage={mockGetDeviceImage}
           />
         </Col>
         <Col {...columnSizes}>
@@ -242,6 +253,7 @@ export const SecondFloor: Story = {
             roomName="Guest Room"
             devices={mockDevices}
             onDeviceClick={(device) => console.log("Clicked:", device.name)}
+            getDeviceImage={mockGetDeviceImage}
           />
         </Col>
       </Row>
@@ -272,6 +284,7 @@ export const WithManyRooms: Story = {
               roomName={roomName}
               devices={mockDevices.slice(0, (idx % 3) + 1)}
               onDeviceClick={(device) => console.log("Clicked:", device.name)}
+              getDeviceImage={mockGetDeviceImage}
             />
           </Col>
         ))}
@@ -311,6 +324,7 @@ export const SmallIcon: Story = {
             roomName="Living Room"
             devices={mockDevices}
             onDeviceClick={(device) => console.log("Clicked:", device.name)}
+            getDeviceImage={mockGetDeviceImage}
           />
         </Col>
       </Row>
@@ -344,6 +358,7 @@ export const WithFloorScenes: Story = {
               roomName="Living Room"
               devices={mockDevices}
               onDeviceClick={(device) => console.log("Clicked:", device.name)}
+              getDeviceImage={mockGetDeviceImage}
             />
           </Col>
           <Col {...columnSizes}>
@@ -351,6 +366,7 @@ export const WithFloorScenes: Story = {
               roomName="Kitchen"
               devices={mockDevices.slice(0, 2)}
               onDeviceClick={(device) => console.log("Clicked:", device.name)}
+              getDeviceImage={mockGetDeviceImage}
             />
           </Col>
         </Row>
@@ -374,6 +390,7 @@ export const WithRoomScenes: Story = {
             roomName="Living Room"
             devices={mockDevices}
             onDeviceClick={(device) => console.log("Clicked:", device.name)}
+            getDeviceImage={mockGetDeviceImage}
             scenes={
               <ScenesUI
                 scenes={[
@@ -393,6 +410,7 @@ export const WithRoomScenes: Story = {
             roomName="Kitchen"
             devices={mockDevices.slice(0, 2)}
             onDeviceClick={(device) => console.log("Clicked:", device.name)}
+            getDeviceImage={mockGetDeviceImage}
             scenes={
               <ScenesUI
                 scenes={[
@@ -411,6 +429,7 @@ export const WithRoomScenes: Story = {
             roomName="Dining Room"
             devices={mockDevices.slice(1, 3)}
             onDeviceClick={(device) => console.log("Clicked:", device.name)}
+            getDeviceImage={mockGetDeviceImage}
             scenes={
               <ScenesUI
                 scenes={[
@@ -455,6 +474,7 @@ export const WithFloorAndRoomScenes: Story = {
               roomName="Master Bedroom"
               devices={mockDevices}
               onDeviceClick={(device) => console.log("Clicked:", device.name)}
+              getDeviceImage={mockGetDeviceImage}
               scenes={
                 <ScenesUI
                   scenes={[
@@ -474,6 +494,7 @@ export const WithFloorAndRoomScenes: Story = {
               roomName="Bedroom 2"
               devices={mockDevices.slice(0, 1)}
               onDeviceClick={(device) => console.log("Clicked:", device.name)}
+              getDeviceImage={mockGetDeviceImage}
               scenes={
                 <ScenesUI
                   scenes={[
@@ -492,6 +513,7 @@ export const WithFloorAndRoomScenes: Story = {
               roomName="Bathroom"
               devices={mockDevices.slice(1, 3)}
               onDeviceClick={(device) => console.log("Clicked:", device.name)}
+              getDeviceImage={mockGetDeviceImage}
               scenes={
                 <ScenesUI
                   scenes={[
@@ -540,6 +562,7 @@ export const WithManyScenes: Story = {
               roomName="Living Room"
               devices={mockDevices}
               onDeviceClick={(device) => console.log("Clicked:", device.name)}
+              getDeviceImage={mockGetDeviceImage}
               scenes={
                 <ScenesUI
                   scenes={[
@@ -561,6 +584,7 @@ export const WithManyScenes: Story = {
               roomName="Kitchen"
               devices={mockDevices.slice(0, 2)}
               onDeviceClick={(device) => console.log("Clicked:", device.name)}
+              getDeviceImage={mockGetDeviceImage}
               scenes={
                 <ScenesUI
                   scenes={[

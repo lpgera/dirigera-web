@@ -1,14 +1,14 @@
 import React from "react";
 import { Card, Divider } from "@/components/ui";
 import { Row, Col } from "@/components/ui/Grid";
-import { DeviceImage, BatteryIndicator } from "@/features/devices";
+import { DeviceImageContainer, BatteryIndicator } from "@/features/devices";
 import type { Device } from "@/graphql.types";
-import type { ProcessedDevice } from "../../types";
 import "./CompactRoomCardUI.css";
 
 interface CompactRoomCardUIProps {
   roomName: string;
-  devices: ProcessedDevice[];
+  devices: Device[];
+  getDeviceImage: (deviceId: string) => string | undefined;
   scenes?: React.ReactNode;
   onDeviceClick?: (device: Device) => void;
 }
@@ -16,6 +16,7 @@ interface CompactRoomCardUIProps {
 export function CompactRoomCardUI({
   roomName,
   devices,
+  getDeviceImage,
   scenes,
   onDeviceClick,
 }: CompactRoomCardUIProps) {
@@ -54,17 +55,9 @@ export function CompactRoomCardUI({
                     }
                   }}
                 >
-                  <DeviceImage
-                    imagePath={device.imagePath}
-                    name={device.name}
-                    isOn={!!device.isOn}
-                    isReachable={device.isReachable}
-                    {...(device.lightLevel != null && {
-                      lightLevel: device.lightLevel,
-                    })}
-                    {...(device.deviceColor && {
-                      lightColor: device.deviceColor,
-                    })}
+                  <DeviceImageContainer
+                    device={device}
+                    imagePath={getDeviceImage(device.id)}
                   />
                 </div>
               </Col>

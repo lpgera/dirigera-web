@@ -1,99 +1,34 @@
 import { Row, Col } from "@/components/ui/Grid";
-import { DeviceImage } from "./DeviceImage";
-import { DeviceToggle } from "./DeviceToggle";
-import { LightLevelControl } from "./LightLevelControl";
-import { VolumeControl } from "./VolumeControl";
-import { BatteryIndicator } from "./BatteryIndicator";
-import { ColorControl } from "./ColorControl";
 import { PlaybackControl } from "./PlaybackControl";
 import { PlayItemDisplay } from "./PlayItemDisplay";
 import { SensorDisplay } from "./SensorDisplay";
 import { DoorWindowStatus } from "./DoorWindowStatus";
-import {
-  useDeviceColorStore,
-  useDeviceHue,
-  useDeviceSaturation,
-  useDeviceTemperature,
-  useDeviceColor,
-} from "@/features/devices/stores/deviceColorStore";
-import { useEffect } from "react";
 import type { Device } from "@/graphql.types";
+import type { ReactNode } from "react";
 import "./DeviceControlUI.css";
 
 export interface DeviceControlUIProps {
   device: Device;
-  imagePath: string | undefined;
-  onIsOnChange: (isOn: boolean) => void;
-  onLightLevelChange: (lightLevel: number) => void;
-  onVolumeChange: (volume: number) => void;
-  onColorTemperatureChange: (colorTemperature: number) => void;
-  onColorHueSaturationChange: (
-    colorHue: number,
-    colorSaturation: number
-  ) => void;
+  deviceImageSlot?: ReactNode;
+  basicControlsSlot?: ReactNode;
+  colorControlSlot?: ReactNode;
   onPlaybackPlayPause: () => void;
   onPlaybackPrevious: () => void;
   onPlaybackNext: () => void;
   loading: {
-    isOn: boolean;
-    lightLevel: boolean;
-    volume: boolean;
-    colorTemperature: boolean;
-    colorHueSaturation: boolean;
     playback: boolean;
   };
 }
 export function DeviceControlUI({
   device,
-  imagePath,
-  onIsOnChange,
-  onLightLevelChange,
-  onVolumeChange,
-  onColorTemperatureChange,
-  onColorHueSaturationChange,
+  deviceImageSlot,
+  basicControlsSlot,
+  colorControlSlot,
   onPlaybackPlayPause,
   onPlaybackPrevious,
   onPlaybackNext,
   loading,
 }: DeviceControlUIProps) {
-  // Use Zustand store for local color state
-  const localHue = useDeviceHue(device.id);
-  const localSaturation = useDeviceSaturation(device.id);
-  const localTemperature = useDeviceTemperature(device.id);
-  const deviceColor = useDeviceColor(device.id);
-  console.log(device.name, device.lightLevel);
-
-  const {
-    syncDeviceColor,
-    setDeviceHue,
-    setDeviceSaturation,
-    setDeviceTemperature,
-  } = useDeviceColorStore();
-
-  // Sync server state to local state when device props change
-  useEffect(() => {
-    syncDeviceColor(
-      device.id,
-      device.colorHue ?? undefined,
-      device.colorSaturation ?? undefined,
-      device.colorTemperature ?? undefined
-    );
-  }, [
-    device.id,
-    device.colorHue,
-    device.colorSaturation,
-    device.colorTemperature,
-    syncDeviceColor,
-  ]);
-
-  const hasControls =
-    device.isOn != null ||
-    device.lightLevel != null ||
-    device.volume != null ||
-    device.colorTemperature != null ||
-    (device.colorHue != null && device.colorSaturation != null) ||
-    device.playback != null;
-
   const hasSensors =
     device.temperature != null ||
     device.humidity != null ||
@@ -104,18 +39,7 @@ export function DeviceControlUI({
     <div className="device-control">
       <Row align="middle" gutter={8} className="device-control-row">
         {/* Device Image or Icon */}
-        <Col flex="none">
-          <DeviceImage
-            imagePath={imagePath}
-            name={device.name}
-            isOn={!!device.isOn}
-            isReachable={device.isReachable}
-            {...(device.lightLevel != null && {
-              lightLevel: device.lightLevel,
-            })}
-            {...(deviceColor && { lightColor: deviceColor })}
-          />
-        </Col>
+        {deviceImageSlot && <Col flex="none">{deviceImageSlot}</Col>}
 
         {/* Device Name */}
         <Col flex="auto" className="device-control-name">
@@ -123,87 +47,13 @@ export function DeviceControlUI({
         </Col>
       </Row>
 
-      <Row gutter={8} className="device-control-row">
-        {/* Device Controls */}
-        {hasControls && (
-          <>
-            {device.isOn != null && (
-              <Col flex="none">
-                <DeviceToggle
-                  isOn={device.isOn}
-                  isReachable={device.isReachable}
-                  onChange={onIsOnChange}
-                  loading={loading.isOn}
-                />
-              </Col>
-            )}
+      {/* Basic Controls (isOn, lightLevel, volume, battery) */}
+      {basicControlsSlot}
 
-            {device.lightLevel != null && (
-              <Col flex="auto" className="device-control-slider">
-                <LightLevelControl
-                  disabled={!device.isReachable || !device.isOn}
-                  lightLevel={device.lightLevel}
-                  isReachable={device.isReachable}
-                  onChange={onLightLevelChange}
-                  loading={loading.lightLevel}
-                />
-              </Col>
-            )}
-
-            {device.volume != null && (
-              <Col flex="auto" className="device-control-slider">
-                <VolumeControl
-                  volume={device.volume}
-                  isReachable={device.isReachable}
-                  onChange={onVolumeChange}
-                  loading={loading.volume}
-                />
-              </Col>
-            )}
-
-            {device.batteryPercentage != null && (
-              <Col flex="none">
-                <BatteryIndicator
-                  batteryPercentage={device.batteryPercentage}
-                  name={device.name}
-                />
-              </Col>
-            )}
-          </>
-        )}
-      </Row>
-
-      {/* Color Control (combines Temperature and Hue/Saturation) */}
-      {(device.colorTemperature != null ||
-        (device.colorHue != null && device.colorSaturation != null)) && (
+      {/* Color Control (temperature, hue/saturation) */}
+      {colorControlSlot && (
         <Row gutter={8} className="device-control-row">
-          <Col flex="auto">
-            <ColorControl
-              disabled={!device.isReachable || !device.isOn}
-              colorHue={localHue}
-              colorSaturation={localSaturation}
-              colorTemperature={localTemperature}
-              isReachable={device.isReachable}
-              onColorHueChange={(hue) => setDeviceHue(device.id, hue)}
-              onColorSaturationChange={(sat) =>
-                setDeviceSaturation(device.id, sat)
-              }
-              onColorTemperatureChange={(temp) =>
-                setDeviceTemperature(device.id, temp)
-              }
-              onColorHueSaturationChangeComplete={
-                device.colorHue != null && device.colorSaturation != null
-                  ? onColorHueSaturationChange
-                  : undefined
-              }
-              onColorTemperatureChangeComplete={
-                device.colorTemperature != null
-                  ? onColorTemperatureChange
-                  : undefined
-              }
-              loading={loading.colorTemperature || loading.colorHueSaturation}
-            />
-          </Col>
+          <Col flex="auto">{colorControlSlot}</Col>
         </Row>
       )}
 

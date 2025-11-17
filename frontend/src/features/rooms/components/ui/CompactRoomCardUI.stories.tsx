@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { CompactRoomCardUI } from "./CompactRoomCardUI";
 import { ScenesUI } from "@/features/scenes/components/ui/ScenesUI";
-import type { ProcessedDevice } from "../../types";
+import type { Device } from "@/graphql.types";
 
 /**
  * CompactRoomCardUI is a pure presentational component that displays:
@@ -15,7 +15,19 @@ import type { ProcessedDevice } from "../../types";
  * visualize different states in Storybook without mocking hooks or GraphQL.
  */
 
-const mockProcessedDevices: ProcessedDevice[] = [
+const mockGetDeviceImage = (deviceId: string) => {
+  const imageMap: Record<string, string> = {
+    "device-1": "https://picsum.photos/id/199/80/80",
+    "device-2": "https://picsum.photos/id/200/80/80",
+    "device-3": "https://picsum.photos/id/201/80/80",
+    "device-4": "https://picsum.photos/id/202/80/80",
+    "device-5": "https://picsum.photos/id/203/80/80",
+    "device-6": "https://picsum.photos/id/204/80/80",
+  };
+  return imageMap[deviceId];
+};
+
+const mockDevices: Device[] = [
   {
     __typename: "Device",
     id: "device-1",
@@ -28,8 +40,6 @@ const mockProcessedDevices: ProcessedDevice[] = [
     colorTemperature: 3000,
     colorHue: null,
     colorSaturation: null,
-    imagePath: "https://picsum.photos/id/199/80/80",
-    deviceColor: "#ffeab3",
   },
   {
     __typename: "Device",
@@ -43,8 +53,6 @@ const mockProcessedDevices: ProcessedDevice[] = [
     colorTemperature: null,
     colorHue: null,
     colorSaturation: null,
-    imagePath: "https://picsum.photos/id/200/80/80",
-    deviceColor: "rgb(255, 217, 146)",
   },
   {
     __typename: "Device",
@@ -58,8 +66,6 @@ const mockProcessedDevices: ProcessedDevice[] = [
     colorTemperature: null,
     colorHue: 120,
     colorSaturation: 0.8,
-    imagePath: "https://picsum.photos/id/201/80/80",
-    deviceColor: "#00FF00",
   },
   {
     __typename: "Device",
@@ -73,8 +79,6 @@ const mockProcessedDevices: ProcessedDevice[] = [
     colorTemperature: null,
     colorHue: null,
     colorSaturation: null,
-    imagePath: "https://picsum.photos/id/202/80/80",
-    deviceColor: undefined,
   },
   {
     __typename: "Device",
@@ -88,8 +92,6 @@ const mockProcessedDevices: ProcessedDevice[] = [
     colorTemperature: null,
     colorHue: null,
     colorSaturation: null,
-    imagePath: "https://picsum.photos/id/203/80/80",
-    deviceColor: undefined,
   },
   {
     __typename: "Device",
@@ -103,8 +105,6 @@ const mockProcessedDevices: ProcessedDevice[] = [
     colorTemperature: 2700,
     colorHue: null,
     colorSaturation: null,
-    imagePath: undefined,
-    deviceColor: "#ffc85f",
   },
   {
     __typename: "Device",
@@ -118,8 +118,6 @@ const mockProcessedDevices: ProcessedDevice[] = [
     colorTemperature: null,
     colorHue: null,
     colorSaturation: null,
-    imagePath: undefined,
-    deviceColor: "rgb(255, 217, 146)",
   },
   {
     __typename: "Device",
@@ -133,8 +131,6 @@ const mockProcessedDevices: ProcessedDevice[] = [
     colorTemperature: null,
     colorHue: null,
     colorSaturation: null,
-    imagePath: undefined,
-    deviceColor: "rgb(255, 217, 146)",
   },
 ];
 
@@ -173,7 +169,8 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     roomName: "Living Room",
-    devices: mockProcessedDevices,
+    devices: mockDevices,
+    getDeviceImage: mockGetDeviceImage,
   },
 };
 
@@ -181,13 +178,15 @@ export const EmptyRoom: Story = {
   args: {
     roomName: "Empty Room",
     devices: [],
+    getDeviceImage: mockGetDeviceImage,
   },
 };
 
 export const SingleDevice: Story = {
   args: {
     roomName: "Bathroom",
-    devices: [mockProcessedDevices[0]],
+    devices: [mockDevices[0]],
+    getDeviceImage: mockGetDeviceImage,
   },
 };
 
@@ -195,37 +194,41 @@ export const ManyDevices: Story = {
   args: {
     roomName: "Office",
     devices: [
-      ...mockProcessedDevices,
-      ...mockProcessedDevices.map((d, i) => ({
+      ...mockDevices,
+      ...mockDevices.map((d, i) => ({
         ...d,
         id: `${d.id}-copy-${i}`,
       })),
-      ...mockProcessedDevices.map((d, i) => ({
+      ...mockDevices.map((d, i) => ({
         ...d,
         id: `${d.id}-copy2-${i}`,
       })),
     ],
+    getDeviceImage: mockGetDeviceImage,
   },
 };
 
 export const OnlyBatteryDevices: Story = {
   args: {
     roomName: "Sensors Room",
-    devices: mockProcessedDevices.filter((d) => d.batteryPercentage !== null),
+    devices: mockDevices.filter((d) => d.batteryPercentage !== null),
+    getDeviceImage: mockGetDeviceImage,
   },
 };
 
 export const OnlyPoweredDevices: Story = {
   args: {
     roomName: "Lights Only",
-    devices: mockProcessedDevices.filter((d) => d.batteryPercentage === null),
+    devices: mockDevices.filter((d) => d.batteryPercentage === null),
+    getDeviceImage: mockGetDeviceImage,
   },
 };
 
 export const WithScenes: Story = {
   args: {
     roomName: "Living Room with Scenes",
-    devices: mockProcessedDevices,
+    devices: mockDevices,
+    getDeviceImage: mockGetDeviceImage,
     scenes: (
       <ScenesUI
         scenes={[
@@ -242,7 +245,8 @@ export const WithScenes: Story = {
 export const WithManyScenes: Story = {
   args: {
     roomName: "Living Room",
-    devices: mockProcessedDevices,
+    devices: mockDevices,
+    getDeviceImage: mockGetDeviceImage,
     scenes: (
       <ScenesUI
         scenes={[
@@ -274,8 +278,6 @@ export const AllDeviceStates: Story = {
         colorTemperature: 3000,
         colorHue: null,
         colorSaturation: null,
-        imagePath: "https://picsum.photos/id/199/80/80",
-        deviceColor: "#ffeab3",
       },
       {
         __typename: "Device",
@@ -289,8 +291,6 @@ export const AllDeviceStates: Story = {
         colorTemperature: 3000,
         colorHue: null,
         colorSaturation: null,
-        imagePath: "https://picsum.photos/id/200/80/80",
-        deviceColor: "#ffeab3",
       },
       {
         __typename: "Device",
@@ -304,8 +304,6 @@ export const AllDeviceStates: Story = {
         colorTemperature: null,
         colorHue: null,
         colorSaturation: null,
-        imagePath: "https://picsum.photos/id/201/80/80",
-        deviceColor: "rgb(255, 217, 146)",
       },
       {
         __typename: "Device",
@@ -319,8 +317,6 @@ export const AllDeviceStates: Story = {
         colorTemperature: null,
         colorHue: null,
         colorSaturation: null,
-        imagePath: "https://picsum.photos/id/202/80/80",
-        deviceColor: "rgb(255, 217, 146)",
       },
       {
         __typename: "Device",
@@ -334,8 +330,6 @@ export const AllDeviceStates: Story = {
         colorTemperature: null,
         colorHue: 0,
         colorSaturation: 1,
-        imagePath: "https://picsum.photos/id/203/80/80",
-        deviceColor: "#FF0000",
       },
       {
         __typename: "Device",
@@ -349,8 +343,6 @@ export const AllDeviceStates: Story = {
         colorTemperature: null,
         colorHue: 120,
         colorSaturation: 1,
-        imagePath: "https://picsum.photos/id/204/80/80",
-        deviceColor: "#00FF00",
       },
       {
         __typename: "Device",
@@ -364,10 +356,9 @@ export const AllDeviceStates: Story = {
         colorTemperature: null,
         colorHue: 240,
         colorSaturation: 1,
-        imagePath: "https://picsum.photos/id/188/80/80",
-        deviceColor: "#0000FF",
       },
     ],
+    getDeviceImage: mockGetDeviceImage,
   },
   parameters: {
     docs: {
@@ -384,24 +375,22 @@ export const WithCustomColors: Story = {
     roomName: "RGB Lights",
     devices: [
       {
-        ...mockProcessedDevices[2],
+        ...mockDevices[2],
         id: "rgb-1",
         name: "Purple Light",
-        deviceColor: "#9B59B6",
       },
       {
-        ...mockProcessedDevices[2],
+        ...mockDevices[2],
         id: "rgb-2",
         name: "Orange Light",
-        deviceColor: "#E67E22",
       },
       {
-        ...mockProcessedDevices[2],
+        ...mockDevices[2],
         id: "rgb-3",
         name: "Pink Light",
-        deviceColor: "#E91E63",
       },
     ],
+    getDeviceImage: mockGetDeviceImage,
   },
   parameters: {
     docs: {
@@ -415,7 +404,8 @@ export const WithCustomColors: Story = {
 export const NoScenes: Story = {
   args: {
     roomName: "Room Without Scenes",
-    devices: mockProcessedDevices,
+    devices: mockDevices,
+    getDeviceImage: mockGetDeviceImage,
     scenes: null,
   },
   parameters: {
@@ -431,7 +421,8 @@ export const NoScenes: Story = {
 export const DevicesWithoutImages: Story = {
   args: {
     roomName: "Devices Without Images",
-    devices: mockProcessedDevices.filter((d) => !d.imagePath),
+    devices: mockDevices.filter((d) => !mockGetDeviceImage(d.id)),
+    getDeviceImage: mockGetDeviceImage,
   },
   parameters: {
     docs: {
@@ -447,10 +438,11 @@ export const MixedDevicesWithAndWithoutImages: Story = {
   args: {
     roomName: "Mixed Device Images",
     devices: [
-      ...mockProcessedDevices.filter((d) => d.imagePath).slice(0, 2),
-      ...mockProcessedDevices.filter((d) => !d.imagePath),
-      ...mockProcessedDevices.filter((d) => d.imagePath).slice(2, 3),
+      ...mockDevices.filter((d) => mockGetDeviceImage(d.id)).slice(0, 2),
+      ...mockDevices.filter((d) => !mockGetDeviceImage(d.id)),
+      ...mockDevices.filter((d) => mockGetDeviceImage(d.id)).slice(2, 3),
     ],
+    getDeviceImage: mockGetDeviceImage,
   },
   parameters: {
     docs: {

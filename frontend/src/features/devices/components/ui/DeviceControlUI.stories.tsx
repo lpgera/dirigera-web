@@ -1,5 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { DeviceControlUI } from "./DeviceControlUI";
+import { DeviceImage } from "./DeviceImage";
+import { DeviceBasicControls } from "../containers/DeviceBasicControls";
+import { DeviceColorControl } from "../containers/DeviceColorControl";
 import type { Device } from "@/graphql.types";
 
 const baseDevice: Device = {
@@ -32,24 +35,65 @@ const meta = {
   component: DeviceControlUI,
   title: "Features/Devices/UI/DeviceControlUI",
   tags: ["autodocs"],
+  render: (args) => {
+    const { device, deviceImageSlot, onPlaybackPlayPause, onPlaybackPrevious, onPlaybackNext, loading } = args;
+    
+    // Determine if we should show basic controls
+    const hasBasicControls =
+      device.isOn != null ||
+      device.lightLevel != null ||
+      device.volume != null ||
+      device.batteryPercentage != null;
+
+    // Determine if we should show color controls
+    const hasColorControls =
+      device.colorTemperature != null ||
+      (device.colorHue != null && device.colorSaturation != null);
+
+    return (
+      <DeviceControlUI
+        device={device}
+        deviceImageSlot={deviceImageSlot}
+        basicControlsSlot={
+          hasBasicControls ? (
+            <DeviceBasicControls
+              device={device}
+              onIsOnChange={() => console.log("isOn change")}
+              onLightLevelChange={() => console.log("lightLevel change")}
+              onVolumeChange={() => console.log("volume change")}
+              loading={{
+                isOn: false,
+                lightLevel: false,
+                volume: false,
+              }}
+            />
+          ) : undefined
+        }
+        colorControlSlot={
+          hasColorControls ? (
+            <DeviceColorControl
+              device={device}
+              onColorTemperatureChange={() => console.log("colorTemp change")}
+              onColorHueSaturationChange={() => console.log("colorHS change")}
+              loading={{
+                colorTemperature: false,
+                colorHueSaturation: false,
+              }}
+            />
+          ) : undefined
+        }
+        onPlaybackPlayPause={onPlaybackPlayPause}
+        onPlaybackPrevious={onPlaybackPrevious}
+        onPlaybackNext={onPlaybackNext}
+        loading={loading}
+      />
+    );
+  },
   args: {
-    onIsOnChange: (value: boolean) => console.log("isOn changed to:", value),
-    onLightLevelChange: (value: number) =>
-      console.log("lightLevel changed to:", value),
-    onVolumeChange: (value: number) => console.log("volume changed to:", value),
-    onColorTemperatureChange: (value: number) =>
-      console.log("colorTemperature changed to:", value),
-    onColorHueSaturationChange: (hue: number, saturation: number) =>
-      console.log(`colorHue: ${hue}, colorSaturation: ${saturation}`),
     onPlaybackPlayPause: () => console.log("playback play/pause"),
     onPlaybackPrevious: () => console.log("playback previous"),
     onPlaybackNext: () => console.log("playback next"),
     loading: {
-      isOn: false,
-      lightLevel: false,
-      volume: false,
-      colorTemperature: false,
-      colorHueSaturation: false,
       playback: false,
     },
   },
@@ -69,7 +113,15 @@ export const LightWithToggleAndLevel: Story = {
       isOn: true,
       lightLevel: 75,
     },
-    imagePath: undefined,
+    deviceImageSlot: (
+      <DeviceImage
+        imagePath="https://placehold.co/64x64/yellow/black?text=Light"
+        name="Living Room Light"
+        isOn={true}
+        isReachable={true}
+        lightLevel={75}
+      />
+    ),
   },
 };
 
@@ -82,7 +134,15 @@ export const LightWithColorTemperature: Story = {
       lightLevel: 50,
       colorTemperature: 3000,
     },
-    imagePath: undefined,
+    deviceImageSlot: (
+      <DeviceImage
+        imagePath="https://placehold.co/64x64/orange/white?text=Warm"
+        name="Kitchen Light"
+        isOn={true}
+        isReachable={true}
+        lightLevel={50}
+      />
+    ),
   },
 };
 
@@ -96,7 +156,14 @@ export const ColorBulb: Story = {
       colorHue: 180,
       colorSaturation: 0.8,
     },
-    imagePath: "https://placehold.co/64x64/cyan/white?text=RGB",
+    deviceImageSlot: (
+      <DeviceImage
+        imagePath="https://placehold.co/64x64/cyan/white?text=RGB"
+        name="Color LED Strip"
+        isOn={true}
+        isReachable={true}
+      />
+    ),
   },
 };
 
@@ -111,7 +178,15 @@ export const FullColorLight: Story = {
       colorHue: 240,
       colorSaturation: 0.9,
     },
-    imagePath: undefined,
+    deviceImageSlot: (
+      <DeviceImage
+        imagePath="https://placehold.co/64x64/blue/white?text=Color"
+        name="Smart Color Bulb"
+        isOn={true}
+        isReachable={true}
+        lightLevel={60}
+      />
+    ),
   },
 };
 
@@ -128,7 +203,14 @@ export const MediaPlayer: Story = {
       playItem: "Bohemian Rhapsody - Queen",
       nextPlayItem: "Stairway to Heaven - Led Zeppelin",
     },
-    imagePath: "https://placehold.co/64x64/purple/white?text=Music",
+    deviceImageSlot: (
+      <DeviceImage
+        imagePath="https://placehold.co/64x64/purple/white?text=Music"
+        name="Living Room Speaker"
+        isOn={true}
+        isReachable={true}
+      />
+    ),
   },
 };
 
@@ -144,7 +226,14 @@ export const MediaPlayerPaused: Story = {
       playbackPreviousAvailable: false,
       playItem: "The Less I Know The Better - Tame Impala",
     },
-    imagePath: undefined,
+    deviceImageSlot: (
+      <DeviceImage
+        imagePath="https://placehold.co/64x64/gray/white?text=Paused"
+        name="Bedroom Speaker"
+        isOn={true}
+        isReachable={true}
+      />
+    ),
   },
 };
 
@@ -155,7 +244,14 @@ export const DoorSensor: Story = {
       name: "Front Door",
       isOpen: false,
     },
-    imagePath: undefined,
+    deviceImageSlot: (
+      <DeviceImage
+        imagePath="https://placehold.co/64x64/brown/white?text=Door"
+        name="Front Door"
+        isOn={false}
+        isReachable={true}
+      />
+    ),
   },
 };
 
@@ -167,7 +263,14 @@ export const WindowSensorOpen: Story = {
       isOpen: true,
       batteryPercentage: 65,
     },
-    imagePath: undefined,
+    deviceImageSlot: (
+      <DeviceImage
+        imagePath="https://placehold.co/64x64/lightblue/black?text=Window"
+        name="Kitchen Window"
+        isOn={false}
+        isReachable={true}
+      />
+    ),
   },
 };
 
@@ -180,7 +283,14 @@ export const TemperatureSensor: Story = {
       humidity: 45,
       batteryPercentage: 85,
     },
-    imagePath: "https://placehold.co/64x64/green/white?text=Temp",
+    deviceImageSlot: (
+      <DeviceImage
+        imagePath="https://placehold.co/64x64/green/white?text=Temp"
+        name="Living Room Sensor"
+        isOn={false}
+        isReachable={true}
+      />
+    ),
   },
 };
 
@@ -194,7 +304,14 @@ export const AirQualitySensor: Story = {
       pm25: 12,
       vocIndex: 150,
     },
-    imagePath: undefined,
+    deviceImageSlot: (
+      <DeviceImage
+        imagePath="https://placehold.co/64x64/teal/white?text=AQ"
+        name="Air Quality Monitor"
+        isOn={false}
+        isReachable={true}
+      />
+    ),
   },
 };
 
@@ -205,7 +322,14 @@ export const DeviceWithBattery: Story = {
       name: "Motion Sensor",
       batteryPercentage: 85,
     },
-    imagePath: undefined,
+    deviceImageSlot: (
+      <DeviceImage
+        imagePath="https://placehold.co/64x64/lime/black?text=Motion"
+        name="Motion Sensor"
+        isOn={false}
+        isReachable={true}
+      />
+    ),
   },
 };
 
@@ -219,7 +343,14 @@ export const ComplexDevice: Story = {
       volume: 45,
       batteryPercentage: 55,
     },
-    imagePath: "https://placehold.co/64x64/purple/white?text=Smart",
+    deviceImageSlot: (
+      <DeviceImage
+        imagePath="https://placehold.co/64x64/purple/white?text=Smart"
+        name="Smart Speaker"
+        isOn={true}
+        isReachable={true}
+      />
+    ),
   },
 };
 
@@ -232,7 +363,15 @@ export const Unreachable: Story = {
       isOn: true,
       lightLevel: 50,
     },
-    imagePath: undefined,
+    deviceImageSlot: (
+      <DeviceImage
+        imagePath="https://placehold.co/64x64/darkgray/white?text=Offline"
+        name="Hallway Light"
+        isOn={true}
+        isReachable={false}
+        lightLevel={50}
+      />
+    ),
   },
 };
 
@@ -245,7 +384,14 @@ export const UnreachableWithImage: Story = {
       isOn: true,
       lightLevel: 75,
     },
-    imagePath: "https://placehold.co/64x64/red/white?text=Offline",
+    deviceImageSlot: (
+      <DeviceImage
+        imagePath="https://placehold.co/64x64/red/white?text=Offline"
+        name="Garage Light"
+        isOn={true}
+        isReachable={false}
+      />
+    ),
   },
 };
 
@@ -257,14 +403,17 @@ export const Loading: Story = {
       isOn: true,
       lightLevel: 50,
     },
-    imagePath: undefined,
+    deviceImageSlot: (
+      <DeviceImage
+        imagePath="https://placehold.co/64x64/white/black?text=Load"
+        name="Bedroom Light"
+        isOn={true}
+        isReachable={true}
+        lightLevel={50}
+      />
+    ),
     loading: {
-      isOn: true,
-      lightLevel: true,
-      volume: false,
-      colorTemperature: false,
-      colorHueSaturation: false,
-      playback: false,
+      playback: true,
     },
   },
 };
