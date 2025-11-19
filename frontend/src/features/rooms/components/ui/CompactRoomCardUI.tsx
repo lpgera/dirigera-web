@@ -8,15 +8,14 @@ import "./CompactRoomCardUI.css";
 interface CompactRoomCardUIProps {
   roomName: string;
   devices: Device[];
-  getDeviceImage: (deviceId: string) => string | undefined;
   scenes?: React.ReactNode;
   onDeviceClick?: (device: Device) => void;
+  getDeviceImage?: (deviceId: string) => string | undefined;
 }
 
 export function CompactRoomCardUI({
   roomName,
   devices,
-  getDeviceImage,
   scenes,
   onDeviceClick,
 }: CompactRoomCardUIProps) {
@@ -55,10 +54,7 @@ export function CompactRoomCardUI({
                     }
                   }}
                 >
-                  <DeviceImageContainer
-                    device={device}
-                    imagePath={getDeviceImage(device.id)}
-                  />
+                  <DeviceImageContainer device={device} />
                 </div>
               </Col>
             ))}

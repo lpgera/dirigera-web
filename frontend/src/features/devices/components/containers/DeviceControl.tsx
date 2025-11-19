@@ -1,9 +1,9 @@
-import { useDeviceImages } from "@/hooks/useDeviceImages";
 import { useDeviceControl } from "../../hooks/useDeviceControl";
 import { DeviceControlUI } from "../ui/DeviceControlUI";
 import { DeviceBasicControls } from "./DeviceBasicControls";
 import { DeviceColorControl } from "./DeviceColorControl";
 import { DeviceImageContainer } from "./DeviceImageContainer";
+import { useDeviceImages } from "@/hooks";
 import type { Device } from "@/graphql.types";
 
 export interface DeviceControlProps {
@@ -11,9 +11,6 @@ export interface DeviceControlProps {
 }
 
 export function DeviceControl({ device }: DeviceControlProps) {
-  const { getDeviceImage } = useDeviceImages();
-  const imagePath = getDeviceImage(device.id);
-
   const {
     handleIsOnChange,
     handleLightLevelChange,
@@ -41,7 +38,7 @@ export function DeviceControl({ device }: DeviceControlProps) {
   return (
     <DeviceControlUI
       device={device}
-      deviceImageSlot={<DeviceImageContainer device={device} imagePath={imagePath} />}
+      deviceImageSlot={<DeviceImageContainer device={device} />}
       basicControlsSlot={
         hasBasicControls ? (
           <DeviceBasicControls

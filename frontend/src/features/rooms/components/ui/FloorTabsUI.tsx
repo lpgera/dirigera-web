@@ -15,7 +15,7 @@ interface FloorTabsUIProps {
   iconSize?: number;
   onFloorClick?: (floorId: string) => void;
   onFloorRefChange?: (floorId: string, element: HTMLDivElement | null) => void;
-  children: (floor: FloorData) => React.ReactNode;
+  children: (floor: FloorData, index: number) => React.ReactNode;
 }
 
 /**
@@ -41,7 +41,7 @@ export function FloorTabsUI({
       />
 
       <div className="floor-tabs-content">
-        {floors.map((floor) => (
+        {floors.map((floor, index) => (
           <FloorSectionUI
             key={floor.id}
             floorId={floor.id}
@@ -54,7 +54,7 @@ export function FloorTabsUI({
               onRefChange: (el) => onFloorRefChange(floor.id, el),
             })}
           >
-            {children(floor)}
+            {children(floor, index)}
           </FloorSectionUI>
         ))}
       </div>

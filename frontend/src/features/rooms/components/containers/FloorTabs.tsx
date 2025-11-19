@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Row, Col, useBreakpoint } from "@/components/ui";
+import { Row, Col, useBreakpoint, Card } from "@/components/ui";
 import { FloorTabsUI } from "../ui/FloorTabsUI";
 import { useFloors } from "@/hooks";
 import { Scenes } from "@/features/scenes";
@@ -102,18 +102,27 @@ export function FloorTabs({ rooms, columnSizes }: FloorTabsProps) {
       onFloorClick={handleFloorClick}
       onFloorRefChange={handleFloorRefChange}
     >
-      {(floor) => {
+      {(floor, index) => {
         const floorData = groupedRooms.get(floor.id);
         const floorRooms = floorData?.rooms || [];
 
         return (
           <>
             <Scenes scope="floor" scopeId={floor.id} />
-            <FloorPlanRenderer
-              config={floorsConfig.floors[0] as FloorPlanConfig}
-              scale={0.8}
-            />
-
+            <Row gutter={[16, 16]}>
+              <Col span={12} md={8} lg={6} xl={4}>
+                <Card>
+                  <FloorPlanRenderer
+                    config={
+                      floorsConfig.floors[
+                        floors.length - 1 - index
+                      ] as FloorPlanConfig
+                    }
+                    scale={0.8}
+                  />
+                </Card>
+              </Col>
+            </Row>
             <Row gutter={[16, 16]}>
               {floorRooms.map((room) => (
                 <Col key={room.id} {...columnSizes}>

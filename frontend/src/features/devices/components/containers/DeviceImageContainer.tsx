@@ -7,10 +7,11 @@ import {
   type DeviceLocalState,
 } from "../../hooks/useDeviceLocalState";
 import type { Device } from "@/graphql.types";
+import { useDeviceImages } from "@/hooks";
 
 export interface DeviceImageContainerProps {
   device: Device;
-  imagePath: string | undefined;
+  imagePath?: string | undefined;
 }
 
 export function DeviceImageContainer({
@@ -20,6 +21,9 @@ export function DeviceImageContainer({
   const localLightLevel = useLocalLightLevel(device.id);
   const deviceColor = useDeviceColor(device.id);
   const { syncDeviceState } = useDeviceLocalStateStore();
+  const { getDeviceImage } = useDeviceImages();
+
+  const resolvedImagePath = imagePath ?? getDeviceImage(device.id);
 
   // Sync server state to local state
   useEffect(() => {
@@ -47,7 +51,7 @@ export function DeviceImageContainer({
 
   return (
     <DeviceImage
-      imagePath={imagePath}
+      imagePath={resolvedImagePath}
       name={device.name}
       isOn={!!device.isOn}
       isReachable={device.isReachable}

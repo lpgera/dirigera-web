@@ -9,6 +9,7 @@ const meta = {
   argTypes: {
     imagePath: { control: "text" },
     name: { control: "text" },
+    isOn: { control: "boolean" },
     isReachable: { control: "boolean" },
     lightLevel: { control: { type: "range", min: 0, max: 100, step: 1 } },
     lightColor: { control: "color" },
@@ -34,24 +35,27 @@ export const WithIconUnreachable: Story = {
 
 export const WithImage: Story = {
   args: {
-    imagePath: "/devices/bulb-e27-ws-globe.png",
+    imagePath: "https://picsum.photos/id/199/80/80",
     name: "Living Room Light",
+    isOn: true,
     isReachable: true,
   },
 };
 
 export const WithImageUnreachable: Story = {
   args: {
-    imagePath: "/devices/bulb-e27-ws-globe.png",
+    imagePath: "https://picsum.photos/id/199/80/80",
     name: "Living Room Light",
+    isOn: true,
     isReachable: false,
   },
 };
 
 export const WithLightLevel: Story = {
   args: {
-    imagePath: "/devices/bulb-e27-ws-globe.png",
+    imagePath: "https://picsum.photos/id/199/80/80",
     name: "Living Room Light",
+    isOn: true,
     isReachable: true,
     lightLevel: 50,
   },
@@ -59,8 +63,9 @@ export const WithLightLevel: Story = {
 
 export const WithLightColor: Story = {
   args: {
-    imagePath: "/devices/bulb-e27-ws-globe.png",
+    imagePath: "https://picsum.photos/id/199/80/80",
     name: "Living Room Light",
+    isOn: true,
     isReachable: true,
     lightColor: "#ff6b35",
   },
@@ -68,8 +73,9 @@ export const WithLightColor: Story = {
 
 export const WithLightLevelAndColor: Story = {
   args: {
-    imagePath: "/devices/bulb-e27-ws-globe.png",
+    imagePath: "https://picsum.photos/id/199/80/80",
     name: "Living Room Light",
+    isOn: true,
     isReachable: true,
     lightLevel: 75,
     lightColor: "#4ecdc4",
@@ -78,8 +84,9 @@ export const WithLightLevelAndColor: Story = {
 
 export const DimmedWithColor: Story = {
   args: {
-    imagePath: "/devices/bulb-e27-ws-globe.png",
+    imagePath: "https://picsum.photos/id/199/80/80",
     name: "Bedroom Light",
+    isOn: true,
     isReachable: true,
     lightLevel: 25,
     lightColor: "#ffd93d",
@@ -88,8 +95,9 @@ export const DimmedWithColor: Story = {
 
 export const BrightWarmLight: Story = {
   args: {
-    imagePath: "/devices/bulb-e27-ws-globe.png",
+    imagePath: "https://picsum.photos/id/199/80/80",
     name: "Kitchen Light",
+    isOn: true,
     isReachable: true,
     lightLevel: 100,
     lightColor: "#ffb347",
