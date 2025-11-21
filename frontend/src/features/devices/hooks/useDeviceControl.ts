@@ -25,6 +25,7 @@ import type {
   SetColorHueAndSaturationMutationVariables,
 } from "@/components/deviceControls/LightColor.types.gen";
 import type { ControlType } from "@/graphql.types";
+import { useDeviceLocalStateStore } from "./useDeviceLocalState";
 
 export interface UseDeviceControlProps {
   id: string;
@@ -32,6 +33,15 @@ export interface UseDeviceControlProps {
 }
 
 export function useDeviceControl({ id, type }: UseDeviceControlProps) {
+  const {
+    setDeviceIsOn,
+    setDeviceLightLevel,
+    setDeviceVolume,
+    setDeviceColorSaturation,
+    setDeviceColorHue,
+    setDeviceColorTemperature,
+  } = useDeviceLocalStateStore();
+
   const [setIsOn, { loading: isOnLoading }] = useMutation<
     SetIsOnMutation,
     SetIsOnMutationVariables
@@ -60,6 +70,7 @@ export function useDeviceControl({ id, type }: UseDeviceControlProps) {
     >(SET_COLOR_HUE_AND_SATURATION_MUTATION);
 
   const handleIsOnChange = async (isOn: boolean) => {
+    setDeviceIsOn(id, isOn);
     await setIsOn({
       variables: {
         id,
@@ -70,6 +81,7 @@ export function useDeviceControl({ id, type }: UseDeviceControlProps) {
   };
 
   const handleLightLevelChange = async (lightLevel: number) => {
+    setDeviceLightLevel(id, lightLevel);
     await setLightLevel({
       variables: {
         id,
@@ -80,6 +92,7 @@ export function useDeviceControl({ id, type }: UseDeviceControlProps) {
   };
 
   const handleVolumeChange = async (volume: number) => {
+    setDeviceVolume(id, volume);
     await setVolume({
       variables: {
         id,
@@ -90,6 +103,8 @@ export function useDeviceControl({ id, type }: UseDeviceControlProps) {
   };
 
   const handleColorTemperatureChange = async (colorTemperature: number) => {
+    console.log("handleColorTemperatureChange", colorTemperature);
+    setDeviceColorTemperature(id, colorTemperature);
     await setColorTemperature({
       variables: {
         id,
@@ -103,6 +118,8 @@ export function useDeviceControl({ id, type }: UseDeviceControlProps) {
     colorHue: number,
     colorSaturation: number
   ) => {
+    setDeviceColorHue(id, colorHue);
+    setDeviceColorSaturation(id, colorSaturation);
     await setColorHueAndSaturation({
       variables: {
         id,

@@ -17,17 +17,11 @@ export function LightLevelControl({
   onChange,
   loading = false,
 }: LightLevelControlProps) {
-  const [localValue, setLocalValue] = useState(lightLevel);
-
-  useEffect(() => {
-    setLocalValue(lightLevel);
-  }, [lightLevel]);
-
   return (
     <div className="light-level-control">
       <div className="light-level-control-header">
         <label className="light-level-control-label">Light Level</label>
-        <span className="light-level-control-value">{localValue}%</span>
+        <span className="light-level-control-value">{lightLevel}%</span>
       </div>
       <div className="light-level-control-slider-wrapper">
         <div
@@ -40,9 +34,9 @@ export function LightLevelControl({
           <Slider
             min={1}
             max={100}
-            value={localValue}
+            value={lightLevel}
             disabled={!isReachable || loading || disabled}
-            onChange={setLocalValue}
+            onChange={onChange}
             onChangeComplete={onChange}
             className="light-level-control-slider"
             tooltip={false}

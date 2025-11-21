@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { DeviceImage } from "../ui/DeviceImage";
 import {
   useDeviceLocalStateStore,
+  useLocalIsOn,
   useLocalLightLevel,
   useDeviceColor,
   type DeviceLocalState,
@@ -18,6 +19,7 @@ export function DeviceImageContainer({
   device,
   imagePath,
 }: DeviceImageContainerProps) {
+  const localIsOn = useLocalIsOn(device.id);
   const localLightLevel = useLocalLightLevel(device.id);
   const deviceColor = useDeviceColor(device.id);
   const { syncDeviceState } = useDeviceLocalStateStore();
@@ -53,7 +55,7 @@ export function DeviceImageContainer({
     <DeviceImage
       imagePath={resolvedImagePath}
       name={device.name}
-      isOn={!!device.isOn}
+      isOn={localIsOn ?? !!device.isOn}
       isReachable={device.isReachable}
       {...(localLightLevel != null && { lightLevel: localLightLevel })}
       {...(deviceColor && { lightColor: deviceColor })}

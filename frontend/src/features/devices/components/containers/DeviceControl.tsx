@@ -15,8 +15,6 @@ export function DeviceControl({ device }: DeviceControlProps) {
     handleIsOnChange,
     handleLightLevelChange,
     handleVolumeChange,
-    handleColorTemperatureChange,
-    handleColorHueSaturationChange,
     loading,
   } = useDeviceControl({
     id: device.id,
@@ -40,32 +38,10 @@ export function DeviceControl({ device }: DeviceControlProps) {
       device={device}
       deviceImageSlot={<DeviceImageContainer device={device} />}
       basicControlsSlot={
-        hasBasicControls ? (
-          <DeviceBasicControls
-            device={device}
-            onIsOnChange={handleIsOnChange}
-            onLightLevelChange={handleLightLevelChange}
-            onVolumeChange={handleVolumeChange}
-            loading={{
-              isOn: loading.isOn,
-              lightLevel: loading.lightLevel,
-              volume: loading.volume,
-            }}
-          />
-        ) : undefined
+        hasBasicControls ? <DeviceBasicControls device={device} /> : undefined
       }
       colorControlSlot={
-        hasColorControls ? (
-          <DeviceColorControl
-            device={device}
-            onColorTemperatureChange={handleColorTemperatureChange}
-            onColorHueSaturationChange={handleColorHueSaturationChange}
-            loading={{
-              colorTemperature: loading.colorTemperature,
-              colorHueSaturation: loading.colorHueSaturation,
-            }}
-          />
-        ) : undefined
+        hasColorControls ? <DeviceColorControl device={device} /> : undefined
       }
       onPlaybackPlayPause={() => {}}
       onPlaybackPrevious={() => {}}

@@ -73,8 +73,6 @@ const meta = {
           hasColorControls ? (
             <DeviceColorControl
               device={device}
-              onColorTemperatureChange={() => console.log("colorTemp change")}
-              onColorHueSaturationChange={() => console.log("colorHS change")}
               loading={{
                 colorTemperature: false,
                 colorHueSaturation: false,

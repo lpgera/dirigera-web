@@ -1,65 +1,34 @@
-import { useEffect } from "react";
 import { Row, Col } from "@/components/ui/Grid";
 import { DeviceToggle } from "../ui/DeviceToggle";
 import { LightLevelControl } from "../ui/LightLevelControl";
 import { VolumeControl } from "../ui/VolumeControl";
 import { BatteryIndicator } from "../ui/BatteryIndicator";
 import {
-  useDeviceLocalStateStore,
   useLocalIsOn,
   useLocalLightLevel,
   useLocalVolume,
-  type DeviceLocalState,
 } from "../../hooks/useDeviceLocalState";
 import type { Device } from "@/graphql.types";
+import { useDeviceControl } from "../../hooks/useDeviceControl";
 
 export interface DeviceBasicControlsProps {
   device: Device;
-  onIsOnChange: (isOn: boolean) => void;
-  onLightLevelChange: (lightLevel: number) => void;
-  onVolumeChange: (volume: number) => void;
-  loading: {
-    isOn: boolean;
-    lightLevel: boolean;
-    volume: boolean;
-  };
 }
 
-export function DeviceBasicControls({
-  device,
-  onIsOnChange,
-  onLightLevelChange,
-  onVolumeChange,
-  loading,
-}: DeviceBasicControlsProps) {
+export function DeviceBasicControls({ device }: DeviceBasicControlsProps) {
   const localIsOn = useLocalIsOn(device.id);
   const localLightLevel = useLocalLightLevel(device.id);
   const localVolume = useLocalVolume(device.id);
 
   const {
-    setDeviceIsOn,
-    setDeviceLightLevel,
-    setDeviceVolume,
-    syncDeviceState,
-  } = useDeviceLocalStateStore();
-
-  // Sync server state to local state when device props change
-  useEffect(() => {
-    const stateUpdate: Partial<DeviceLocalState> = {};
-    if (device.isOn != null) stateUpdate.isOn = device.isOn;
-    if (device.lightLevel != null) stateUpdate.lightLevel = device.lightLevel;
-    if (device.volume != null) stateUpdate.volume = device.volume;
-
-    if (Object.keys(stateUpdate).length > 0) {
-      syncDeviceState(device.id, stateUpdate);
-    }
-  }, [
-    device.id,
-    device.isOn,
-    device.lightLevel,
-    device.volume,
-    syncDeviceState,
-  ]);
+    handleIsOnChange,
+    handleLightLevelChange,
+    handleVolumeChange,
+    loading,
+  } = useDeviceControl({
+    id: device.id,
+    type: device.type,
+  });
 
   const hasControls =
     device.isOn != null ||
@@ -70,22 +39,6 @@ export function DeviceBasicControls({
   if (!hasControls) {
     return null;
   }
-
-  // Handle changes with local state updates
-  const handleIsOnChange = (isOn: boolean) => {
-    setDeviceIsOn(device.id, isOn);
-    onIsOnChange(isOn);
-  };
-
-  const handleLightLevelChange = (lightLevel: number) => {
-    setDeviceLightLevel(device.id, lightLevel);
-    onLightLevelChange(lightLevel);
-  };
-
-  const handleVolumeChange = (volume: number) => {
-    setDeviceVolume(device.id, volume);
-    onVolumeChange(volume);
-  };
 
   return (
     <Row gutter={8} className="device-control-row">
