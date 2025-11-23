@@ -45,35 +45,34 @@ httpServer.on(
 
 const port = tsEnv.number('PORT') ?? 4000
 
-async function start() {
-  const client = await getClient()
-  client.startListeningForUpdates((updateEvent) => {
-    if (updateEvent.type !== 'pong') {
-      wss.clients.forEach((client) => client.send('update'))
-    }
+const client = await getClient()
+client.startListeningForUpdates((updateEvent) => {
+  if (updateEvent.type !== 'pong') {
+    wss.clients.forEach((client) => client.send('update'))
+  }
+})
+
+const graphqlServer = apolloServer(httpServer)
+await graphqlServer.start()
+
+app.use(
+  '/graphql',
+  bodyParser.json(),
+  expressMiddleware(graphqlServer, {
+    context: getContextFunction(client),
   })
+)
 
-  const graphqlServer = apolloServer(httpServer)
-  await graphqlServer.start()
+httpServer.listen(port, () => {
+  console.log(`Server is listening on port ${port}`)
+})
 
-  app.use(
-    '/graphql',
-    bodyParser.json(),
-    expressMiddleware(graphqlServer, {
-      context: getContextFunction(client),
-    })
-  )
-
-  httpServer.listen(port, () => {
-    console.log(`Server is listening on port ${port}`)
-  })
-
-  process.once('SIGINT', () => {
-    console.log('Received SIGINT, shutting down server...')
-    client.stopListeningForUpdates()
-    wss.clients.forEach((ws) => ws.terminate())
-    httpServer.close()
-  })
+const exitSignalHandler = (signal: NodeJS.Signals) => {
+  console.log(`Received ${signal}, shutting down server...`)
+  client.stopListeningForUpdates()
+  wss.clients.forEach((ws) => ws.terminate())
+  httpServer.close()
 }
 
-start().catch(console.error)
+process.once('SIGINT', exitSignalHandler)
+process.once('SIGTERM', exitSignalHandler)

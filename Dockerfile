@@ -35,4 +35,4 @@ COPY --from=BUILD /usr/src/app/frontend/build ./frontend/build
 
 WORKDIR /usr/src/app/backend
 
-CMD ["node", "--run", "start"]
+CMD ["node", "backend/src/index.ts"]
