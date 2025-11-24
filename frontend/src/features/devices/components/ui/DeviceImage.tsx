@@ -1,4 +1,5 @@
 import { MdLightbulbOutline } from "react-icons/md";
+import { DeviceImageGlow } from "./DeviceImageGlow";
 import "./DeviceImage.css";
 
 export interface DeviceImageProps {
@@ -19,46 +20,16 @@ export function DeviceImage({
   lightColor = "#ffffff",
 }: DeviceImageProps) {
   const localLightLevel = 20 + (lightLevel ?? 0) * 0.8;
+  const shouldShowGlow = !!(lightColor && lightLevel && isOn && isReachable);
+
   return (
     <div className="device-image-wrapper">
-      <div
-        className="device-image-glow"
-        style={{
-          boxShadow:
-            lightColor && lightLevel && isOn && isReachable
-              ? `0 0 10px ${lightColor}, 0 0 20px ${lightColor}, 0 0 30px ${lightColor}`
-              : "none",
-          backgroundColor: "transparent",
-          borderTopLeftRadius:
-            localLightLevel < 80
-              ? 0
-              : "calc(var(--device-image-border-radius) + var(--device-image-border-width))",
-          borderTopRightRadius:
-            localLightLevel < 80
-              ? 0
-              : "calc(var(--device-image-border-radius) + var(--device-image-border-width))",
-          opacity:
-            localLightLevel !== undefined
-              ? (24 + (lightLevel ?? 0) * 0.6) / 100
-              : 1,
-          height: `calc((var(--device-image-size)  + var(--device-image-border-width) * 2 ) * ${localLightLevel !== undefined ? localLightLevel / 100 : 0})`,
-        }}
+      <DeviceImageGlow
+        showGlow={shouldShowGlow}
+        color={lightColor}
+        percentage={localLightLevel}
+        orientation="horizontal"
       />
-      <div className="device-image-border">
-        {isOn && isReachable && (
-          <div
-            className="device-image-border-inner"
-            style={{
-              backgroundColor: lightColor,
-              opacity:
-                localLightLevel !== undefined
-                  ? (40 + (lightLevel ?? 0) * 0.6) / 100
-                  : 1,
-              height: `${localLightLevel !== undefined ? Math.max(localLightLevel, 20) : 0}%`,
-            }}
-          />
-        )}
-      </div>
       <div className="device-image-container">
         {imagePath ? (
           <img

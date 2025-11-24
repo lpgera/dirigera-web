@@ -1,0 +1,12 @@
+.device-image-glow {
+  position: absolute;
+  bottom: calc(var(--device-image-border-width) * -1);
+  left: calc(var(--device-image-border-width) * -1);
+  width: calc(var(--device-image-size) + var(--device-image-border-width) * 2);
+  height: calc(var(--device-image-size) + var(--device-image-border-width) * 2);
+  border-radius: calc(
+    var(--device-image-border-radius) + var(--device-image-border-width)
+  );
+  pointer-events: none;
+  z-index: 5;
+}
