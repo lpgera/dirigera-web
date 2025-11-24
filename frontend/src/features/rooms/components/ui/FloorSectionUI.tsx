@@ -1,3 +1,4 @@
+import React from "react";
 import { FloorIcon } from "@/components/ui/FloorIcon";
 
 import "./FloorSection.css";
@@ -48,4 +49,4 @@ export function FloorSectionUI({
 }
 
 // Export both names for backward compatibility during migration
-export { FloorSectionUI as FloorSection };
+export default FloorSectionUI;

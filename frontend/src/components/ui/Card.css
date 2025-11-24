@@ -20,6 +20,26 @@
   gap: var(--spacing-md);
 }
 
+.card-header-collapsible {
+  cursor: pointer;
+  user-select: none;
+}
+
+.card-header-collapsible:hover {
+  background-color: var(--color-bg-secondary);
+}
+
+.card-header-collapsible:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: -2px;
+}
+
+.card-header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
 .card-title {
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);
@@ -31,6 +51,16 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
+}
+
+.card-chevron {
+  color: var(--color-text-secondary);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.card-chevron-collapsed {
+  transform: rotate(-90deg);
 }
 
 .card-body {

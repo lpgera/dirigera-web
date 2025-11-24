@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { FloorSectionUI } from "./FloorSection";
+import FloorSectionUI from "./FloorSectionUI";
 import { CompactRoomCardUI } from "./CompactRoomCardUI";
 import { ScenesUI } from "@/features/scenes/components/ui/ScenesUI";
 import type { Device } from "@/graphql.types";
@@ -533,6 +533,98 @@ export const WithFloorAndRoomScenes: Story = {
   },
 };
 
+export const WithFloorPlanFloorAndRoomScenes: Story = {
+  args: {
+    floorId: "floor-2",
+    floorName: "First Floor",
+    floorOrder: 1,
+    totalFloors: 3,
+    isActive: true,
+    iconSize: 48,
+    children: (
+      <>
+        <ScenesUI
+          scenes={[
+            { id: "floor-morning", name: "Morning Routine" },
+            { id: "floor-night", name: "Night Time" },
+            { id: "floor-away", name: "Away Mode" },
+          ]}
+          onActivateScene={(sceneId) =>
+            console.log(`Floor scene ${sceneId} activated`)
+          }
+        />
+        <Row gutter={[16, 16]}>
+          <Col
+            style={{ textAlign: "center", background: "#030303", padding: 16 }}
+          >
+            <FloorPlanRenderer
+              config={floorsConfig.floors[1] as FloorPlanConfig}
+              scale={0.8}
+            />
+          </Col>
+          <Col {...columnSizes}>
+            <CompactRoomCardUI
+              roomName="Master Bedroom"
+              devices={mockDevices}
+              onDeviceClick={(device) => console.log("Clicked:", device.name)}
+              getDeviceImage={mockGetDeviceImage}
+              scenes={
+                <ScenesUI
+                  scenes={[
+                    { id: "wake-up", name: "Wake Up" },
+                    { id: "sleep", name: "Sleep" },
+                    { id: "reading", name: "Reading" },
+                  ]}
+                  onActivateScene={(sceneId) =>
+                    console.log(`Room scene ${sceneId} activated`)
+                  }
+                />
+              }
+            />
+          </Col>
+          <Col {...columnSizes}>
+            <CompactRoomCardUI
+              roomName="Bedroom 2"
+              devices={mockDevices.slice(0, 1)}
+              onDeviceClick={(device) => console.log("Clicked:", device.name)}
+              getDeviceImage={mockGetDeviceImage}
+              scenes={
+                <ScenesUI
+                  scenes={[
+                    { id: "bedtime", name: "Bedtime" },
+                    { id: "study", name: "Study Time" },
+                  ]}
+                  onActivateScene={(sceneId) =>
+                    console.log(`Room scene ${sceneId} activated`)
+                  }
+                />
+              }
+            />
+          </Col>
+          <Col {...columnSizes}>
+            <CompactRoomCardUI
+              roomName="Bathroom"
+              devices={mockDevices.slice(1, 3)}
+              onDeviceClick={(device) => console.log("Clicked:", device.name)}
+              getDeviceImage={mockGetDeviceImage}
+              scenes={
+                <ScenesUI
+                  scenes={[
+                    { id: "morning-routine", name: "Morning" },
+                    { id: "night-routine", name: "Night" },
+                  ]}
+                  onActivateScene={(sceneId) =>
+                    console.log(`Room scene ${sceneId} activated`)
+                  }
+                />
+              }
+            />
+          </Col>
+        </Row>
+      </>
+    ),
+  },
+};
 export const WithManyScenes: Story = {
   args: {
     floorId: "floor-1",

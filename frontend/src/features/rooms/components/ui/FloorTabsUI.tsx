@@ -1,5 +1,6 @@
+import { Scenes } from "@/features/scenes";
 import { FloorNavUI, type FloorNavItem } from "./FloorNav";
-import { FloorSectionUI } from "./FloorSection";
+import FloorSectionUI from "./FloorSectionUI";
 
 import "./FloorTabsUI.css";
 
@@ -33,6 +34,7 @@ export function FloorTabsUI({
 }: FloorTabsUIProps) {
   return (
     <div className="floor-tabs">
+      <Scenes scope="house" />
       <FloorNavUI
         floors={floors}
         activeFloorId={activeFloorId}
