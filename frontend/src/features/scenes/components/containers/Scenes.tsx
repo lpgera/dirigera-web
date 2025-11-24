@@ -1,8 +1,11 @@
+import { useMemo } from "react";
 import { useScenes } from "../../hooks/useScenes";
 import { useActivateScene } from "../../hooks/useActivateScene";
 import { useSceneScopes } from "@/hooks/useSceneScopes";
 import { useRefetch } from "@/hooks/useRefetch";
+import { Skeleton, Col } from "@/components/ui";
 import { ScenesUI } from "../ui/ScenesUI";
+import { ScenesList } from "../ui/ScenesList";
 
 interface ScenesProps {
   scope?: "house" | "floor" | "room" | undefined;
@@ -12,7 +15,7 @@ interface ScenesProps {
 
 export function Scenes({ scope = "house", scopeId, title }: ScenesProps) {
   const { scenes, loading, refetch } = useScenes();
-  const { activateScene, loading: activating } = useActivateScene();
+  const { activateScene, activeSceneId } = useActivateScene();
   const {
     getHouseScenes,
     getFloorScenes,
@@ -24,33 +27,55 @@ export function Scenes({ scope = "house", scopeId, title }: ScenesProps) {
 
   useRefetch(refetch);
 
-  // Determine which scenes to show
-  let filteredScenes = scenes;
-
-  if (hasConfiguration) {
-    // Configuration file exists
-    if (isScopeConfigured(scope, scopeId)) {
-      // This scope is explicitly configured (even if empty array)
-      let allowedSceneIds: string[] = [];
-
-      if (scope === "house") {
-        allowedSceneIds = getHouseScenes();
-      } else if (scope === "floor" && scopeId) {
-        allowedSceneIds = getFloorScenes(scopeId);
-      } else if (scope === "room" && scopeId) {
-        allowedSceneIds = getRoomScenes(scopeId);
-      }
-
-      filteredScenes = filterScenes(scenes, allowedSceneIds);
-    } else {
-      // This scope is not configured - show nothing
-      filteredScenes = [];
+  // Determine which scenes to show - memoized to prevent unnecessary re-renders
+  const filteredScenes = useMemo(() => {
+    if (!hasConfiguration) {
+      return scenes;
     }
-  }
 
-  // Don't render if loading
+    // Configuration file exists
+    if (!isScopeConfigured(scope, scopeId)) {
+      // This scope is not configured - show nothing
+      return [];
+    }
+
+    // This scope is explicitly configured (even if empty array)
+    let allowedSceneIds: string[] = [];
+
+    if (scope === "house") {
+      allowedSceneIds = getHouseScenes();
+    } else if (scope === "floor" && scopeId) {
+      allowedSceneIds = getFloorScenes(scopeId);
+    } else if (scope === "room" && scopeId) {
+      allowedSceneIds = getRoomScenes(scopeId);
+    }
+
+    return filterScenes(scenes, allowedSceneIds);
+  }, [
+    scenes,
+    hasConfiguration,
+    scope,
+    scopeId,
+    isScopeConfigured,
+    getHouseScenes,
+    getFloorScenes,
+    getRoomScenes,
+    filterScenes,
+  ]);
+
+  // Show skeleton while loading
   if (loading) {
-    return null;
+    return (
+      <ScenesList title={title}>
+        {Array.from({ length: 6 }).map((_, i) => (
+          <Col key={i} xs={12} sm={8} md={6} lg={4}>
+            <div style={{ height: "40px" }}>
+              <Skeleton active paragraph={{ rows: 1 }} />
+            </div>
+          </Col>
+        ))}
+      </ScenesList>
+    );
   }
 
   const handleActivateScene = (sceneId: string) => {
@@ -62,7 +87,7 @@ export function Scenes({ scope = "house", scopeId, title }: ScenesProps) {
       scenes={filteredScenes}
       title={title}
       onActivateScene={handleActivateScene}
-      loading={activating}
+      activeSceneId={activeSceneId}
     />
   );
 }

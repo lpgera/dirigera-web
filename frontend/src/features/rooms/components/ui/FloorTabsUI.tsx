@@ -34,14 +34,14 @@ export function FloorTabsUI({
 }: FloorTabsUIProps) {
   return (
     <div className="floor-tabs">
-      <Scenes scope="house" />
       <FloorNavUI
         floors={floors}
         activeFloorId={activeFloorId}
         onFloorClick={onFloorClick}
         iconSize={32}
-      />
-
+      >
+        <Scenes scope="house" />
+      </FloorNavUI>
       <div className="floor-tabs-content">
         {floors.map((floor, index) => (
           <FloorSectionUI

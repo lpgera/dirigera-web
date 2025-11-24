@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 
 export interface SceneScope {
   house: string[];
@@ -81,66 +81,71 @@ export function useSceneScopes() {
     loadConfig();
   }, []);
 
-  const getHouseScenes = (): string[] => {
+  const getHouseScenes = useCallback((): string[] => {
     return config.house;
-  };
+  }, [config.house]);
 
-  const getFloorScenes = (floorId: string): string[] => {
-    return config.floors[floorId] || [];
-  };
+  const getFloorScenes = useCallback(
+    (floorId: string): string[] => {
+      return config.floors[floorId] || [];
+    },
+    [config.floors]
+  );
 
-  const getRoomScenes = (roomId: string): string[] => {
-    return config.rooms[roomId] || [];
-  };
+  const getRoomScenes = useCallback(
+    (roomId: string): string[] => {
+      return config.rooms[roomId] || [];
+    },
+    [config.rooms]
+  );
 
-  const hasConfiguration = (): boolean => {
-    // If we have any configuration (even if empty), it means the file was loaded
+  const isScopeConfigured = useCallback(
+    (scope: "house" | "floor" | "room", scopeId?: string): boolean => {
+      if (scope === "house") {
+        return config.house !== undefined && Array.isArray(config.house);
+      } else if (scope === "floor" && scopeId) {
+        return config.floors.hasOwnProperty(scopeId);
+      } else if (scope === "room" && scopeId) {
+        return config.rooms.hasOwnProperty(scopeId);
+      }
+      return false;
+    },
+    [config]
+  );
+
+  const filterScenes = useCallback(
+    <T extends { id: string }>(scenes: T[], allowedSceneIds: string[]): T[] => {
+      // Create a map for quick lookup
+      const sceneMap = new Map<string, T>();
+      scenes.forEach((scene) => sceneMap.set(scene.id, scene));
+
+      // Return scenes in the order specified by allowedSceneIds
+      const orderedScenes: T[] = [];
+      allowedSceneIds.forEach((id) => {
+        const scene = sceneMap.get(id);
+        if (scene) {
+          orderedScenes.push(scene);
+        }
+      });
+
+      return orderedScenes;
+    },
+    []
+  );
+
+  const hasConfigValue = useMemo(() => {
     return (
       config.house !== undefined ||
       Object.keys(config.floors).length > 0 ||
       Object.keys(config.rooms).length > 0
     );
-  };
-
-  const isScopeConfigured = (
-    scope: "house" | "floor" | "room",
-    scopeId?: string
-  ): boolean => {
-    if (scope === "house") {
-      return config.house !== undefined && Array.isArray(config.house);
-    } else if (scope === "floor" && scopeId) {
-      return config.floors.hasOwnProperty(scopeId);
-    } else if (scope === "room" && scopeId) {
-      return config.rooms.hasOwnProperty(scopeId);
-    }
-    return false;
-  };
-
-  const filterScenes = <T extends { id: string }>(
-    scenes: T[],
-    allowedSceneIds: string[]
-  ): T[] => {
-    // Create a map for quick lookup
-    const sceneMap = new Map<string, T>();
-    scenes.forEach((scene) => sceneMap.set(scene.id, scene));
-
-    // Return scenes in the order specified by allowedSceneIds
-    const orderedScenes: T[] = [];
-    allowedSceneIds.forEach((id) => {
-      const scene = sceneMap.get(id);
-      if (scene) {
-        orderedScenes.push(scene);
-      }
-    });
-
-    return orderedScenes;
-  };
+  }, [config]);
 
   return {
     config,
     isLoading,
     error,
-    hasConfiguration: hasConfiguration(),
+    hasConfiguration: hasConfigValue,
     isScopeConfigured,
     getHouseScenes,
     getFloorScenes,

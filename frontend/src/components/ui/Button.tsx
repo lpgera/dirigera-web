@@ -1,4 +1,5 @@
 import React, { ButtonHTMLAttributes } from "react";
+import { Skeleton } from "./Utils";
 import "./Button.css";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -32,6 +33,7 @@ export function Button({
     `button-${variant}`,
     shape === "circle" && "button-circle",
     block && "button-block",
+    loading && "button-loading",
     className,
   ]
     .filter(Boolean)
@@ -44,8 +46,15 @@ export function Button({
       disabled={disabled || loading}
       {...props}
     >
-      {loading ? "..." : icon}
-      {children && <span>{children}</span>}
+      {loading && (
+        <span className="button-loading-overlay">
+          <span className="button-loading-spinner" />
+        </span>
+      )}
+      <span className="button-content" style={{ opacity: loading ? 0.5 : 1 }}>
+        {icon}
+        {children && <span>{children}</span>}
+      </span>
     </button>
   );
 }

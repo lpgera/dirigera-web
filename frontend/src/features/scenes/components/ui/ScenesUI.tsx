@@ -6,14 +6,14 @@ interface ScenesUIProps {
   scenes: Array<{ id: string; name: string }>;
   title?: string | undefined;
   onActivateScene: (sceneId: string) => void;
-  loading?: boolean;
+  activeSceneId?: string | null;
 }
 
 export function ScenesUI({
   scenes,
   title,
   onActivateScene,
-  loading,
+  activeSceneId,
 }: ScenesUIProps) {
   if (scenes.length === 0) {
     return null;
@@ -26,7 +26,7 @@ export function ScenesUI({
           <SceneButton
             name={scene.name}
             onClick={() => onActivateScene(scene.id)}
-            loading={loading}
+            loading={activeSceneId === scene.id}
           />
         </Col>
       ))}

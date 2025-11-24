@@ -1,7 +1,7 @@
 /* Component tokens */
 .floor-tabs {
   --floor-tabs-nav-width: 200px;
-  --floor-tabs-nav-top: 146px;
+  --floor-tabs-nav-top: 20px;
   --floor-tabs-gap: var(--spacing-md);
   --floor-tabs-section-spacing: 48px;
   --floor-tabs-title-gap: 12px;
