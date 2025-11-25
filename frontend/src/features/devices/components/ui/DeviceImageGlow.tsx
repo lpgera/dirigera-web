@@ -38,10 +38,10 @@ export function DeviceImageGlow({
               : radius,
           opacity,
           height: isVertical
-            ? `calc((var(--device-image-size)  + var(--device-image-border-width) * 2 ) * ${percentage / 100})`
+            ? `calc((100%  + var(--device-image-border-width) * 2 ) * ${percentage / 100})`
             : undefined,
           width: !isVertical
-            ? `calc((var(--device-image-size)  + var(--device-image-border-width) * 2 ) * ${percentage / 100})`
+            ? `calc((100%  + var(--device-image-border-width) * 2 ) * ${percentage / 100})`
             : undefined,
         }}
       />

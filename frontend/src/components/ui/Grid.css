@@ -96,49 +96,50 @@
   flex: 0 0 16.66667%;
 }
 
-/* Responsive breakpoints */
-@media (max-width: 575px) {
-  .col-xs-12 {
-    width: 50%;
-    flex: 0 0 50%;
-  }
-  .col-xs-24 {
-    width: 100%;
-    flex: 0 0 100%;
-  }
-}
+/* Responsive column sizes - mobile first approach */
+/* Base (xs): <576px */
+.col-xs-4 { width: 16.66667%; flex: 0 0 16.66667%; }
+.col-xs-6 { width: 25%; flex: 0 0 25%; }
+.col-xs-8 { width: 33.33333%; flex: 0 0 33.33333%; }
+.col-xs-12 { width: 50%; flex: 0 0 50%; }
+.col-xs-24 { width: 100%; flex: 0 0 100%; }
 
 @media (min-width: 576px) {
-  .col-sm-12 {
-    width: 50%;
-    flex: 0 0 50%;
-  }
+  .col-sm-4 { width: 16.66667%; flex: 0 0 16.66667%; }
+  .col-sm-6 { width: 25%; flex: 0 0 25%; }
+  .col-sm-8 { width: 33.33333%; flex: 0 0 33.33333%; }
+  .col-sm-12 { width: 50%; flex: 0 0 50%; }
+  .col-sm-24 { width: 100%; flex: 0 0 100%; }
 }
 
 @media (min-width: 768px) {
-  .col-md-8 {
-    width: 33.33333%;
-    flex: 0 0 33.33333%;
-  }
+  .col-md-4 { width: 16.66667%; flex: 0 0 16.66667%; }
+  .col-md-6 { width: 25%; flex: 0 0 25%; }
+  .col-md-8 { width: 33.33333%; flex: 0 0 33.33333%; }
+  .col-md-12 { width: 50%; flex: 0 0 50%; }
+  .col-md-24 { width: 100%; flex: 0 0 100%; }
 }
 
 @media (min-width: 992px) {
-  .col-lg-8 {
-    width: 33.33333%;
-    flex: 0 0 33.33333%;
-  }
+  .col-lg-4 { width: 16.66667%; flex: 0 0 16.66667%; }
+  .col-lg-6 { width: 25%; flex: 0 0 25%; }
+  .col-lg-8 { width: 33.33333%; flex: 0 0 33.33333%; }
+  .col-lg-12 { width: 50%; flex: 0 0 50%; }
+  .col-lg-24 { width: 100%; flex: 0 0 100%; }
 }
 
 @media (min-width: 1200px) {
-  .col-xl-6 {
-    width: 25%;
-    flex: 0 0 25%;
-  }
+  .col-xl-4 { width: 16.66667%; flex: 0 0 16.66667%; }
+  .col-xl-6 { width: 25%; flex: 0 0 25%; }
+  .col-xl-8 { width: 33.33333%; flex: 0 0 33.33333%; }
+  .col-xl-12 { width: 50%; flex: 0 0 50%; }
+  .col-xl-24 { width: 100%; flex: 0 0 100%; }
 }
 
 @media (min-width: 1600px) {
-  .col-xxl-4 {
-    width: 16.66667%;
-    flex: 0 0 16.66667%;
-  }
+  .col-xxl-4 { width: 16.66667%; flex: 0 0 16.66667%; }
+  .col-xxl-6 { width: 25%; flex: 0 0 25%; }
+  .col-xxl-8 { width: 33.33333%; flex: 0 0 33.33333%; }
+  .col-xxl-12 { width: 50%; flex: 0 0 50%; }
+  .col-xxl-24 { width: 100%; flex: 0 0 100%; }
 }

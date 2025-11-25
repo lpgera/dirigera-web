@@ -1,5 +1,8 @@
 .compact-room-card-devices {
   margin-top: var(--spacing-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
 }
 
 .compact-room-card-device {
@@ -9,7 +12,7 @@
 }
 
 .compact-room-card-device:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 
 .compact-room-card-device:focus {
@@ -19,7 +22,7 @@
 }
 
 .compact-room-card-device:active {
-  transform: scale(0.95);
+  transform: scale(0.98);
 }
 
 .compact-room-card-batteries {

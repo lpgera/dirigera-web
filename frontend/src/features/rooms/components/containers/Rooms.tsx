@@ -11,16 +11,15 @@ import { useRooms } from "../../hooks/useRooms";
 import { useFloors } from "@/hooks";
 import { RoomsGrid } from "./RoomsGrid";
 import { FloorTabs } from "./FloorTabs";
-import { Scenes } from "@/features/scenes";
 import type { ColumnSizes } from "../../types";
 
 const columnSizes: ColumnSizes = {
-  xs: 12,
-  sm: 12,
-  md: 8,
-  lg: 8,
-  xl: 6,
-  xxl: 4,
+  xs: 24, // 100% width (1 card per row on mobile)
+  sm: 24, // 100% width (1 card per row on small tablets)
+  md: 24, // 100% width (1 card per row on medium screens)
+  lg: 12, // 50% width (2 cards per row on large screens)
+  xl: 8, // 50% width (2 cards per row on extra large)
+  xxl: 6, // 50% width (2 cards per row on extra extra large)
 };
 
 export function Rooms() {

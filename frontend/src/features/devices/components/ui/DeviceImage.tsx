@@ -9,6 +9,7 @@ export interface DeviceImageProps {
   isReachable?: boolean;
   lightLevel?: number;
   lightColor?: string;
+  showGlow?: boolean;
 }
 
 export function DeviceImage({
@@ -18,18 +19,22 @@ export function DeviceImage({
   isReachable = true,
   lightLevel,
   lightColor = "#ffffff",
+  showGlow = true,
 }: DeviceImageProps) {
   const localLightLevel = 20 + (lightLevel ?? 0) * 0.8;
-  const shouldShowGlow = !!(lightColor && lightLevel && isOn && isReachable);
+  const shouldShowGlow =
+    showGlow && !!(lightColor && lightLevel && isOn && isReachable);
 
   return (
     <div className="device-image-wrapper">
-      <DeviceImageGlow
-        showGlow={shouldShowGlow}
-        color={lightColor}
-        percentage={localLightLevel}
-        orientation="horizontal"
-      />
+      {showGlow && (
+        <DeviceImageGlow
+          showGlow={shouldShowGlow}
+          color={lightColor}
+          percentage={localLightLevel}
+          orientation="horizontal"
+        />
+      )}
       <div className="device-image-container">
         {imagePath ? (
           <img

@@ -110,7 +110,7 @@ export function FloorTabs({ rooms, columnSizes }: FloorTabsProps) {
           <>
             <Scenes scope="floor" scopeId={floor.id} />
             <Row gutter={[16, 16]}>
-              <Col span={12} md={8} lg={6} xl={4}>
+              <Col span={12} md={24} lg={24} xl={16} xxl={12}>
                 <Card>
                   <FloorPlanRenderer
                     config={

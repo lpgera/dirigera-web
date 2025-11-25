@@ -1,7 +1,8 @@
 import React from "react";
 import { Card, Divider } from "@/components/ui";
 import { Row, Col } from "@/components/ui/Grid";
-import { DeviceImageContainer, BatteryIndicator } from "@/features/devices";
+import { BatteryIndicator } from "@/features/devices";
+import { CompactDeviceControl } from "./CompactDeviceControl";
 import type { Device } from "@/graphql.types";
 import "./CompactRoomCardUI.css";
 
@@ -36,29 +37,26 @@ export function CompactRoomCardUI({
       {/* Scene buttons section */}
       {scenes}
 
-      {/* Device images section */}
+      {/* Device controls section */}
       {devicesWithoutBattery.length > 0 && (
         <div className="compact-room-card-devices">
-          <Row gutter={[8, 8]}>
-            {devicesWithoutBattery.map((device) => (
-              <Col key={device.id} flex="none">
-                <div
-                  className="compact-room-card-device"
-                  onClick={() => onDeviceClick?.(device)}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      e.preventDefault();
-                      onDeviceClick?.(device);
-                    }
-                  }}
-                >
-                  <DeviceImageContainer device={device} />
-                </div>
-              </Col>
-            ))}
-          </Row>
+          {devicesWithoutBattery.map((device) => (
+            <div
+              key={device.id}
+              className="compact-room-card-device"
+              onClick={() => onDeviceClick?.(device)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  onDeviceClick?.(device);
+                }
+              }}
+            >
+              <CompactDeviceControl device={device} />
+            </div>
+          ))}
         </div>
       )}
 

@@ -1,0 +1,30 @@
+.compact-device-control-wrapper {
+  position: relative;
+  width: 100%;
+  height: calc(var(--device-image-size) + var(--device-image-border-width) * 2);
+  margin: var(--device-image-border-width) 0;
+}
+
+.compact-device-control {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  height: 100%;
+  background-color: var(--card-bg);
+  border-radius: var(--radius-lg);
+}
+
+.compact-device-control-image {
+  flex-shrink: 0;
+}
+
+.compact-device-control-name {
+  flex: 1;
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
