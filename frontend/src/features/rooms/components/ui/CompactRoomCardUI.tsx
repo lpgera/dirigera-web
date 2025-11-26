@@ -32,8 +32,11 @@ export function CompactRoomCardUI({
       device.batteryPercentage !== undefined
   );
 
+  // defaultCollapsed should be true if on mobile
+  const isMobile = window.innerWidth <= 768;
+
   return (
-    <Card title={roomName}>
+    <Card title={roomName} collapsible defaultCollapsed={false}>
       {/* Scene buttons section */}
       {scenes}
 

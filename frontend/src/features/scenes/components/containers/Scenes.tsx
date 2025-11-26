@@ -68,11 +68,9 @@ export function Scenes({ scope = "house", scopeId, title }: ScenesProps) {
     return (
       <ScenesList title={title}>
         {Array.from({ length: 6 }).map((_, i) => (
-          <Col key={i} xs={12} sm={8} md={6} lg={4}>
-            <div style={{ height: "40px" }}>
-              <Skeleton active paragraph={{ rows: 1 }} />
-            </div>
-          </Col>
+          <div style={{ height: "40px" }}>
+            <Skeleton active paragraph={{ rows: 1 }} />
+          </div>
         ))}
       </ScenesList>
     );

@@ -6,3 +6,35 @@
   margin-bottom: 8px;
   font-weight: 500;
 }
+
+.scenes-list-horizontal-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  cursor: grab;
+  user-select: none;
+}
+
+.scenes-list-horizontal-container::-webkit-scrollbar {
+  display: none;
+}
+
+.scenes-list-horizontal-container:active {
+  cursor: grabbing;
+}
+
+.scenes-list-horizontal-container.dragging {
+  cursor: grabbing;
+  user-select: none;
+}
+
+.scenes-list-horizontal {
+  flex-wrap: nowrap;
+  width: max-content;
+}
+
+.scenes-list-horizontal > .col {
+  flex-shrink: 0;
+}

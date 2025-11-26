@@ -54,6 +54,10 @@ export function useFloors() {
     return floors.find((floor) => floor.rooms.includes(roomId));
   };
 
+  const getFloorById = (floorId: string): Floor | undefined => {
+    return floors.find((floor) => floor.id === floorId);
+  };
+
   const groupRoomsByFloor = <T extends { id: string }>(
     rooms: T[]
   ): Map<string, { floor: Floor | null; rooms: T[] }> => {
@@ -87,12 +91,16 @@ export function useFloors() {
     return grouped;
   };
 
+  const totalFloorCount = floors.length;
+
   return {
     floors,
     isLoading,
     error,
     hasFloors: floors.length > 0,
+    totalFloorCount,
     getFloorForRoom,
     groupRoomsByFloor,
+    getFloorById,
   };
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import { FloorIcon } from "@/components/ui/FloorIcon";
 
-import "./FloorSection.css";
+import "./FloorSectionUI.css";
 
 interface FloorSectionUIProps {
   floorId: string;
@@ -11,7 +11,9 @@ interface FloorSectionUIProps {
   isActive?: boolean;
   iconSize?: number;
   onRefChange?: (element: HTMLDivElement | null) => void;
-  children: React.ReactNode;
+  scenes: React.ReactNode;
+  floorPlan?: React.ReactNode;
+  rooms: React.ReactNode[];
 }
 
 /**
@@ -26,7 +28,9 @@ export function FloorSectionUI({
   isActive = false,
   iconSize = 48,
   onRefChange,
-  children,
+  scenes,
+  floorPlan,
+  rooms,
 }: FloorSectionUIProps) {
   return (
     <div
@@ -43,7 +47,10 @@ export function FloorSectionUI({
         />
         {floorName}
       </h2>
-      {children}
+
+      {scenes}
+      {floorPlan}
+      {rooms}
     </div>
   );
 }

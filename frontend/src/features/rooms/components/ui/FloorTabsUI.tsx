@@ -16,7 +16,7 @@ interface FloorTabsUIProps {
   iconSize?: number;
   onFloorClick?: (floorId: string) => void;
   onFloorRefChange?: (floorId: string, element: HTMLDivElement | null) => void;
-  children: (floor: FloorData, index: number) => React.ReactNode;
+  children: React.ReactNode;
 }
 
 /**
@@ -42,24 +42,7 @@ export function FloorTabsUI({
       >
         <Scenes scope="house" />
       </FloorNavUI>
-      <div className="floor-tabs-content">
-        {floors.map((floor, index) => (
-          <FloorSectionUI
-            key={floor.id}
-            floorId={floor.id}
-            floorName={floor.name}
-            floorOrder={floor.order}
-            totalFloors={floors.length}
-            isActive={floor.id === activeFloorId}
-            iconSize={iconSize}
-            {...(onFloorRefChange && {
-              onRefChange: (el) => onFloorRefChange(floor.id, el),
-            })}
-          >
-            {children(floor, index)}
-          </FloorSectionUI>
-        ))}
-      </div>
+      <div className="floor-tabs-content">{children}</div>
     </div>
   );
 }

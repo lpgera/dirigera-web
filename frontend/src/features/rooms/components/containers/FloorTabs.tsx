@@ -13,6 +13,7 @@ import type { FloorPlanConfig } from "@jesperkihlberg/floor-plan";
 
 // Import config
 import floorsConfig from "@jesperkihlberg/floor-plan/floors-config.json";
+import FloorSection from "./FloorSection";
 
 interface FloorTabsProps {
   rooms: Room[];
@@ -102,41 +103,9 @@ export function FloorTabs({ rooms, columnSizes }: FloorTabsProps) {
       onFloorClick={handleFloorClick}
       onFloorRefChange={handleFloorRefChange}
     >
-      {(floor, index) => {
-        const floorData = groupedRooms.get(floor.id);
-        const floorRooms = floorData?.rooms || [];
-
-        return (
-          <>
-            <Scenes scope="floor" scopeId={floor.id} />
-            <Row gutter={[16, 16]}>
-              <Col span={12} md={24} lg={24} xl={16} xxl={12}>
-                <Card>
-                  <FloorPlanRenderer
-                    config={
-                      floorsConfig.floors[
-                        floors.length - 1 - index
-                      ] as FloorPlanConfig
-                    }
-                    scale={0.8}
-                  />
-                </Card>
-              </Col>
-            </Row>
-            <Row gutter={[16, 16]}>
-              {floorRooms.map((room) => (
-                <Col key={room.id} {...columnSizes}>
-                  <CompactRoomCard
-                    room={room}
-                    onDeviceClick={handleDeviceClick}
-                    scenes={<Scenes scope="room" scopeId={room.id} />}
-                  />
-                </Col>
-              ))}
-            </Row>
-          </>
-        );
-      }}
+      {floors.map((floor, index) => (
+        <FloorSection floorId={floor.id} floorIndex={index} key={floor.id} />
+      ))}
     </FloorTabsUI>
   );
 }
