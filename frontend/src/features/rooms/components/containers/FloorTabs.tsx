@@ -6,13 +6,6 @@ import { Scenes } from "@/features/scenes";
 import { CompactRoomCard } from "./CompactRoomCard";
 import type { Device, Room } from "@/graphql.types";
 import type { ColumnSizes } from "../../types";
-import { FloorPlanRenderer } from "@jesperkihlberg/floor-plan";
-
-// Import types
-import type { FloorPlanConfig } from "@jesperkihlberg/floor-plan";
-
-// Import config
-import floorsConfig from "@jesperkihlberg/floor-plan/floors-config.json";
 import FloorSection from "./FloorSection";
 
 interface FloorTabsProps {

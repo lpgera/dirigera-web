@@ -2,10 +2,9 @@ import { useFloors } from "@/hooks";
 import React from "react";
 import FloorSectionUI from "../ui/FloorSectionUI";
 import { Scenes } from "@/features/scenes";
-import { FloorPlanConfig, FloorPlanRenderer } from "@jesperkihlberg/floor-plan";
-import floorsConfig from "@jesperkihlberg/floor-plan/floors-config.json";
 import { useRooms } from "../../hooks/useRooms";
 import { CompactRoomCard } from "./CompactRoomCard";
+import { FloorPlan } from "./FloorPlan";
 
 interface FloorSectionProps {
   floorId: string;
@@ -43,16 +42,7 @@ const FloorSection: React.FC<FloorSectionProps> = ({ floorId, floorIndex }) => {
       isActive={true}
       iconSize={48}
       scenes={<Scenes scope="floor" scopeId={floor.id} />}
-      floorPlan={
-        <FloorPlanRenderer
-          config={
-            floorsConfig.floors[
-              totalFloorCount - 1 - floorIndex
-            ] as FloorPlanConfig
-          }
-          scale={0.8}
-        />
-      }
+      floorPlan={<FloorPlan floorId={floor.id} scale={0.8} />}
       rooms={renderedRooms}
     />
   );

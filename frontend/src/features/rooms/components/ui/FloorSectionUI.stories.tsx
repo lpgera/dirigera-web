@@ -3,15 +3,9 @@ import FloorSectionUI from "./FloorSectionUI";
 import { CompactRoomCardUI } from "./CompactRoomCardUI";
 import { ScenesUI } from "@/features/scenes/components/ui/ScenesUI";
 import type { Device } from "@/graphql.types";
-import { Row, Col } from "@/components/ui";
-import { FloorPlanRenderer } from "@jesperkihlberg/floor-plan";
-
-// Import types
+import { FloorPlanUI } from "./FloorPlanUI";
 import type { FloorPlanConfig } from "@jesperkihlberg/floor-plan";
-
-// Import config
 import floorsConfig from "@jesperkihlberg/floor-plan/floors-config.json";
-import { Scenes } from "@/features/scenes";
 
 /**
  * FloorSectionUI is a pure presentational component that displays:
@@ -84,10 +78,7 @@ const defaultScenes = (
 );
 
 const defaultFloorPlan = (
-  <FloorPlanRenderer
-    config={floorsConfig.floors[1] as FloorPlanConfig}
-    scale={0.8}
-  />
+  <FloorPlanUI config={floorsConfig.floors[1] as FloorPlanConfig} scale={0.8} />
 );
 
 const defaultRooms = [
