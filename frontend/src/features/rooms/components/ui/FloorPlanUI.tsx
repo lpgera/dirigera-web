@@ -8,6 +8,7 @@ export interface FloorPlanUIProps {
   config: FloorPlanConfig;
   scale?: number | undefined;
   className?: string | undefined;
+  defaultCollapsed?: boolean;
 }
 
 /**
@@ -22,13 +23,16 @@ export function FloorPlanUI({
   config,
   scale = 1,
   className,
+  defaultCollapsed = false,
 }: FloorPlanUIProps) {
+  const isMobile = window.innerWidth <= 768;
+
   return (
     <Card
       className={className}
       title="Floor Plan"
       collapsible
-      defaultCollapsed={false}
+      defaultCollapsed={defaultCollapsed || isMobile}
     >
       <FloorPlanRenderer
         config={config}

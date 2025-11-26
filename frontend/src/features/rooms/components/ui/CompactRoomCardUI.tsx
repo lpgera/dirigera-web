@@ -12,6 +12,7 @@ interface CompactRoomCardUIProps {
   scenes?: React.ReactNode;
   onDeviceClick?: (device: Device) => void;
   getDeviceImage?: (deviceId: string) => string | undefined;
+  defaultCollapsed?: boolean;
 }
 
 export function CompactRoomCardUI({
@@ -19,6 +20,7 @@ export function CompactRoomCardUI({
   devices,
   scenes,
   onDeviceClick,
+  defaultCollapsed = false,
 }: CompactRoomCardUIProps) {
   const devicesWithoutBattery = devices.filter(
     (device) =>
@@ -36,7 +38,11 @@ export function CompactRoomCardUI({
   const isMobile = window.innerWidth <= 768;
 
   return (
-    <Card title={roomName} collapsible defaultCollapsed={false}>
+    <Card
+      title={roomName}
+      collapsible
+      defaultCollapsed={defaultCollapsed || isMobile}
+    >
       {/* Scene buttons section */}
       {scenes}
 
