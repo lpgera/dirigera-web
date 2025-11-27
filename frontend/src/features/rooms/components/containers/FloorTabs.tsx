@@ -1,11 +1,13 @@
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useMemo } from "react";
 import { useBreakpoint } from "@/components/ui";
 import { FloorTabsUI } from "../ui/FloorTabsUI";
 import { useFloors } from "@/hooks";
 import type { Room } from "@/graphql.types";
 import type { ColumnSizes } from "../../types";
 import FloorSection, { floorRefRegistry } from "./FloorSection";
+import OrphanedSection, { ORPHANED_SECTION_ID } from "./OrphanedSection";
 import { useFloorNavigationStore } from "../../stores/floorNavigationStore";
+import { useRooms } from "../../hooks/useRooms";
 
 interface FloorTabsProps {
   rooms: Room[];
@@ -16,7 +18,8 @@ const HEADER_OFFSET = 146;
 
 export function FloorTabs({ rooms, columnSizes }: FloorTabsProps) {
   const screens = useBreakpoint();
-  const { floors } = useFloors();
+  const { floors, groupRoomsByFloor } = useFloors();
+  const { rooms: allRooms } = useRooms();
 
   const activeFloorId = useFloorNavigationStore((s) => s.activeFloorId);
   const isScrollingToFloor = useFloorNavigationStore(
@@ -29,6 +32,28 @@ export function FloorTabs({ rooms, columnSizes }: FloorTabsProps) {
   const scrollToFloor = useFloorNavigationStore((s) => s.scrollToFloor);
 
   const isDesktop = screens.md || screens.lg || screens.xl || screens.xxl;
+
+  // Check if there are orphaned rooms
+  const hasOrphanedRooms = useMemo(() => {
+    const grouped = groupRoomsByFloor(allRooms);
+    const unassigned = grouped.get("unassigned");
+    return unassigned && unassigned.rooms.length > 0;
+  }, [groupRoomsByFloor, allRooms]);
+
+  // Combined floors list including orphaned section if needed
+  const allFloorTabs = useMemo(() => {
+    const floorTabs = [...floors];
+    if (hasOrphanedRooms) {
+      floorTabs.push({
+        id: ORPHANED_SECTION_ID,
+        name: "Other",
+        shortName: "Other",
+        order: -1,
+        rooms: [],
+      });
+    }
+    return floorTabs;
+  }, [floors, hasOrphanedRooms]);
 
   // Initialize active floor when floors are loaded
   useEffect(() => {
@@ -45,7 +70,7 @@ export function FloorTabs({ rooms, columnSizes }: FloorTabsProps) {
       const scrollPosition =
         window.scrollY + window.innerHeight / 3 + HEADER_OFFSET;
 
-      for (const floor of floors) {
+      for (const floor of allFloorTabs) {
         const element = floorRefRegistry.get(floor.id);
         if (element) {
           const rect = element.getBoundingClientRect();
@@ -64,7 +89,7 @@ export function FloorTabs({ rooms, columnSizes }: FloorTabsProps) {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [floors, isScrollingToFloor, setActiveFloorId]);
+  }, [allFloorTabs, isScrollingToFloor, setActiveFloorId]);
 
   const handleFloorClick = useCallback(
     (floorId: string) => {
@@ -87,7 +112,7 @@ export function FloorTabs({ rooms, columnSizes }: FloorTabsProps) {
 
   return (
     <FloorTabsUI
-      floors={floors}
+      floors={allFloorTabs}
       activeFloorId={activeFloorId}
       iconSize={isDesktop ? 48 : 40}
       onFloorClick={handleFloorClick}
@@ -95,6 +120,7 @@ export function FloorTabs({ rooms, columnSizes }: FloorTabsProps) {
       {floors.map((floor, index) => (
         <FloorSection floorId={floor.id} floorIndex={index} key={floor.id} />
       ))}
+      {hasOrphanedRooms && <OrphanedSection floorIndex={floors.length} />}
     </FloorTabsUI>
   );
 }

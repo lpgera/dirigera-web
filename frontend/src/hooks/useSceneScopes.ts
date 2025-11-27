@@ -141,6 +141,40 @@ export function useSceneScopes() {
     );
   }, [config]);
 
+  // Get all scene IDs that are configured in any scope
+  const getAllConfiguredSceneIds = useCallback((): Set<string> => {
+    const configuredIds = new Set<string>();
+
+    // Add house scenes
+    config.house.forEach((id) => configuredIds.add(id));
+
+    // Add floor scenes
+    Object.values(config.floors).forEach((floorScenes) => {
+      floorScenes.forEach((id) => configuredIds.add(id));
+    });
+
+    // Add room scenes
+    Object.values(config.rooms).forEach((roomScenes) => {
+      roomScenes.forEach((id) => configuredIds.add(id));
+    });
+
+    return configuredIds;
+  }, [config]);
+
+  // Get orphaned scenes (scenes not assigned to any scope)
+  const getOrphanedScenes = useCallback(
+    <T extends { id: string }>(allScenes: T[]): T[] => {
+      if (!hasConfigValue) {
+        // No configuration - no orphaned scenes (all scenes show everywhere)
+        return [];
+      }
+
+      const configuredIds = getAllConfiguredSceneIds();
+      return allScenes.filter((scene) => !configuredIds.has(scene.id));
+    },
+    [hasConfigValue, getAllConfiguredSceneIds]
+  );
+
   return {
     config,
     isLoading,
@@ -151,5 +185,7 @@ export function useSceneScopes() {
     getFloorScenes,
     getRoomScenes,
     filterScenes,
+    getOrphanedScenes,
+    getAllConfiguredSceneIds,
   };
 }
