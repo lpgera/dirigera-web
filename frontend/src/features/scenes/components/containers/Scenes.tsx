@@ -11,9 +11,15 @@ interface ScenesProps {
   scope?: "house" | "floor" | "room" | undefined;
   scopeId?: string | undefined;
   title?: string | undefined;
+  wrapScenes?: boolean | undefined;
 }
 
-export function Scenes({ scope = "house", scopeId, title }: ScenesProps) {
+export function Scenes({
+  scope = "house",
+  scopeId,
+  title,
+  wrapScenes = true,
+}: ScenesProps) {
   const { scenes, loading, refetch } = useScenes();
   const { activateScene, activeSceneId } = useActivateScene();
   const {
@@ -66,7 +72,7 @@ export function Scenes({ scope = "house", scopeId, title }: ScenesProps) {
   // Show skeleton while loading
   if (loading) {
     return (
-      <ScenesList title={title}>
+      <ScenesList title={title} wrapScenes={wrapScenes}>
         {Array.from({ length: 6 }).map((_, i) => (
           <div style={{ height: "40px" }}>
             <Skeleton active paragraph={{ rows: 1 }} />
@@ -86,6 +92,7 @@ export function Scenes({ scope = "house", scopeId, title }: ScenesProps) {
       title={title}
       onActivateScene={handleActivateScene}
       activeSceneId={activeSceneId}
+      wrapScenes={wrapScenes}
     />
   );
 }

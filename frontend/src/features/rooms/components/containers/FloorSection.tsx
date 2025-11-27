@@ -44,7 +44,7 @@ const FloorSection: React.FC<FloorSectionProps> = ({ floorId, floorIndex }) => {
       totalFloors={totalFloorCount}
       isActive={true}
       iconSize={48}
-      scenes={<Scenes scope="floor" scopeId={floor.id} />}
+      scenes={<Scenes scope="floor" scopeId={floor.id} wrapScenes={false} />}
       floorPlan={<FloorPlan floorId={floor.id} scale={0.8} />}
       rooms={renderedRooms}
     />
