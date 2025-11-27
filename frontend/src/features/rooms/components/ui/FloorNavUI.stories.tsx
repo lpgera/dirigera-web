@@ -35,7 +35,7 @@ const meta = {
       description: "Callback when a floor is clicked",
       action: "floor-clicked",
     },
-    children: {
+    scenes: {
       description: "Optional additional content to render before floors",
     },
   },
@@ -45,10 +45,10 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const mockFloors = [
-  { id: "floor-2", name: "Second Floor", order: 2 },
-  { id: "floor-1", name: "First Floor", order: 1 },
-  { id: "floor-0", name: "Ground Floor", order: 0 },
-  { id: "floor-basement", name: "Basement", order: -1 },
+  { id: "floor-2", name: "Second Floor", shortName: "2.", order: 2 },
+  { id: "floor-1", name: "First Floor", shortName: "1.", order: 1 },
+  { id: "floor-0", name: "Ground Floor", shortName: "G.", order: 0 },
+  { id: "floor-basement", name: "Basement", shortName: "B.", order: -1 },
 ];
 
 export const Default: Story = {
@@ -62,8 +62,8 @@ export const Default: Story = {
 export const TwoFloors: Story = {
   args: {
     floors: [
-      { id: "floor-1", name: "Upstairs", order: 1 },
-      { id: "floor-0", name: "Downstairs", order: 0 },
+      { id: "floor-1", name: "Upstairs", shortName: "Up", order: 1 },
+      { id: "floor-0", name: "Downstairs", shortName: "Dn", order: 0 },
     ],
     activeFloorId: "floor-1",
     iconSize: 32,
@@ -73,14 +73,14 @@ export const TwoFloors: Story = {
 export const ManyFloors: Story = {
   args: {
     floors: [
-      { id: "floor-5", name: "Penthouse", order: 5 },
-      { id: "floor-4", name: "Fourth Floor", order: 4 },
-      { id: "floor-3", name: "Third Floor", order: 3 },
-      { id: "floor-2", name: "Second Floor", order: 2 },
-      { id: "floor-1", name: "First Floor", order: 1 },
-      { id: "floor-0", name: "Ground Floor", order: 0 },
-      { id: "floor-basement", name: "Basement", order: -1 },
-      { id: "floor-parking", name: "Parking", order: -2 },
+      { id: "floor-5", name: "Penthouse", shortName: "PH", order: 5 },
+      { id: "floor-4", name: "Fourth Floor", shortName: "4.", order: 4 },
+      { id: "floor-3", name: "Third Floor", shortName: "3.", order: 3 },
+      { id: "floor-2", name: "Second Floor", shortName: "2.", order: 2 },
+      { id: "floor-1", name: "First Floor", shortName: "1.", order: 1 },
+      { id: "floor-0", name: "Ground Floor", shortName: "G.", order: 0 },
+      { id: "floor-basement", name: "Basement", shortName: "B.", order: -1 },
+      { id: "floor-parking", name: "Parking", shortName: "P.", order: -2 },
     ],
     activeFloorId: "floor-2",
     iconSize: 32,
@@ -90,9 +90,9 @@ export const ManyFloors: Story = {
 export const WithCustomNames: Story = {
   args: {
     floors: [
-      { id: "attic", name: "Attic", order: 2 },
-      { id: "main", name: "Main Level", order: 1 },
-      { id: "lower", name: "Lower Level", order: 0 },
+      { id: "attic", name: "Attic", shortName: "Att", order: 2 },
+      { id: "main", name: "Main Level", shortName: "Main", order: 1 },
+      { id: "lower", name: "Lower Level", shortName: "Low", order: 0 },
     ],
     activeFloorId: "main",
     iconSize: 32,
@@ -149,7 +149,7 @@ export const WithHeaderContent: Story = {
     floors: mockFloors,
     activeFloorId: "floor-0",
     iconSize: 32,
-    children: (
+    scenes: (
       <div
         style={{
           padding: "12px",

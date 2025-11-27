@@ -12,7 +12,8 @@
   --button-border-width: 1px;
   --button-transition: all 0.2s ease;
   --button-disabled-opacity: 0.5;
-  --button-circle-size: 2.5rem; /* 40px */
+  --button-circle-size: 2.5rem;
+  --button-square-size: 3rem; 
 
   /* Card */
   --card-bg: var(--color-surface);
@@ -178,6 +179,10 @@
   /* Utils */
   --skeleton-line-height: 1rem; /* 16px */
   --skeleton-line-last-width: 60%;
+
+  /* Floor Nav */
+  --floor-nav-xs-width: 50px;
+  --floor-nav-sm-width: 100px;
 
   /* Result */
   --result-padding: var(--spacing-2xl);

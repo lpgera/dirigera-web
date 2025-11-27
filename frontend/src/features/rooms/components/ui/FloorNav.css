@@ -10,8 +10,18 @@
   gap: var(--spacing-sm);
 }
 
+.floor-nav-xs {
+  min-width: var(--floor-nav-xs-width);
+  max-width: var(--floor-nav-xs-width);
+}
+.floor-nav-sm,
+.floor-nav-md {
+  --floor-nav-width: 100px;
+  min-width: var(--floor-nav-sm-width);
+  max-width: var(--floor-nav-sm-width);
+}
+
 .floor-nav-button {
-  height: auto;
   padding: var(--spacing-md);
   display: flex;
   align-items: center;

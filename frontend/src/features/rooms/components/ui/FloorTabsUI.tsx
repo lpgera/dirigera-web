@@ -7,6 +7,7 @@ import "./FloorTabsUI.css";
 export interface FloorData {
   id: string;
   name: string;
+  shortName: string;
   order: number;
 }
 
@@ -39,9 +40,8 @@ export function FloorTabsUI({
         activeFloorId={activeFloorId}
         onFloorClick={onFloorClick}
         iconSize={32}
-      >
-        <Scenes scope="house" />
-      </FloorNavUI>
+        scenes={<Scenes scope="house" />}
+      ></FloorNavUI>
       <div className="floor-tabs-content">{children}</div>
     </div>
   );

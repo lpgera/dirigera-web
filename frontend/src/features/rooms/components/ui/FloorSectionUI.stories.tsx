@@ -82,18 +82,24 @@ const defaultFloorPlan = (
 );
 
 const defaultRooms = [
-  <CompactRoomCardUI
-    roomName="Living Room"
-    devices={mockDevices}
-    onDeviceClick={(device) => console.log("Clicked:", device.name)}
-    getDeviceImage={mockGetDeviceImage}
-  />,
-  <CompactRoomCardUI
-    roomName="Kitchen"
-    devices={mockDevices.slice(0, 2)}
-    onDeviceClick={(device) => console.log("Clicked:", device.name)}
-    getDeviceImage={mockGetDeviceImage}
-  />,
+  (defaultCollapsed: boolean) => (
+    <CompactRoomCardUI
+      roomName="Living Room"
+      devices={mockDevices}
+      onDeviceClick={(device) => console.log("Clicked:", device.name)}
+      getDeviceImage={mockGetDeviceImage}
+      defaultCollapsed={defaultCollapsed}
+    />
+  ),
+  (defaultCollapsed: boolean) => (
+    <CompactRoomCardUI
+      roomName="Kitchen"
+      devices={mockDevices.slice(0, 2)}
+      onDeviceClick={(device) => console.log("Clicked:", device.name)}
+      getDeviceImage={mockGetDeviceImage}
+      defaultCollapsed={defaultCollapsed}
+    />
+  ),
 ];
 
 const meta = {
@@ -180,6 +186,23 @@ export const WithManyScenes: Story = {
         }
         wrapScenes={false}
       />
+    ),
+  },
+};
+
+export const TenRooms: Story = {
+  args: {
+    rooms: Array.from({ length: 10 }).map(
+      (_, idx) => (defaultCollapsed: boolean) => (
+        <CompactRoomCardUI
+          key={idx}
+          roomName={`Room ${idx + 1}`}
+          devices={mockDevices.slice(0, (idx % 3) + 1)}
+          onDeviceClick={(device) => console.log("Clicked:", device.name)}
+          getDeviceImage={mockGetDeviceImage}
+          defaultCollapsed={defaultCollapsed}
+        />
+      )
     ),
   },
 };

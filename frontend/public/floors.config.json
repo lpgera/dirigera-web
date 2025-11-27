@@ -7,12 +7,14 @@
     {
       "id": "second-floor",
       "name": "Anden Sal",
+      "shortName": "2.",
       "order": 3,
       "rooms": ["f8bc8873-5335-438a-afda-bdaff7bc80eb"]
     },
     {
       "id": "first-floor",
       "name": "Første Sal",
+      "shortName": "1.",
       "order": 2,
       "rooms": [
         "5d138710-51f1-4353-bf1d-0397f069cc1d",
@@ -23,6 +25,7 @@
     {
       "id": "ground-floor",
       "name": "Stueetage",
+      "shortName": "ST.",
       "order": 1,
       "rooms": [
         "78c2b381-749c-49b9-94ac-0fbff8d73b0c",
@@ -33,6 +36,7 @@
     {
       "id": "basement",
       "name": "Kælder",
+      "shortName": "K.",
       "order": 0,
       "rooms": [
         "82aee614-0842-4a59-b4a5-237a9b06c517",

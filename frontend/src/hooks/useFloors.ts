@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 export interface Floor {
   id: string;
   name: string;
+  shortName: string;
   order: number;
   rooms: string[];
 }

@@ -26,12 +26,15 @@ const FloorSection: React.FC<FloorSectionProps> = ({ floorId, floorIndex }) => {
     return null; // Floor not found
   }
 
-  const renderedRooms = floorRooms.map((room) => (
-    <CompactRoomCard
-      room={room as unknown as any}
-      scenes={<Scenes scope="room" scopeId={room.id} />}
-    />
-  ));
+  const renderedRooms = floorRooms.map(
+    (room) => (defaultCollapsed: boolean) => (
+      <CompactRoomCard
+        room={room as unknown as any}
+        scenes={<Scenes scope="room" scopeId={room.id} />}
+        defaultCollapsed={defaultCollapsed}
+      />
+    )
+  );
   return (
     <FloorSectionUI
       key={floor.id}

@@ -1,12 +1,11 @@
 import React, { ButtonHTMLAttributes } from "react";
-import { Skeleton } from "./Utils";
 import "./Button.css";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   /** Button visual style variant */
   variant?: "primary" | "default" | "text" | undefined;
   /** Button shape - use 'circle' for icon-only buttons */
-  shape?: "default" | "circle" | undefined;
+  shape?: "default" | "circle" | "square" | undefined;
   /** Make button full width */
   block?: boolean | undefined;
   /** Icon to display in the button */
@@ -32,6 +31,7 @@ export function Button({
     "button",
     `button-${variant}`,
     shape === "circle" && "button-circle",
+    shape === "square" && "button-square",
     block && "button-block",
     loading && "button-loading",
     className,

@@ -51,6 +51,10 @@
   color: var(--color-text-primary);
 }
 
+.button-block {
+  width: 100%;
+}
+
 .button-circle {
   border-radius: var(--radius-full);
   width: var(--button-circle-size);
@@ -58,8 +62,11 @@
   padding: 0;
 }
 
-.button-block {
-  width: 100%;
+.button-square {
+  border-radius: var(--radius-md);
+  width: var(--button-square-size);
+  height: var(--button-square-size);
+  padding: 0;
 }
 
 .button-loading {

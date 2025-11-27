@@ -10,12 +10,14 @@ interface CompactRoomCardProps {
   room: Room;
   onDeviceClick?: (device: Device) => void;
   scenes?: React.ReactNode;
+  defaultCollapsed?: boolean;
 }
 
 export function CompactRoomCard({
   room,
   onDeviceClick,
   scenes,
+  defaultCollapsed = false,
 }: CompactRoomCardProps) {
   const [selectedDevice, setSelectedDevice] = useState<Device | null>(null);
 
@@ -35,6 +37,7 @@ export function CompactRoomCard({
         devices={room.devices}
         scenes={renderScenes}
         onDeviceClick={handleDeviceClick}
+        defaultCollapsed={defaultCollapsed}
       />
 
       <Modal
