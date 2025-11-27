@@ -16,7 +16,6 @@ interface FloorTabsUIProps {
   activeFloorId: string | null;
   iconSize?: number;
   onFloorClick?: (floorId: string) => void;
-  onFloorRefChange?: (floorId: string, element: HTMLDivElement | null) => void;
   children: React.ReactNode;
 }
 
@@ -30,7 +29,6 @@ export function FloorTabsUI({
   activeFloorId,
   iconSize = 48,
   onFloorClick = () => {},
-  onFloorRefChange,
   children,
 }: FloorTabsUIProps) {
   return (

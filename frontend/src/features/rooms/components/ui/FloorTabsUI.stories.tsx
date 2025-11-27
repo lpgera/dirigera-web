@@ -65,14 +65,14 @@ const mockDevices: ProcessedDevice[] = [
 ];
 
 const mockFloors = [
-  { id: "floor-1", name: "First Floor", order: 1 },
-  { id: "floor-0", name: "Ground Floor", order: 0 },
+  { id: "floor-1", name: "First Floor", shortName: "F1", order: 1 },
+  { id: "floor-0", name: "Ground Floor", shortName: "GF", order: 0 },
 ];
 
 const mockFloorsThree = [
-  { id: "floor-2", name: "Second Floor", order: 2 },
-  { id: "floor-1", name: "First Floor", order: 1 },
-  { id: "floor-0", name: "Ground Floor", order: 0 },
+  { id: "floor-2", name: "Second Floor", shortName: "F2", order: 2 },
+  { id: "floor-1", name: "First Floor", shortName: "F1", order: 1 },
+  { id: "floor-0", name: "Ground Floor", shortName: "GF", order: 0 },
 ];
 
 const columnSizes = {
@@ -105,10 +105,6 @@ const meta = {
       description: "Callback when a floor nav button is clicked",
       action: "floor-clicked",
     },
-    onFloorRefChange: {
-      description:
-        "Callback when a floor section ref changes (for scroll tracking)",
-    },
     children: {
       description: "Render prop function that provides content for each floor",
     },
@@ -118,43 +114,96 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+// Helper type for room data
+interface MockRoomData {
+  name: string;
+  devices: ProcessedDevice[];
+  scenes?: Array<{ id: string; name: string }>;
+}
+
+// Helper component for rendering mock floor content
+function MockFloorContent({
+  floorId,
+  withScenes = false,
+}: {
+  floorId: string;
+  withScenes?: boolean;
+}) {
+  const roomsData: Record<string, MockRoomData[]> = {
+    "floor-0": [
+      {
+        name: "Living Room",
+        devices: mockDevices,
+        ...(withScenes && {
+          scenes: [
+            { id: "cozy", name: "Cozy" },
+            { id: "bright", name: "Bright" },
+          ],
+        }),
+      },
+      {
+        name: "Kitchen",
+        devices: mockDevices.slice(0, 2),
+        ...(withScenes && { scenes: [{ id: "cooking", name: "Cooking" }] }),
+      },
+      { name: "Dining Room", devices: mockDevices.slice(1, 3) },
+    ],
+    "floor-1": [
+      {
+        name: "Master Bedroom",
+        devices: mockDevices,
+        ...(withScenes && { scenes: [{ id: "sleep", name: "Sleep" }] }),
+      },
+      { name: "Bedroom 2", devices: mockDevices.slice(0, 1) },
+      { name: "Bathroom", devices: mockDevices.slice(1, 3) },
+    ],
+    "floor-2": [
+      { name: "Office", devices: mockDevices.slice(0, 2) },
+      { name: "Guest Room", devices: mockDevices },
+      { name: "Storage", devices: [] },
+    ],
+  };
+
+  const rooms = roomsData[floorId] || [];
+
+  return (
+    <Row gutter={[16, 16]}>
+      {rooms.map((room, idx) => (
+        <Col key={idx} {...columnSizes}>
+          <CompactRoomCardUI
+            roomName={room.name}
+            devices={room.devices}
+            onDeviceClick={(device) =>
+              console.log("Device clicked:", device.name)
+            }
+            scenes={
+              room.scenes ? (
+                <ScenesUI
+                  scenes={room.scenes}
+                  onActivateScene={(sceneId) =>
+                    console.log(`Scene ${sceneId} activated`)
+                  }
+                />
+              ) : undefined
+            }
+          />
+        </Col>
+      ))}
+    </Row>
+  );
+}
+
 export const TwoFloors: Story = {
   args: {
     floors: mockFloors,
     activeFloorId: "floor-0",
     iconSize: 48,
-    children: (floor) => {
-      const roomsData = {
-        "floor-0": [
-          { name: "Living Room", devices: mockDevices },
-          { name: "Kitchen", devices: mockDevices.slice(0, 2) },
-          { name: "Dining Room", devices: mockDevices.slice(1, 3) },
-        ],
-        "floor-1": [
-          { name: "Master Bedroom", devices: mockDevices },
-          { name: "Bedroom 2", devices: mockDevices.slice(0, 1) },
-          { name: "Bathroom", devices: mockDevices.slice(1, 3) },
-        ],
-      };
-
-      const rooms = roomsData[floor.id as keyof typeof roomsData] || [];
-
-      return (
-        <Row gutter={[16, 16]}>
-          {rooms.map((room, idx) => (
-            <Col key={idx} {...columnSizes}>
-              <CompactRoomCardUI
-                roomName={room.name}
-                devices={room.devices}
-                onDeviceClick={(device) =>
-                  console.log("Device clicked:", device.name)
-                }
-              />
-            </Col>
-          ))}
-        </Row>
-      );
-    },
+    children: (
+      <>
+        <MockFloorContent floorId="floor-0" />
+        <MockFloorContent floorId="floor-1" />
+      </>
+    ),
   },
 };
 
@@ -163,45 +212,13 @@ export const ThreeFloors: Story = {
     floors: mockFloorsThree,
     activeFloorId: "floor-1",
     iconSize: 48,
-    children: (floor) => {
-      const roomsData = {
-        "floor-0": [
-          { name: "Living Room", devices: mockDevices },
-          { name: "Kitchen", devices: mockDevices.slice(0, 2) },
-          { name: "Dining Room", devices: mockDevices.slice(1, 3) },
-          { name: "Hallway", devices: mockDevices.slice(0, 1) },
-        ],
-        "floor-1": [
-          { name: "Master Bedroom", devices: mockDevices },
-          { name: "Bedroom 2", devices: mockDevices.slice(0, 1) },
-          { name: "Bedroom 3", devices: mockDevices.slice(1, 2) },
-          { name: "Bathroom", devices: mockDevices.slice(1, 3) },
-        ],
-        "floor-2": [
-          { name: "Office", devices: mockDevices.slice(0, 2) },
-          { name: "Guest Room", devices: mockDevices },
-          { name: "Storage", devices: [] },
-        ],
-      };
-
-      const rooms = roomsData[floor.id as keyof typeof roomsData] || [];
-
-      return (
-        <Row gutter={[16, 16]}>
-          {rooms.map((room, idx) => (
-            <Col key={idx} {...columnSizes}>
-              <CompactRoomCardUI
-                roomName={room.name}
-                devices={room.devices}
-                onDeviceClick={(device) =>
-                  console.log("Device clicked:", device.name)
-                }
-              />
-            </Col>
-          ))}
-        </Row>
-      );
-    },
+    children: (
+      <>
+        <MockFloorContent floorId="floor-0" />
+        <MockFloorContent floorId="floor-1" />
+        <MockFloorContent floorId="floor-2" />
+      </>
+    ),
   },
 };
 
@@ -210,66 +227,12 @@ export const WithScenes: Story = {
     floors: mockFloors,
     activeFloorId: "floor-0",
     iconSize: 48,
-    children: (floor) => {
-      const roomsData = {
-        "floor-0": [
-          {
-            name: "Living Room",
-            devices: mockDevices,
-            scenes: [
-              { id: "cozy", name: "Cozy" },
-              { id: "bright", name: "Bright" },
-            ],
-          },
-          {
-            name: "Kitchen",
-            devices: mockDevices.slice(0, 2),
-            scenes: [
-              { id: "cooking", name: "Cooking" },
-              { id: "dinner", name: "Dinner" },
-            ],
-          },
-        ],
-        "floor-1": [
-          {
-            name: "Bedroom",
-            devices: mockDevices,
-            scenes: [
-              { id: "sleep", name: "Sleep" },
-              { id: "reading", name: "Reading" },
-            ],
-          },
-        ],
-      };
-
-      const rooms = roomsData[floor.id as keyof typeof roomsData] || [];
-
-      return (
-        <Row gutter={[16, 16]}>
-          {rooms.map((room, idx) => (
-            <Col key={idx} {...columnSizes}>
-              <CompactRoomCardUI
-                roomName={room.name}
-                devices={room.devices}
-                onDeviceClick={(device) =>
-                  console.log("Device clicked:", device.name)
-                }
-                scenes={
-                  room.scenes ? (
-                    <ScenesUI
-                      scenes={room.scenes}
-                      onActivateScene={(sceneId) =>
-                        console.log(`Scene ${sceneId} activated`)
-                      }
-                    />
-                  ) : undefined
-                }
-              />
-            </Col>
-          ))}
-        </Row>
-      );
-    },
+    children: (
+      <>
+        <MockFloorContent floorId="floor-0" withScenes />
+        <MockFloorContent floorId="floor-1" withScenes />
+      </>
+    ),
   },
 };
 
@@ -287,36 +250,8 @@ function InteractiveFloorTabs() {
         setActiveFloorId(floorId);
       }}
     >
-      {(floor) => {
-        const roomsData = {
-          "floor-0": [
-            { name: "Living Room", devices: mockDevices },
-            { name: "Kitchen", devices: mockDevices.slice(0, 2) },
-          ],
-          "floor-1": [
-            { name: "Bedroom", devices: mockDevices },
-            { name: "Bathroom", devices: mockDevices.slice(1, 3) },
-          ],
-        };
-
-        const rooms = roomsData[floor.id as keyof typeof roomsData] || [];
-
-        return (
-          <Row gutter={[16, 16]}>
-            {rooms.map((room, idx) => (
-              <Col key={idx} {...columnSizes}>
-                <CompactRoomCardUI
-                  roomName={room.name}
-                  devices={room.devices}
-                  onDeviceClick={(device) =>
-                    console.log("Device clicked:", device.name)
-                  }
-                />
-              </Col>
-            ))}
-          </Row>
-        );
-      }}
+      <MockFloorContent floorId="floor-0" />
+      <MockFloorContent floorId="floor-1" />
     </FloorTabsUI>
   );
 }
@@ -333,39 +268,47 @@ export const Interactive: Story = {
   },
 };
 
+// Helper for many rooms
+function ManyRoomsContent() {
+  const rooms = [
+    "Living Room",
+    "Kitchen",
+    "Dining Room",
+    "Hallway",
+    "Bathroom",
+    "Garage",
+    "Laundry",
+    "Office",
+  ];
+
+  return (
+    <Row gutter={[16, 16]}>
+      {rooms.map((roomName, idx) => (
+        <Col key={idx} {...columnSizes}>
+          <CompactRoomCardUI
+            roomName={roomName}
+            devices={mockDevices.slice(0, (idx % 3) + 1)}
+            onDeviceClick={(device) =>
+              console.log("Device clicked:", device.name)
+            }
+          />
+        </Col>
+      ))}
+    </Row>
+  );
+}
+
 export const ManyRoomsPerFloor: Story = {
   args: {
     floors: mockFloors,
     activeFloorId: "floor-0",
     iconSize: 48,
-    children: (floor) => {
-      const rooms = [
-        "Living Room",
-        "Kitchen",
-        "Dining Room",
-        "Hallway",
-        "Bathroom",
-        "Garage",
-        "Laundry",
-        "Office",
-      ];
-
-      return (
-        <Row gutter={[16, 16]}>
-          {rooms.map((roomName, idx) => (
-            <Col key={idx} {...columnSizes}>
-              <CompactRoomCardUI
-                roomName={`${roomName} (${floor.name})`}
-                devices={mockDevices.slice(0, (idx % 3) + 1)}
-                onDeviceClick={(device) =>
-                  console.log("Device clicked:", device.name)
-                }
-              />
-            </Col>
-          ))}
-        </Row>
-      );
-    },
+    children: (
+      <>
+        <ManyRoomsContent />
+        <ManyRoomsContent />
+      </>
+    ),
   },
 };
 
@@ -374,10 +317,18 @@ export const EmptyFloors: Story = {
     floors: mockFloorsThree,
     activeFloorId: "floor-1",
     iconSize: 48,
-    children: (floor) => (
-      <div style={{ padding: "40px", textAlign: "center", opacity: 0.6 }}>
-        No rooms configured on {floor.name}
-      </div>
+    children: (
+      <>
+        <div style={{ padding: "40px", textAlign: "center", opacity: 0.6 }}>
+          No rooms configured on Ground Floor
+        </div>
+        <div style={{ padding: "40px", textAlign: "center", opacity: 0.6 }}>
+          No rooms configured on First Floor
+        </div>
+        <div style={{ padding: "40px", textAlign: "center", opacity: 0.6 }}>
+          No rooms configured on Second Floor
+        </div>
+      </>
     ),
   },
 };

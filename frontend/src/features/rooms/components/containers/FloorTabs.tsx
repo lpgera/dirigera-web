@@ -1,12 +1,11 @@
-import { useState, useEffect, useRef, useCallback } from "react";
-import { Row, Col, useBreakpoint, Card } from "@/components/ui";
+import { useEffect, useCallback } from "react";
+import { useBreakpoint } from "@/components/ui";
 import { FloorTabsUI } from "../ui/FloorTabsUI";
 import { useFloors } from "@/hooks";
-import { Scenes } from "@/features/scenes";
-import { CompactRoomCard } from "./CompactRoomCard";
-import type { Device, Room } from "@/graphql.types";
+import type { Room } from "@/graphql.types";
 import type { ColumnSizes } from "../../types";
-import FloorSection from "./FloorSection";
+import FloorSection, { floorRefRegistry } from "./FloorSection";
+import { useFloorNavigationStore } from "../../stores/floorNavigationStore";
 
 interface FloorTabsProps {
   rooms: Room[];
@@ -17,29 +16,37 @@ const HEADER_OFFSET = 146;
 
 export function FloorTabs({ rooms, columnSizes }: FloorTabsProps) {
   const screens = useBreakpoint();
-  const { groupRoomsByFloor, floors } = useFloors();
-  const [activeFloorId, setActiveFloorId] = useState<string | null>(null);
-  const floorRefs = useRef<Map<string, HTMLDivElement>>(new Map());
-  const isScrollingToFloor = useRef(false);
+  const { floors } = useFloors();
 
-  const groupedRooms = groupRoomsByFloor(rooms);
+  const activeFloorId = useFloorNavigationStore((s) => s.activeFloorId);
+  const isScrollingToFloor = useFloorNavigationStore(
+    (s) => s.isScrollingToFloor
+  );
+  const setActiveFloorId = useFloorNavigationStore((s) => s.setActiveFloorId);
+  const setIsScrollingToFloor = useFloorNavigationStore(
+    (s) => s.setIsScrollingToFloor
+  );
+  const scrollToFloor = useFloorNavigationStore((s) => s.scrollToFloor);
+
   const isDesktop = screens.md || screens.lg || screens.xl || screens.xxl;
 
+  // Initialize active floor when floors are loaded
   useEffect(() => {
     if (floors && floors.length > 0 && !activeFloorId) {
       setActiveFloorId(floors[0].id);
     }
-  }, [floors, activeFloorId]);
+  }, [floors, activeFloorId, setActiveFloorId]);
 
+  // Track scroll position to update active floor
   useEffect(() => {
     const handleScroll = () => {
-      if (isScrollingToFloor.current) return;
+      if (isScrollingToFloor) return;
 
       const scrollPosition =
         window.scrollY + window.innerHeight / 3 + HEADER_OFFSET;
 
       for (const floor of floors) {
-        const element = floorRefs.current.get(floor.id);
+        const element = floorRefRegistry.get(floor.id);
         if (element) {
           const rect = element.getBoundingClientRect();
           const absoluteTop = rect.top + window.scrollY - HEADER_OFFSET;
@@ -57,36 +64,26 @@ export function FloorTabs({ rooms, columnSizes }: FloorTabsProps) {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [floors]);
+  }, [floors, isScrollingToFloor, setActiveFloorId]);
 
-  const handleFloorClick = (floorId: string) => {
-    const element = floorRefs.current.get(floorId);
-    if (element) {
-      isScrollingToFloor.current = true;
-      setActiveFloorId(floorId);
+  const handleFloorClick = useCallback(
+    (floorId: string) => {
+      const element = floorRefRegistry.get(floorId);
+      if (element) {
+        scrollToFloor(floorId);
 
-      const rect = element.getBoundingClientRect();
-      const absoluteTop = rect.top + window.scrollY;
-      const target = Math.max(0, absoluteTop - HEADER_OFFSET);
-      window.scrollTo({ top: target, behavior: "smooth" });
+        const rect = element.getBoundingClientRect();
+        const absoluteTop = rect.top + window.scrollY;
+        const target = Math.max(0, absoluteTop - HEADER_OFFSET);
+        window.scrollTo({ top: target, behavior: "smooth" });
 
-      setTimeout(() => {
-        isScrollingToFloor.current = false;
-      }, 1000);
-    }
-  };
-
-  const handleFloorRefChange = (floorId: string, el: HTMLDivElement | null) => {
-    if (el) {
-      floorRefs.current.set(floorId, el);
-    } else {
-      floorRefs.current.delete(floorId);
-    }
-  };
-
-  const handleDeviceClick = useCallback((device: Device) => {
-    console.log("Device clicked:", device.name);
-  }, []);
+        setTimeout(() => {
+          setIsScrollingToFloor(false);
+        }, 1000);
+      }
+    },
+    [scrollToFloor, setIsScrollingToFloor]
+  );
 
   return (
     <FloorTabsUI
@@ -94,7 +91,6 @@ export function FloorTabs({ rooms, columnSizes }: FloorTabsProps) {
       activeFloorId={activeFloorId}
       iconSize={isDesktop ? 48 : 40}
       onFloorClick={handleFloorClick}
-      onFloorRefChange={handleFloorRefChange}
     >
       {floors.map((floor, index) => (
         <FloorSection floorId={floor.id} floorIndex={index} key={floor.id} />

@@ -110,15 +110,54 @@ export function FloorSectionUI({
             })()}
           </>
         )}
-        {isDesktopLg ||
-          isDesktopXl ||
-          (isDesktopXxl && (
-            <>
-              {() => {
-                // Calculate how many rooms go at the top:
-              }}
-            </>
-          ))}
+        {isDesktopXl && (
+          <>
+            {(() => {
+              // show floor plan in the middle and rooms left
+              return (
+                <Row gutter={16}>
+                  <Col span={8}>
+                    {rooms.map((room, index) => (
+                      <div key={index} style={{ marginBottom: "16px" }}>
+                        {room(false)}
+                      </div>
+                    ))}
+                  </Col>
+                  <Col span={16}>{floorPlan}</Col>
+                </Row>
+              );
+            })()}
+          </>
+        )}
+        {isDesktopXxl && (
+          <>
+            {(() => {
+              // show floor plan in the middle and rooms left and right
+              const roomsPerSide = Math.ceil(rooms.length / 2);
+              const leftRooms = rooms.slice(0, roomsPerSide);
+              const rightRooms = rooms.slice(roomsPerSide);
+              return (
+                <Row gutter={16}>
+                  <Col span={8}>
+                    {leftRooms.map((room, index) => (
+                      <div key={index} style={{ marginBottom: "16px" }}>
+                        {room(false)}
+                      </div>
+                    ))}
+                  </Col>
+                  <Col span={8}>{floorPlan}</Col>
+                  <Col span={8}>
+                    {rightRooms.map((room, index) => (
+                      <div key={index} style={{ marginBottom: "16px" }}>
+                        {room(false)}
+                      </div>
+                    ))}
+                  </Col>
+                </Row>
+              );
+            })()}
+          </>
+        )}
       </div>
     </div>
   );
