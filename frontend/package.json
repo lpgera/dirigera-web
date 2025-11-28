@@ -31,7 +31,7 @@
     "storybook-addon-remix-react-router": "^5.0.0",
     "typescript": "^5.9.3",
     "vite": "^7.2.4",
-    "vite-plugin-pwa": "^1.1.0"
+    "vite-plugin-pwa": "^1.2.0"
   },
   "volta": {
     "extends": "../package.json"
