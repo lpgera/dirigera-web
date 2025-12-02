@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Divider } from "@/components/ui";
 import { Row, Col } from "@/components/ui/Grid";
 import { BatteryIndicator } from "@/features/devices";
-import { CompactDeviceControl } from "./CompactDeviceControl";
+import { CompactDeviceControl } from "../../../devices/components/containers/CompactDeviceControl";
 import type { Device } from "@/graphql.types";
 import "./CompactRoomCardUI.css";
 

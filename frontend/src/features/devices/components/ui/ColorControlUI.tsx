@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Slider } from "@/components/ui/Slider";
 import { hsvToRgb } from "@/utils/deviceColor";
-import "./ColorControl.css";
+import "./ColorControlUI.css";
 
 export interface ColorControlProps {
   colorHue?: number | undefined;

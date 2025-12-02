@@ -1,4 +1,4 @@
-import { ColorControl } from "../ui/ColorControl";
+import { ColorControl } from "../ui/ColorControlUI";
 import {
   useDeviceLocalStateStore,
   useLocalColorHue,

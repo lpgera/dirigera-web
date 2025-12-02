@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { DeviceControlUI } from "./DeviceControlUI";
 import { DeviceImage } from "./DeviceImage";
-import { DeviceBasicControls } from "../containers/DeviceBasicControls";
-import { DeviceColorControl } from "../containers/DeviceColorControl";
+import { DeviceBasicControlsUI } from "./DeviceBasicControlsUI";
+import { ColorControl } from "./ColorControlUI";
 import type { Device } from "@/graphql.types";
 
 const baseDevice: Device = {
@@ -36,8 +36,15 @@ const meta = {
   title: "Features/Devices/UI/DeviceControlUI",
   tags: ["autodocs"],
   render: (args) => {
-    const { device, deviceImageSlot, onPlaybackPlayPause, onPlaybackPrevious, onPlaybackNext, loading } = args;
-    
+    const {
+      device,
+      deviceImageSlot,
+      onPlaybackPlayPause,
+      onPlaybackPrevious,
+      onPlaybackNext,
+      loading,
+    } = args;
+
     // Determine if we should show basic controls
     const hasBasicControls =
       device.isOn != null ||
@@ -56,8 +63,13 @@ const meta = {
         deviceImageSlot={deviceImageSlot}
         basicControlsSlot={
           hasBasicControls ? (
-            <DeviceBasicControls
-              device={device}
+            <DeviceBasicControlsUI
+              isOn={device.isOn ?? null}
+              lightLevel={device.lightLevel ?? null}
+              volume={device.volume ?? null}
+              batteryPercentage={device.batteryPercentage ?? null}
+              isReachable={device.isReachable}
+              name={device.name}
               onIsOnChange={() => console.log("isOn change")}
               onLightLevelChange={() => console.log("lightLevel change")}
               onVolumeChange={() => console.log("volume change")}
@@ -71,12 +83,20 @@ const meta = {
         }
         colorControlSlot={
           hasColorControls ? (
-            <DeviceColorControl
-              device={device}
-              loading={{
-                colorTemperature: false,
-                colorHueSaturation: false,
-              }}
+            <ColorControl
+              colorHue={device.colorHue ?? undefined}
+              colorSaturation={device.colorSaturation ?? undefined}
+              colorTemperature={device.colorTemperature ?? undefined}
+              isReachable={device.isReachable}
+              disabled={!device.isOn}
+              onColorHueChange={() => console.log("colorHue change")}
+              onColorSaturationChange={() =>
+                console.log("colorSaturation change")
+              }
+              onColorTemperatureChange={() =>
+                console.log("colorTemperature change")
+              }
+              loading={false}
             />
           ) : undefined
         }

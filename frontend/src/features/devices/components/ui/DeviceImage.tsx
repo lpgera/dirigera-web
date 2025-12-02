@@ -32,7 +32,7 @@ export function DeviceImage({
           showGlow={shouldShowGlow}
           color={lightColor}
           percentage={localLightLevel}
-          orientation="horizontal"
+          orientation="vertical"
         />
       )}
       <div className="device-image-container">
