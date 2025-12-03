@@ -28,3 +28,8 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.compact-device-control-toggle {
+  flex-shrink: 0;
+  margin-right: var(--spacing-md);
+}

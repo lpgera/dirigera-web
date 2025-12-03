@@ -12,6 +12,11 @@
   color: var(--color-text-secondary);
 }
 
+.compact-room-card-toggle {
+  display: flex;
+  align-items: center;
+}
+
 .compact-room-card-devices {
   --device-column-count: 1;
   margin-top: var(--spacing-sm);

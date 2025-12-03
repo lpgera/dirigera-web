@@ -1,3 +1,4 @@
+import { Switch } from "@/components/ui/Switch";
 import { DeviceImage } from "@/features/devices";
 import { DeviceImageGlow } from "@/features/devices/components/ui/DeviceImageGlow";
 import "./CompactDeviceControlUI.css";
@@ -50,6 +51,12 @@ export function CompactDeviceControlUI({
           />
         </div>
         <div className="compact-device-control-name">{name}</div>
+        <div
+          className="compact-device-control-toggle"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {onOffControl}
+        </div>
       </div>
     </div>
   );

@@ -9,6 +9,8 @@ import {
 import type { Device } from "@/graphql.types";
 import { useDeviceImages } from "@/hooks";
 import { CompactDeviceControlUI } from "../ui/CompactDeviceControlUI";
+import { Switch } from "@/components/ui/Switch";
+import { useDeviceControl } from "../../hooks/useDeviceControl";
 
 export interface CompactDeviceControlProps {
   device: Device;
@@ -22,7 +24,15 @@ export function CompactDeviceControl({ device }: CompactDeviceControlProps) {
   const { getDeviceImage } = useDeviceImages();
 
   const imagePath = getDeviceImage(device.id);
-
+  const {
+    handleIsOnChange,
+    handleLightLevelChange,
+    handleVolumeChange,
+    loading,
+  } = useDeviceControl({
+    id: device.id,
+    type: device.type,
+  });
   // Sync server state to local state
   useEffect(() => {
     const stateUpdate: Partial<DeviceLocalState> = {};
@@ -57,6 +67,14 @@ export function CompactDeviceControl({ device }: CompactDeviceControlProps) {
     device.isReachable
   );
 
+  const onToggle = (checked: boolean) => {
+    handleIsOnChange(checked);
+  };
+
+  const onOffControl = (
+    <Switch checked={isOn} onChange={onToggle} disabled={!device.isReachable} />
+  );
+
   return (
     <CompactDeviceControlUI
       name={device.name}
@@ -66,6 +84,7 @@ export function CompactDeviceControl({ device }: CompactDeviceControlProps) {
       lightLevel={lightLevel}
       lightColor={lightColor}
       showGlow={shouldShowGlow}
+      onOffControl={onOffControl}
     />
   );
 }

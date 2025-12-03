@@ -11,12 +11,7 @@ export interface DeviceControlProps {
 }
 
 export function DeviceControl({ device }: DeviceControlProps) {
-  const {
-    handleIsOnChange,
-    handleLightLevelChange,
-    handleVolumeChange,
-    loading,
-  } = useDeviceControl({
+  const { loading } = useDeviceControl({
     id: device.id,
     type: device.type,
   });

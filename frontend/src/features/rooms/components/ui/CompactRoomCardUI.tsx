@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, Divider } from "@/components/ui";
+import { Switch } from "@/components/ui/Switch";
 import { Row, Col } from "@/components/ui/Grid";
 import { BatteryIndicator } from "@/features/devices";
 import { CompactDeviceControl } from "../../../devices/components/containers/CompactDeviceControl";
@@ -16,6 +17,8 @@ interface CompactRoomCardUIProps {
   defaultCollapsed?: boolean;
   hideBatteryDevices?: boolean;
   deviceColumnCount?: 1 | 2 | 3 | 4;
+  onToggleAllLamps?: (isOn: boolean) => void;
+  toggleAllLampsLoading?: boolean;
 }
 
 export function CompactRoomCardUI({
@@ -27,6 +30,8 @@ export function CompactRoomCardUI({
   defaultCollapsed = false,
   hideBatteryDevices = false,
   deviceColumnCount = 1,
+  onToggleAllLamps,
+  toggleAllLampsLoading = false,
 }: CompactRoomCardUIProps) {
   const devicesWithoutBattery = devices.filter(
     (device) =>
@@ -40,6 +45,19 @@ export function CompactRoomCardUI({
       device.batteryPercentage !== undefined
   );
 
+  // Filter devices that can be toggled (have isOn property)
+  const toggleableDevices = devicesWithoutBattery.filter(
+    (device) => device.isOn !== null && device.isOn !== undefined
+  );
+
+  // Determine if all lamps are on
+  const allLampsOn =
+    toggleableDevices.length > 0 &&
+    toggleableDevices.every((device) => device.isOn === true);
+
+  // Check if all devices are reachable
+  const allReachable = toggleableDevices.every((device) => device.isReachable);
+
   return (
     <Card
       title={
@@ -49,6 +67,20 @@ export function CompactRoomCardUI({
           )}
           {roomName}
         </span>
+      }
+      extra={
+        toggleableDevices.length > 0 && onToggleAllLamps ? (
+          <div
+            className="compact-room-card-toggle"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Switch
+              checked={allLampsOn}
+              disabled={!allReachable || toggleAllLampsLoading}
+              onChange={(checked) => onToggleAllLamps(checked)}
+            />
+          </div>
+        ) : null
       }
       collapsible
       defaultCollapsed={defaultCollapsed}
