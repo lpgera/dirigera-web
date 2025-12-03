@@ -71,8 +71,15 @@ export function CompactDeviceControl({ device }: CompactDeviceControlProps) {
     handleIsOnChange(checked);
   };
 
+  const switchColor = isOn && device.isReachable ? lightColor : undefined;
+
   const onOffControl = (
-    <Switch checked={isOn} onChange={onToggle} disabled={!device.isReachable} />
+    <Switch
+      checked={isOn}
+      onChange={onToggle}
+      disabled={!device.isReachable}
+      color={switchColor}
+    />
   );
 
   return (

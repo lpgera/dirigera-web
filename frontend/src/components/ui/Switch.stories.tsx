@@ -113,3 +113,92 @@ export const WithLabels: Story = {
     </div>
   ),
 };
+
+export const WithCustomColor: Story = {
+  args: {
+    checked: true,
+    color: "#f5a623",
+  },
+};
+
+export const CustomColorOrange: Story = {
+  render: () => {
+    const [checked, setChecked] = React.useState(true);
+    return (
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "12px",
+          background: "#1a1a2e",
+          padding: "16px",
+          borderRadius: "8px",
+        }}
+      >
+        <Switch checked={checked} onChange={setChecked} color="#f5a623" />
+        <span style={{ color: "white" }}>Warm Light</span>
+      </div>
+    );
+  },
+};
+
+export const CustomColorBlue: Story = {
+  render: () => {
+    const [checked, setChecked] = React.useState(true);
+    return (
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "12px",
+          background: "#1a1a2e",
+          padding: "16px",
+          borderRadius: "8px",
+        }}
+      >
+        <Switch checked={checked} onChange={setChecked} color="#4a9eff" />
+        <span style={{ color: "white" }}>Cool Light</span>
+      </div>
+    );
+  },
+};
+
+export const CustomColorVariants: Story = {
+  render: () => (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "16px",
+        background: "#1a1a2e",
+        padding: "24px",
+        borderRadius: "12px",
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+        <Switch checked={true} onChange={() => {}} color="#f5a623" />
+        <span style={{ color: "white" }}>Warm Orange</span>
+      </div>
+      <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+        <Switch checked={true} onChange={() => {}} color="#4a9eff" />
+        <span style={{ color: "white" }}>Cool Blue</span>
+      </div>
+      <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+        <Switch checked={true} onChange={() => {}} color="#ff6b6b" />
+        <span style={{ color: "white" }}>Red</span>
+      </div>
+      <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+        <Switch checked={true} onChange={() => {}} color="#51cf66" />
+        <span style={{ color: "white" }}>Green</span>
+      </div>
+      <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+        <Switch checked={true} onChange={() => {}} color="#cc5de8" />
+        <span style={{ color: "white" }}>Purple</span>
+      </div>
+      <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+        <Switch checked={false} onChange={() => {}} color="#f5a623" />
+        <span style={{ color: "white" }}>Off (color ignored)</span>
+      </div>
+    </div>
+  ),
+};

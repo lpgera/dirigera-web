@@ -65,8 +65,21 @@
   background-color: var(--switch-bg-checked);
 }
 
+.switch-input:checked + .switch-slider.switch-slider-custom-color {
+  background-color: var(--switch-custom-color);
+}
+
+.switch-input:checked + .switch-slider.switch-slider-custom-color::before {
+  background-color: var(--color-bg-primary, #1a1a2e);
+}
+
 .switch-input:checked + .switch-slider::before {
-  transform: translateX(calc(var(--switch-width) - var(--switch-handle-size) - var(--switch-handle-offset) * 2));
+  transform: translateX(
+    calc(
+      var(--switch-width) - var(--switch-handle-size) -
+        var(--switch-handle-offset) * 2
+    )
+  );
 }
 
 .switch-input:focus + .switch-slider {

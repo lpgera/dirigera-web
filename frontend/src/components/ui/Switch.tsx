@@ -12,6 +12,8 @@ export interface SwitchProps {
   className?: string | undefined;
   /** Label text to display above the switch */
   label?: string | undefined;
+  /** Custom color for the switch when checked (e.g., light color) */
+  color?: string | undefined;
 }
 
 export function Switch({
@@ -20,6 +22,7 @@ export function Switch({
   disabled = false,
   className = "",
   label,
+  color,
 }: SwitchProps) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (onChange) {
@@ -30,6 +33,13 @@ export function Switch({
   const classes = ["switch", disabled && "switch-disabled", className]
     .filter(Boolean)
     .join(" ");
+
+  const sliderStyle: React.CSSProperties | undefined =
+    color && checked
+      ? ({
+          "--switch-custom-color": color,
+        } as React.CSSProperties)
+      : undefined;
 
   return (
     <div className="switch-container">
@@ -46,7 +56,10 @@ export function Switch({
           disabled={disabled}
           className="switch-input"
         />
-        <span className="switch-slider" />
+        <span
+          className={`switch-slider${color && checked ? " switch-slider-custom-color" : ""}`}
+          style={sliderStyle}
+        />
       </label>
     </div>
   );
