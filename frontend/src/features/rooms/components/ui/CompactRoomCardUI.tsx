@@ -8,19 +8,25 @@ import "./CompactRoomCardUI.css";
 
 interface CompactRoomCardUIProps {
   roomName: string;
+  roomIcon?: React.ReactNode;
   devices: Device[];
   scenes?: React.ReactNode;
   onDeviceClick?: (device: Device) => void;
   getDeviceImage?: (deviceId: string) => string | undefined;
   defaultCollapsed?: boolean;
+  hideBatteryDevices?: boolean;
+  deviceColumnCount?: 1 | 2 | 3 | 4;
 }
 
 export function CompactRoomCardUI({
   roomName,
+  roomIcon,
   devices,
   scenes,
   onDeviceClick,
   defaultCollapsed = false,
+  hideBatteryDevices = false,
+  deviceColumnCount = 1,
 }: CompactRoomCardUIProps) {
   const devicesWithoutBattery = devices.filter(
     (device) =>
@@ -35,13 +41,31 @@ export function CompactRoomCardUI({
   );
 
   return (
-    <Card title={roomName} collapsible defaultCollapsed={defaultCollapsed}>
+    <Card
+      title={
+        <span className="compact-room-card-title">
+          {roomIcon && (
+            <span className="compact-room-card-icon">{roomIcon}</span>
+          )}
+          {roomName}
+        </span>
+      }
+      collapsible
+      defaultCollapsed={defaultCollapsed}
+    >
       {/* Scene buttons section */}
       {scenes}
 
       {/* Device controls section */}
       {devicesWithoutBattery.length > 0 && (
-        <div className="compact-room-card-devices">
+        <div
+          className="compact-room-card-devices"
+          style={
+            {
+              "--device-column-count": deviceColumnCount,
+            } as React.CSSProperties
+          }
+        >
           {devicesWithoutBattery.map((device) => (
             <div
               key={device.id}
@@ -63,7 +87,7 @@ export function CompactRoomCardUI({
       )}
 
       {/* Battery devices section */}
-      {devicesWithBattery.length > 0 && (
+      {!hideBatteryDevices && devicesWithBattery.length > 0 && (
         <>
           <Divider />
           <div className="compact-room-card-batteries">

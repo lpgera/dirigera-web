@@ -1,14 +1,30 @@
-.compact-room-card-devices {
-  margin-top: var(--spacing-sm);
+.compact-room-card-title {
   display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xs);
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.compact-room-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25em;
+  color: var(--color-text-secondary);
+}
+
+.compact-room-card-devices {
+  --device-column-count: 1;
+  margin-top: var(--spacing-sm);
+  display: grid;
+  grid-template-columns: repeat(var(--device-column-count), 1fr);
+  gap: var(--spacing-md);
 }
 
 .compact-room-card-device {
   cursor: pointer;
   transition: transform 0.2s ease;
   outline: none;
+  min-width: 0;
 }
 
 .compact-room-card-device:hover {

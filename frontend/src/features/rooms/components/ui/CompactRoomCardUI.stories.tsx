@@ -1,11 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { MdLiving, MdBed, MdKitchen, MdBathtub, MdHome } from "react-icons/md";
 import { CompactRoomCardUI } from "./CompactRoomCardUI";
 import { ScenesUI } from "@/features/scenes/components/ui/ScenesUI";
 import type { Device } from "@/graphql.types";
 
 /**
  * CompactRoomCardUI is a pure presentational component that displays:
- * - Room name header
+ * - Room name header with optional icon
  * - Optional scenes section
  * - Device images in a grid layout
  * - Battery devices in a separate section
@@ -140,7 +141,7 @@ const meta = {
   title: "Features/Rooms/CompactRoomCardUI",
   decorators: [
     (Story) => (
-      <div style={{ maxWidth: 400, margin: "20px auto" }}>
+      <div style={{ margin: "20px auto" }}>
         <Story />
       </div>
     ),
@@ -148,6 +149,9 @@ const meta = {
   argTypes: {
     roomName: {
       description: "Name of the room to display in the card header",
+    },
+    roomIcon: {
+      description: "Optional icon to display next to the room name",
     },
     devices: {
       description:
@@ -159,6 +163,14 @@ const meta = {
     onDeviceClick: {
       description: "Callback when a device is clicked",
       action: "device-clicked",
+    },
+    deviceColumnCount: {
+      description: "Number of columns to display devices in (1-4)",
+      control: { type: "select" },
+      options: [1, 2, 3, 4],
+    },
+    hideBatteryDevices: {
+      description: "Whether to hide devices that have battery indicators",
     },
   },
 } satisfies Meta<typeof CompactRoomCardUI>;
@@ -449,6 +461,139 @@ export const MixedDevicesWithAndWithoutImages: Story = {
       description: {
         story:
           "Shows a mix of devices with and without images to demonstrate the real-world scenario.",
+      },
+    },
+  },
+};
+
+export const HideBatteryDevices: Story = {
+  args: {
+    roomName: "Living Room",
+    devices: mockDevices,
+    getDeviceImage: mockGetDeviceImage,
+    hideBatteryDevices: true,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Hides devices with battery indicators when hideBatteryDevices is true.",
+      },
+    },
+  },
+};
+
+export const TwoColumns: Story = {
+  args: {
+    roomName: "Living Room (2 Columns)",
+    devices: mockDevices,
+    getDeviceImage: mockGetDeviceImage,
+    deviceColumnCount: 2,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Displays devices in a 2-column grid layout.",
+      },
+    },
+  },
+};
+
+export const ThreeColumns: Story = {
+  args: {
+    roomName: "Living Room (3 Columns)",
+    devices: mockDevices,
+    getDeviceImage: mockGetDeviceImage,
+    deviceColumnCount: 3,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Displays devices in a 3-column grid layout.",
+      },
+    },
+  },
+};
+
+export const FourColumns: Story = {
+  args: {
+    roomName: "Living Room (4 Columns)",
+    devices: mockDevices,
+    getDeviceImage: mockGetDeviceImage,
+    deviceColumnCount: 4,
+  },
+  decorators: [
+    (Story) => (
+      <div style={{ maxWidth: 800, margin: "20px auto" }}>
+        <Story />
+      </div>
+    ),
+  ],
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Displays devices in a 4-column grid layout. Uses a wider container to accommodate the columns.",
+      },
+    },
+  },
+};
+
+export const WithRoomIcon: Story = {
+  args: {
+    roomName: "Living Room",
+    roomIcon: <MdLiving />,
+    devices: mockDevices,
+    getDeviceImage: mockGetDeviceImage,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Displays a room icon next to the room name in the header.",
+      },
+    },
+  },
+};
+
+export const DifferentRoomIcons: Story = {
+  args: {
+    roomName: "Living Room",
+    devices: mockDevices.slice(0, 2),
+  },
+  render: () => (
+    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+      <CompactRoomCardUI
+        roomName="Living Room"
+        roomIcon={<MdLiving />}
+        devices={mockDevices.slice(0, 2)}
+      />
+      <CompactRoomCardUI
+        roomName="Bedroom"
+        roomIcon={<MdBed />}
+        devices={mockDevices.slice(0, 2)}
+      />
+      <CompactRoomCardUI
+        roomName="Kitchen"
+        roomIcon={<MdKitchen />}
+        devices={mockDevices.slice(0, 2)}
+      />
+      <CompactRoomCardUI
+        roomName="Bathroom"
+        roomIcon={<MdBathtub />}
+        devices={mockDevices.slice(0, 2)}
+      />
+      <CompactRoomCardUI
+        roomName="Home Office"
+        roomIcon={<MdHome />}
+        devices={mockDevices.slice(0, 2)}
+      />
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Shows different room types with their appropriate icons. Use react-icons to pass any icon as the roomIcon prop.",
       },
     },
   },
