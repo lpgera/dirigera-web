@@ -24,7 +24,7 @@ export function ScenesUI({
   return (
     <ScenesList title={title} wrapScenes={wrapScenes}>
       {scenes.map((scene) => (
-        <Col>
+        <Col key={scene.id}>
           <SceneButton
             name={scene.name}
             onClick={() => onActivateScene(scene.id)}

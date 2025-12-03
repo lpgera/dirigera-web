@@ -1,0 +1,47 @@
+{
+  "_comment": "Configure room-specific settings like icons. Use icon names from react-icons/md (Material Design icons).",
+  "_instructions": "Add room IDs as keys and configure their settings. Common icons: MdLiving, MdBed, MdKitchen, MdBathtub, MdHome, MdDeck, MdGarage, MdChair, MdWeekend, MdTv, MdWork, MdYard, MdDoorFront, MdStairs",
+  "_example": {
+    "room-id-here": {
+      "icon": "MdLiving"
+    }
+  },
+  "rooms": {
+    "78c2b381-749c-49b9-94ac-0fbff8d73b0c": {
+      "name": "Stue",
+      "icon": "MdLiving"
+    },
+    "4c10322b-b38f-40d9-974a-2b2f61b77b91": {
+      "name": "Repos",
+      "icon": "MdStairs"
+    },
+    "14073104-76e6-4160-b8c7-66c5cab549cc": {
+      "name": "Havestue",
+      "icon": "MdYard"
+    },
+    "f8bc8873-5335-438a-afda-bdaff7bc80eb": {
+      "name": "Loft",
+      "icon": "MdRoofing"
+    },
+    "5d138710-51f1-4353-bf1d-0397f069cc1d": {
+      "name": "Hermans værelse",
+      "icon": "MdBed"
+    },
+    "e084a08e-fc0f-45aa-9dcd-a7fbda101ad9": {
+      "name": "Soveværelse",
+      "icon": "MdBed"
+    },
+    "c94ed1e8-c825-42a6-ae94-599a077a3f1d": {
+      "name": "Repos",
+      "icon": "MdStairs"
+    },
+    "82aee614-0842-4a59-b4a5-237a9b06c517": {
+      "name": "Kælder entre",
+      "icon": "MdOutlineCheckroom"
+    },
+    "fa729b1e-9649-42e2-bd1c-738c0b2823a0": {
+      "name": "Kælder vaskerum",
+      "icon": "MdLocalLaundryService"
+    }
+  }
+}

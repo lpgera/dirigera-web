@@ -74,7 +74,7 @@ export function Scenes({
     return (
       <ScenesList title={title} wrapScenes={wrapScenes}>
         {Array.from({ length: 6 }).map((_, i) => (
-          <div style={{ height: "40px" }}>
+          <div key={i} style={{ height: "40px" }}>
             <Skeleton active paragraph={{ rows: 1 }} />
           </div>
         ))}

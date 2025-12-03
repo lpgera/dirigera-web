@@ -72,6 +72,7 @@ const FloorSection: React.FC<FloorSectionProps> = ({ floorId, floorIndex }) => {
   const renderedRooms = floorRooms.map(
     (room) => (defaultCollapsed: boolean) => (
       <CompactRoomCard
+        key={room.id}
         room={room as unknown as any}
         scenes={<Scenes scope="room" scopeId={room.id} />}
         defaultCollapsed={defaultCollapsed}
