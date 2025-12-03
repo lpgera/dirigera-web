@@ -184,9 +184,9 @@ export type ResolverTypeWrapper<T> = Promise<T> | T
 
 export type Resolver<
   TResult,
-  TParent = {},
-  TContext = {},
-  TArgs = {},
+  TParent = Record<PropertyKey, never>,
+  TContext = Record<PropertyKey, never>,
+  TArgs = Record<PropertyKey, never>,
 > = ResolverFn<TResult, TParent, TContext, TArgs>
 
 export type ResolverFn<TResult, TParent, TContext, TArgs> = (
@@ -249,22 +249,29 @@ export type SubscriptionObject<
 export type SubscriptionResolver<
   TResult,
   TKey extends string,
-  TParent = {},
-  TContext = {},
-  TArgs = {},
+  TParent = Record<PropertyKey, never>,
+  TContext = Record<PropertyKey, never>,
+  TArgs = Record<PropertyKey, never>,
 > =
   | ((
       ...args: any[]
     ) => SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>)
   | SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>
 
-export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
+export type TypeResolveFn<
+  TTypes,
+  TParent = Record<PropertyKey, never>,
+  TContext = Record<PropertyKey, never>,
+> = (
   parent: TParent,
   context: TContext,
   info: GraphQLResolveInfo
 ) => Maybe<TTypes> | Promise<Maybe<TTypes>>
 
-export type IsTypeOfResolverFn<T = {}, TContext = {}> = (
+export type IsTypeOfResolverFn<
+  T = Record<PropertyKey, never>,
+  TContext = Record<PropertyKey, never>,
+> = (
   obj: T,
   context: TContext,
   info: GraphQLResolveInfo
@@ -273,10 +280,10 @@ export type IsTypeOfResolverFn<T = {}, TContext = {}> = (
 export type NextResolverFn<T> = () => Promise<T>
 
 export type DirectiveResolverFn<
-  TResult = {},
-  TParent = {},
-  TContext = {},
-  TArgs = {},
+  TResult = Record<PropertyKey, never>,
+  TParent = Record<PropertyKey, never>,
+  TContext = Record<PropertyKey, never>,
+  TArgs = Record<PropertyKey, never>,
 > = (
   next: NextResolverFn<TResult>,
   parent: TParent,
@@ -292,9 +299,9 @@ export type ResolversTypes = ResolversObject<{
   Device: ResolverTypeWrapper<Device>
   Float: ResolverTypeWrapper<Scalars['Float']['output']>
   Int: ResolverTypeWrapper<Scalars['Int']['output']>
-  Mutation: ResolverTypeWrapper<{}>
+  Mutation: ResolverTypeWrapper<Record<PropertyKey, never>>
   Playback: Playback
-  Query: ResolverTypeWrapper<{}>
+  Query: ResolverTypeWrapper<Record<PropertyKey, never>>
   QuickControl: ResolverTypeWrapper<QuickControl>
   Room: ResolverTypeWrapper<Room>
   Scene: ResolverTypeWrapper<Scene>
@@ -307,8 +314,8 @@ export type ResolversParentTypes = ResolversObject<{
   Device: Device
   Float: Scalars['Float']['output']
   Int: Scalars['Int']['output']
-  Mutation: {}
-  Query: {}
+  Mutation: Record<PropertyKey, never>
+  Query: Record<PropertyKey, never>
   QuickControl: QuickControl
   Room: Room
   Scene: Scene
@@ -326,8 +333,8 @@ export type LoggedInDirectiveResolver<
 
 export type DeviceResolvers<
   ContextType = Context,
-  ParentType extends
-    ResolversParentTypes['Device'] = ResolversParentTypes['Device'],
+  ParentType extends ResolversParentTypes['Device'] =
+    ResolversParentTypes['Device'],
 > = ResolversObject<{
   batteryPercentage?: Resolver<
     Maybe<ResolversTypes['Int']>,
@@ -383,13 +390,12 @@ export type DeviceResolvers<
   type?: Resolver<ResolversTypes['ControlType'], ParentType, ContextType>
   vocIndex?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
   volume?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
 export type MutationResolvers<
   ContextType = Context,
-  ParentType extends
-    ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation'],
+  ParentType extends ResolversParentTypes['Mutation'] =
+    ResolversParentTypes['Mutation'],
 > = ResolversObject<{
   _?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
   activateScene?: Resolver<
@@ -456,8 +462,8 @@ export type MutationResolvers<
 
 export type QueryResolvers<
   ContextType = Context,
-  ParentType extends
-    ResolversParentTypes['Query'] = ResolversParentTypes['Query'],
+  ParentType extends ResolversParentTypes['Query'] =
+    ResolversParentTypes['Query'],
 > = ResolversObject<{
   _?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
   devicePlayItemImageURL?: Resolver<
@@ -478,8 +484,8 @@ export type QueryResolvers<
 
 export type QuickControlResolvers<
   ContextType = Context,
-  ParentType extends
-    ResolversParentTypes['QuickControl'] = ResolversParentTypes['QuickControl'],
+  ParentType extends ResolversParentTypes['QuickControl'] =
+    ResolversParentTypes['QuickControl'],
 > = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   isOn?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>
@@ -487,13 +493,12 @@ export type QuickControlResolvers<
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   playback?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
   type?: Resolver<ResolversTypes['ControlType'], ParentType, ContextType>
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
 export type RoomResolvers<
   ContextType = Context,
-  ParentType extends
-    ResolversParentTypes['Room'] = ResolversParentTypes['Room'],
+  ParentType extends ResolversParentTypes['Room'] =
+    ResolversParentTypes['Room'],
 > = ResolversObject<{
   devices?: Resolver<Array<ResolversTypes['Device']>, ParentType, ContextType>
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>
@@ -503,17 +508,15 @@ export type RoomResolvers<
     ParentType,
     ContextType
   >
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
 export type SceneResolvers<
   ContextType = Context,
-  ParentType extends
-    ResolversParentTypes['Scene'] = ResolversParentTypes['Scene'],
+  ParentType extends ResolversParentTypes['Scene'] =
+    ResolversParentTypes['Scene'],
 > = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }>
 
 export type Resolvers<ContextType = Context> = ResolversObject<{
