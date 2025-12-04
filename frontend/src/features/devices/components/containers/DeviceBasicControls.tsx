@@ -1,10 +1,8 @@
-import {
-  useLocalIsOn,
-  useLocalLightLevel,
-  useLocalVolume,
-} from "../../hooks/useDeviceLocalState";
-import { useDeviceControl } from "../../hooks/useDeviceControl";
 import { DeviceBasicControlsUI } from "../ui/DeviceBasicControlsUI";
+import { DeviceToggleContainer } from "./DeviceToggleContainer";
+import { LightLevelControlContainer } from "./LightLevelControlContainer";
+import { VolumeControlContainer } from "./VolumeControlContainer";
+import { BatteryIndicatorContainer } from "./BatteryIndicatorContainer";
 import type { Device } from "@/graphql.types";
 
 export interface DeviceBasicControlsProps {
@@ -12,32 +10,47 @@ export interface DeviceBasicControlsProps {
 }
 
 export function DeviceBasicControls({ device }: DeviceBasicControlsProps) {
-  const localIsOn = useLocalIsOn(device.id);
-  const localLightLevel = useLocalLightLevel(device.id);
-  const localVolume = useLocalVolume(device.id);
-
-  const {
-    handleIsOnChange,
-    handleLightLevelChange,
-    handleVolumeChange,
-    loading,
-  } = useDeviceControl({
-    id: device.id,
-    type: device.type,
-  });
-
   return (
     <DeviceBasicControlsUI
-      isOn={localIsOn ?? device.isOn ?? null}
-      lightLevel={localLightLevel ?? device.lightLevel ?? null}
-      volume={localVolume ?? device.volume ?? null}
-      batteryPercentage={device.batteryPercentage ?? null}
-      isReachable={device.isReachable}
-      name={device.name}
-      loading={loading}
-      onIsOnChange={handleIsOnChange}
-      onLightLevelChange={handleLightLevelChange}
-      onVolumeChange={handleVolumeChange}
+      toggleSlot={
+        device.isOn != null ? (
+          <DeviceToggleContainer
+            id={device.id}
+            type={device.type}
+            isOn={device.isOn}
+            isReachable={device.isReachable}
+          />
+        ) : undefined
+      }
+      lightLevelSlot={
+        device.lightLevel != null ? (
+          <LightLevelControlContainer
+            id={device.id}
+            type={device.type}
+            lightLevel={device.lightLevel}
+            isOn={device.isOn}
+            isReachable={device.isReachable}
+          />
+        ) : undefined
+      }
+      volumeSlot={
+        device.volume != null ? (
+          <VolumeControlContainer
+            id={device.id}
+            type={device.type}
+            volume={device.volume}
+            isReachable={device.isReachable}
+          />
+        ) : undefined
+      }
+      batterySlot={
+        device.batteryPercentage != null ? (
+          <BatteryIndicatorContainer
+            batteryPercentage={device.batteryPercentage}
+            name={device.name}
+          />
+        ) : undefined
+      }
     />
   );
 }

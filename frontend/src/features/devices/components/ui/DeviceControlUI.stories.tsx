@@ -2,6 +2,10 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { DeviceControlUI } from "./DeviceControlUI";
 import { DeviceImage } from "./DeviceImage";
 import { DeviceBasicControlsUI } from "./DeviceBasicControlsUI";
+import { DeviceToggle } from "./DeviceToggle";
+import { LightLevelControl } from "./LightLevelControl";
+import { VolumeControl } from "./VolumeControl";
+import { BatteryIndicator } from "./BatteryIndicator";
 import { ColorControl } from "./ColorControlUI";
 import type { Device } from "@/graphql.types";
 
@@ -45,13 +49,6 @@ const meta = {
       loading,
     } = args;
 
-    // Determine if we should show basic controls
-    const hasBasicControls =
-      device.isOn != null ||
-      device.lightLevel != null ||
-      device.volume != null ||
-      device.batteryPercentage != null;
-
     // Determine if we should show color controls
     const hasColorControls =
       device.colorTemperature != null ||
@@ -62,24 +59,47 @@ const meta = {
         device={device}
         deviceImageSlot={deviceImageSlot}
         basicControlsSlot={
-          hasBasicControls ? (
-            <DeviceBasicControlsUI
-              isOn={device.isOn ?? null}
-              lightLevel={device.lightLevel ?? null}
-              volume={device.volume ?? null}
-              batteryPercentage={device.batteryPercentage ?? null}
-              isReachable={device.isReachable}
-              name={device.name}
-              onIsOnChange={() => console.log("isOn change")}
-              onLightLevelChange={() => console.log("lightLevel change")}
-              onVolumeChange={() => console.log("volume change")}
-              loading={{
-                isOn: false,
-                lightLevel: false,
-                volume: false,
-              }}
-            />
-          ) : undefined
+          <DeviceBasicControlsUI
+            toggleSlot={
+              device.isOn != null ? (
+                <DeviceToggle
+                  isOn={device.isOn}
+                  isReachable={device.isReachable}
+                  onChange={() => console.log("isOn change")}
+                  loading={false}
+                />
+              ) : undefined
+            }
+            lightLevelSlot={
+              device.lightLevel != null ? (
+                <LightLevelControl
+                  lightLevel={device.lightLevel}
+                  isReachable={device.isReachable}
+                  disabled={!device.isOn}
+                  onChange={() => console.log("lightLevel change")}
+                  loading={false}
+                />
+              ) : undefined
+            }
+            volumeSlot={
+              device.volume != null ? (
+                <VolumeControl
+                  volume={device.volume}
+                  isReachable={device.isReachable}
+                  onChange={() => console.log("volume change")}
+                  loading={false}
+                />
+              ) : undefined
+            }
+            batterySlot={
+              device.batteryPercentage != null ? (
+                <BatteryIndicator
+                  batteryPercentage={device.batteryPercentage}
+                  name={device.name}
+                />
+              ) : undefined
+            }
+          />
         }
         colorControlSlot={
           hasColorControls ? (

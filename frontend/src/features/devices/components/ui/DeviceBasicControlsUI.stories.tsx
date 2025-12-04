@@ -1,19 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "storybook/test";
 import { DeviceBasicControlsUI } from "./DeviceBasicControlsUI";
+import { DeviceToggle } from "./DeviceToggle";
+import { LightLevelControl } from "./LightLevelControl";
+import { VolumeControl } from "./VolumeControl";
+import { BatteryIndicator } from "./BatteryIndicator";
 
 const meta = {
   component: DeviceBasicControlsUI,
   title: "Features/Devices/UI/DeviceBasicControlsUI",
   tags: ["autodocs"],
-  args: {
-    onIsOnChange: fn(),
-    onLightLevelChange: fn(),
-    onVolumeChange: fn(),
-    loading: {},
-    isReachable: true,
-    name: "Living Room Light",
-  },
   decorators: [
     (story) => <div style={{ width: 400, padding: "20px" }}>{story()}</div>,
   ],
@@ -24,128 +20,239 @@ type Story = StoryObj<typeof meta>;
 
 export const LightWithToggleAndLevel: Story = {
   args: {
-    isOn: true,
-    lightLevel: 75,
-    volume: null,
-    batteryPercentage: null,
+    toggleSlot: (
+      <DeviceToggle
+        isOn={true}
+        isReachable={true}
+        onChange={fn()}
+        loading={false}
+      />
+    ),
+    lightLevelSlot: (
+      <LightLevelControl
+        lightLevel={75}
+        isReachable={true}
+        disabled={false}
+        onChange={fn()}
+        loading={false}
+      />
+    ),
   },
 };
 
 export const LightOff: Story = {
   args: {
-    isOn: false,
-    lightLevel: 50,
-    volume: null,
-    batteryPercentage: null,
+    toggleSlot: (
+      <DeviceToggle
+        isOn={false}
+        isReachable={true}
+        onChange={fn()}
+        loading={false}
+      />
+    ),
+    lightLevelSlot: (
+      <LightLevelControl
+        lightLevel={50}
+        isReachable={true}
+        disabled={true}
+        onChange={fn()}
+        loading={false}
+      />
+    ),
   },
 };
 
 export const SpeakerWithVolume: Story = {
   args: {
-    isOn: true,
-    lightLevel: null,
-    volume: 60,
-    batteryPercentage: null,
-    name: "Kitchen Speaker",
+    toggleSlot: (
+      <DeviceToggle
+        isOn={true}
+        isReachable={true}
+        onChange={fn()}
+        loading={false}
+      />
+    ),
+    volumeSlot: (
+      <VolumeControl
+        volume={60}
+        isReachable={true}
+        onChange={fn()}
+        loading={false}
+      />
+    ),
   },
 };
 
 export const BatteryDeviceOnly: Story = {
   args: {
-    isOn: null,
-    lightLevel: null,
-    volume: null,
-    batteryPercentage: 85,
-    name: "Motion Sensor",
+    batterySlot: <BatteryIndicator batteryPercentage={85} name="Motion Sensor" />,
   },
 };
 
 export const LightWithBattery: Story = {
   args: {
-    isOn: true,
-    lightLevel: 50,
-    volume: null,
-    batteryPercentage: 42,
-    name: "Remote Control Bulb",
+    toggleSlot: (
+      <DeviceToggle
+        isOn={true}
+        isReachable={true}
+        onChange={fn()}
+        loading={false}
+      />
+    ),
+    lightLevelSlot: (
+      <LightLevelControl
+        lightLevel={50}
+        isReachable={true}
+        disabled={false}
+        onChange={fn()}
+        loading={false}
+      />
+    ),
+    batterySlot: (
+      <BatteryIndicator batteryPercentage={42} name="Remote Control Bulb" />
+    ),
   },
 };
 
 export const AllControls: Story = {
   args: {
-    isOn: true,
-    lightLevel: 80,
-    volume: 50,
-    batteryPercentage: 100,
-    name: "Multi-Function Device",
+    toggleSlot: (
+      <DeviceToggle
+        isOn={true}
+        isReachable={true}
+        onChange={fn()}
+        loading={false}
+      />
+    ),
+    lightLevelSlot: (
+      <LightLevelControl
+        lightLevel={80}
+        isReachable={true}
+        disabled={false}
+        onChange={fn()}
+        loading={false}
+      />
+    ),
+    volumeSlot: (
+      <VolumeControl
+        volume={50}
+        isReachable={true}
+        onChange={fn()}
+        loading={false}
+      />
+    ),
+    batterySlot: (
+      <BatteryIndicator batteryPercentage={100} name="Multi-Function Device" />
+    ),
   },
 };
 
 export const Unreachable: Story = {
   args: {
-    isOn: true,
-    lightLevel: 50,
-    volume: null,
-    batteryPercentage: null,
-    isReachable: false,
+    toggleSlot: (
+      <DeviceToggle
+        isOn={true}
+        isReachable={false}
+        onChange={fn()}
+        loading={false}
+      />
+    ),
+    lightLevelSlot: (
+      <LightLevelControl
+        lightLevel={50}
+        isReachable={false}
+        disabled={true}
+        onChange={fn()}
+        loading={false}
+      />
+    ),
   },
 };
 
 export const LoadingToggle: Story = {
   args: {
-    isOn: true,
-    lightLevel: 75,
-    volume: null,
-    batteryPercentage: null,
-    loading: { isOn: true },
+    toggleSlot: (
+      <DeviceToggle
+        isOn={true}
+        isReachable={true}
+        onChange={fn()}
+        loading={true}
+      />
+    ),
+    lightLevelSlot: (
+      <LightLevelControl
+        lightLevel={75}
+        isReachable={true}
+        disabled={false}
+        onChange={fn()}
+        loading={false}
+      />
+    ),
   },
 };
 
 export const LoadingLightLevel: Story = {
   args: {
-    isOn: true,
-    lightLevel: 75,
-    volume: null,
-    batteryPercentage: null,
-    loading: { lightLevel: true },
+    toggleSlot: (
+      <DeviceToggle
+        isOn={true}
+        isReachable={true}
+        onChange={fn()}
+        loading={false}
+      />
+    ),
+    lightLevelSlot: (
+      <LightLevelControl
+        lightLevel={75}
+        isReachable={true}
+        disabled={false}
+        onChange={fn()}
+        loading={true}
+      />
+    ),
   },
 };
 
 export const LoadingVolume: Story = {
   args: {
-    isOn: true,
-    lightLevel: null,
-    volume: 50,
-    batteryPercentage: null,
-    loading: { volume: true },
-    name: "Speaker",
+    toggleSlot: (
+      <DeviceToggle
+        isOn={true}
+        isReachable={true}
+        onChange={fn()}
+        loading={false}
+      />
+    ),
+    volumeSlot: (
+      <VolumeControl
+        volume={50}
+        isReachable={true}
+        onChange={fn()}
+        loading={true}
+      />
+    ),
   },
 };
 
 export const NoControls: Story = {
-  args: {
-    isOn: null,
-    lightLevel: null,
-    volume: null,
-    batteryPercentage: null,
-  },
+  args: {},
 };
 
 export const LowBattery: Story = {
   args: {
-    isOn: null,
-    lightLevel: null,
-    volume: null,
-    batteryPercentage: 10,
-    name: "Door Sensor",
+    batterySlot: <BatteryIndicator batteryPercentage={10} name="Door Sensor" />,
   },
 };
 
 export const ToggleOnly: Story = {
   args: {
-    isOn: true,
-    lightLevel: null,
-    volume: null,
-    batteryPercentage: null,
-    name: "Smart Plug",
+    toggleSlot: (
+      <DeviceToggle
+        isOn={true}
+        isReachable={true}
+        onChange={fn()}
+        loading={false}
+      />
+    ),
   },
 };
