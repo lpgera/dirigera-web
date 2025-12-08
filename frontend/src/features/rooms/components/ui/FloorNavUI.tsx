@@ -1,7 +1,7 @@
 import { Button, useBreakpoint } from "@/components/ui";
 import { FloorIcon } from "@/components/ui/FloorIcon";
 
-import "./FloorNav.css";
+import "./FloorNavUI.css";
 
 export interface FloorNavItem {
   id: string;

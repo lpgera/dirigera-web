@@ -16,6 +16,9 @@ interface FloorTabsProps {
 
 const HEADER_OFFSET = 146;
 
+// Module-level flag to persist across React Strict Mode remounts
+let hasScrolledToSavedFloor = false;
+
 export function FloorTabs({ rooms, columnSizes }: FloorTabsProps) {
   const screens = useBreakpoint();
   const { floors, groupRoomsByFloor } = useFloors();
@@ -25,6 +28,7 @@ export function FloorTabs({ rooms, columnSizes }: FloorTabsProps) {
   const isScrollingToFloor = useFloorNavigationStore(
     (s) => s.isScrollingToFloor
   );
+  const hasHydrated = useFloorNavigationStore((s) => s._hasHydrated);
   const setActiveFloorId = useFloorNavigationStore((s) => s.setActiveFloorId);
   const setIsScrollingToFloor = useFloorNavigationStore(
     (s) => s.setIsScrollingToFloor
@@ -55,17 +59,76 @@ export function FloorTabs({ rooms, columnSizes }: FloorTabsProps) {
     return floorTabs;
   }, [floors, hasOrphanedRooms]);
 
-  // Initialize active floor when floors are loaded
+  // Initialize active floor when floors are loaded (only if no saved floor)
   useEffect(() => {
-    if (floors && floors.length > 0 && !activeFloorId) {
+    if (hasHydrated && floors && floors.length > 0 && !activeFloorId) {
       setActiveFloorId(floors[0].id);
     }
-  }, [floors, activeFloorId, setActiveFloorId]);
+  }, [floors, activeFloorId, setActiveFloorId, hasHydrated]);
+
+  // Scroll to saved floor after hydration and floors are loaded
+  useEffect(() => {
+    if (
+      hasHydrated &&
+      activeFloorId &&
+      floors.length > 0 &&
+      !hasScrolledToSavedFloor
+    ) {
+      // Poll for element availability since refs are set after render
+      const maxAttempts = 20;
+      let attempts = 0;
+
+      const tryScroll = () => {
+        const element = floorRefRegistry.get(activeFloorId);
+        console.log(
+          "[FloorTabs] tryScroll attempt",
+          attempts,
+          "- element found:",
+          !!element,
+          "registry keys:",
+          Array.from(floorRefRegistry.keys())
+        );
+        if (element) {
+          hasScrolledToSavedFloor = true;
+          const rect = element.getBoundingClientRect();
+          const absoluteTop = rect.top + window.scrollY;
+          const target = Math.max(0, absoluteTop - HEADER_OFFSET);
+          console.log(
+            "[FloorTabs] Scrolling to",
+            activeFloorId,
+            "at position",
+            target
+          );
+          window.scrollTo({ top: target, behavior: "instant" });
+        } else if (attempts < maxAttempts) {
+          attempts++;
+          setTimeout(tryScroll, 50);
+        } else {
+          // Give up after max attempts, allow scroll tracking
+          console.log("[FloorTabs] Gave up waiting for element");
+          hasScrolledToSavedFloor = true;
+        }
+      };
+
+      const timeoutId = setTimeout(tryScroll, 50);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [hasHydrated, activeFloorId, floors.length]);
+
+  // Reset scroll flag on page unload so next visit will scroll to saved floor
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      hasScrolledToSavedFloor = false;
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, []);
 
   // Track scroll position to update active floor
   useEffect(() => {
     const handleScroll = () => {
-      if (isScrollingToFloor) return;
+      // Don't update active floor until we've scrolled to the saved position
+      if (isScrollingToFloor || !hasScrolledToSavedFloor) return;
 
       const scrollPosition =
         window.scrollY + window.innerHeight / 3 + HEADER_OFFSET;

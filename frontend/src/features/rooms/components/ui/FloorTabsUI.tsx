@@ -1,5 +1,5 @@
 import { Scenes } from "@/features/scenes";
-import { FloorNavUI, type FloorNavItem } from "./FloorNav";
+import { FloorNavUI, type FloorNavItem } from "./FloorNavUI";
 import FloorSectionUI from "./FloorSectionUI";
 
 import "./FloorTabsUI.css";

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { FloorNavUI } from "./FloorNav";
+import { FloorNavUI } from "./FloorNavUI";
 import { useState } from "react";
 
 /**
