@@ -28,14 +28,12 @@ export function CompactDeviceControlUI({
   colorControl,
   onOffControl,
 }: CompactDeviceControlUIProps) {
-  const lightLevelAdjusted = 20 + lightLevel * 0.8;
-
   return (
     <div className="compact-device-control-wrapper">
       <DeviceImageGlow
         showGlow={showGlow}
         color={lightColor}
-        percentage={lightLevelAdjusted}
+        percentage={lightLevel}
         orientation="horizontal"
       />
       <div className="compact-device-control">
