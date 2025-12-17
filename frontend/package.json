@@ -9,7 +9,7 @@
     "watch": "vite"
   },
   "devDependencies": {
-    "@apollo/client": "^4.0.10",
+    "@apollo/client": "^4.0.11",
     "@graphql-codegen/cli": "^6.1.0",
     "@graphql-codegen/near-operation-file-preset": "^4.0.0",
     "@graphql-codegen/typescript": "^5.0.6",
