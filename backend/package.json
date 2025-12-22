@@ -14,7 +14,7 @@
     "@as-integrations/express5": "^1.1.2",
     "@graphql-tools/schema": "^10.0.30",
     "@graphql-tools/utils": "^10.11.0",
-    "@lpgera/ts-env": "^1.2.7",
+    "@lpgera/ts-env": "^1.2.8",
     "body-parser": "^2.2.1",
     "compression": "^1.8.1",
     "dirigera": "^1.5.0",
