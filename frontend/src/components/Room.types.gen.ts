@@ -32,6 +32,7 @@ export type RoomQuery = {
       humidity?: number | null
       pm25?: number | null
       vocIndex?: number | null
+      co2?: number | null
       isOpen?: boolean | null
     }>
   } | null

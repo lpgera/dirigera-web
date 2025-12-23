@@ -25,10 +25,11 @@ export const typeDefs = gql`
     volume: Int
     playItem: String
     nextPlayItem: String
-    temperature: Int
-    humidity: Int
+    temperature: Float
+    humidity: Float
     pm25: Int
     vocIndex: Int
+    co2: Int
     isOpen: Boolean
   }
 
@@ -111,6 +112,7 @@ export function getDevicesNotInSet(devices: Device[]) {
         humidity: device.attributes.currentRH,
         pm25: device.attributes.currentPM25,
         vocIndex: device.attributes.vocIndex,
+        co2: device.attributes.currentCO2,
         isOpen: device.attributes.isOpen,
       }
     })

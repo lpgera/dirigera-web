@@ -9,6 +9,10 @@ import Playback from './deviceControls/Playback'
 import Battery from './deviceControls/Battery'
 import PlayItemImage from './deviceControls/PlayItemImage'
 
+const roundToTwoDecimals = (number: number) => {
+  return Math.round((number + Number.EPSILON) * 100) / 100
+}
+
 const Device = ({
   id,
   name,
@@ -30,6 +34,7 @@ const Device = ({
   humidity,
   pm25,
   vocIndex,
+  co2,
   isOpen,
 }: {
   id: string
@@ -52,6 +57,7 @@ const Device = ({
   humidity?: number | null
   pm25?: number | null
   vocIndex?: number | null
+  co2?: number | null
   isOpen?: boolean | null
 }) => {
   return (
@@ -167,7 +173,7 @@ const Device = ({
       {temperature != null && (
         <Row>
           <Col>
-            <div>Temperature: {temperature}°C</div>
+            <div>Temperature: {roundToTwoDecimals(temperature)}°C</div>
           </Col>
         </Row>
       )}
@@ -175,7 +181,7 @@ const Device = ({
       {humidity != null && (
         <Row>
           <Col>
-            <div>Humidity: {humidity}%</div>
+            <div>Humidity: {roundToTwoDecimals(humidity)}%</div>
           </Col>
         </Row>
       )}
@@ -192,6 +198,14 @@ const Device = ({
         <Row>
           <Col>
             <div>tVOC Index: {vocIndex}</div>
+          </Col>
+        </Row>
+      )}
+
+      {co2 != null && (
+        <Row>
+          <Col>
+            <div>CO²: {co2} ppm</div>
           </Col>
         </Row>
       )}

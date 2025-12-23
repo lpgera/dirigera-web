@@ -17,7 +17,7 @@
     "@lpgera/ts-env": "^1.2.8",
     "body-parser": "^2.2.1",
     "compression": "^1.8.1",
-    "dirigera": "^1.5.0",
+    "dirigera": "^1.6.0",
     "express": "^5.2.1",
     "graphql": "^16.12.0",
     "graphql-tag": "^2.12.6",

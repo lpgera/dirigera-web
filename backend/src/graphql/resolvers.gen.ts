@@ -39,10 +39,11 @@ export type ControlType = 'DEVICE' | 'DEVICE_SET'
 export type Device = {
   __typename?: 'Device'
   batteryPercentage?: Maybe<Scalars['Int']['output']>
+  co2?: Maybe<Scalars['Int']['output']>
   colorHue?: Maybe<Scalars['Float']['output']>
   colorSaturation?: Maybe<Scalars['Float']['output']>
   colorTemperature?: Maybe<Scalars['Int']['output']>
-  humidity?: Maybe<Scalars['Int']['output']>
+  humidity?: Maybe<Scalars['Float']['output']>
   id: Scalars['String']['output']
   isOn?: Maybe<Scalars['Boolean']['output']>
   isOpen?: Maybe<Scalars['Boolean']['output']>
@@ -56,7 +57,7 @@ export type Device = {
   playbackPauseAvailable?: Maybe<Scalars['Boolean']['output']>
   playbackPreviousAvailable?: Maybe<Scalars['Boolean']['output']>
   pm25?: Maybe<Scalars['Int']['output']>
-  temperature?: Maybe<Scalars['Int']['output']>
+  temperature?: Maybe<Scalars['Float']['output']>
   type: ControlType
   vocIndex?: Maybe<Scalars['Int']['output']>
   volume?: Maybe<Scalars['Int']['output']>
@@ -341,6 +342,7 @@ export type DeviceResolvers<
     ParentType,
     ContextType
   >
+  co2?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
   colorHue?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>
   colorSaturation?: Resolver<
     Maybe<ResolversTypes['Float']>,
@@ -352,7 +354,7 @@ export type DeviceResolvers<
     ParentType,
     ContextType
   >
-  humidity?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
+  humidity?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   isOn?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>
   isOpen?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>
@@ -386,7 +388,11 @@ export type DeviceResolvers<
     ContextType
   >
   pm25?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
-  temperature?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
+  temperature?: Resolver<
+    Maybe<ResolversTypes['Float']>,
+    ParentType,
+    ContextType
+  >
   type?: Resolver<ResolversTypes['ControlType'], ParentType, ContextType>
   vocIndex?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
   volume?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
