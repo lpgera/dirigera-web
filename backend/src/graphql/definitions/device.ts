@@ -12,6 +12,7 @@ export const typeDefs = gql`
     name: String!
     type: ControlType!
     isReachable: Boolean!
+    lastSeen: String!
     batteryPercentage: Int
     isOn: Boolean
     lightLevel: Int
@@ -90,6 +91,7 @@ export function getDevicesNotInSet(devices: Device[]) {
         name: device.attributes.customName,
         type: 'DEVICE' as ControlType,
         isReachable: device.isReachable,
+        lastSeen: device.lastSeen,
         batteryPercentage: device.attributes.batteryPercentage,
         isOn: getAttributeIfCanReceive(device, 'isOn'),
         lightLevel: getAttributeIfCanReceive(device, 'lightLevel'),
@@ -145,6 +147,7 @@ export function getDeviceSets(devices: Device[]) {
       name: deviceSet.name,
       type: 'DEVICE_SET' as ControlType,
       isReachable: devicesInSet.every((d) => d.isReachable),
+      lastSeen: devicesInSet.map((d) => d.lastSeen).toSorted()[0],
       batteryPercentage: devicesInSet[0]?.attributes?.batteryPercentage,
       isOn: devicesInSet.some((d) => d.attributes.isOn),
       lightLevel: devicesInSet[0]?.attributes?.lightLevel,

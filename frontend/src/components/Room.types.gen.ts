@@ -16,6 +16,7 @@ export type RoomQuery = {
       name: string
       type: Types.ControlType
       isReachable: boolean
+      lastSeen: string
       batteryPercentage?: number | null
       isOn?: boolean | null
       lightLevel?: number | null

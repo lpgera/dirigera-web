@@ -48,6 +48,7 @@ export type Device = {
   isOn?: Maybe<Scalars['Boolean']['output']>
   isOpen?: Maybe<Scalars['Boolean']['output']>
   isReachable: Scalars['Boolean']['output']
+  lastSeen: Scalars['String']['output']
   lightLevel?: Maybe<Scalars['Int']['output']>
   name: Scalars['String']['output']
   nextPlayItem?: Maybe<Scalars['String']['output']>
@@ -359,6 +360,7 @@ export type DeviceResolvers<
   isOn?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>
   isOpen?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>
   isReachable?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
+  lastSeen?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   lightLevel?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   nextPlayItem?: Resolver<

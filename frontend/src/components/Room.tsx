@@ -26,6 +26,7 @@ export const ROOM_QUERY = gql`
         name
         type
         isReachable
+        lastSeen
         batteryPercentage
         isOn
         lightLevel

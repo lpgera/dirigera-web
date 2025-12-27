@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Col, Row } from 'antd'
+import { Card, Col, Flex, Row, Tooltip } from 'antd'
 import type { ControlType } from '../graphql.types'
 import IsOn from './deviceControls/IsOn'
 import LightLevel from './deviceControls/LightLevel'
@@ -8,6 +8,7 @@ import LightColor from './deviceControls/LightColor'
 import Playback from './deviceControls/Playback'
 import Battery from './deviceControls/Battery'
 import PlayItemImage from './deviceControls/PlayItemImage'
+import { MdOutlineWarningAmber } from 'react-icons/md'
 
 const roundToTwoDecimals = (number: number) => {
   return Math.round((number + Number.EPSILON) * 100) / 100
@@ -18,6 +19,7 @@ const Device = ({
   name,
   type,
   isReachable,
+  lastSeen,
   batteryPercentage,
   isOn,
   lightLevel,
@@ -41,6 +43,7 @@ const Device = ({
   name: string
   type: ControlType
   isReachable: boolean
+  lastSeen: string
   batteryPercentage?: number | null
   isOn?: boolean | null
   lightLevel?: number | null
@@ -61,7 +64,27 @@ const Device = ({
   isOpen?: boolean | null
 }) => {
   return (
-    <Card title={name}>
+    <Card
+      title={
+        <Flex justify="space-between" align="center">
+          <span>{name}</span>
+          {isReachable ? null : (
+            <Tooltip
+              title={`Device is unreachable. Last seen: ${new Date(lastSeen).toLocaleString()}`}
+            >
+              <MdOutlineWarningAmber
+                size={'18px'}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              />
+            </Tooltip>
+          )}
+        </Flex>
+      }
+    >
       <Row align="middle" gutter={[8, 8]}>
         {isOn != null && (
           <Col>

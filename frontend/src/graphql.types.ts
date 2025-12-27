@@ -41,6 +41,7 @@ export type Device = {
   isOn?: Maybe<Scalars['Boolean']['output']>
   isOpen?: Maybe<Scalars['Boolean']['output']>
   isReachable: Scalars['Boolean']['output']
+  lastSeen: Scalars['String']['output']
   lightLevel?: Maybe<Scalars['Int']['output']>
   name: Scalars['String']['output']
   nextPlayItem?: Maybe<Scalars['String']['output']>
