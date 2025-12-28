@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, Card, Col, Result, Row, Skeleton } from 'antd'
 import { gql } from '@apollo/client'
 import { useMutation, useQuery } from '@apollo/client/react'
@@ -59,6 +59,10 @@ const Rooms = () => {
 
   const { data, refetch, error } = useQuery<RoomsQuery>(ROOMS_QUERY)
 
+  const [loadingQuickControlIds, setLoadingQuicControlIds] = useState<
+    Record<string, boolean>
+  >({})
+
   const [quickControl, { loading: quickControlLoading }] = useMutation<
     QuickControlMutation,
     QuickControlMutationVariables
@@ -112,18 +116,22 @@ const Rooms = () => {
                       key={qc.id}
                       block
                       style={buttonStyles}
+                      loading={Boolean(loadingQuickControlIds[qc.id])}
                       disabled={
                         (qc.playback && qc.playback !== 'playbackPlaying') ||
-                        !qc.isReachable ||
-                        quickControlLoading
+                        !qc.isReachable
                       }
                       type={
                         qc.isOn || qc.playback === 'playbackPlaying'
                           ? 'primary'
                           : 'default'
                       }
-                      onClick={() =>
-                        quickControl({
+                      onClick={async () => {
+                        setLoadingQuicControlIds((prev) => ({
+                          ...prev,
+                          [qc.id]: true,
+                        }))
+                        await quickControl({
                           variables: {
                             id: qc.id,
                             type: qc.type,
@@ -134,7 +142,11 @@ const Rooms = () => {
                                 : null,
                           },
                         })
-                      }
+                        setLoadingQuicControlIds((prev) => ({
+                          ...prev,
+                          [qc.id]: false,
+                        }))
+                      }}
                     >
                       {qc.name}
                     </Button>
