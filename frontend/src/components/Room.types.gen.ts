@@ -35,6 +35,8 @@ export type RoomQuery = {
       vocIndex?: number | null
       co2?: number | null
       isOpen?: boolean | null
+      isDetected?: boolean | null
+      illuminance?: number | null
     }>
   } | null
 }

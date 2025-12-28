@@ -45,6 +45,8 @@ export const ROOM_QUERY = gql`
         vocIndex
         co2
         isOpen
+        isDetected
+        illuminance
       }
     }
   }

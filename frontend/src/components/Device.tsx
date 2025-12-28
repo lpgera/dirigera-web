@@ -38,6 +38,8 @@ const Device = ({
   vocIndex,
   co2,
   isOpen,
+  isDetected,
+  illuminance,
 }: {
   id: string
   name: string
@@ -62,6 +64,8 @@ const Device = ({
   vocIndex?: number | null
   co2?: number | null
   isOpen?: boolean | null
+  isDetected?: boolean | null
+  illuminance?: number | null
 }) => {
   return (
     <Card
@@ -177,18 +181,18 @@ const Device = ({
         )}
       </Row>
 
-      {isOpen != null && (
-        <Row>
-          <Col>
-            <div>{isOpen ? 'Open' : 'Closed'}</div>
-          </Col>
-        </Row>
-      )}
-
       {batteryPercentage != null && (
         <Row>
           <Col>
             <Battery batteryPercentage={batteryPercentage} />
+          </Col>
+        </Row>
+      )}
+
+      {isOpen != null && (
+        <Row>
+          <Col>
+            <div>{isOpen ? 'Open' : 'Closed'}</div>
           </Col>
         </Row>
       )}
@@ -229,6 +233,22 @@ const Device = ({
         <Row>
           <Col>
             <div>CO²: {co2} ppm</div>
+          </Col>
+        </Row>
+      )}
+
+      {isDetected != null && (
+        <Row>
+          <Col>
+            <div>Motion detected: {isDetected ? 'yes' : 'no'}</div>
+          </Col>
+        </Row>
+      )}
+
+      {illuminance != null && (
+        <Row>
+          <Col>
+            <div>Illumninance: {illuminance}</div>
           </Col>
         </Row>
       )}

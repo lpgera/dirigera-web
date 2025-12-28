@@ -32,6 +32,8 @@ export const typeDefs = gql`
     vocIndex: Int
     co2: Int
     isOpen: Boolean
+    isDetected: Boolean
+    illuminance: Int
   }
 
   extend type Query {
@@ -116,6 +118,8 @@ export function getDevicesNotInSet(devices: Device[]) {
         vocIndex: device.attributes.vocIndex,
         co2: device.attributes.currentCO2,
         isOpen: device.attributes.isOpen,
+        isDetected: device.attributes.isDetected,
+        illuminance: device.attributes.illuminance,
       }
     })
 }
@@ -148,29 +152,31 @@ export function getDeviceSets(devices: Device[]) {
       type: 'DEVICE_SET' as ControlType,
       isReachable: devicesInSet.every((d) => d.isReachable),
       lastSeen: devicesInSet.map((d) => d.lastSeen).toSorted()[0],
-      batteryPercentage: devicesInSet[0]?.attributes?.batteryPercentage,
+      batteryPercentage: devicesInSet[0]?.attributes.batteryPercentage,
       isOn: devicesInSet.some((d) => d.attributes.isOn),
-      lightLevel: devicesInSet[0]?.attributes?.lightLevel,
-      colorTemperature: devicesInSet[0]?.attributes?.colorTemperature,
-      colorSaturation: devicesInSet[0]?.attributes?.colorSaturation,
-      colorHue: devicesInSet[0]?.attributes?.colorHue,
-      playback: devicesInSet[0]?.attributes?.playback,
+      lightLevel: devicesInSet[0]?.attributes.lightLevel,
+      colorTemperature: devicesInSet[0]?.attributes.colorTemperature,
+      colorSaturation: devicesInSet[0]?.attributes.colorSaturation,
+      colorHue: devicesInSet[0]?.attributes.colorHue,
+      playback: devicesInSet[0]?.attributes.playback,
       playbackPauseAvailable:
-        devicesInSet[0]?.attributes?.playbackAvailableActions?.pause,
+        devicesInSet[0]?.attributes.playbackAvailableActions?.pause,
       playbackNextAvailable:
-        devicesInSet[0]?.attributes?.playbackAvailableActions?.playbackNext,
+        devicesInSet[0]?.attributes.playbackAvailableActions?.playbackNext,
       playbackPreviousAvailable:
-        devicesInSet[0]?.attributes?.playbackAvailableActions?.playbackPrev,
-      volume: devicesInSet[0]?.attributes?.volume,
+        devicesInSet[0]?.attributes.playbackAvailableActions?.playbackPrev,
+      volume: devicesInSet[0]?.attributes.volume,
       playItem: playItem ? `${playItem?.artist} - ${playItem?.title}` : null,
       nextPlayItem: nextPlayItem
         ? `${nextPlayItem?.artist} - ${nextPlayItem?.title}`
         : null,
-      temperature: devicesInSet[0]?.attributes?.currentTemperature,
-      humidity: devicesInSet[0]?.attributes?.currentRH,
-      pm25: devicesInSet[0]?.attributes?.currentPM25,
+      temperature: devicesInSet[0]?.attributes.currentTemperature,
+      humidity: devicesInSet[0]?.attributes.currentRH,
+      pm25: devicesInSet[0]?.attributes.currentPM25,
       vocIndex: devicesInSet[0]?.attributes.vocIndex,
       isOpen: devicesInSet[0]?.attributes.isOpen,
+      isDetected: devicesInSet[0]?.attributes.isDetected,
+      illuminance: devicesInSet[0]?.attributes.illuminance,
     }
   })
 }
@@ -197,9 +203,25 @@ export const resolvers: Resolvers = {
     devices: async ({ id }, _, { homeState: { devices } }) => {
       const devicesInRoom = devices.filter((device) => device.room?.id === id)
 
+      const devicesInRoomWithRelations = devicesInRoom.map((d) => ({
+        ...d,
+        attributes: devices.reduce((acc, currentDevice) => {
+          if (
+            Boolean(d.relationId) &&
+            d.relationId === currentDevice.relationId
+          ) {
+            return {
+              ...currentDevice.attributes,
+              ...acc,
+            }
+          }
+          return acc
+        }, d.attributes),
+      }))
+
       return [
-        ...getDevicesNotInSet(devicesInRoom),
-        ...getDeviceSets(devicesInRoom),
+        ...getDevicesNotInSet(devicesInRoomWithRelations),
+        ...getDeviceSets(devicesInRoomWithRelations),
       ]
         .sort((a, b) => a.name.localeCompare(b.name))
         .sort((a, b) => Number(hasControl(b)) - Number(hasControl(a)))
