@@ -5,6 +5,11 @@ import type { Resolvers, ControlType } from '../resolvers.gen.ts'
 export const typeDefs = gql`
   extend type Room {
     devices: [Device!]!
+    temperature: Float
+    humidity: Float
+    pm25: Float
+    vocIndex: Float
+    co2: Float
   }
 
   type Device {
@@ -198,26 +203,62 @@ const hasControl = (d: {
   d.playback !== null ||
   d.volume !== null
 
+function getDevicesInRoomWithRelations({
+  roomId,
+  devices,
+}: {
+  roomId: string
+  devices: Device[]
+}) {
+  const devicesInRoom = devices.filter((device) => device.room?.id === roomId)
+
+  return devicesInRoom.map((d) => ({
+    ...d,
+    attributes: devices.reduce((acc, currentDevice) => {
+      if (Boolean(d.relationId) && d.relationId === currentDevice.relationId) {
+        return {
+          ...currentDevice.attributes,
+          ...acc,
+        }
+      }
+      return acc
+    }, d.attributes),
+  }))
+}
+
+function getAverageAttributeValue({
+  devices,
+  attribute,
+}: {
+  devices: Device[]
+  attribute:
+    | 'currentTemperature'
+    | 'currentRH'
+    | 'currentPM25'
+    | 'vocIndex'
+    | 'currentCO2'
+}) {
+  const attributeValues = devices
+    .map((d) => d.attributes[attribute])
+    .filter((t) => t != null)
+
+  if (attributeValues.length === 0) {
+    return null
+  }
+
+  return (
+    attributeValues.reduce((acc, current) => acc + current, 0) /
+    attributeValues.length
+  )
+}
+
 export const resolvers: Resolvers = {
   Room: {
-    devices: async ({ id }, _, { homeState: { devices } }) => {
-      const devicesInRoom = devices.filter((device) => device.room?.id === id)
-
-      const devicesInRoomWithRelations = devicesInRoom.map((d) => ({
-        ...d,
-        attributes: devices.reduce((acc, currentDevice) => {
-          if (
-            Boolean(d.relationId) &&
-            d.relationId === currentDevice.relationId
-          ) {
-            return {
-              ...currentDevice.attributes,
-              ...acc,
-            }
-          }
-          return acc
-        }, d.attributes),
-      }))
+    devices: ({ id }, _, { homeState: { devices } }) => {
+      const devicesInRoomWithRelations = getDevicesInRoomWithRelations({
+        roomId: id,
+        devices,
+      })
 
       return [
         ...getDevicesNotInSet(devicesInRoomWithRelations),
@@ -225,6 +266,61 @@ export const resolvers: Resolvers = {
       ]
         .sort((a, b) => a.name.localeCompare(b.name))
         .sort((a, b) => Number(hasControl(b)) - Number(hasControl(a)))
+    },
+    temperature: ({ id }, _, { homeState: { devices } }) => {
+      const devicesInRoomWithRelations = getDevicesInRoomWithRelations({
+        roomId: id,
+        devices,
+      })
+
+      return getAverageAttributeValue({
+        devices: devicesInRoomWithRelations,
+        attribute: 'currentTemperature',
+      })
+    },
+    humidity: ({ id }, _, { homeState: { devices } }) => {
+      const devicesInRoomWithRelations = getDevicesInRoomWithRelations({
+        roomId: id,
+        devices,
+      })
+
+      return getAverageAttributeValue({
+        devices: devicesInRoomWithRelations,
+        attribute: 'currentRH',
+      })
+    },
+    pm25: ({ id }, _, { homeState: { devices } }) => {
+      const devicesInRoomWithRelations = getDevicesInRoomWithRelations({
+        roomId: id,
+        devices,
+      })
+
+      return getAverageAttributeValue({
+        devices: devicesInRoomWithRelations,
+        attribute: 'currentPM25',
+      })
+    },
+    vocIndex: ({ id }, _, { homeState: { devices } }) => {
+      const devicesInRoomWithRelations = getDevicesInRoomWithRelations({
+        roomId: id,
+        devices,
+      })
+
+      return getAverageAttributeValue({
+        devices: devicesInRoomWithRelations,
+        attribute: 'vocIndex',
+      })
+    },
+    co2: ({ id }, _, { homeState: { devices } }) => {
+      const devicesInRoomWithRelations = getDevicesInRoomWithRelations({
+        roomId: id,
+        devices,
+      })
+
+      return getAverageAttributeValue({
+        devices: devicesInRoomWithRelations,
+        attribute: 'currentCO2',
+      })
     },
   },
   Query: {

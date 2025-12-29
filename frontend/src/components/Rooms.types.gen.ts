@@ -8,6 +8,11 @@ export type RoomsQuery = {
     __typename?: 'Room'
     id: string
     name: string
+    temperature?: number | null
+    humidity?: number | null
+    pm25?: number | null
+    vocIndex?: number | null
+    co2?: number | null
     quickControls: Array<{
       __typename?: 'QuickControl'
       id: string

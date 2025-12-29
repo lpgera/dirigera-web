@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Col, Flex, Row, Tooltip } from 'antd'
+import { Card, Col, Row, Tooltip } from 'antd'
 import type { ControlType } from '../graphql.types'
 import IsOn from './deviceControls/IsOn'
 import LightLevel from './deviceControls/LightLevel'
@@ -69,24 +69,22 @@ const Device = ({
 }) => {
   return (
     <Card
-      title={
-        <Flex justify="space-between" align="center">
-          <span>{name}</span>
-          {isReachable ? null : (
-            <Tooltip
-              title={`Device is unreachable. Last seen: ${new Date(lastSeen).toLocaleString()}`}
-            >
-              <MdOutlineWarningAmber
-                size={'18px'}
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              />
-            </Tooltip>
-          )}
-        </Flex>
+      title={name}
+      extra={
+        isReachable ? null : (
+          <Tooltip
+            title={`Device is unreachable. Last seen: ${new Date(lastSeen).toLocaleString()}`}
+          >
+            <MdOutlineWarningAmber
+              size={'18px'}
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            />
+          </Tooltip>
+        )
       }
     >
       <Row align="middle" gutter={[8, 8]}>
@@ -216,7 +214,9 @@ const Device = ({
       {pm25 != null && (
         <Row>
           <Col>
-            <div>PM2.5: {pm25} μg/m³</div>
+            <div>
+              PM<sub>2.5</sub>: {pm25} μg/m<sup>3</sup>
+            </div>
           </Col>
         </Row>
       )}
@@ -232,7 +232,9 @@ const Device = ({
       {co2 != null && (
         <Row>
           <Col>
-            <div>CO²: {co2} ppm</div>
+            <div>
+              CO<sub>2</sub>: {co2} ppm
+            </div>
           </Col>
         </Row>
       )}

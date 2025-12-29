@@ -169,10 +169,15 @@ export type QuickControl = {
 
 export type Room = {
   __typename?: 'Room'
+  co2?: Maybe<Scalars['Float']['output']>
   devices: Array<Device>
+  humidity?: Maybe<Scalars['Float']['output']>
   id: Scalars['String']['output']
   name: Scalars['String']['output']
+  pm25?: Maybe<Scalars['Float']['output']>
   quickControls: Array<QuickControl>
+  temperature?: Maybe<Scalars['Float']['output']>
+  vocIndex?: Maybe<Scalars['Float']['output']>
 }
 
 export type Scene = {
@@ -516,14 +521,23 @@ export type RoomResolvers<
   ParentType extends ResolversParentTypes['Room'] =
     ResolversParentTypes['Room'],
 > = ResolversObject<{
+  co2?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>
   devices?: Resolver<Array<ResolversTypes['Device']>, ParentType, ContextType>
+  humidity?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  pm25?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>
   quickControls?: Resolver<
     Array<ResolversTypes['QuickControl']>,
     ParentType,
     ContextType
   >
+  temperature?: Resolver<
+    Maybe<ResolversTypes['Float']>,
+    ParentType,
+    ContextType
+  >
+  vocIndex?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>
 }>
 
 export type SceneResolvers<

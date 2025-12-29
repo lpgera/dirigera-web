@@ -162,10 +162,15 @@ export type QuickControl = {
 
 export type Room = {
   __typename?: 'Room'
+  co2?: Maybe<Scalars['Float']['output']>
   devices: Array<Device>
+  humidity?: Maybe<Scalars['Float']['output']>
   id: Scalars['String']['output']
   name: Scalars['String']['output']
+  pm25?: Maybe<Scalars['Float']['output']>
   quickControls: Array<QuickControl>
+  temperature?: Maybe<Scalars['Float']['output']>
+  vocIndex?: Maybe<Scalars['Float']['output']>
 }
 
 export type Scene = {

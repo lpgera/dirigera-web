@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Card, Col, Result, Row, Skeleton } from 'antd'
+import { Button, Card, Col, Result, Row, Skeleton, Tag } from 'antd'
 import { gql } from '@apollo/client'
 import { useMutation, useQuery } from '@apollo/client/react'
 import { GoGear } from 'react-icons/go'
@@ -26,6 +26,10 @@ const buttonStyles = {
   textOverflow: 'ellipsis',
 }
 
+const roundToTwoDecimals = (number: number) => {
+  return Math.round((number + Number.EPSILON) * 100) / 100
+}
+
 export const ROOMS_QUERY = gql`
   query Rooms {
     rooms {
@@ -39,6 +43,11 @@ export const ROOMS_QUERY = gql`
         playback
         type
       }
+      temperature
+      humidity
+      pm25
+      vocIndex
+      co2
     }
   }
 `
@@ -63,7 +72,7 @@ const Rooms = () => {
     Record<string, boolean>
   >({})
 
-  const [quickControl, { loading: quickControlLoading }] = useMutation<
+  const [quickControl] = useMutation<
     QuickControlMutation,
     QuickControlMutationVariables
   >(QUICK_CONTROL_MUTATION)
@@ -108,6 +117,51 @@ const Rooms = () => {
                 }
               >
                 <Row align="middle" gutter={[8, 8]}>
+                  {(room.temperature != null ||
+                    room.humidity != null ||
+                    room.pm25 != null ||
+                    room.vocIndex != null ||
+                    room.co2 != null) && (
+                    <Col span={24}>
+                      <Row gutter={[8, 8]}>
+                        {room.temperature != null && (
+                          <Col>
+                            <Tag variant="outlined">
+                              {roundToTwoDecimals(room.temperature)}°C
+                            </Tag>
+                          </Col>
+                        )}
+                        {room.humidity != null && (
+                          <Col>
+                            <Tag variant="outlined">
+                              {roundToTwoDecimals(room.humidity)}%
+                            </Tag>
+                          </Col>
+                        )}
+                        {room.pm25 != null && (
+                          <Col>
+                            <Tag variant="outlined">
+                              PM<sub>2.5</sub> {roundToTwoDecimals(room.pm25)}
+                            </Tag>
+                          </Col>
+                        )}
+                        {room.vocIndex != null && (
+                          <Col>
+                            <Tag variant="outlined">
+                              VOC {roundToTwoDecimals(room.vocIndex)}
+                            </Tag>
+                          </Col>
+                        )}
+                        {room.co2 != null && (
+                          <Col>
+                            <Tag variant="outlined">
+                              CO<sub>2</sub> {roundToTwoDecimals(room.co2)}
+                            </Tag>
+                          </Col>
+                        )}
+                      </Row>
+                    </Col>
+                  )}
                   {room.quickControls.length === 0 && (
                     <>No quick controls available</>
                   )}
