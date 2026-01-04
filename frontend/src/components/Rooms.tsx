@@ -26,8 +26,8 @@ const buttonStyles = {
   textOverflow: 'ellipsis',
 }
 
-const roundToTwoDecimals = (number: number) => {
-  return Math.round((number + Number.EPSILON) * 100) / 100
+const roundToOneDecimal = (number: number) => {
+  return Math.round((number + Number.EPSILON) * 10) / 10
 }
 
 export const ROOMS_QUERY = gql`
@@ -122,40 +122,40 @@ const Rooms = () => {
                     room.pm25 != null ||
                     room.vocIndex != null ||
                     room.co2 != null) && (
-                    <Col span={24}>
+                    <Col span={24} style={{ padding: 0, marginBottom: 8 }}>
                       <Row gutter={[8, 8]}>
                         {room.temperature != null && (
                           <Col>
                             <Tag variant="outlined">
-                              {roundToTwoDecimals(room.temperature)}°C
+                              {roundToOneDecimal(room.temperature)}°C
                             </Tag>
                           </Col>
                         )}
                         {room.humidity != null && (
                           <Col>
                             <Tag variant="outlined">
-                              {roundToTwoDecimals(room.humidity)}%
+                              {roundToOneDecimal(room.humidity)}%
                             </Tag>
                           </Col>
                         )}
                         {room.pm25 != null && (
                           <Col>
                             <Tag variant="outlined">
-                              PM<sub>2.5</sub> {roundToTwoDecimals(room.pm25)}
+                              PM<sub>2.5</sub> {roundToOneDecimal(room.pm25)}
                             </Tag>
                           </Col>
                         )}
                         {room.vocIndex != null && (
                           <Col>
                             <Tag variant="outlined">
-                              VOC {roundToTwoDecimals(room.vocIndex)}
+                              VOC {roundToOneDecimal(room.vocIndex)}
                             </Tag>
                           </Col>
                         )}
                         {room.co2 != null && (
                           <Col>
                             <Tag variant="outlined">
-                              CO<sub>2</sub> {roundToTwoDecimals(room.co2)}
+                              CO<sub>2</sub> {roundToOneDecimal(room.co2)}
                             </Tag>
                           </Col>
                         )}
