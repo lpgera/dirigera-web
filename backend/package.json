@@ -13,7 +13,7 @@
     "@apollo/server": "^5.2.0",
     "@as-integrations/express5": "^1.1.2",
     "@graphql-tools/schema": "^10.0.31",
-    "@graphql-tools/utils": "^10.11.0",
+    "@graphql-tools/utils": "^11.0.0",
     "@lpgera/ts-env": "^1.2.8",
     "body-parser": "^2.2.2",
     "compression": "^1.8.1",
