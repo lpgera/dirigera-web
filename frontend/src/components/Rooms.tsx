@@ -2,7 +2,13 @@ import React, { useState } from 'react'
 import { Button, Card, Col, Result, Row, Skeleton, Tag } from 'antd'
 import { gql } from '@apollo/client'
 import { useMutation, useQuery } from '@apollo/client/react'
-import { GoGear } from 'react-icons/go'
+import {
+  MdOutlineSpeaker,
+  MdLightbulbOutline,
+  MdOutlineOutlet,
+  MdOutlineSettings,
+} from 'react-icons/md'
+
 import { useNavigate } from 'react-router-dom'
 import type {
   QuickControlMutation,
@@ -21,11 +27,6 @@ const columnSizes = {
   xxl: 4,
 }
 
-const buttonStyles = {
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-}
-
 const roundToOneDecimal = (number: number) => {
   return Math.round((number + Number.EPSILON) * 10) / 10
 }
@@ -37,11 +38,8 @@ export const ROOMS_QUERY = gql`
       name
       quickControls {
         id
-        name
-        isReachable
-        isOn
-        playback
         type
+        isOn
       }
       temperature
       humidity
@@ -54,12 +52,11 @@ export const ROOMS_QUERY = gql`
 
 const QUICK_CONTROL_MUTATION = gql`
   mutation QuickControl(
-    $id: String!
-    $type: ControlType!
+    $roomId: String!
+    $type: QuickControlType!
     $isOn: Boolean
-    $playback: Playback
   ) {
-    quickControl(id: $id, type: $type, isOn: $isOn, playback: $playback)
+    quickControl(roomId: $roomId, type: $type, isOn: $isOn)
   }
 `
 
@@ -105,7 +102,7 @@ const Rooms = () => {
                     shape="circle"
                     onClick={() => navigate(`room/${room.id}`)}
                     icon={
-                      <GoGear
+                      <MdOutlineSettings
                         style={{
                           display: 'flex',
                           justifyContent: 'center',
@@ -165,46 +162,44 @@ const Rooms = () => {
                   {room.quickControls.length === 0 && (
                     <>No quick controls available</>
                   )}
-                  {room.quickControls.map((qc) => (
-                    <Button
-                      key={qc.id}
-                      block
-                      style={buttonStyles}
-                      loading={Boolean(loadingQuickControlIds[qc.id])}
-                      disabled={
-                        (qc.playback && qc.playback !== 'playbackPlaying') ||
-                        !qc.isReachable
-                      }
-                      type={
-                        qc.isOn || qc.playback === 'playbackPlaying'
-                          ? 'primary'
-                          : 'default'
-                      }
-                      onClick={async () => {
-                        setLoadingQuicControlIds((prev) => ({
-                          ...prev,
-                          [qc.id]: true,
-                        }))
-                        await quickControl({
-                          variables: {
-                            id: qc.id,
-                            type: qc.type,
-                            isOn: qc.isOn != null ? !qc.isOn : null,
-                            playback:
-                              qc.playback === 'playbackPlaying'
-                                ? 'playbackPaused'
-                                : null,
-                          },
-                        })
-                        setLoadingQuicControlIds((prev) => ({
-                          ...prev,
-                          [qc.id]: false,
-                        }))
-                      }}
-                    >
-                      {qc.name}
-                    </Button>
-                  ))}
+                  <Row gutter={[8, 8]}>
+                    {room.quickControls.map((qc) => (
+                      <Col>
+                        <Button
+                          key={qc.id}
+                          shape="circle"
+                          loading={Boolean(loadingQuickControlIds[qc.id])}
+                          type={qc.isOn ? 'primary' : 'default'}
+                          onClick={async () => {
+                            setLoadingQuicControlIds((prev) => ({
+                              ...prev,
+                              [qc.id]: true,
+                            }))
+                            await quickControl({
+                              variables: {
+                                roomId: room.id,
+                                type: qc.type,
+                                isOn: qc.isOn != null ? !qc.isOn : null,
+                              },
+                            })
+                            setLoadingQuicControlIds((prev) => ({
+                              ...prev,
+                              [qc.id]: false,
+                            }))
+                          }}
+                          icon={
+                            qc.type === 'LIGHTS' ? (
+                              <MdLightbulbOutline />
+                            ) : qc.type === 'OUTLETS' ? (
+                              <MdOutlineOutlet />
+                            ) : qc.type === 'SPEAKERS' ? (
+                              <MdOutlineSpeaker />
+                            ) : null
+                          }
+                        />
+                      </Col>
+                    ))}
+                  </Row>
                 </Row>
               </Card>
             </Col>

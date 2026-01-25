@@ -16,20 +16,16 @@ export type RoomsQuery = {
     quickControls: Array<{
       __typename?: 'QuickControl'
       id: string
-      name: string
-      isReachable: boolean
+      type: Types.QuickControlType
       isOn?: boolean | null
-      playback?: string | null
-      type: Types.ControlType
     }>
   }>
 }
 
 export type QuickControlMutationVariables = Types.Exact<{
-  id: Types.Scalars['String']['input']
-  type: Types.ControlType
+  roomId: Types.Scalars['String']['input']
+  type: Types.QuickControlType
   isOn?: Types.InputMaybe<Types.Scalars['Boolean']['input']>
-  playback?: Types.InputMaybe<Types.Playback>
 }>
 
 export type QuickControlMutation = {

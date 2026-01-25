@@ -82,10 +82,9 @@ export type MutationLoginArgs = {
 }
 
 export type MutationQuickControlArgs = {
-  id: Scalars['String']['input']
   isOn?: InputMaybe<Scalars['Boolean']['input']>
-  playback?: InputMaybe<Playback>
-  type: ControlType
+  roomId: Scalars['String']['input']
+  type: QuickControlType
 }
 
 export type MutationSetColorHueAndSaturationArgs = {
@@ -154,11 +153,10 @@ export type QuickControl = {
   __typename?: 'QuickControl'
   id: Scalars['String']['output']
   isOn?: Maybe<Scalars['Boolean']['output']>
-  isReachable: Scalars['Boolean']['output']
-  name: Scalars['String']['output']
-  playback?: Maybe<Scalars['String']['output']>
-  type: ControlType
+  type: QuickControlType
 }
+
+export type QuickControlType = 'LIGHTS' | 'OUTLETS' | 'SPEAKERS'
 
 export type Room = {
   __typename?: 'Room'

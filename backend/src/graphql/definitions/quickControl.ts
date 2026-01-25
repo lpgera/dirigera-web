@@ -1,118 +1,120 @@
 import { gql } from 'graphql-tag'
-import type { Device, DeviceSet } from 'dirigera'
-import type { ControlType, Resolvers } from '../resolvers.gen.ts'
+import type { QuickControlType, Resolvers } from '../resolvers.gen.ts'
 
 export const typeDefs = gql`
   extend type Room {
     quickControls: [QuickControl!]!
   }
 
+  enum QuickControlType {
+    LIGHTS
+    OUTLETS
+    SPEAKERS
+  }
+
   type QuickControl {
     id: String!
-    name: String!
-    type: ControlType!
-    isReachable: Boolean!
+    type: QuickControlType!
     isOn: Boolean
-    playback: String
   }
 
   extend type Mutation {
     quickControl(
-      id: String!
-      type: ControlType!
+      roomId: String!
+      type: QuickControlType!
       isOn: Boolean
-      playback: Playback
     ): Boolean @loggedIn
   }
 `
 
-export function getDeviceQuickControls(devices: Device[], roomId: string) {
-  return devices
-    .filter(
-      (device) =>
-        device.room?.id === roomId &&
-        (device.capabilities.canReceive.includes('isOn') ||
-          device.capabilities.canReceive.includes('playback')) &&
-        device.deviceSet.length === 0
-    )
-    .map((device) => ({
-      id: device.id,
-      name: device.attributes.customName,
-      type: 'DEVICE' as ControlType,
-      isReachable: device.isReachable,
-      isOn: device.attributes.isOn,
-      playback: device.attributes.playback,
-    }))
-}
-
-export function getDeviceSetQuickControls(devices: Device[], roomId: string) {
-  const deviceSets = [
-    ...devices
-      .filter(
-        (d) =>
-          d.room?.id === roomId &&
-          (d.capabilities.canReceive.includes('isOn') ||
-            d.capabilities.canReceive.includes('playback'))
-      )
-      .flatMap((d) => d.deviceSet)
-      .reduce((map, item) => {
-        if (!map.has(item.id)) {
-          map.set(item.id, item)
-        }
-        return map
-      }, new Map<string, DeviceSet>())
-      .values(),
-  ]
-
-  return deviceSets.map((deviceSet) => {
-    const devicesInSet = devices.filter((d) =>
-      d.deviceSet.some((ds) => ds.id === deviceSet.id)
-    )
-    return {
-      id: deviceSet.id,
-      name: deviceSet.name,
-      type: 'DEVICE_SET' as ControlType,
-      isReachable: devicesInSet.every((d) => d.isReachable),
-      isOn: devicesInSet.some((d) => d.attributes.isOn),
-      playback: devicesInSet.find((d) => d.attributes.playback)?.attributes
-        .playback,
-    }
-  })
-}
-
 export const resolvers: Resolvers = {
   Room: {
     quickControls: async ({ id }, _, { homeState: { devices } }) => {
+      const roomDevices = devices
+        .filter((d) => d.room?.id === id)
+        .filter((d) => d.isReachable)
+
+      const lights = roomDevices.filter((d) => d.type === 'light')
+      const outlets = roomDevices.filter((d) => d.type === 'outlet')
+      const speakers = roomDevices.filter((d) => d.type === 'speaker')
+
+      const lighthsQuickControl =
+        lights.length > 0
+          ? {
+              id: `${id}-lights`,
+              type: 'LIGHTS' as QuickControlType,
+              isOn: lights.some((d) => d.attributes.isOn),
+            }
+          : null
+      const outletsQuickControl =
+        outlets.length > 0
+          ? {
+              id: `${id}-outlets`,
+              type: 'OUTLETS' as QuickControlType,
+              isOn: outlets.some((d) => d.attributes.isOn),
+            }
+          : null
+      const speakersQuickControl =
+        speakers.length > 0
+          ? {
+              id: `${id}-speakers`,
+              type: 'SPEAKERS' as QuickControlType,
+              isOn: speakers.some(
+                (d) => d.attributes.playback === 'playbackPlaying'
+              ),
+            }
+          : null
+
       return [
-        ...getDeviceQuickControls(devices, id),
-        ...getDeviceSetQuickControls(devices, id),
-      ].sort((a, b) => a.name.localeCompare(b.name))
+        lighthsQuickControl,
+        outletsQuickControl,
+        speakersQuickControl,
+      ].filter(Boolean)
     },
   },
   Mutation: {
     quickControl: async (
       _,
-      { id, type, isOn, playback },
-      { dirigeraClient }
+      { roomId, type, isOn },
+      { dirigeraClient, homeState }
     ) => {
-      if (type === 'DEVICE_SET') {
-        await dirigeraClient.deviceSets.setAttributes({
-          id,
-          attributes: {
-            isOn: isOn != null ? isOn : undefined,
-            playback: playback != null ? playback : undefined,
-          },
+      const devices = homeState.devices
+        .filter((d) => d.room?.id === roomId)
+        .filter((d) => {
+          switch (type) {
+            case 'LIGHTS':
+              return d.type === 'light'
+            case 'OUTLETS':
+              return d.type === 'outlet'
+            case 'SPEAKERS':
+              return d.type === 'speaker'
+            default:
+              return false
+          }
         })
-      }
-      if (type === 'DEVICE') {
-        await dirigeraClient.devices.setAttributes({
-          id,
-          attributes: {
-            isOn: isOn != null ? isOn : undefined,
-            playback: playback != null ? playback : undefined,
-          },
+      await Promise.all(
+        devices.map((d) => {
+          switch (d.type) {
+            case 'speaker':
+              return dirigeraClient.speakers.setPlayback({
+                id: d.id,
+                playback: isOn ? 'playbackPlaying' : 'playbackPaused',
+              })
+            case 'light':
+              return dirigeraClient.lights.setIsOn({
+                id: d.id,
+                isOn,
+              })
+            case 'outlet':
+              return dirigeraClient.outlets.setIsOn({
+                id: d.id,
+                isOn,
+              })
+            default:
+              return null
+          }
         })
-      }
+      )
       return null
     },
   },

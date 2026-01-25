@@ -89,10 +89,9 @@ export type MutationLoginArgs = {
 }
 
 export type MutationQuickControlArgs = {
-  id: Scalars['String']['input']
   isOn?: InputMaybe<Scalars['Boolean']['input']>
-  playback?: InputMaybe<Playback>
-  type: ControlType
+  roomId: Scalars['String']['input']
+  type: QuickControlType
 }
 
 export type MutationSetColorHueAndSaturationArgs = {
@@ -161,11 +160,10 @@ export type QuickControl = {
   __typename?: 'QuickControl'
   id: Scalars['String']['output']
   isOn?: Maybe<Scalars['Boolean']['output']>
-  isReachable: Scalars['Boolean']['output']
-  name: Scalars['String']['output']
-  playback?: Maybe<Scalars['String']['output']>
-  type: ControlType
+  type: QuickControlType
 }
+
+export type QuickControlType = 'LIGHTS' | 'OUTLETS' | 'SPEAKERS'
 
 export type Room = {
   __typename?: 'Room'
@@ -312,6 +310,7 @@ export type ResolversTypes = ResolversObject<{
   Playback: Playback
   Query: ResolverTypeWrapper<Record<PropertyKey, never>>
   QuickControl: ResolverTypeWrapper<QuickControl>
+  QuickControlType: QuickControlType
   Room: ResolverTypeWrapper<Room>
   Scene: ResolverTypeWrapper<Scene>
   String: ResolverTypeWrapper<Scalars['String']['output']>
@@ -435,7 +434,7 @@ export type MutationResolvers<
     Maybe<ResolversTypes['Boolean']>,
     ParentType,
     ContextType,
-    RequireFields<MutationQuickControlArgs, 'id' | 'type'>
+    RequireFields<MutationQuickControlArgs, 'roomId' | 'type'>
   >
   setColorHueAndSaturation?: Resolver<
     Maybe<ResolversTypes['Boolean']>,
@@ -510,10 +509,7 @@ export type QuickControlResolvers<
 > = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   isOn?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>
-  isReachable?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  playback?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
-  type?: Resolver<ResolversTypes['ControlType'], ParentType, ContextType>
+  type?: Resolver<ResolversTypes['QuickControlType'], ParentType, ContextType>
 }>
 
 export type RoomResolvers<

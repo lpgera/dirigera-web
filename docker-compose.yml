@@ -1,5 +1,4 @@
 # for development purposes
-version: '3.8'
 services:
   backend:
     image: node:25
