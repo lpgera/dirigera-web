@@ -6,7 +6,7 @@
     "npm": ">11.0.0"
   },
   "volta": {
-    "node": "25.7.0"
+    "node": "25.8.0"
   },
   "scripts": {
     "browserslist-update": "npx update-browserslist-db@latest",
