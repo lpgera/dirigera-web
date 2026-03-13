@@ -1,5 +1,6 @@
 import React, { createContext, ReactElement, useContext } from 'react'
-import useWebSocket from 'react-use-websocket'
+// https://github.com/robtaussig/react-use-websocket/issues/242#issuecomment-2646079836
+import { useWebSocket } from 'react-use-websocket/src/lib/use-websocket'
 import { AuthContext } from './AuthContext'
 
 const WebSocketUpdateContext = createContext<{
