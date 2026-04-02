@@ -33,6 +33,11 @@
     "vite": "^8.0.3",
     "vite-plugin-pwa": "^1.2.0"
   },
+  "overrides": {
+    "vite-plugin-pwa": {
+      "vite": "$vite"
+    }
+  },
   "volta": {
     "extends": "../package.json"
   }
