@@ -84,7 +84,7 @@ jobs:
     needs: [chromatic-deployment, build-and-push-image]
     steps:
       - id: metadata
-        uses: dependabot/fetch-metadata@v2
+        uses: dependabot/fetch-metadata@v3
         with:
           github-token: ${{ secrets.AUTO_MERGE_PERSONAL_TOKEN }}
       - id: check-update-type
