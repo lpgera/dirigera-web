@@ -20,7 +20,7 @@ jobs:
         uses: volta-cli/action@v5
 
       - name: Run volta pin node
-        run: volta pin node@25
+        run: volta pin node@26
 
       - name: Check for changes
         id: git-diff

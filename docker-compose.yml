@@ -1,7 +1,7 @@
 # for development purposes
 services:
   backend:
-    image: node:25
+    image: node:26
     env_file: .env
     volumes:
       - .:/opt/app:delegated
@@ -10,7 +10,7 @@ services:
     ports:
       - 4000:4000
   frontend:
-    image: node:25
+    image: node:26
     volumes:
       - .:/opt/app:delegated
     working_dir: /opt/app
