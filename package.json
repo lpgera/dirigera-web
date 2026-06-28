@@ -19,8 +19,8 @@
   "devDependencies": {
     "husky": "^9.1.7",
     "lint-staged": "^17.0.8",
-    "npm-check-updates": "^22.2.7",
-    "prettier": "^3.8.5"
+    "npm-check-updates": "^22.2.9",
+    "prettier": "^3.9.1"
   },
   "workspaces": [
     "backend",
@@ -28,5 +28,11 @@
   ],
   "lint-staged": {
     "*.{ts,tsx,js,css,md,json,yml}": "prettier --write"
+  },
+  "allowScripts": {
+    "@apollo/protobufjs@1.2.7": true,
+    "esbuild@0.28.1": true,
+    "fsevents@2.3.3": true,
+    "storybook-addon-remix-react-router@6.1.0": true
   }
 }
