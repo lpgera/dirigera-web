@@ -20,7 +20,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^17.0.8",
     "npm-check-updates": "^22.2.9",
-    "prettier": "^3.9.3"
+    "prettier": "^3.9.4"
   },
   "workspaces": [
     "backend",
