@@ -19,7 +19,7 @@
     "compression": "^1.8.1",
     "dirigera": "^2.0.0",
     "express": "^5.2.1",
-    "graphql": "^17.0.1",
+    "graphql": "^17.0.2",
     "graphql-tag": "^2.12.7",
     "jsonwebtoken": "^9.0.3",
     "ws": "^8.21.0"
