@@ -29,7 +29,7 @@
     "react-use-websocket": "^4.13.0",
     "storybook": "^10.4.6",
     "storybook-addon-remix-react-router": "^6.1.0",
-    "typescript": "^6.0.3",
+    "typescript": "^7.0.2",
     "vite": "^8.1.3",
     "vite-plugin-pwa": "^1.3.0"
   },
