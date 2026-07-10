@@ -4,6 +4,8 @@ updates:
     directory: '/'
     schedule:
       interval: 'daily'
+    cooldown:
+      default-days: 1
     groups:
       graphql-codegen:
         patterns:
@@ -12,12 +14,15 @@ updates:
         patterns:
           - '@storybook/*'
           - 'storybook*'
-    open-pull-requests-limit: 20
   - package-ecosystem: 'docker'
     directory: '/'
     schedule:
       interval: 'daily'
+    cooldown:
+      default-days: 1
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
       interval: 'daily'
+    cooldown:
+      default-days: 1
