@@ -1,5 +1,5 @@
 import React from 'react'
-import { createHashRouter, RouterProvider } from 'react-router-dom'
+import { createHashRouter, RouterProvider } from 'react-router'
 import { ConfigProvider, theme } from 'antd'
 import 'antd/dist/reset.css'
 import ApolloProvider from './ApolloProvider'

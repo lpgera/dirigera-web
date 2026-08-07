@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { BsFillHouseFill } from 'react-icons/bs'
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet } from 'react-router'
 import { Col, Layout, Row, Typography } from 'antd'
 import { AuthContext } from './AuthContext'
 import Login from './Login'

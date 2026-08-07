@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router'
 import { Card, Col, Result, Row, Skeleton, Typography } from 'antd'
 import { gql } from '@apollo/client'
 import { useQuery } from '@apollo/client/react'
