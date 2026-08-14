@@ -254,10 +254,10 @@ function getAverageAttributeValue({
 
 export const resolvers: Resolvers = {
   Room: {
-    devices: ({ id }, _, { homeState: { devices } }) => {
+    devices: ({ id }, _, { homeState }) => {
       const devicesInRoomWithRelations = getDevicesInRoomWithRelations({
         roomId: id,
-        devices,
+        devices: homeState?.devices ?? [],
       })
 
       return [
@@ -267,10 +267,10 @@ export const resolvers: Resolvers = {
         .sort((a, b) => a.name.localeCompare(b.name))
         .sort((a, b) => Number(hasControl(b)) - Number(hasControl(a)))
     },
-    temperature: ({ id }, _, { homeState: { devices } }) => {
+    temperature: ({ id }, _, { homeState }) => {
       const devicesInRoomWithRelations = getDevicesInRoomWithRelations({
         roomId: id,
-        devices,
+        devices: homeState?.devices ?? [],
       })
 
       return getAverageAttributeValue({
@@ -278,10 +278,10 @@ export const resolvers: Resolvers = {
         attribute: 'currentTemperature',
       })
     },
-    humidity: ({ id }, _, { homeState: { devices } }) => {
+    humidity: ({ id }, _, { homeState }) => {
       const devicesInRoomWithRelations = getDevicesInRoomWithRelations({
         roomId: id,
-        devices,
+        devices: homeState?.devices ?? [],
       })
 
       return getAverageAttributeValue({
@@ -289,10 +289,10 @@ export const resolvers: Resolvers = {
         attribute: 'currentRH',
       })
     },
-    pm25: ({ id }, _, { homeState: { devices } }) => {
+    pm25: ({ id }, _, { homeState }) => {
       const devicesInRoomWithRelations = getDevicesInRoomWithRelations({
         roomId: id,
-        devices,
+        devices: homeState?.devices ?? [],
       })
 
       return getAverageAttributeValue({
@@ -300,10 +300,10 @@ export const resolvers: Resolvers = {
         attribute: 'currentPM25',
       })
     },
-    vocIndex: ({ id }, _, { homeState: { devices } }) => {
+    vocIndex: ({ id }, _, { homeState }) => {
       const devicesInRoomWithRelations = getDevicesInRoomWithRelations({
         roomId: id,
-        devices,
+        devices: homeState?.devices ?? [],
       })
 
       return getAverageAttributeValue({
@@ -311,10 +311,10 @@ export const resolvers: Resolvers = {
         attribute: 'vocIndex',
       })
     },
-    co2: ({ id }, _, { homeState: { devices } }) => {
+    co2: ({ id }, _, { homeState }) => {
       const devicesInRoomWithRelations = getDevicesInRoomWithRelations({
         roomId: id,
-        devices,
+        devices: homeState?.devices ?? [],
       })
 
       return getAverageAttributeValue({
@@ -324,8 +324,8 @@ export const resolvers: Resolvers = {
     },
   },
   Query: {
-    devicePlayItemImageURL: async (_, { id }, { homeState: { devices } }) => {
-      const device = devices.find((d) => d.id === id)
+    devicePlayItemImageURL: async (_, { id }, { homeState }) => {
+      const device = (homeState?.devices ?? []).find((d) => d.id === id)
 
       if (!device) {
         return null

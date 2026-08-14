@@ -29,8 +29,8 @@ export const typeDefs = gql`
 
 export const resolvers: Resolvers = {
   Room: {
-    quickControls: async ({ id }, _, { homeState: { devices } }) => {
-      const roomDevices = devices
+    quickControls: async ({ id }, _, { homeState }) => {
+      const roomDevices = (homeState?.devices ?? [])
         .filter((d) => d.room?.id === id)
         .filter((d) => d.isReachable)
 
@@ -69,7 +69,7 @@ export const resolvers: Resolvers = {
         lighthsQuickControl,
         outletsQuickControl,
         speakersQuickControl,
-      ].filter(Boolean)
+      ].filter((qc) => qc !== null)
     },
   },
   Mutation: {
@@ -78,7 +78,7 @@ export const resolvers: Resolvers = {
       { roomId, type, isOn },
       { dirigeraClient, homeState }
     ) => {
-      const devices = homeState.devices
+      const devices = (homeState?.devices ?? [])
         .filter((d) => d.room?.id === roomId)
         .filter((d) => {
           switch (type) {
@@ -103,12 +103,12 @@ export const resolvers: Resolvers = {
             case 'light':
               return dirigeraClient.lights.setIsOn({
                 id: d.id,
-                isOn,
+                isOn: Boolean(isOn),
               })
             case 'outlet':
               return dirigeraClient.outlets.setIsOn({
                 id: d.id,
-                isOn,
+                isOn: Boolean(isOn),
               })
             default:
               return null

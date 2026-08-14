@@ -18,8 +18,8 @@ export const typeDefs = gql`
 
 export const resolvers: Resolvers = {
   Query: {
-    scenes: async (_, __, { homeState: { scenes } }) => {
-      return scenes
+    scenes: async (_, __, { homeState }) => {
+      return (homeState?.scenes ?? [])
         .filter((scene) => scene.type === 'userScene')
         .map((scene) => ({
           id: scene.id,

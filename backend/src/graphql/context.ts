@@ -4,7 +4,7 @@ import { verify } from '../jwt.ts'
 
 export type Context = {
   dirigeraClient: DirigeraClient
-  homeState: Home
+  homeState: Home | null
   isLoggedIn: Boolean
 }
 
@@ -13,7 +13,7 @@ export const getContextFunction =
   async ({ req }: { req: Request }): Promise<Context> => {
     const token = req.headers['x-token']
     const isLoggedIn = Boolean(token && verify(token.toString()))
-    const homeState = await dirigeraClient.home()
+    const homeState = isLoggedIn ? await dirigeraClient.home() : null
     return {
       dirigeraClient,
       homeState,
