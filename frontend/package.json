@@ -11,7 +11,7 @@
   "devDependencies": {
     "@apollo/client": "^4.2.12",
     "@graphql-codegen/cli": "^7.2.0",
-    "@graphql-codegen/near-operation-file-preset": "^5.2.1",
+    "@graphql-codegen/near-operation-file-preset": "^5.2.2",
     "@graphql-codegen/typescript": "^6.0.2",
     "@graphql-codegen/typescript-operations": "^6.1.6",
     "@storybook/react": "^10.5.8",
