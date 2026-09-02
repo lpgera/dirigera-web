@@ -21,6 +21,7 @@ export const loggedInDirectiveTransformer = (schema: GraphQLSchema) =>
               {
                 extensions: {
                   code: 'UNAUTHENTICATED',
+                  http: { status: 401 },
                 },
               }
             )

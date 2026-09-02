@@ -1,5 +1,6 @@
 import { before, describe, it } from 'node:test'
 import assert from 'node:assert'
+import type { GraphQLError } from 'graphql'
 
 let auth: typeof import('./auth.ts')
 let jwt: typeof import('../../jwt.ts')
@@ -37,15 +38,22 @@ describe('definitions/auth', () => {
       assert.strictEqual(typeof payload, 'object')
     })
 
-    it('should return null if password is incorrect', async () => {
-      const token = await auth.resolvers.Mutation?.login?.(
-        {},
-        { password: 'invalid' },
-        // @ts-ignore
-        { isLoggedIn: false, dirigeraClient: null },
-        null
+    it('should throw a 401 error if password is incorrect', async () => {
+      await assert.rejects(
+        async () =>
+          await auth.resolvers.Mutation?.login?.(
+            {},
+            { password: 'invalid' },
+            // @ts-ignore
+            { isLoggedIn: false, dirigeraClient: null },
+            null
+          ),
+        (error: GraphQLError) => {
+          assert.strictEqual(error.extensions.code, 'UNAUTHENTICATED')
+          assert.deepStrictEqual(error.extensions.http, { status: 401 })
+          return true
+        }
       )
-      assert.strictEqual(token, null)
     })
   })
 })
