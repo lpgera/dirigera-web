@@ -17,7 +17,7 @@
     "@storybook/react": "^10.6.0",
     "@storybook/react-vite": "^10.6.0",
     "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.5",
+    "@types/react-dom": "^19.2.7",
     "@vitejs/plugin-react": "^6.1.1",
     "antd": "^6.6.2",
     "apollo3-cache-persist": "^0.15.0",
