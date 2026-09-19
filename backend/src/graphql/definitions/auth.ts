@@ -2,7 +2,7 @@ import { gql } from 'graphql-tag'
 import type { Resolvers } from '../resolvers.gen.ts'
 import tsEnv from '@lpgera/ts-env'
 import { sign } from '../../jwt.ts'
-import { GraphQLError } from 'graphql/index'
+import { GraphQLError } from 'graphql'
 
 const PASSWORD = tsEnv.stringOrThrow('PASSWORD')
 
