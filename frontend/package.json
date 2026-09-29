@@ -13,7 +13,7 @@
     "@graphql-codegen/cli": "^7.4.3",
     "@graphql-codegen/near-operation-file-preset": "^5.2.2",
     "@graphql-codegen/typescript": "^6.1.0",
-    "@graphql-codegen/typescript-operations": "^6.1.7",
+    "@graphql-codegen/typescript-operations": "^6.1.8",
     "@storybook/react": "^10.6.0",
     "@storybook/react-vite": "^10.6.0",
     "@types/react": "^19.3.0",
