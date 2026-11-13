@@ -27,7 +27,7 @@
   "devDependencies": {
     "@graphql-codegen/cli": "^8.0.0",
     "@graphql-codegen/typescript": "^7.0.1",
-    "@graphql-codegen/typescript-resolvers": "^7.0.0",
+    "@graphql-codegen/typescript-resolvers": "^7.0.1",
     "@types/compression": "^1.8.1",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^26.6.6",
